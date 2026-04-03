@@ -387,7 +387,7 @@ function EditField<
 						: label}
 				</Button>
 			) : (
-				<Text wrap="nowrap" size="1">
+				<Text wrap="nowrap" size="1" style={{ color: "var(--accent-11)" }}>
 					{label}
 				</Text>
 			)}

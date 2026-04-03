@@ -23,3 +23,9 @@
 	background-repeat: no-repeat;
 	transform: scale(1.02);
 }
+
+.customBackgroundMask {
+	position: absolute;
+	inset: 0;
+	background-color: var(--color-background);
+}

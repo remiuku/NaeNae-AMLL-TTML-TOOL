@@ -35,7 +35,7 @@ export const RibbonSection: FC<PropsWithChildren<{ label: string }>> = ({
 			<Flex flexGrow="1" align="center" justify="center">
 				{children}
 			</Flex>
-			<Text align="center" wrap="nowrap" color="gray" size="1">
+			<Text align="center" wrap="nowrap" size="1" style={{ color: "var(--accent-11)" }}>
 				{label}
 			</Text>
 		</Flex>

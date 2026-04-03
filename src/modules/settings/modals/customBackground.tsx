@@ -134,7 +134,7 @@ export const customBackgroundImageInitAtom = atom(null, async (get, set) => {
 
 export const customBackgroundOpacityAtom = atomWithStorage(
 	"customBackgroundOpacity",
-	0.4,
+	0.8,
 );
 
 export const customBackgroundMaskAtom = atomWithStorage(
@@ -240,11 +240,11 @@ export const SettingsCustomBackgroundSettings = ({
 							<Text wrap="nowrap" color="gray" size="1">
 								{Math.round(customBackgroundOpacity * 100)}%
 							</Text>
-							{customBackgroundOpacity !== 0.4 && (
+							{customBackgroundOpacity !== 0.8 && (
 								<IconButton
 									variant="ghost"
 									size="1"
-									onClick={() => setCustomBackgroundOpacity(0.4)}
+									onClick={() => setCustomBackgroundOpacity(0.8)}
 								>
 									<ArrowHookUpLeft24Regular />
 								</IconButton>
@@ -258,7 +258,7 @@ export const SettingsCustomBackgroundSettings = ({
 						value={[customBackgroundOpacity]}
 						onValueChange={(v) => setCustomBackgroundOpacity(v[0])}
 					/>
-					{customBackgroundOpacity >= 0.5 && (
+					{customBackgroundOpacity >= 0.9 && (
 						<Text size="1" color="orange">
 							{t(
 								"settings.common.customBackgroundOpacityWarning",

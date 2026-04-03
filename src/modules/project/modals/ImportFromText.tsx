@@ -290,37 +290,47 @@ export const ImportFromText = () => {
 						>
 							{t("textImportDialog.title", "导入纯文本歌词")}
 						</Dialog.Title>
-						<Button
-							onClick={() => {
-								try {
-									const importAction = () => {
-										onImport(store.get(textValueAtom));
-										setImportFromTextDialog(false);
-									};
-									if (isDirty)
-										setConfirmDialog({
-											open: true,
-											title: t(
-												"confirmDialog.importFile.title",
-												"确认导入歌词",
-											),
-											description: t(
-												"confirmDialog.importFile.description",
-												"当前文件有未保存的更改。如果继续，这些更改将会丢失。确定要导入歌词吗？",
-											),
-											onConfirm: () => importAction(),
-										});
-									else importAction();
-								} catch (e) {
-									error(
-										"导入纯文本歌词失败，请检查输入的文本是否正确，或者导入设置是否正确",
-									);
-									logError(e);
+						<Flex gap="2">
+							<Button
+								variant="soft"
+								onClick={() =>
+									window.open("https://lyrprep.spicylyrics.org/", "_blank")
 								}
-							}}
-						>
-							{t("textImportDialog.actionButton", "导入歌词")}
-						</Button>
+							>
+								{t("textImportDialog.processLyrics", "Process Lyrics")}
+							</Button>
+							<Button
+								onClick={() => {
+									try {
+										const importAction = () => {
+											onImport(store.get(textValueAtom));
+											setImportFromTextDialog(false);
+										};
+										if (isDirty)
+											setConfirmDialog({
+												open: true,
+												title: t(
+													"confirmDialog.importFile.title",
+													"确认导入歌词",
+												),
+												description: t(
+													"confirmDialog.importFile.description",
+													"当前文件有未保存的更改。如果继续，这些更改将会丢失。确定要导入歌词吗？",
+												),
+												onConfirm: () => importAction(),
+											});
+										else importAction();
+									} catch (e) {
+										error(
+											"导入纯文本歌词失败，请检查输入的文本是否正确，或者导入设置是否正确",
+										);
+										logError(e);
+									}
+								}}
+							>
+								{t("textImportDialog.actionButton", "导入歌词")}
+							</Button>
+						</Flex>
 					</Flex>
 					<Flex
 						gap="4"

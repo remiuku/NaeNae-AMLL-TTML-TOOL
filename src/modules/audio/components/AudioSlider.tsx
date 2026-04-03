@@ -50,10 +50,8 @@ export const AudioSlider = () => {
 		}
 		const height = wsContainerRef.current.clientHeight;
 		const canvasStyles = getComputedStyle(wsContainerRef.current);
-		const fontColor =
-			canvasStyles.getPropertyValue("--accent-a11") || "#00ffa21e";
-		const primaryFillColor =
-			canvasStyles.getPropertyValue("--accent-a4") || "#00ffa21e";
+		const fontColor = canvasStyles.getPropertyValue("--accent-a11").trim();
+		const primaryFillColor = canvasStyles.getPropertyValue("--accent-a4").trim();
 
 		const peaks = [audioBuffer.getChannelData(0)];
 		const duration = audioBuffer.duration;

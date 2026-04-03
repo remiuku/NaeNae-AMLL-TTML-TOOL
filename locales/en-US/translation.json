@@ -155,11 +155,23 @@
 			"ready": "Update is ready. Restart the application for it to take effect.",
 			"restart": "Restart"
 		},
-		"group": {
-			"display": "Display",
-			"timing": "Timing",
-			"playback": "Playback",
-			"autosave": "Autosave"
+		"appearance": {
+			"theme": "Theme",
+			"accentColor": "Accent Color",
+			"accentColorDesc": "Select the primary accent color for the application interface.",
+			"useCustomAccent": "Custom Accent Color",
+			"useCustomAccentDesc": "Override presets with a custom color scale.",
+			"background": "Background",
+			"mode": {
+				"none": "None",
+				"image": "Image",
+				"gradient": "Gradient"
+			},
+			"gradientStyle": "Gradient Style",
+			"gradientStyleDesc": "Choose a premium gradient style for your background.",
+			"useCustomGradient": "Custom Gradient Color",
+			"useCustomGradientDesc": "Generate a gradient from a single color.",
+			"backgroundFilterTip": "Tip: You can still adjust opacity, blur, and brightness in the background settings."
 		},
 		"spectrogram": {
 			"palette": "Color Palette",
@@ -261,6 +273,12 @@
 		"common": {
 			"latencyTest": "Audio/input latency test"
 		},
+		"tab": {
+			"common": "General",
+			"appearance": "Appearance",
+			"keybindings": "Keybindings",
+			"spectrogram": "Spectrogram"
+		},
 		"keybindings": {
 			"newFile": "New File",
 			"openFile": "Open File",
@@ -306,11 +324,6 @@
 				"Audio": "Audio",
 				"Spectrogram": "Spectrogram"
 			}
-		},
-		"tab": {
-			"common": "General",
-			"keybindings": "Keybindings",
-			"spectrogram": "Spectrogram"
 		}
 	},
 	"error": {
@@ -473,6 +486,7 @@
 	},
 	"textImportDialog": {
 		"title": "Import Lyrics from Plain Text",
+		"processLyrics": "Process Lyrics",
 		"actionButton": "Import",
 		"contentMode": {
 			"caption": "Text content",
