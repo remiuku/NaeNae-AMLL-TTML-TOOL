@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { settingsDialogAtom, settingsTabAtom } from "$/states/dialogs.ts";
 import { SettingsAboutTab } from "./about";
 import { SettingsCommonTab } from "./common";
+import { SettingsAppearanceTab } from "./appearance";
 import { SettingsKeyBindingsDialog } from "./keybindings";
 import { SettingsSpectrogramTab } from "./spectrogram";
 
@@ -22,6 +23,9 @@ export const SettingsDialog = memo(() => {
 					<Tabs.List>
 						<Tabs.Trigger value="common">
 							{t("settingsDialog.tab.common", "常规")}
+						</Tabs.Trigger>
+						<Tabs.Trigger value="appearance">
+							{t("settingsDialog.tab.appearance", "外观")}
 						</Tabs.Trigger>
 						<Tabs.Trigger value="keybinding">
 							{t("settingsDialog.tab.keybindings", "按键绑定")}
@@ -43,6 +47,9 @@ export const SettingsDialog = memo(() => {
 					>
 						<Tabs.Content value="common">
 							<SettingsCommonTab />
+						</Tabs.Content>
+						<Tabs.Content value="appearance">
+							<SettingsAppearanceTab />
 						</Tabs.Content>
 						<Tabs.Content value="keybinding">
 							<SettingsKeyBindingsDialog />

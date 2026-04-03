@@ -62,11 +62,133 @@ export const highlightActiveWordAtom = atomWithStorage(
 );
 
 export const highlightErrorsAtom = atomWithStorage("highlightErrors", false);
+export const quickFixesAtom = atomWithStorage(
+	"highlightGrammarWarnings",
+	false,
+);
+export const ignoredQuickFixWordsAtom = atomWithStorage(
+	"ignoredGrammarWords",
+	[] as string[],
+);
 
 export const smartFirstWordAtom = atomWithStorage("smartFirstWord", false);
 export const smartLastWordAtom = atomWithStorage("smartLastWord", false);
 
 export const enableAutoRomanizationPredictionAtom = atomWithStorage(
 	"enableAutoRomanizationPrediction",
+	false,
+);
+
+export const romanizationModeAtom = atomWithStorage<"global" | "multi-lingual">(
+	"romanizationMode",
+	"global",
+);
+
+export const globalRomanLanguageAtom = atomWithStorage<string>(
+	"globalRomanLanguage",
+	"ja",
+);
+
+export const accentColorAtom = atomWithStorage<
+	| "gray"
+	| "gold"
+	| "bronze"
+	| "brown"
+	| "yellow"
+	| "amber"
+	| "orange"
+	| "tomato"
+	| "red"
+	| "ruby"
+	| "crimson"
+	| "pink"
+	| "plum"
+	| "purple"
+	| "violet"
+	| "iris"
+	| "indigo"
+	| "blue"
+	| "cyan"
+	| "teal"
+	| "jade"
+	| "green"
+	| "grass"
+	| "lime"
+	| "mint"
+	| "sky"
+>("accentColor", "red");
+
+export const backgroundModeAtom = atomWithStorage<"none" | "image" | "gradient">(
+	"backgroundMode",
+	"none",
+);
+
+export const selectedGradientAtom = atomWithStorage<string>(
+	"selectedGradient",
+	"sunset",
+);
+
+export const useCustomAccentAtom = atomWithStorage<boolean>(
+	"useCustomAccent",
+	false,
+);
+
+export const customAccentColorAtom = atomWithStorage<string>(
+	"customAccentColor",
+	"#e5484d",
+);
+
+export const useCustomPanelAtom = atomWithStorage<boolean>(
+	"useCustomPanel",
+	false,
+);
+
+export const customPanelColorAtom = atomWithStorage<string>(
+	"customPanelColor",
+	"#282c34",
+);
+
+export const customPanelOpacityAtom = atomWithStorage<number>(
+	"customPanelOpacity",
+	0.8,
+);
+
+export const useCustomGradientAtom = atomWithStorage<boolean>(
+	"useCustomGradient",
+	false,
+);
+
+export const customGradientColorsAtom = atomWithStorage<string[]>(
+	"customGradientColors",
+	["#7028e4"],
+);
+
+export const customGradientTypeAtom = atomWithStorage<"linear" | "radial" | "conic">(
+	"customGradientType",
+	"linear",
+);
+
+export const customGradientOpacityAtom = atomWithStorage<number>(
+	"customGradientOpacity",
+	1,
+);
+
+export const customGradientCenterAtom = atomWithStorage<[number, number]>(
+	"customGradientCenter",
+	[50, 50],
+);
+
+export const customGradientAngleAtom = atomWithStorage<number>(
+	"customGradientAngle",
+	45,
+);
+
+export const customGradientSizeAtom = atomWithStorage<number>(
+	"customGradientSize",
+	1,
+);
+
+export const syncGradientToAccentAtom = atomWithStorage<boolean>(
+	"syncGradientToAccent",
 	false,
 );

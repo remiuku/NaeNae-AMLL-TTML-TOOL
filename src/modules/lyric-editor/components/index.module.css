@@ -129,19 +129,12 @@
 	color: var(--white-a6);
 }
 
-:global(.radix-themes.light) {
-	.startTime,
-	.endTime {
-		color: var(--white-a10);
-	}
-}
-
 .startTime {
-	background-color: var(--green-a4);
+	background-color: var(--accent-a3);
 }
 
 .endTime {
-	background-color: var(--red-a4);
+	background-color: var(--accent-a5);
 }
 
 .endTimeButton {
@@ -307,6 +300,16 @@
 	background-color: var(--red-a4);
 }
 
+.lyricWord.grammarWarning,
+.lyricLine.grammarWarning {
+	box-shadow: 0 0 0 2px var(--orange-a10);
+}
+
+.lyricWord.grammarWarning:hover,
+.lyricLine.grammarWarning:hover {
+	background-color: var(--orange-a2);
+}
+
 :global(.radix-themes.light) .lyricWord.selected {
 	.startTime,
 	.endTime {
@@ -322,10 +325,10 @@
 }
 
 .lyricWord.sync.active {
-	background-color: var(--blue-a5);
+	background-color: var(--accent-a4);
 
 	&.selected {
-		background-color: var(--blue-a7);
+		background-color: var(--accent-a6);
 	}
 }
 

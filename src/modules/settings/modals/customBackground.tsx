@@ -4,8 +4,8 @@ import {
 	Image24Regular,
 } from "@fluentui/react-icons";
 import {
-	Button,
 	Box,
+	Button,
 	Card,
 	Flex,
 	Heading,
@@ -118,26 +118,23 @@ export const customBackgroundImageAtom = atom(
 	},
 );
 
-export const customBackgroundImageInitAtom = atom(
-	null,
-	async (get, set) => {
-		const previous = get(customBackgroundImageValueAtom);
-		if (previous) {
-			URL.revokeObjectURL(previous);
-		}
-		const blob = await readCustomBackgroundBlob();
-		if (!blob) {
-			set(customBackgroundImageValueAtom, null);
-			return;
-		}
-		const url = URL.createObjectURL(blob);
-		set(customBackgroundImageValueAtom, url);
-	},
-);
+export const customBackgroundImageInitAtom = atom(null, async (get, set) => {
+	const previous = get(customBackgroundImageValueAtom);
+	if (previous) {
+		URL.revokeObjectURL(previous);
+	}
+	const blob = await readCustomBackgroundBlob();
+	if (!blob) {
+		set(customBackgroundImageValueAtom, null);
+		return;
+	}
+	const url = URL.createObjectURL(blob);
+	set(customBackgroundImageValueAtom, url);
+});
 
 export const customBackgroundOpacityAtom = atomWithStorage(
 	"customBackgroundOpacity",
-	0.4,
+	0.8,
 );
 
 export const customBackgroundMaskAtom = atomWithStorage(
@@ -236,16 +233,18 @@ export const SettingsCustomBackgroundSettings = ({
 			<Card>
 				<Flex direction="column" gap="2">
 					<Flex align="center" justify="between">
-						<Text>{t("settings.common.customBackgroundOpacity", "透明度")}</Text>
+						<Text>
+							{t("settings.common.customBackgroundOpacity", "透明度")}
+						</Text>
 						<Flex align="center" gap="2">
 							<Text wrap="nowrap" color="gray" size="1">
 								{Math.round(customBackgroundOpacity * 100)}%
 							</Text>
-							{customBackgroundOpacity !== 0.4 && (
+							{customBackgroundOpacity !== 0.8 && (
 								<IconButton
 									variant="ghost"
 									size="1"
-									onClick={() => setCustomBackgroundOpacity(0.4)}
+									onClick={() => setCustomBackgroundOpacity(0.8)}
 								>
 									<ArrowHookUpLeft24Regular />
 								</IconButton>
@@ -259,7 +258,7 @@ export const SettingsCustomBackgroundSettings = ({
 						value={[customBackgroundOpacity]}
 						onValueChange={(v) => setCustomBackgroundOpacity(v[0])}
 					/>
-					{customBackgroundOpacity >= 0.5 && (
+					{customBackgroundOpacity >= 0.9 && (
 						<Text size="1" color="orange">
 							{t(
 								"settings.common.customBackgroundOpacityWarning",
@@ -331,7 +330,9 @@ export const SettingsCustomBackgroundSettings = ({
 			<Card>
 				<Flex direction="column" gap="2">
 					<Flex align="center" justify="between">
-						<Text>{t("settings.common.customBackgroundBrightness", "亮度")}</Text>
+						<Text>
+							{t("settings.common.customBackgroundBrightness", "亮度")}
+						</Text>
 						<Flex align="center" gap="2">
 							<Text wrap="nowrap" color="gray" size="1">
 								{Math.round(customBackgroundBrightness * 100)}%
@@ -378,10 +379,7 @@ export const SettingsCustomBackgroundCard = ({
 							<Text>{t("settings.common.customBackground", "自定义背景")}</Text>
 							<Text size="1" color="gray">
 								{customBackgroundImage
-									? t(
-											"settings.common.customBackgroundEnabled",
-											"已设置背景",
-										)
+									? t("settings.common.customBackgroundEnabled", "已设置背景")
 									: t(
 											"settings.common.customBackgroundDesc",
 											"选择一张图片作为背景。",

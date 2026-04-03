@@ -83,6 +83,7 @@
 			"assistSettings": "辅助设置",
 			"showTimestampUpdate": "呈现时间戳更新",
 			"touchSyncPanel": "触控打轴辅助面板",
+			"quickFixes": "快速修复",
 			"displayOptions": "显示选项",
 			"showTimestamps": "显示时间戳",
 			"highlightActiveWord": "高亮当前音节",
@@ -144,6 +145,15 @@
 				"interval": "保存间隔 (分钟)",
 				"limit": "保留快照数量"
 			}
+		},
+		"appearance": {
+			"theme": "主题",
+			"accentColor": "强调色",
+			"accentColorDesc": "选择应用程序界面的主要强调颜色。",
+			"useCustomAccent": "自定义强调色",
+			"useCustomAccentDesc": "使用自定义色阶覆盖预设颜色。",
+			"background": "背景",
+			"backgroundFilterTip": "提示：您仍可以在“自定义背景”设置中调整透明度、模糊和亮度。"
 		},
 		"about": {
 			"update": "软件更新",
@@ -306,6 +316,7 @@
 		},
 		"tab": {
 			"common": "常规",
+			"appearance": "外观",
 			"keybindings": "按键绑定",
 			"spectrogram": "频谱图"
 		}
@@ -398,7 +409,10 @@
 	},
 	"lyricWordView": {
 		"empty": "空白",
-		"spaceCount": "空格 x{count}"
+		"spaceCount": "空格 x{count}",
+		"noSuggestions": "No suggestions",
+		"editingWordTitle": "编辑单词",
+		"editingWordDesc": "编辑此单词或应用建议的快速修复。"
 	},
 	"touchSyncPanel": {
 		"prevWord": "跳上词",
@@ -468,6 +482,7 @@
 	},
 	"textImportDialog": {
 		"title": "导入纯文本歌词",
+		"processLyrics": "处理歌词",
 		"actionButton": "导入歌词",
 		"contentMode": {
 			"caption": "导入模式",

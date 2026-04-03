@@ -35,7 +35,7 @@ export const RibbonSection: FC<PropsWithChildren<{ label: string }>> = ({
 			<Flex flexGrow="1" align="center" justify="center">
 				{children}
 			</Flex>
-			<Text align="center" wrap="nowrap" color="gray" size="1">
+			<Text align="center" wrap="nowrap" size="1" style={{ color: "var(--accent-11)" }}>
 				{label}
 			</Text>
 		</Flex>
@@ -65,8 +65,7 @@ export const RibbonFrame = forwardRef<HTMLDivElement, PropsWithChildren>(
 					height: "100%",
 				}}
 				asChild
-			>
-				<motion.div
+			><motion.div
 					initial={{ x: 10, opacity: 0 }}
 					animate={{ x: 0, opacity: 1 }}
 					exit={{ x: -10, opacity: 0 }}
@@ -74,8 +73,7 @@ export const RibbonFrame = forwardRef<HTMLDivElement, PropsWithChildren>(
 					ref={frameRef}
 				>
 					{children}
-				</motion.div>
-			</Flex>
+				</motion.div></Flex>
 		);
 	},
 );

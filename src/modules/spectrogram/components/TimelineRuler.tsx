@@ -134,7 +134,7 @@ export const TimelineRuler = forwardRef<
 			style={{
 				width: "100%",
 				height: `${RULER_HEIGHT}px`,
-				backgroundColor: "var(--white-3)",
+				backgroundColor: "var(--gray-2)",
 			}}
 			onClick={handleClick}
 			onContextMenu={(e) => e.preventDefault()}
