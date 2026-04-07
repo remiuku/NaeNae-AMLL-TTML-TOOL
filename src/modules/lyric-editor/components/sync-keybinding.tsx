@@ -1,4 +1,3 @@
-import { produce } from "immer";
 import { useStore } from "jotai";
 import { type FC, useCallback } from "react";
 import { audioEngine } from "$/modules/audio/audio-engine";
@@ -40,7 +39,7 @@ import {
 	selectedLinesAtom,
 	selectedWordsAtom,
 } from "$/states/main.ts";
-import type { LyricLine, LyricWord, LyricWordBase } from "$/types/ttml";
+import type { LyricLine, LyricWord, LyricWordBase, TTMLLyric } from "$/types/ttml";
 import {
 	type KeyBindingEvent,
 	useKeyBindingAtom,
@@ -52,42 +51,72 @@ const getUnitStartTime = (unit: {
 }) => unit.rubyWord?.startTime ?? unit.word.startTime;
 
 const updateRubyParentTime = (word: LyricWord) => {
-	if (!word.ruby || word.ruby.length === 0) return;
-	const rubyStarts = word.ruby.map((ruby) => ruby.startTime);
-	const rubyEnds = word.ruby.map((ruby) => ruby.endTime);
-	word.startTime = Math.min(...rubyStarts);
-	word.endTime = Math.max(...rubyEnds);
+	const ruby = word.ruby;
+	if (!ruby || ruby.length === 0) return;
+	let minStart = Number.POSITIVE_INFINITY;
+	let maxEnd = Number.NEGATIVE_INFINITY;
+	for (const r of ruby) {
+		if (r.startTime < minStart) minStart = r.startTime;
+		if (r.endTime > maxEnd) maxEnd = r.endTime;
+	}
+	if (Number.isFinite(minStart)) word.startTime = minStart;
+	if (Number.isFinite(maxEnd)) word.endTime = maxEnd;
 };
 
-const setUnitStartTime = (
+type LyricsState = TTMLLyric;
+
+function cloneLineWithWords(line: LyricLine): LyricLine {
+	return { ...line, words: line.words.slice() };
+}
+
+function cloneWordWithRuby(word: LyricWord): LyricWord {
+	return {
+		...word,
+		ruby: word.ruby ? word.ruby.slice() : undefined,
+	};
+}
+
+function setUnitStartTimeCloned(
 	line: LyricLine,
 	wordIndex: number,
 	rubyIndex: number | undefined,
 	time: number,
-) => {
-	const word = line.words[wordIndex];
-	if (rubyIndex !== undefined && word.ruby?.[rubyIndex]) {
-		word.ruby[rubyIndex].startTime = time;
-		updateRubyParentTime(word);
-		return;
-	}
-	word.startTime = time;
-};
+) {
+	const prevWord = line.words[wordIndex];
+	if (!prevWord) return;
+	const nextWord = cloneWordWithRuby(prevWord);
 
-const setUnitEndTime = (
+	if (rubyIndex !== undefined && nextWord.ruby?.[rubyIndex]) {
+		const prevRuby = nextWord.ruby[rubyIndex];
+		nextWord.ruby[rubyIndex] = { ...prevRuby, startTime: time };
+		updateRubyParentTime(nextWord);
+	} else {
+		nextWord.startTime = time;
+	}
+
+	line.words[wordIndex] = nextWord;
+}
+
+function setUnitEndTimeCloned(
 	line: LyricLine,
 	wordIndex: number,
 	rubyIndex: number | undefined,
 	time: number,
-) => {
-	const word = line.words[wordIndex];
-	if (rubyIndex !== undefined && word.ruby?.[rubyIndex]) {
-		word.ruby[rubyIndex].endTime = time;
-		updateRubyParentTime(word);
-		return;
+) {
+	const prevWord = line.words[wordIndex];
+	if (!prevWord) return;
+	const nextWord = cloneWordWithRuby(prevWord);
+
+	if (rubyIndex !== undefined && nextWord.ruby?.[rubyIndex]) {
+		const prevRuby = nextWord.ruby[rubyIndex];
+		nextWord.ruby[rubyIndex] = { ...prevRuby, endTime: time };
+		updateRubyParentTime(nextWord);
+	} else {
+		nextWord.endTime = time;
 	}
-	word.endTime = time;
-};
+
+	line.words[wordIndex] = nextWord;
+}
 
 export const SyncKeyBinding: FC = () => {
 	const store = useStore();
@@ -275,20 +304,24 @@ export const SyncKeyBinding: FC = () => {
 				store.set(smartFirstWordActiveIdAtom, location.word.id);
 			}
 
-			store.set(lyricLinesAtom, (state) =>
-				produce(state, (state) => {
-					const line = state.lyricLines[location.lineIndex];
-					if (location.isFirstWord) {
-						line.startTime = currentTime;
-					}
-					setUnitStartTime(
-						line,
-						location.wordIndex,
-						location.rubyIndex,
-						currentTime,
-					);
-				}),
-			);
+			store.set(lyricLinesAtom, (prev) => {
+				const state: LyricsState = prev;
+				const prevLine = state.lyricLines[location.lineIndex];
+				if (!prevLine) return prev;
+
+				const nextLines = state.lyricLines.slice();
+				const nextLine = cloneLineWithWords(prevLine);
+				if (location.isFirstWord) nextLine.startTime = currentTime;
+				setUnitStartTimeCloned(
+					nextLine,
+					location.wordIndex,
+					location.rubyIndex,
+					currentTime,
+				);
+				nextLines[location.lineIndex] = nextLine;
+
+				return { ...state, lyricLines: nextLines };
+			});
 		},
 		[store],
 	);
@@ -304,18 +337,24 @@ export const SyncKeyBinding: FC = () => {
 			if (smartFirstWord && location.isFirstWord) {
 				const activeId = store.get(smartFirstWordActiveIdAtom);
 				if (activeId !== location.word.id) {
-					store.set(lyricLinesAtom, (state) =>
-						produce(state, (state) => {
-							const line = state.lyricLines[location.lineIndex];
-							line.startTime = currentTime;
-							setUnitStartTime(
-								line,
-								location.wordIndex,
-								location.rubyIndex,
-								currentTime,
-							);
-						}),
-					);
+					store.set(lyricLinesAtom, (prev) => {
+						const state: LyricsState = prev;
+						const prevLine = state.lyricLines[location.lineIndex];
+						if (!prevLine) return prev;
+
+						const nextLines = state.lyricLines.slice();
+						const nextLine = cloneLineWithWords(prevLine);
+						nextLine.startTime = currentTime;
+						setUnitStartTimeCloned(
+							nextLine,
+							location.wordIndex,
+							location.rubyIndex,
+							currentTime,
+						);
+						nextLines[location.lineIndex] = nextLine;
+
+						return { ...state, lyricLines: nextLines };
+					});
 					store.set(smartFirstWordActiveIdAtom, location.word.id);
 					return;
 				}
@@ -334,50 +373,78 @@ export const SyncKeyBinding: FC = () => {
 			// 智能尾字
 			const smartLastWord = store.get(smartLastWordAtom);
 			if (smartLastWord && location.isLastWord) {
-				store.set(lyricLinesAtom, (state) =>
-					produce(state, (state) => {
-						const line = state.lyricLines[location.lineIndex];
-						setUnitEndTime(
-							line,
-							location.wordIndex,
-							location.rubyIndex,
-							currentTime,
-						);
-						line.endTime = currentTime;
-					}),
-				);
-				moveToNextWord();
-				return;
-			}
+				store.set(lyricLinesAtom, (prev) => {
+					const state: LyricsState = prev;
+					const prevLine = state.lyricLines[location.lineIndex];
+					if (!prevLine) return prev;
 
-			store.set(lyricLinesAtom, (state) =>
-				produce(state, (state) => {
-					const curLine = state.lyricLines[location.lineIndex];
-					setUnitEndTime(
-						curLine,
+					const nextLines = state.lyricLines.slice();
+					const nextLine = cloneLineWithWords(prevLine);
+					setUnitEndTimeCloned(
+						nextLine,
 						location.wordIndex,
 						location.rubyIndex,
 						currentTime,
 					);
-					const nextWord = findNextWord(
-						state.lyricLines,
-						location.lineIndex,
-						location.syncIndex,
+					nextLine.endTime = currentTime;
+					nextLines[location.lineIndex] = nextLine;
+
+					return { ...state, lyricLines: nextLines };
+				});
+				moveToNextWord();
+				return;
+			}
+
+			store.set(lyricLinesAtom, (prev) => {
+				const state: LyricsState = prev;
+				const prevCurLine = state.lyricLines[location.lineIndex];
+				if (!prevCurLine) return prev;
+
+				const nextWord = findNextWord(
+					state.lyricLines,
+					location.lineIndex,
+					location.syncIndex,
+				);
+
+				const nextLines = state.lyricLines.slice();
+				const curLine = cloneLineWithWords(prevCurLine);
+				setUnitEndTimeCloned(
+					curLine,
+					location.wordIndex,
+					location.rubyIndex,
+					currentTime,
+				);
+
+				if (nextWord) {
+					const nextLineIndex = state.lyricLines.findIndex(
+						(l) => l.id === nextWord.line.id,
 					);
-					if (nextWord) {
-						if (curLine !== nextWord.line) {
+					if (nextLineIndex >= 0) {
+						const prevNextLine = state.lyricLines[nextLineIndex];
+						const nextLine =
+							nextLineIndex === location.lineIndex
+								? curLine
+								: cloneLineWithWords(prevNextLine);
+
+						if (nextLineIndex !== location.lineIndex) {
 							curLine.endTime = currentTime;
-							nextWord.line.startTime = currentTime;
+							nextLine.startTime = currentTime;
 						}
-						setUnitStartTime(
-							nextWord.line,
+
+						setUnitStartTimeCloned(
+							nextLine,
 							nextWord.unit.wordIndex,
 							nextWord.unit.rubyIndex,
 							currentTime,
 						);
+
+						nextLines[nextLineIndex] = nextLine;
 					}
-				}),
-			);
+				}
+
+				nextLines[location.lineIndex] = curLine;
+				return { ...state, lyricLines: nextLines };
+			});
 			moveToNextWord();
 
 			// 开了智能首字后，连轴打到下一行时跳过智能首字
@@ -396,20 +463,24 @@ export const SyncKeyBinding: FC = () => {
 			const location = getCurrentLocation(store);
 			if (!location) return;
 			const currentTime = calcJudgeTime(evt);
-			store.set(lyricLinesAtom, (state) =>
-				produce(state, (state) => {
-					const line = state.lyricLines[location.lineIndex];
-					setUnitEndTime(
-						line,
-						location.wordIndex,
-						location.rubyIndex,
-						currentTime,
-					);
-					if (location.isLastWord) {
-						line.endTime = currentTime;
-					}
-				}),
-			);
+			store.set(lyricLinesAtom, (prev) => {
+				const state: LyricsState = prev;
+				const prevLine = state.lyricLines[location.lineIndex];
+				if (!prevLine) return prev;
+
+				const nextLines = state.lyricLines.slice();
+				const nextLine = cloneLineWithWords(prevLine);
+				setUnitEndTimeCloned(
+					nextLine,
+					location.wordIndex,
+					location.rubyIndex,
+					currentTime,
+				);
+				if (location.isLastWord) nextLine.endTime = currentTime;
+				nextLines[location.lineIndex] = nextLine;
+
+				return { ...state, lyricLines: nextLines };
+			});
 			moveToNextWord();
 		},
 		[store, moveToNextWord],
