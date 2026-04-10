@@ -59,6 +59,7 @@ import {
 	upcomingWordHighlightColorAtom,
 	upcomingWordHighlightThresholdAtom,
 	visualizeTimestampUpdateAtom,
+	syncLevelModeAtom,
 } from "$/modules/settings/states/sync.ts";
 import { splitWordDialogAtom } from "$/states/dialogs.ts";
 import {
@@ -75,7 +76,7 @@ import { type LyricLine, type LyricWord, newLyricWord } from "$/types/ttml.ts";
 import { msToTimestamp, parseTimespan } from "$/utils/timestamp.ts";
 import { RubyEditor } from "../tools/RubyEditor.tsx";
 import { getGrammarSuggestions } from "../utils/grammar-warning.ts";
-import { buildRubySelectionId } from "../utils/lyric-states.ts";
+import { buildRubySelectionId, getSynchronizableUnits } from "../utils/lyric-states.ts";
 import { normalizeLineTime } from "../utils/normalize-line-time.ts";
 import styles from "./index.module.css";
 import { LyricLineMenu } from "./lyric-line-menu.tsx";
@@ -161,8 +162,25 @@ const LyricWordViewEditSpan = ({
 	const toolMode = useAtomValue(toolModeAtom);
 	const blockDragRef = useRef(false);
 	const lastClickTimeRef = useRef(0);
+	const syncLevelMode = useAtomValue(syncLevelModeAtom);
 
 	function onWordSelect(evt: MouseEvent<HTMLSpanElement>) {
+		if (toolMode === ToolMode.Sync && syncLevelMode === "line") {
+			setSelectedLines((state) => {
+				if (!state.has(line.id) || state.size !== 1) {
+					state.clear();
+					state.add(line.id);
+				}
+			});
+			setSelectedWords((state) => {
+				const units = getSynchronizableUnits(line);
+				state.clear();
+				for (const unit of units) {
+					state.add(unit.id);
+				}
+			});
+			return;
+		}
 		if (evt.ctrlKey || evt.metaKey) {
 			setSelectedWords((v) => {
 				if (v.has(word.id)) {
@@ -797,6 +815,7 @@ const LyricSyncWordView: FC<{
 	const highlightActiveWord = useAtomValue(highlightActiveWordAtom);
 	const toolMode = useAtomValue(toolModeAtom);
 	const quickFixes = useAtomValue(quickFixesAtom);
+	const syncLevelMode = useAtomValue(syncLevelModeAtom);
 
 	const store = useStore();
 	const enableUpcomingWordHighlight = useAtomValue(
@@ -948,7 +967,14 @@ const LyricSyncWordView: FC<{
 				});
 				setSelectedWords((state) => {
 					state.clear();
-					state.add(syncId);
+					if (syncLevelMode === "line") {
+						const units = getSynchronizableUnits(line);
+						for (const unit of units) {
+							state.add(unit.id);
+						}
+					} else {
+						state.add(syncId);
+					}
 				});
 			}}
 			onClick={(evt) => {
