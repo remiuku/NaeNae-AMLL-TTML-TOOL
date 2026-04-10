@@ -134,7 +134,21 @@ export const GeniusApi = {
 				fullLyrics += `${container.textContent}\n`;
 			}
 
-			return fullLyrics.trim();
+			// --- Cleanup "slop" ---
+			let cleaned = fullLyrics.trim();
+
+			// 1. Remove initial "Contributors" / "Translations" metadata block if it bled into the text
+			cleaned = cleaned.replace(/^[0-9]+\sContributors.*Lyrics/i, "");
+
+			// 2. Remove [Section Headers] like [Intro], [Chorus: ...], etc.
+			cleaned = cleaned.replace(/\[.*?\]/g, "");
+
+			// 3. Final polish: remove multiple spaces, handle line split slop
+			return cleaned
+				.split("\n")
+				.map((line) => line.trim())
+				.filter((line) => line.length > 0)
+				.join("\n");
 		} catch (error) {
 			console.error("Genius Lyrics Direct Fetch Error:", error);
 			throw error;
