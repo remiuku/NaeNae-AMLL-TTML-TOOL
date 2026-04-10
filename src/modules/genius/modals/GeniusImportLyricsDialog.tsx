@@ -220,12 +220,18 @@ export const GeniusImportLyricsDialog = () => {
 							<TextArea
 								value={editableLyrics}
 								onChange={(e) => setEditableLyrics(e.target.value)}
-								style={{ height: "calc(75vh - 180px)", resize: "none", fontFamily: "monospace", fontSize: 13 }}
+								style={{ height: "calc(75vh - 180px)", resize: "none", fontSize: 13 }}
 							/>
 							<Flex justify="between" align="center" mt="3">
-								<Text size="1" color="gray">
-									{t("genius.linesCount", "{count} lines", { count: editableLyrics.split("\n").filter((l) => l.trim()).length })}
-								</Text>
+								<Flex gap="2" align="center">
+									<Text size="1" color="gray">
+										{t("genius.linesCount", "{count} lines", { count: editableLyrics.split("\n").filter((l) => l.trim()).length })}
+									</Text>
+									<Separator orientation="vertical" size="1" />
+									<Button variant="ghost" size="1" onClick={() => window.open("https://lyrprep.spicylyrics.org/", "_blank")}>
+										{t("textImportDialog.processLyrics", "Process Lyrics")}
+									</Button>
+								</Flex>
 								<Flex gap="2">
 									<Dialog.Close>
 										<Button variant="soft" color="gray">{t("common.cancel", "Cancel")}</Button>
