@@ -87,24 +87,56 @@ export const GeniusApi = {
 	},
 
 	/**
-	 * Fetch plain lyrics for a Genius song using the Paxsenix Lyrically proxy.
+	 * Fetch plain lyrics for a Genius song directly from the Genius website.
+	 * Uses a CORS proxy to bypass browse security policies.
 	 * @param songUrl The full Genius song URL (e.g. https://genius.com/Artist-song-lyrics)
 	 * @returns Plain-text lyrics string
 	 */
 	async getLyrics(songUrl: string): Promise<string> {
 		try {
-			const resp = await fetch(
-				`https://lyrically.paxsenix.biz.id/genius?url=${encodeURIComponent(songUrl)}`,
-			);
+			// Using a public CORS proxy to fetch the actual Genius page
+			const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(songUrl)}`;
+			const resp = await fetch(proxyUrl);
 			if (!resp.ok) {
-				throw new Error(`Lyrics fetch failed: ${resp.status} ${resp.statusText}`);
+				throw new Error(`Failed to fetch Genius page: ${resp.status} ${resp.statusText}`);
 			}
-			const data = await resp.json();
-			// Paxsenix returns { lyrics: "..." }
-			if (typeof data?.lyrics === "string") return data.lyrics;
-			throw new Error("Unexpected lyrics response shape");
+			const html = await resp.text();
+
+			// Parse HTML
+			const parser = new DOMParser();
+			const doc = parser.parseFromString(html, "text/html");
+
+			// Genius uses multiple divs with class starting with "Lyrics__Container" for the new layout
+			let lyricsContainers = doc.querySelectorAll('[class^="Lyrics__Container"]');
+
+			// Fallback for older layout
+			if (lyricsContainers.length === 0) {
+				const oldContainer = doc.querySelector(".lyrics");
+				if (oldContainer) {
+					// In the old layout, it's just one div
+					return oldContainer.textContent?.trim() || "";
+				}
+			}
+
+			if (lyricsContainers.length === 0) {
+				throw new Error("Could not find lyrics container in the Genius page");
+			}
+
+			let fullLyrics = "";
+			for (const container of Array.from(lyricsContainers)) {
+				// Replace <br> tags with newlines before getting textContent
+				const brs = container.querySelectorAll("br");
+				for (const br of Array.from(brs)) {
+					br.replaceWith("\n");
+				}
+
+				// Genius also puts annotations in <a> tags, which we want as plain text
+				fullLyrics += `${container.textContent}\n`;
+			}
+
+			return fullLyrics.trim();
 		} catch (error) {
-			console.error("Genius Lyrics Fetch Error:", error);
+			console.error("Genius Lyrics Direct Fetch Error:", error);
 			throw error;
 		}
 	},

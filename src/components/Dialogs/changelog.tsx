@@ -53,7 +53,7 @@ export function ChangelogDialog() {
 									<strong>Smart Double Click Editor:</strong> If Quick Fixes is disabled, double clicking skips context evaluation saving resources and opening the inline-editor quickly.
 								</Text>
 								<Text size="2">
-									<strong>Full Genius Lyrics Import:</strong> Directly search and import song lyrics from Genius into the editor. Automatically sets song title, artist metadata, and file name. Access it via File &gt; Import &gt; Import from Genius.
+									<strong>Full Genius Lyrics Import:</strong> Directly search and import song lyrics from Genius into the editor. Automatically sets song title, artist metadata, and file name. Features a robust direct-from-source scraper for maximum reliability.
 								</Text>
 							</Flex>
 						</Box>
