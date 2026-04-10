@@ -48,6 +48,8 @@ export const GeniusImportLyricsDialog = () => {
 	const [fetchingLyrics, setFetchingLyrics] = useState(false);
 	const [editableLyrics, setEditableLyrics] = useState("");
 
+	const [isEditing, setIsEditing] = useState(false);
+
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
@@ -57,6 +59,7 @@ export const GeniusImportLyricsDialog = () => {
 			setSelectedHit(null);
 			setLyrics("");
 			setEditableLyrics("");
+			setIsEditing(false);
 			setTimeout(() => {
 				inputRef.current?.focus();
 			}, 50);
@@ -71,6 +74,7 @@ export const GeniusImportLyricsDialog = () => {
 		setSelectedHit(null);
 		setLyrics("");
 		setEditableLyrics("");
+		setIsEditing(false);
 		try {
 			const data = await GeniusApi.search(query, geniusApiKey);
 			setResults(data.response.hits);
@@ -80,13 +84,14 @@ export const GeniusImportLyricsDialog = () => {
 		} finally {
 			setSearching(false);
 		}
-	}, [query, geniusApiKey]);
+	}, [query, geniusApiKey, t]);
 
 	const handleSelectSong = useCallback(async (hit: GeniusSearchHit) => {
 		setSelectedHit(hit);
 		setFetchingLyrics(true);
 		setLyrics("");
 		setEditableLyrics("");
+		setIsEditing(false);
 
 		// Set TTML metadata and file name immediately on song selection
 		const title = hit.result.title;
@@ -119,7 +124,7 @@ export const GeniusImportLyricsDialog = () => {
 		} finally {
 			setFetchingLyrics(false);
 		}
-	}, [setSaveFileName, setLyricLines]);
+	}, [setSaveFileName, setLyricLines, t]);
 
 	const handleImport = useCallback(() => {
 		const lines = editableLyrics
@@ -146,7 +151,7 @@ export const GeniusImportLyricsDialog = () => {
 					words,
 					startTime: 0,
 					endTime: 0,
-					isBG: false,
+					isBG: lineText.includes("("),
 					isDuet: false,
 				};
 			});
@@ -195,7 +200,7 @@ export const GeniusImportLyricsDialog = () => {
 	if (selectedHit) {
 		return (
 			<Dialog.Root open={isOpen} onOpenChange={setIsOpen}>
-				<Dialog.Content style={{ maxWidth: 680, height: "75vh" }}>
+				<Dialog.Content style={{ maxWidth: 680, height: "82vh" }}>
 					<Flex justify="between" align="center" mb="3">
 						<Flex direction="column">
 							<Dialog.Title mb="0">{t("genius.previewTitle", "Genius — Lyrics Preview")}</Dialog.Title>
@@ -214,23 +219,57 @@ export const GeniusImportLyricsDialog = () => {
 						</Flex>
 					) : (
 						<>
-							<Text size="1" color="gray" mb="2">
-								{t("genius.previewSubtitle", "You can edit the lyrics below before importing.")}
-							</Text>
-							<TextArea
-								value={editableLyrics}
-								onChange={(e) => setEditableLyrics(e.target.value)}
-								style={{ height: "calc(75vh - 180px)", resize: "none", fontSize: 13 }}
-							/>
+							<Flex justify="between" align="center" mb="2">
+								<Text size="1" color="gray">
+									{isEditing ? "Editing Raw Text" : t("genius.previewSubtitle", "Lines with parentheses will be imported as background vocals.")}
+								</Text>
+								<Button variant="ghost" size="1" onClick={() => setIsEditing(!isEditing)}>
+									{isEditing ? "Back to Preview" : "Manual Edit"}
+								</Button>
+							</Flex>
+
+							{isEditing ? (
+								<TextArea
+									value={editableLyrics}
+									onChange={(e) => setEditableLyrics(e.target.value)}
+									style={{ height: "calc(82vh - 200px)", resize: "none", fontSize: 13 }}
+								/>
+							) : (
+								<Box
+									style={{
+										height: "calc(82vh - 200px)",
+										padding: "16px",
+										backgroundColor: "var(--gray-2)",
+										border: "1px solid var(--gray-5)",
+										borderRadius: "var(--radius-3)",
+										overflow: "auto",
+									}}
+								>
+									<pre
+										style={{
+											margin: 0,
+											whiteSpace: "pre-wrap",
+											fontFamily: "inherit",
+											fontSize: "13px",
+											lineHeight: "1.6",
+											color: "var(--gray-12)",
+										}}
+										dangerouslySetInnerHTML={{
+											__html: editableLyrics
+												.replace(/&/g, "&amp;")
+												.replace(/</g, "&lt;")
+												.replace(/>/g, "&gt;")
+												.replace(/(\(.*?\))/g, '<span style="opacity: 0.35; font-style: italic; font-weight: 300;">$1</span>')
+										}}
+									/>
+								</Box>
+							)}
+
 							<Flex justify="between" align="center" mt="3">
 								<Flex gap="2" align="center">
 									<Text size="1" color="gray">
 										{t("genius.linesCount", "{count} lines", { count: editableLyrics.split("\n").filter((l) => l.trim()).length })}
 									</Text>
-									<Separator orientation="vertical" size="1" />
-									<Button variant="ghost" size="1" onClick={() => window.open("https://lyrprep.spicylyrics.org/", "_blank")}>
-										{t("textImportDialog.processLyrics", "Process Lyrics")}
-									</Button>
 								</Flex>
 								<Flex gap="2">
 									<Dialog.Close>
