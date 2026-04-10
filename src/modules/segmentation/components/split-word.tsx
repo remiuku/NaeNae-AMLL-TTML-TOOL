@@ -256,6 +256,27 @@ export const SplitWordDialog = memo(() => {
 							splitIndices={splitIndices}
 							onSplitIndexToggle={toggleSplitPoint}
 						/>
+						<Flex justify="end" mt="2">
+							<Button
+								size="1"
+								variant="soft"
+								disabled={!activeHyphenator || !targetWordText}
+								onClick={() => {
+									if (!activeHyphenator || !targetWordText) return;
+									const hyphenated = activeHyphenator(targetWordText);
+									const parts = hyphenated.split("\u00AD");
+									const indices = new Set<number>();
+									let currentIndex = 0;
+									for (let i = 0; i < parts.length - 1; i++) {
+										currentIndex += parts[i].length;
+										indices.add(currentIndex);
+									}
+									setSplitIndices(indices);
+								}}
+							>
+								{t("splitWordDialog.syllableSplit", "音节拆分")}
+							</Button>
+						</Flex>
 					</Box>
 
 					<Flex direction="column" gap="2">

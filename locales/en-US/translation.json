@@ -500,6 +500,37 @@
 	},
 	"textImportDialog": {
 		"title": "Import Lyrics from Plain Text",
+		"guides": "Guides",
+		"tab": {
+			"import": "Import",
+			"guide": "Guides"
+		},
+		"guide": {
+			"prepare": {
+				"title": "1. Prepare Lyrics",
+				"desc": "It is recommended to use the Lyrprep tool to prepare your lyrics. You can search for songs, select a version, and copy the output text."
+			},
+			"import": {
+				"title": "2. Import to TTML Tool",
+				"desc": "Paste the prepared text into the editor on the left. Make sure to select the correct \"Import Mode\" based on your text format. If your text contains special prefixes (like background vocal markers), ensure \"Special Prefix\" is enabled."
+			},
+			"sync": {
+				"title": "3. Start Syncing",
+				"desc": "After clicking \"Import\", switch to the \"Time\" (Sync) mode. Use hotkeys for precise alignment:",
+				"f": "Set word start time",
+				"g": "Set word end & start next",
+				"h": "Set word end only",
+				"ad": "Switch between words"
+			},
+			"community": {
+				"title": "Community Guides & Cheat Sheets",
+				"desc": "Helpful resources from the community for specific languages and genres."
+			}
+		},
+		"guidesMenu": {
+			"plainText": "Plain Text Import Guide",
+			"full": "Full TTML Guide"
+		},
 		"processLyrics": "Process Lyrics",
 		"actionButton": "Import",
 		"contentMode": {
@@ -608,6 +639,7 @@
 		"tip": "After splitting, new words will evenly divide the original word's start/end time. Empty beats will be cleared.",
 		"applyToAll": "Apply this splitting to all identical words",
 		"ignoreCase": "Ignore case",
+		"syllableSplit": "Syllable Split",
 		"actionButton": "Confirm"
 	},
 	"advancedSegmentDialog": {
