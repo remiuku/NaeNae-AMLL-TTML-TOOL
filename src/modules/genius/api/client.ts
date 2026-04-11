@@ -97,10 +97,12 @@ export const GeniusApi = {
 			// Using a public CORS proxy to fetch the actual Genius page
 			// We try multiple proxies to increase reliability as Genius aggressively blocks them.
 			const proxies = [
-				(url: string) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+				(url: string) => `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`,
 				(url: string) => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
-				(url: string) => `https://corsproxy.io/?${encodeURIComponent(url)}`,
+				(url: string) => `https://proxy.cors.sh/${url}`, // This sometimes works for free
 				(url: string) => `https://thingproxy.freeboard.io/fetch/${encodeURIComponent(url)}`,
+				(url: string) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+				(url: string) => `https://corsproxy.io/?${encodeURIComponent(url)}`,
 			];
 
 			let resp: Response | null = null;
