@@ -186,7 +186,7 @@ export const appFontStyleAtom = atomWithStorage<string>("appFontStyle", "normal"
 
 export const importAddSpacesAtom = atomWithStorage<boolean>(
 	"importAddSpaces",
-	true,
+	false,
 );
 
 export const importSplitHyphensAtom = atomWithStorage<boolean>(

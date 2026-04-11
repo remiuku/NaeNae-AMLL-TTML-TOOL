@@ -58,6 +58,9 @@ export function ChangelogDialog() {
 								<Text size="2">
 									<strong>Redo Shortcut:</strong> Updated the Redo shortcut to <strong>Shift + Ctrl + Z</strong> across all platforms for a more intuitive editing workflow.
 								</Text>
+								<Text size="2">
+									<strong>Refined Plain Text Import:</strong> Set the default word separator to <code>/</code> and disabled automatic space padding by default to prevent unwanted spacing in imported projects.
+								</Text>
 							</Flex>
 						</Box>
 
