@@ -38,22 +38,26 @@ export function ChangelogDialog() {
 				<ScrollArea type="always" scrollbars="vertical" style={{ height: "calc(100% - 60px)" }}>
 					<Flex direction="column" gap="5" pr="4">
 						<Box>
-							<Heading size="4" mb="2" color="gold">v0.1.3 Updates (Latest)</Heading>
+							<Heading size="4" mb="2" color="cyan">v0.1.4 Updates (Latest)</Heading>
 							<Flex direction="column" gap="3">
 								<Text size="2">
-									<strong>10-Band Audio Equalizer:</strong> A professional-grade audio processor is now available. Optimize your syncing experience with <strong>Presets</strong> like <em>Bass Boost</em>, <em>Vocal Boost</em>, and <em>Rock</em>, or create your own <strong>Custom Profiles</strong>.
+									<strong>Lyrically Engine Integration:</strong> Added a high-reliability alternative lyrics source via the <strong>Lyrically API</strong> (powered by lyrics.ovh). This fallback completely bypasses CORS restrictions and Genius anti-bot measures using server-side aggregation.
 								</Text>
 								<Text size="2">
-									<strong>Immersive Lyrics Preview:</strong> The live preview now features <strong>Dynamic Cover Art Backgrounds</strong> with premium glassmorphism effects, synced playback blurs, and spring-loaded "popping" text animations.
+									<strong>Bulletproof Scraper Engine:</strong> Rebuilt the Genius scraper with a <strong>Multi-Proxy Rotation</strong> system and deep <code>__PRELOADED_STATE__</code> JSON extraction, ensuring imports work even when the site's layout changes or blocks standard requests.
 								</Text>
 								<Text size="2">
-									<strong>Sync Mode Highlighting:</strong> Added a high-contrast <strong>Glow Effect</strong> to the active word in the Time (Sync) tab, making it significantly easier to track your timing focus during playback.
+									<strong>Native CDN Image Loading:</strong> Switched to direct <strong>Genius CDN</strong> and <strong>HTTPS forced</strong> image links for cover arts. This resolves persistent "403 Forbidden" blocks and "Mixed Content" security errors in browser environments.
 								</Text>
 								<Text size="2">
-									<strong>Enhanced Genius Parser:</strong> Rebuilt the Genius import engine with advanced <strong>Slop-Removal</strong> to strip section headers, contributor counts, and metadata artifacts automatically for a cleaner workflow.
+									<strong>Optimized Import Workflow:</strong> The import menu now features a dedicated <strong>English Translation</strong> layer with better fallbacks and a cleaner, more responsive preview panel for Lyrically-sourced lyrics.
 								</Text>
 							</Flex>
 						</Box>
+
+						<Box>
+							<Heading size="4" mb="2" color="gold">v0.1.3 Updates</Heading>
+
 
 						<Box>
 							<Heading size="4" mb="2" color="ruby">v0.1.2 Updates</Heading>
