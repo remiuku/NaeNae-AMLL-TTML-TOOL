@@ -127,52 +127,75 @@ export const GeniusApi = {
 			}
 			const html = await resp.text();
 
-			// Parse HTML
+			// Handle JSON-wrapped proxy responses (e.g. allorigins /get endpoint)
+			let htmlContent = html;
+			try {
+				const possibleJson = JSON.parse(html);
+				if (possibleJson.contents) {
+					htmlContent = possibleJson.contents;
+				}
+			} catch (e) {
+				// Not a JSON response, continue with raw HTML
+			}
+
 			const parser = new DOMParser();
-			const doc = parser.parseFromString(html, "text/html");
+			const doc = parser.parseFromString(htmlContent, "text/html");
 
 			// Check for anti-bot pages
-			if (html.includes("cf-browser-verification") || html.includes("Cloudflare")) {
-				throw new Error("Genius request blocked by Cloudflare. Try again later or use a different proxy.");
+			if (htmlContent.includes("cf-browser-verification") || htmlContent.includes("Cloudflare") || htmlContent.includes("captcha")) {
+				throw new Error("Genius request blocked (Cloudflare/Captcha). Try again later or use a different proxy.");
 			}
 
 			// Method 1: Extraction from window.__PRELOADED_STATE__ (Most robust)
-			// This contains the lyrics data in a structured format (D-Script)
 			try {
-				const stateMatch = html.match(/window\.__PRELOADED_STATE__\s*=\s*JSON\.parse\('(.*?)'\)/);
-				let stateString = stateMatch ? stateMatch[1] : null;
-				if (!stateString) {
-					const directMatch = html.match(/window\.__PRELOADED_STATE__\s*=\s*({.*?});/);
-					stateString = directMatch ? directMatch[1] : null;
+				// Genius uses multiple ways to store state depending on the page version
+				const stateRegexes = [
+					/window\.__PRELOADED_STATE__\s*=\s*JSON\.parse\('(.*?)'\)/,
+					/window\.__PRELOADED_STATE__\s*=\s*({.*?});/,
+					/window\.__PRELOADED_STATE__\s*=\s*(.*?)<\/script>/s
+				];
+
+				let stateString: string | null = null;
+				for (const reg of stateRegexes) {
+					const match = htmlContent.match(reg);
+					if (match) {
+						stateString = match[1];
+						break;
+					}
 				}
 
 				if (stateString) {
 					// Handle escaped characters if it was a JSON.parse('') match
-					if (stateMatch) {
+					if (stateString.startsWith("'") || stateString.includes("\\'")) {
 						stateString = stateString.replace(/\\'/g, "'").replace(/\\\\/g, "\\");
+						if (stateString.startsWith("'") && stateString.endsWith("'")) {
+							stateString = stateString.slice(1, -1);
+						}
 					}
+					
 					const state = JSON.parse(stateString);
 					
-					// The path to lyrics varies, but it's usually in songPage.lyricsData
-					const lyricsData = state.songPage?.lyricsData?.body?.html || "";
+					// Search deep for lyrics data
+					const lyricsData = state.songPage?.lyricsData?.body?.html || 
+									 state.song?.lyricsData?.body?.html || 
+									 state.lyricsData?.body?.html;
+
 					if (lyricsData) {
 						const lyricsDoc = parser.parseFromString(lyricsData, "text/html");
 						return lyricsDoc.body.textContent?.trim() || "";
 					}
 				}
 			} catch (e) {
-				console.warn("Failed to parse __PRELOADED_STATE__:", e);
+				console.warn("Genius JSON parse failed, falling back to DOM:", e);
 			}
 
-			// Method 2: DOM selectors (current standard)
+			// Method 2: DOM selectors
 			let lyricsContainers = Array.from(doc.querySelectorAll('[data-lyrics-container="true"]'));
 
-			// Fallback 1: Legacy class-based selector
 			if (lyricsContainers.length === 0) {
 				lyricsContainers = Array.from(doc.querySelectorAll('[class^="Lyrics__Container"]'));
 			}
 
-			// Fallback 2: Old layout with .lyrics class
 			let backupLyrics = "";
 			if (lyricsContainers.length === 0) {
 				const oldContainer = doc.querySelector(".lyrics");
@@ -181,52 +204,42 @@ export const GeniusApi = {
 				}
 			}
 
-			// Fallback 3: Search for any element with "lyrics" in ID or class as a last resort
 			if (lyricsContainers.length === 0 && !backupLyrics) {
 				const anyLyrics = doc.querySelector('[id*="lyrics"], [class*="lyrics"]');
-				// Filter for elements that actually look like lyrics (long text)
-				if (anyLyrics && anyLyrics.textContent && anyLyrics.textContent.length > 200) {
+				if (anyLyrics && anyLyrics.textContent && anyLyrics.textContent.length > 250) {
 					backupLyrics = anyLyrics.textContent.trim();
 				}
 			}
 
 			if (lyricsContainers.length === 0 && !backupLyrics) {
-				// If we have HTML but no lyrics, the proxy might have returned a skeleton or error page.
-				const title = doc.title || "Unknown Page";
-				throw new Error(`Could not find lyrics container (Page Title: ${title}). Genius might have changed their layout.`);
+				const title = doc.title || "No Title";
+				console.log("Debug Genius HTML Content:", htmlContent.slice(0, 1000));
+				throw new Error(`Lyrics not found (Page: "${title}"). Possible redirection or blocked content.`);
 			}
 
 			let fullLyrics = backupLyrics;
 			if (lyricsContainers.length > 0) {
 				for (const container of lyricsContainers) {
-					// Replace <br> tags with newlines before getting textContent
 					const brs = container.querySelectorAll("br");
 					for (const br of Array.from(brs)) {
 						br.replaceWith("\n");
 					}
-
-					// Genius also puts annotations in <a> tags, which we want as plain text
 					fullLyrics += `${container.textContent}\n`;
 				}
 			}
 
 			// --- Cleanup "slop" ---
 			let cleaned = fullLyrics.trim();
-
-			// 1. Remove initial "Contributors" / "Translations" metadata block if it bled into the text
 			cleaned = cleaned.replace(/^[0-9]+\sContributors.*Lyrics/i, "");
-
-			// 2. Remove [Section Headers] like [Intro], [Chorus: ...], etc.
 			cleaned = cleaned.replace(/\[.*?\]/g, "");
-
-			// 3. Final polish: remove multiple spaces, handle line split slop
+			
 			return cleaned
 				.split("\n")
 				.map((line) => line.trim())
 				.filter((line) => line.length > 0)
 				.join("\n");
 		} catch (error) {
-			console.error("Genius Lyrics Direct Fetch Error:", error);
+			console.error("Genius Scraper Error:", error);
 			throw error;
 		}
 	},
