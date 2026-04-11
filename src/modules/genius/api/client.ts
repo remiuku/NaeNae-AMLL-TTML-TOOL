@@ -95,10 +95,35 @@ export const GeniusApi = {
 	async getLyrics(songUrl: string): Promise<string> {
 		try {
 			// Using a public CORS proxy to fetch the actual Genius page
-			const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(songUrl)}`;
-			const resp = await fetch(proxyUrl);
-			if (!resp.ok) {
-				throw new Error(`Failed to fetch Genius page: ${resp.status} ${resp.statusText}`);
+			// We try multiple proxies to increase reliability as Genius aggressively blocks them.
+			const proxies = [
+				(url: string) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+				(url: string) => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
+				(url: string) => `https://corsproxy.io/?${encodeURIComponent(url)}`,
+				(url: string) => `https://thingproxy.freeboard.io/fetch/${encodeURIComponent(url)}`,
+			];
+
+			let resp: Response | null = null;
+			let lastError: Error | null = null;
+
+			for (let i = 0; i < proxies.length; i++) {
+				try {
+					const proxyUrl = proxies[i](songUrl);
+					resp = await fetch(proxyUrl);
+					if (resp.ok) break;
+					lastError = new Error(`Proxy ${i + 1} returned ${resp.status} ${resp.statusText}`);
+					
+					// If not the last proxy, wait a bit before trying the next one
+					if (i < proxies.length - 1) {
+						await new Promise(resolve => setTimeout(resolve, 500));
+					}
+				} catch (e) {
+					lastError = e as Error;
+				}
+			}
+
+			if (!resp || !resp.ok) {
+				throw new Error(`Failed to fetch Genius page: ${lastError?.message || "All proxies failed"}`);
 			}
 			const html = await resp.text();
 
