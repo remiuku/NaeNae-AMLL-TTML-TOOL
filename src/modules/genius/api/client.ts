@@ -99,11 +99,11 @@ export const GeniusApi = {
 			const targetUrl = songUrl.includes("?") ? `${songUrl}&${cacheBuster.slice(1)}` : `${songUrl}${cacheBuster}`;
 
 			const proxies = [
+				(url: string) => `https://corsproxy.io/?${encodeURIComponent(url)}`,
 				(url: string) => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
 				(url: string) => `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`,
-				(url: string) => `https://thingproxy.freeboard.io/fetch/${encodeURIComponent(url)}`,
 				(url: string) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
-				(url: string) => `https://corsproxy.io/?${encodeURIComponent(url)}`,
+				(url: string) => `https://thingproxy.freeboard.io/fetch/${encodeURIComponent(url)}`,
 			];
 
 			let resp: Response | null = null;
@@ -112,12 +112,7 @@ export const GeniusApi = {
 			for (let i = 0; i < proxies.length; i++) {
 				try {
 					const proxyUrl = proxies[i](targetUrl);
-					resp = await fetch(proxyUrl, {
-						// Some proxies might respect these
-						headers: {
-							"X-Requested-With": "XMLHttpRequest",
-						},
-					});
+					resp = await fetch(proxyUrl);
 					if (resp.ok) break;
 					lastError = new Error(`Proxy ${i + 1} (${new URL(proxies[i]('')).hostname}) returned ${resp.status}`);
 					
