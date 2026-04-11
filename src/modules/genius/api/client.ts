@@ -165,14 +165,15 @@ export const GeniusApi = {
 			let fullLyrics = backupLyrics;
 			if (lyricsContainers.length > 0) {
 				for (const container of lyricsContainers) {
-				// Replace <br> tags with newlines before getting textContent
-				const brs = container.querySelectorAll("br");
-				for (const br of Array.from(brs)) {
-					br.replaceWith("\n");
-				}
+					// Replace <br> tags with newlines before getting textContent
+					const brs = container.querySelectorAll("br");
+					for (const br of Array.from(brs)) {
+						br.replaceWith("\n");
+					}
 
-				// Genius also puts annotations in <a> tags, which we want as plain text
-				fullLyrics += `${container.textContent}\n`;
+					// Genius also puts annotations in <a> tags, which we want as plain text
+					fullLyrics += `${container.textContent}\n`;
+				}
 			}
 
 			// --- Cleanup "slop" ---
