@@ -57,6 +57,10 @@ export const autosaveIntervalAtom = atomWithStorage("autosaveInterval", 10);
 export const autosaveLimitAtom = atomWithStorage("autosaveLimit", 10);
 
 export const showTimestampsAtom = atomWithStorage("showTimestamps", true);
+export const enableManualTimestampEditAtom = atomWithStorage(
+	"enableManualTimestampEdit",
+	true,
+);
 
 export const highlightActiveWordAtom = atomWithStorage(
 	"highlightActiveWord",
@@ -65,7 +69,7 @@ export const highlightActiveWordAtom = atomWithStorage(
 
 export const enableSyncGlowAnimationAtom = atomWithStorage(
 	"enableSyncGlowAnimation",
-	true,
+	false,
 );
 
 export const highlightErrorsAtom = atomWithStorage("highlightErrors", false);

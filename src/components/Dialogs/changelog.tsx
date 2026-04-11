@@ -59,7 +59,19 @@ export function ChangelogDialog() {
 									<strong>Redo Shortcut:</strong> Updated the Redo shortcut to <strong>Shift + Ctrl + Z</strong> across all platforms for a more intuitive editing workflow.
 								</Text>
 								<Text size="2">
-									<strong>Refined Plain Text Import:</strong> Set the default word separator to <code>/</code> and disabled automatic space padding by default to prevent unwanted spacing in imported projects.
+									<strong>Refined Plain Text Import:</strong> Disabled automatic space padding by default to prevent unwanted spacing in imported projects.
+								</Text>
+								<Text size="2">
+									<strong>Redo Memory:</strong> Optimized state management by limiting the Redo/Undo history to the 10 most recent actions for better performance.
+								</Text>
+								<Text size="2">
+									<strong>Static Highlighting:</strong> Disabled word move animations and glow effects during playback for a more focused and distraction-free synchronization experience.
+								</Text>
+								<Text size="2">
+									<strong>Assistant Tab:</strong> Introduced a dedicated "Assistant" tab in Settings to manage helper features like Quick Fixes and timing visualization in one place.
+								</Text>
+								<Text size="2">
+									<strong>Flexible Syncing:</strong> Added a toggle to enable or disable manual timestamp typing in Sync mode, allowing you to lock timings to prevent accidental changes.
 								</Text>
 							</Flex>
 						</Box>

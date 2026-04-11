@@ -47,6 +47,7 @@ import { useTranslation } from "react-i18next";
 import { currentTimeAtom } from "$/modules/audio/states/index.ts";
 import {
 	displayRomanizationInSyncAtom,
+	enableManualTimestampEditAtom,
 	enableSyncGlowAnimationAtom,
 	highlightActiveWordAtom,
 	highlightErrorsAtom,
@@ -965,6 +966,7 @@ const LyricSyncWordView: FC<{
 	}, [endTime, visualizeTimestampUpdate]);
 
 	const enableSyncGlowAnimation = useAtomValue(enableSyncGlowAnimationAtom);
+	const enableManualTimestampEdit = useAtomValue(enableManualTimestampEditAtom);
 	const hasError = useMemo(() => startTime > endTime, [startTime, endTime]);
 
 
@@ -1073,9 +1075,10 @@ const LyricSyncWordView: FC<{
 				<div
 					className={classNames(styles.startTime)}
 					ref={startTimeRef}
-					title="Click to edit start time"
-					style={{ cursor: "text" }}
+					title={enableManualTimestampEdit ? "Click to edit start time" : undefined}
+					style={{ cursor: enableManualTimestampEdit ? "text" : "default" }}
 					onClick={(e) => {
+						if (!enableManualTimestampEdit) return;
 						e.stopPropagation();
 						setEditingInput(startTimeDisplay);
 						setEditingTime("start");
@@ -1116,9 +1119,10 @@ const LyricSyncWordView: FC<{
 				<div
 					className={classNames(styles.endTime)}
 					ref={endTimeRef}
-					title="Click to edit end time"
-					style={{ cursor: "text" }}
+					title={enableManualTimestampEdit ? "Click to edit end time" : undefined}
+					style={{ cursor: enableManualTimestampEdit ? "text" : "default" }}
 					onClick={(e) => {
+						if (!enableManualTimestampEdit) return;
 						e.stopPropagation();
 						setEditingInput(
 							showEndTimeAsDuration ? msToTimestamp(endTime) : endTimeDisplay,

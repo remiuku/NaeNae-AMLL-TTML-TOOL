@@ -12,7 +12,7 @@ import {
 	keySelectWordsOfMatchedSelectionAtom,
 	keyUndoAtom,
 } from "$/states/keybindings.ts";
-import { useKeyBindingAtom } from "$/utils/keybindings.ts";
+import { registerKeyBindings, useKeyBindingAtom } from "$/utils/keybindings.ts";
 import { HeaderFileInfo } from "./HeaderFileInfo";
 import { EditMenu } from "./modals/EditMenu";
 import { FileMenu } from "./modals/FileMenu";
@@ -52,6 +52,14 @@ export const TopMenu: FC = () => {
 	useKeyBindingAtom(keySaveFileAtom, menu.onSaveFile, [menu.onSaveFile]);
 	useKeyBindingAtom(keyUndoAtom, menu.onUndo, [menu.onUndo]);
 	useKeyBindingAtom(keyRedoAtom, menu.onRedo, [menu.onRedo]);
+	useEffect(() => {
+		const unbinds = [
+			registerKeyBindings(["Control", "KeyY"], menu.onRedo),
+			registerKeyBindings(["Control", "Shift", "KeyZ"], menu.onRedo),
+			registerKeyBindings(["Shift", "Control", "KeyZ"], menu.onRedo),
+		];
+		return () => unbinds.forEach((u) => u());
+	}, [menu.onRedo]);
 	useKeyBindingAtom(keySelectAllAtom, menu.onUnselectAll, [menu.onUnselectAll]);
 	useKeyBindingAtom(keySelectAllAtom, menu.onSelectAll, [menu.onSelectAll]);
 	useKeyBindingAtom(keySelectInvertedAtom, menu.onSelectInverted, [

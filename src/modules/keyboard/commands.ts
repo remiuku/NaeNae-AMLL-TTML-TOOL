@@ -44,7 +44,7 @@ export const cmdUndo = registerCommand(
 
 export const cmdRedo = registerCommand(
 	"redo",
-	["Shift", CONTROL_KEY, "KeyZ"],
+	[CONTROL_KEY, "Shift", "KeyZ"],
 	t("settingsDialog.keybindings.redo"),
 	"Edit",
 );

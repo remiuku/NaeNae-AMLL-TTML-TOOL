@@ -29,6 +29,7 @@ import { useTranslation } from "react-i18next";
 import { useCurrentLocation } from "$/modules/lyric-editor/utils/lyric-states.ts";
 import {
 	displayRomanizationInSyncAtom,
+	enableManualTimestampEditAtom,
 	enableSyncGlowAnimationAtom,
 	highlightActiveWordAtom,
 	highlightErrorsAtom,
@@ -111,6 +112,9 @@ export const SyncModeRibbonBar: FC = forwardRef<HTMLDivElement>(
 		);
 		const [enableSyncGlowAnimation, setEnableSyncGlowAnimation] = useAtom(
 			enableSyncGlowAnimationAtom,
+		);
+		const [enableManualTimestampEdit, setEnableManualTimestampEdit] = useAtom(
+			enableManualTimestampEditAtom,
 		);
 
 		const [displayRomanizationInSync, setdisplayRomanizationInSync] = useAtom(
@@ -276,6 +280,17 @@ export const SyncModeRibbonBar: FC = forwardRef<HTMLDivElement>(
 							<Checkbox
 								checked={quickFixes}
 								onCheckedChange={(v) => setQuickFixes(!!v)}
+							/>
+							<Text
+								wrap="nowrap"
+								size="1"
+								style={{ color: "var(--accent-11)" }}
+							>
+								{t("ribbonBar.syncMode.manualTimestampEdit", "Manual Timestamp Editing")}
+							</Text>
+							<Checkbox
+								checked={enableManualTimestampEdit}
+								onCheckedChange={(v) => setEnableManualTimestampEdit(!!v)}
 							/>
 						</Grid>
 					</RibbonSection>
