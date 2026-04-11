@@ -101,7 +101,7 @@ export const AudioSettingsTab = () => {
 									<Select.Label>{t("settings.audio.customPresets", "Custom")}</Select.Label>
 									{Object.keys(customPresets).map((p) => (
 										<Select.Item key={p} value={p}>
-											<Flex align="center" justify="space-between" width="100%">
+											<Flex align="center" justify="between" width="100%">
 												{p}
 											</Flex>
 										</Select.Item>

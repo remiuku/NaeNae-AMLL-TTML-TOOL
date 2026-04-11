@@ -78,7 +78,7 @@ const swapTransAndRomanAtom = atomWithStorage(
 	"importFromText.swapTransAndRoman",
 	false,
 );
-const wordSeparatorAtom = atomWithStorage("importFromText.wordSeparator", "/");
+const wordSeparatorAtom = atomWithStorage("importFromText.wordSeparator", "\\");
 const enableSpecialPrefixAtom = atomWithStorage(
 	"importFromText.enableSpecialPrefix",
 	false,
