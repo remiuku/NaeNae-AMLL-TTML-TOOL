@@ -131,24 +131,40 @@ export const GeniusApi = {
 			const parser = new DOMParser();
 			const doc = parser.parseFromString(html, "text/html");
 
-			// Genius uses multiple divs with class starting with "Lyrics__Container" for the new layout
-			let lyricsContainers = doc.querySelectorAll('[class^="Lyrics__Container"]');
+			// Genius uses multiple divs for the new layout.
+			// [data-lyrics-container="true"] is currently the most stable selector.
+			// We also fallback to class-based selectors.
+			let lyricsContainers = Array.from(doc.querySelectorAll('[data-lyrics-container="true"]'));
 
-			// Fallback for older layout
+			// Fallback 1: Legacy class-based selector
+			if (lyricsContainers.length === 0) {
+				lyricsContainers = Array.from(doc.querySelectorAll('[class^="Lyrics__Container"]'));
+			}
+
+			// Fallback 2: Old layout with .lyrics class
+			let backupLyrics = "";
 			if (lyricsContainers.length === 0) {
 				const oldContainer = doc.querySelector(".lyrics");
 				if (oldContainer) {
-					// In the old layout, it's just one div
-					return oldContainer.textContent?.trim() || "";
+					backupLyrics = oldContainer.textContent?.trim() || "";
 				}
 			}
 
-			if (lyricsContainers.length === 0) {
+			// Fallback 3: Search for any element with "lyrics" in ID or class as a last resort
+			if (lyricsContainers.length === 0 && !backupLyrics) {
+				const anyLyrics = doc.querySelector('[id*="lyrics"], [class*="lyrics"]');
+				if (anyLyrics && anyLyrics.textContent && anyLyrics.textContent.length > 100) {
+					backupLyrics = anyLyrics.textContent.trim();
+				}
+			}
+
+			if (lyricsContainers.length === 0 && !backupLyrics) {
 				throw new Error("Could not find lyrics container in the Genius page");
 			}
 
-			let fullLyrics = "";
-			for (const container of Array.from(lyricsContainers)) {
+			let fullLyrics = backupLyrics;
+			if (lyricsContainers.length > 0) {
+				for (const container of lyricsContainers) {
 				// Replace <br> tags with newlines before getting textContent
 				const brs = container.querySelectorAll("br");
 				for (const br of Array.from(brs)) {
