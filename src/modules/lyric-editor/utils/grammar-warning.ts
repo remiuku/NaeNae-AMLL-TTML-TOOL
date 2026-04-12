@@ -405,6 +405,29 @@ export const collectPossibleGrammarWarnings = (
 				break;
 			}
 		}
+
+		// Check for lowercase at start of line
+		if (i === 0 && !warnings.has(wordObj.id)) {
+			const firstAlphaIndex = wordObj.word.search(/[a-zA-Zа-яёÁ-ЯЁ]/);
+			if (firstAlphaIndex !== -1) {
+				const char = wordObj.word[firstAlphaIndex];
+				const isUpperCase =
+					language === "ru"
+						? char === char.toUpperCase() && /[А-ЯЁ]/.test(char)
+						: char === char.toUpperCase() && /[A-Z]/.test(char);
+				if (!isUpperCase) {
+					warnings.add(wordObj.id);
+				}
+			}
+		}
+
+		// Check for capital letters in middle of line (not first word)
+		if (i > 0 && !warnings.has(wordObj.id)) {
+			const hasCapitalInMiddle = /[a-zA-Zà-ÿÀ-ÿ].*[A-ZÀ-Ý]/.test(wordObj.word);
+			if (hasCapitalInMiddle) {
+				warnings.add(wordObj.id);
+			}
+		}
 	}
 
 	return warnings;
@@ -421,6 +444,44 @@ export const getGrammarSuggestions = (
 
 	const language = getLineLanguage(line);
 	const current = normalizeForLanguage(word.word, language);
+
+	const firstAlphaIndex = word.word.search(/[a-zA-Zа-яёÁ-ЯЁ]/);
+	if (wordIndex === 0 && firstAlphaIndex !== -1) {
+		const char = word.word[firstAlphaIndex];
+		const isUpperCase =
+			language === "ru"
+				? char === char.toUpperCase() && /[А-ЯЁ]/.test(char)
+				: char === char.toUpperCase() && /[A-Z]/.test(char);
+		if (!isUpperCase) {
+			let capitalized: string;
+			if (language === "ru") {
+				capitalized =
+					word.word.slice(0, firstAlphaIndex) +
+					char.toUpperCase() +
+					word.word.slice(firstAlphaIndex + 1);
+			} else {
+				capitalized =
+					word.word.slice(0, firstAlphaIndex) +
+					char.toUpperCase() +
+					word.word.slice(firstAlphaIndex + 1);
+			}
+			suggestions.push(capitalized);
+		}
+	}
+
+	// Suggestion: lowercase capital in middle of word
+	if (wordIndex > 0) {
+		const lowerMatch = word.word.match(/[a-zà-ÿ][A-ZÀ-Ý]/);
+		if (lowerMatch) {
+			const lowerIdx = word.word.search(/[a-zà-ÿ][A-ZÀ-Ý]/);
+			if (lowerIdx !== -1) {
+				const fixed =
+					word.word.slice(0, lowerIdx + 1) +
+					word.word.slice(lowerIdx + 1).toLowerCase();
+				suggestions.push(fixed);
+			}
+		}
+	}
 
 	const ambiguousWords = getAmbiguousWords(language);
 	for (const amb of ambiguousWords) {
