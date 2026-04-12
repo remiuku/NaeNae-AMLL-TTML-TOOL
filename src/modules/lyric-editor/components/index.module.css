@@ -207,6 +207,22 @@
 			opacity: 1;
 		}
 	}
+
+	&.bg {
+		.lyricLineContainer {
+			padding-top: 2px;
+			padding-bottom: 2px;
+		}
+
+		.lyricWord.sync {
+			padding-top: 0;
+			padding-bottom: 0;
+		}
+
+		.displayWord {
+			font-size: 1.1em;
+		}
+	}
 }
 
 .lyricLineContainer {

@@ -41,10 +41,10 @@ import {
 } from "react";
 import { useTranslation } from "react-i18next";
 import {
-	showLineRomanizationAtom,
 	showLineTranslationAtom,
 	showTimestampsAtom,
 	showWordRomanizationInputAtom,
+	compactBGInSyncAtom,
 } from "$/modules/settings/states/index.ts";
 import {
 	syncLevelModeAtom,
@@ -323,6 +323,7 @@ export const LyricLineView: FC<{
 		[],
 	);
 	const editingRomanWordIndex = useAtomValue(editingRomanWordIndexAtom);
+	const compactBGInSync = useAtomValue(compactBGInSyncAtom);
 
 	const startTimeRef = useRef<HTMLDivElement>(null);
 	const endTimeRef = useRef<HTMLButtonElement>(null);
@@ -544,10 +545,11 @@ export const LyricLineView: FC<{
 				<ContextMenu.Trigger disabled={toolMode !== ToolMode.Edit}
 				><Flex
 						mx="2"
-						my="1"
+						my={line.isBG && toolMode === ToolMode.Sync && compactBGInSync ? "0" : "1"}
 						direction="row"
 						className={classNames(
 							styles.lyricLine,
+							line.isBG && toolMode === ToolMode.Sync && compactBGInSync && styles.bg,
 							lineSelected && styles.selected,
 							toolMode === ToolMode.Sync && styles.sync,
 							toolMode === ToolMode.Edit && styles.edit,
