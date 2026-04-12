@@ -405,13 +405,6 @@ export const collectPossibleGrammarWarnings = (
 				break;
 			}
 		}
-
-		if (i === line.words.length - 1 && !warnings.has(wordObj.id)) {
-			const rawWord = wordObj.word.trim();
-			if (rawWord.endsWith(".") || rawWord.endsWith(",")) {
-				warnings.add(wordObj.id);
-			}
-		}
 	}
 
 	return warnings;
@@ -462,13 +455,6 @@ export const getGrammarSuggestions = (
 			if (hasSpaceBetween || hasPunctuationBetween) {
 				suggestions.push("__REMOVE_REPEATED_WORD__");
 			}
-		}
-	}
-
-	if (wordIndex === line.words.length - 1) {
-		const rawWord = word.word.trim();
-		if (rawWord.endsWith(".") || rawWord.endsWith(",")) {
-			suggestions.push(rawWord.slice(0, -1).trim());
 		}
 	}
 
