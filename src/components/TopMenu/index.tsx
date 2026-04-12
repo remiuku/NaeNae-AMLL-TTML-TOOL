@@ -1,25 +1,13 @@
 import { Box, Flex } from "@radix-ui/themes";
 import { Toolbar } from "radix-ui";
 import { type FC, useEffect, useState } from "react";
-import {
-	keyDeleteSelectionAtom,
-	keyNewFileAtom,
-	keyOpenFileAtom,
-	keyRedoAtom,
-	keySaveFileAtom,
-	keySelectAllAtom,
-	keySelectInvertedAtom,
-	keySelectWordsOfMatchedSelectionAtom,
-	keyUndoAtom,
-} from "$/states/keybindings.ts";
-import { useKeyBindingAtom } from "$/utils/keybindings.ts";
 import { HeaderFileInfo } from "./HeaderFileInfo";
 import { EditMenu } from "./modals/EditMenu";
 import { FileMenu } from "./modals/FileMenu";
 import { HelpMenu } from "./modals/HelpMenu";
 import { HomeMenu } from "./modals/HomeMenu";
 import { ToolMenu } from "./modals/ToolMenu";
-import { useTopMenuActions } from "./useTopMenuActions";
+// top menu actions are used inside individual menu components
 
 const useWindowSize = () => {
 	const [windowSize, setWindowSize] = useState({
@@ -45,26 +33,7 @@ const useWindowSize = () => {
 export const TopMenu: FC = () => {
 	const { width } = useWindowSize();
 	const showHomeButton = width < 800;
-	const menu = useTopMenuActions();
-
-	useKeyBindingAtom(keyNewFileAtom, menu.onNewFile, [menu.onNewFile]);
-	useKeyBindingAtom(keyOpenFileAtom, menu.onOpenFile, [menu.onOpenFile]);
-	useKeyBindingAtom(keySaveFileAtom, menu.onSaveFile, [menu.onSaveFile]);
-	useKeyBindingAtom(keyUndoAtom, menu.onUndo, [menu.onUndo]);
-	useKeyBindingAtom(keyRedoAtom, menu.onRedo, [menu.onRedo]);
-	useKeyBindingAtom(keySelectAllAtom, menu.onUnselectAll, [menu.onUnselectAll]);
-	useKeyBindingAtom(keySelectAllAtom, menu.onSelectAll, [menu.onSelectAll]);
-	useKeyBindingAtom(keySelectInvertedAtom, menu.onSelectInverted, [
-		menu.onSelectInverted,
-	]);
-	useKeyBindingAtom(
-		keySelectWordsOfMatchedSelectionAtom,
-		menu.onSelectWordsOfMatchedSelection,
-		[menu.onSelectWordsOfMatchedSelection],
-	);
-	useKeyBindingAtom(keyDeleteSelectionAtom, menu.onDeleteSelection, [
-		menu.onDeleteSelection,
-	]);
+	// useTopMenuActions is not needed here; menu actions are used inside individual menu components
 
 	return (
 		<Flex
