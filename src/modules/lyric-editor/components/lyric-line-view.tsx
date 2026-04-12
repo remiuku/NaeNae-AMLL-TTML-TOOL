@@ -42,6 +42,7 @@ import {
 import { useTranslation } from "react-i18next";
 import {
 	showLineTranslationAtom,
+	showLineRomanizationAtom,
 	showTimestampsAtom,
 	showWordRomanizationInputAtom,
 	compactBGInSyncAtom,
