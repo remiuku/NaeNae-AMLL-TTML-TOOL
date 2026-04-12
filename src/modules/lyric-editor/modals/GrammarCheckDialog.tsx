@@ -108,27 +108,7 @@ export const GrammarCheckDialog = () => {
 				);
 				if (isIgnored) return;
 
-				// Check for capitalization at start of line
-				const firstAlphaIndex = word.word.search(/[a-zA-Z]/);
-				if (
-					wordIndex === 0 &&
-					firstAlphaIndex !== -1 &&
-					word.word[firstAlphaIndex] ===
-						word.word[firstAlphaIndex].toLowerCase()
-				) {
-					issueType = "capitalization";
-					message = t(
-						"grammarCheck.capitalization",
-						"Word should be capitalized",
-					);
-					const char = word.word[firstAlphaIndex];
-					suggestion =
-						word.word.slice(0, firstAlphaIndex) +
-						char.toUpperCase() +
-						word.word.slice(firstAlphaIndex + 1);
-				}
-
-				if (!message) {
+				if (message) {
 					const trimmedWord = word.word.trim();
 					if (trimmedWord === "—") {
 						issueType = "ambiguous";

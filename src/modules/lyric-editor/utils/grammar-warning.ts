@@ -406,20 +406,6 @@ export const collectPossibleGrammarWarnings = (
 			}
 		}
 
-		if (i === 0 && !warnings.has(wordObj.id)) {
-			const firstAlphaIndex = wordObj.word.search(/[a-zA-Zа-яёÁ-ЯЁ]/);
-			if (firstAlphaIndex !== -1) {
-				const char = wordObj.word[firstAlphaIndex];
-				const isUpperCase =
-					language === "ru"
-						? char === char.toUpperCase() && /[А-ЯЁ]/.test(char)
-						: char === char.toUpperCase() && /[A-Z]/.test(char);
-				if (!isUpperCase) {
-					warnings.add(wordObj.id);
-				}
-			}
-		}
-
 		if (i === line.words.length - 1 && !warnings.has(wordObj.id)) {
 			const rawWord = wordObj.word.trim();
 			if (rawWord.endsWith(".") || rawWord.endsWith(",")) {
@@ -442,30 +428,6 @@ export const getGrammarSuggestions = (
 
 	const language = getLineLanguage(line);
 	const current = normalizeForLanguage(word.word, language);
-
-	const firstAlphaIndex = word.word.search(/[a-zA-Zа-яёÁ-ЯЁ]/);
-	if (wordIndex === 0 && firstAlphaIndex !== -1) {
-		const char = word.word[firstAlphaIndex];
-		const isUpperCase =
-			language === "ru"
-				? char === char.toUpperCase() && /[А-ЯЁ]/.test(char)
-				: char === char.toUpperCase() && /[A-Z]/.test(char);
-		if (!isUpperCase) {
-			let capitalized: string;
-			if (language === "ru") {
-				capitalized =
-					word.word.slice(0, firstAlphaIndex) +
-					char.toUpperCase() +
-					word.word.slice(firstAlphaIndex + 1);
-			} else {
-				capitalized =
-					word.word.slice(0, firstAlphaIndex) +
-					char.toUpperCase() +
-					word.word.slice(firstAlphaIndex + 1);
-			}
-			suggestions.push(capitalized);
-		}
-	}
 
 	const ambiguousWords = getAmbiguousWords(language);
 	for (const amb of ambiguousWords) {
