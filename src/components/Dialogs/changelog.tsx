@@ -38,7 +38,25 @@ export function ChangelogDialog() {
 				<ScrollArea type="always" scrollbars="vertical" style={{ height: "calc(100% - 60px)" }}>
 					<Flex direction="column" gap="5" pr="4">
 						<Box>
-							<Heading size="4" mb="2" color="cyan">v0.1.6 Updates (Latest)</Heading>
+							<Heading size="4" mb="2" color="teal">v0.1.65 Updates (Latest)</Heading>
+							<Flex direction="column" gap="3">
+								<Text size="2">
+									<strong>Automatic Lyric Cleaning:</strong> Implemented global backslash (<code>\</code>) removal during lyric imports. This applies across Genius, Lyrically, Plain Text, and LRC imports to ensure high project quality.
+								</Text>
+								<Text size="2">
+									<strong>Improved Sync Navigation:</strong> Synchronization mode now automatically skips over whitespace-only words (spaces). This prevents navigation issues when using the <strong>H</strong> (Set End Time) key and other timing shortcuts.
+								</Text>
+								<Text size="2">
+									<strong>Smart Delimiter Handling:</strong> Refined the word separation logic in Plain Text imports to cleanly remove delimiters without polluting the project with empty or marker words.
+								</Text>
+								<Text size="2">
+									<strong>Consistent Logic:</strong> Standardized background vocal extraction to include the new automatic cleaning and stability fixes.
+								</Text>
+							</Flex>
+						</Box>
+
+						<Box>
+							<Heading size="4" mb="2" color="cyan">v0.1.6 Updates</Heading>
 							<Flex direction="column" gap="3">
 								<Text size="2">
 									<strong>Custom Audio Equalizer:</strong> Introduced a professional 10-band equalizer with support for custom presets. Save, name, and manage your own audio profiles for a tailored listening experience.
