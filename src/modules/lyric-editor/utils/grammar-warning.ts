@@ -426,46 +426,6 @@ export const collectPossibleGrammarWarnings = (
 				warnings.add(wordObj.id);
 			}
 		}
-
-		// Cross-token em-dash bridging: flag em-dash that crosses to the next word
-		if (i < line.words.length - 1) {
-			const currentWord = line.words[i].word;
-			const nextWord = line.words[i + 1].word;
-			if (
-				(currentWord.endsWith("—") || currentWord.endsWith("–")) &&
-				nextWord &&
-				/[A-Za-zÁ-ÿ]/.test(nextWord[0])
-			) {
-				warnings.add(line.words[i].id);
-				warnings.add(line.words[i + 1].id);
-			}
-
-			// Detect internal em-dash when a single word contains an em dash between letters
-			if (!warnings.has(wordObj.id)) {
-				if (/[A-Za-zÁ-ÿ]+[—–][A-Za-zÁ-ÿ]+/.test(wordObj.word)) {
-					warnings.add(wordObj.id);
-				}
-			}
-			// Also handle case where dash occurs across token boundary (e.g., "God—stained" split)
-			if (
-				currentWord.includes("—") &&
-				nextWord &&
-				/[A-Za-zÁ-ÿ]/.test(nextWord[0])
-			) {
-				warnings.add(line.words[i].id);
-				warnings.add(line.words[i + 1].id);
-			}
-		}
-
-		// Detect internal em-dash in any word (em-dash between letters, not at ends)
-		if (/[A-Za-zÁ-ÿ]+[—–][A-Za-zÁ-ÿ]+/.test(wordObj.word)) {
-			warnings.add(wordObj.id);
-		}
-
-		// Detect trailing hyphen at end of line
-		if (i === line.words.length - 1 && wordObj.word.endsWith("-")) {
-			warnings.add(wordObj.id);
-		}
 	}
 
 	return warnings;
@@ -540,14 +500,6 @@ export const getGrammarSuggestions = (
 			if (hasSpaceBetween || hasPunctuationBetween) {
 				suggestions.push("__REMOVE_REPEATED_WORD__");
 			}
-
-			// End-of-line: if the last word ends with a hyphen, suggest replacing with em dash
-			if (wordIndex === line.words.length - 1) {
-				const w = line.words[wordIndex].word.trim();
-				if (w.endsWith("-")) {
-					suggestions.push(w.slice(0, -1) + "—");
-				}
-			}
 		}
 	}
 
@@ -556,35 +508,6 @@ export const getGrammarSuggestions = (
 		if (rawWord.endsWith(".") || rawWord.endsWith(",")) {
 			suggestions.push(rawWord.slice(0, -1).trim());
 		}
-	}
-
-	if (word.word.trim() === "—") {
-		suggestions.push("–");
-	}
-
-	const trimmedWord = word.word;
-	const hasEmDash = trimmedWord.includes("—");
-	const endsWithEmDash = trimmedWord.endsWith("—");
-	if (hasEmDash && !endsWithEmDash) {
-		suggestions.push(trimmedWord.replace("—", "-"));
-	}
-
-	// Suggestion for internal em-dash (word like "God—stained")
-	if (/[A-Za-zÁ-ÿ]+[—–][A-Za-zÁ-ÿ]+/.test(trimmedWord)) {
-		suggestions.push(trimmedWord.replace("—", "-").replace("–", "-"));
-	}
-
-	const isLastWord = wordIndex === line.words.length - 1;
-	if (
-		isLastWord &&
-		/^.+-$/.test(trimmedWord) &&
-		!/[^a-zA-Z]-/.test(trimmedWord)
-	) {
-		suggestions.push(trimmedWord.slice(0, -1) + "—");
-	}
-
-	if (isLastWord && trimmedWord.endsWith("-")) {
-		suggestions.push(trimmedWord.slice(0, -1) + "—");
 	}
 
 	const result = [...new Set(suggestions)];
