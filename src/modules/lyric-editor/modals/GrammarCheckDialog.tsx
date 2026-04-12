@@ -108,46 +108,45 @@ export const GrammarCheckDialog = () => {
 				);
 				if (isIgnored) return;
 
-				if (message) {
-					const trimmedWord = word.word.trim();
-					if (trimmedWord === "—") {
-						issueType = "ambiguous";
-						message = t(
-							"grammarCheck.emDash",
-							"Em dash (—) should be replaced with en dash (–)",
-						);
-						suggestion = "–";
-					}
+				// Check for lowercase at start of line
+				const firstAlphaIndex = word.word.search(/[a-zA-Zа-яёÁ-ЯЁ]/);
+				if (
+					wordIndex === 0 &&
+					firstAlphaIndex !== -1 &&
+					word.word[firstAlphaIndex] ===
+						word.word[firstAlphaIndex].toLowerCase()
+				) {
+					issueType = "capitalization";
+					message = t(
+						"grammarCheck.capitalization",
+						"Word should be capitalized",
+					);
+					const char = word.word[firstAlphaIndex];
+					suggestion =
+						word.word.slice(0, firstAlphaIndex) +
+						char.toUpperCase() +
+						word.word.slice(firstAlphaIndex + 1);
 				}
 
-				if (!message) {
-					const rawWord = word.word;
-					const hasEmDash = rawWord.includes("—");
-					const endsWithEmDash = rawWord.endsWith("—");
-					if (hasEmDash && !endsWithEmDash) {
+				// Check for capital letters in middle of line
+				if (wordIndex > 0 && !message) {
+					const hasCapitalInMiddle = /[a-zA-Zà-ÿÀ-ÿ].*[A-ZÀ-Ý]/.test(word.word);
+					if (hasCapitalInMiddle) {
 						issueType = "ambiguous";
 						message = t(
-							"grammarCheck.wordHasEmDash",
-							"Word contains em dash (—), should use hyphen (-) for syllable breaks",
+							"grammarCheck.capitalInMiddle",
+							"Word has capital letters in middle",
 						);
-						suggestion = rawWord.replace("—", "-");
-					}
-				}
-
-				if (!message) {
-					const rawWord = word.word;
-					const isLastWord = wordIndex === line.words.length - 1;
-					if (
-						isLastWord &&
-						/^.+-$/.test(rawWord) &&
-						!/[^a-zA-Z]-/.test(rawWord)
-					) {
-						issueType = "ambiguous";
-						message = t(
-							"grammarCheck.wordEndsWithHyphen",
-							"Word ending with hyphen (word-) should use em dash (—)",
-						);
-						suggestion = rawWord.slice(0, -1) + "—";
+						// Suggestion: lowercase the capital letter in middle
+						const lowerMatch = word.word.match(/[a-zà-ÿ][A-ZÀ-Ý]/);
+						if (lowerMatch) {
+							const lowerIdx = word.word.search(/[a-zà-ÿ][A-ZÀ-Ý]/);
+							if (lowerIdx !== -1) {
+								suggestion =
+									word.word.slice(0, lowerIdx + 1) +
+									word.word.slice(lowerIdx + 1).toLowerCase();
+							}
+						}
 					}
 				}
 
