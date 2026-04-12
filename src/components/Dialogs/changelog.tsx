@@ -38,19 +38,19 @@ export function ChangelogDialog() {
 				<ScrollArea type="always" scrollbars="vertical" style={{ height: "calc(100% - 60px)" }}>
 					<Flex direction="column" gap="5" pr="4">
 						<Box>
-							<Heading size="4" mb="2" color="teal">v0.1.65 Updates (Latest)</Heading>
+							<Heading size="4" mb="2" color="teal">v0.1.7 Updates (Latest)</Heading>
 							<Flex direction="column" gap="3">
 								<Text size="2">
-									<strong>Automatic Lyric Cleaning:</strong> Implemented global backslash (<code>\</code>) removal during lyric imports. This applies across Genius, Lyrically, Plain Text, and LRC imports to ensure high project quality.
+									<strong>Compact Sync Layout:</strong> Added a new "Compact Background Vocals" feature for the Time tab. This reduces vertical space for background vocals during synchronization, making it easier to manage dense projects. This behavior is toggleable in the Display settings.
 								</Text>
 								<Text size="2">
-									<strong>Improved Sync Navigation:</strong> Synchronization mode now automatically skips over whitespace-only words (spaces). This prevents navigation issues when using the <strong>H</strong> (Set End Time) key and other timing shortcuts.
+									<strong>Smart Space Handling:</strong> Refined synchronization logic to automatically skip over whitespace-only words. Navigation shortcuts like <strong>H</strong> (Set End Time) and <strong>D</strong> (Next Word) now always land on syllables with actual content.
 								</Text>
 								<Text size="2">
-									<strong>Smart Delimiter Handling:</strong> Refined the word separation logic in Plain Text imports to cleanly remove delimiters without polluting the project with empty or marker words.
+									<strong>Clean Imports:</strong> Standardized lyric cleaning during import to automatically strip backslashes (<code>\</code>) across all major sources (Genius, Lyrically, Text, LRC) for higher project stability and quality.
 								</Text>
 								<Text size="2">
-									<strong>Consistent Logic:</strong> Standardized background vocal extraction to include the new automatic cleaning and stability fixes.
+									<strong>UI Refinements:</strong> Improved word separation in Plain Text imports to cleanly remove delimiters without polluting the project with empty words or markers.
 								</Text>
 							</Flex>
 						</Box>
