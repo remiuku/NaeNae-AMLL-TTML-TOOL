@@ -38,7 +38,28 @@ export function ChangelogDialog() {
 				<ScrollArea type="always" scrollbars="vertical" style={{ height: "calc(100% - 60px)" }}>
 					<Flex direction="column" gap="5" pr="4">
 						<Box>
-							<Heading size="4" mb="2" color="teal">v0.1.5 Updates (Latest)</Heading>
+							<Heading size="4" mb="2" color="cyan">v0.1.6 Updates (Latest)</Heading>
+							<Flex direction="column" gap="3">
+								<Text size="2">
+									<strong>Custom Audio Equalizer:</strong> Introduced a professional 10-band equalizer with support for custom presets. Save, name, and manage your own audio profiles for a tailored listening experience.
+								</Text>
+								<Text size="2">
+									<strong>Enhanced EQ Presets:</strong> Added a curated list of built-in presets including Bass Boost, Treble Boost, Vocal Boost, Rock, Jazz, Pop, and more.
+								</Text>
+								<Text size="2">
+									<strong>Persistence:</strong> Equalizer settings and custom presets are now automatically saved and persisted across application sessions.
+								</Text>
+								<Text size="2">
+									<strong>UI Stability Fixes:</strong> Resolved critical layout issues where "space-between" align properties were incorrectly applied, ensuring smoother rendering of settings panels.
+								</Text>
+								<Text size="2">
+									<strong>Type Safety Improvements:</strong> Optimized component prop typing to prevent runtime UI errors and layout shifts.
+								</Text>
+							</Flex>
+						</Box>
+
+						<Box>
+							<Heading size="4" mb="2" color="teal">v0.1.5 Updates</Heading>
 							<Flex direction="column" gap="3">
 								<Text size="2">
 									<strong>Duplicate-to-Spot:</strong> Introduced a "Duplicate to..." workflow. Click indicators between any two lines to instantly place copies of your selection at that exact position.

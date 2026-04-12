@@ -203,8 +203,8 @@ export const ImportFromText = () => {
 							word: finalOrig,
 						},
 					],
-					translatedLyric: trans,
-					romanLyric: roman,
+					translatedLyric: trans.replace(/\\/g, ""),
+					romanLyric: roman.replace(/\\/g, ""),
 					isBG,
 					isDuet,
 				};
@@ -287,7 +287,7 @@ export const ImportFromText = () => {
 					const wholeLine = line.words.map((word) => word.word).join("");
 					let words: string[];
 					if (wordSeparator.length > 0) {
-						const regex = new RegExp(`(${wordSeparator.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'g');
+						const regex = new RegExp(`${wordSeparator.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`, 'g');
 						words = wholeLine.split(regex).filter(p => p.length > 0);
 					} else {
 						words = [wholeLine];
@@ -315,7 +315,7 @@ export const ImportFromText = () => {
 					
 					line.words = words.map((word) => ({
 						...newLyricWord(),
-						word,
+						word: word.replace(/\\/g, ""),
 					}));
 				}
 			}

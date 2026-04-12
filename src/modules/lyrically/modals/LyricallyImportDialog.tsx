@@ -170,7 +170,7 @@ export const LyricallyImportDialog = () => {
 				const isBG = trimmed.startsWith("(") && trimmed.endsWith(")");
 				let text = isBG ? trimmed.slice(1, -1).trim() : trimmed;
 				
-				text = text.replace(/\s+/g, " ");
+				text = text.replace(/\\/g, "").replace(/\s+/g, " ");
 				if (!text) continue;
 
 				const regex = addSpaces ? /(\s+)/ : /\s+/;
