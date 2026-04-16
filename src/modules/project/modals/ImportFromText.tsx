@@ -146,6 +146,7 @@ export const ImportFromText = () => {
 	const [addSpaces, setAddSpaces] = useAtom(importAddSpacesAtom);
 	const [splitHyphens, setSplitHyphens] = useAtom(importSplitHyphensAtom);
 	const [isGuideClicked, setIsGuideClicked] = useAtom(isGuideClickedAtom);
+	const setValue = useSetAtom(textValueAtom);
 
 
 
@@ -289,6 +290,9 @@ export const ImportFromText = () => {
 					if (wordSeparator.length > 0) {
 						const regex = new RegExp(`${wordSeparator.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`, 'g');
 						words = wholeLine.split(regex).filter(p => p.length > 0);
+					} else if (addSpaces) {
+						// If no separator but addSpaces is on, split by whitespace
+						words = wholeLine.split(/\s+/).filter(p => p.length > 0);
 					} else {
 						words = [wholeLine];
 					}
@@ -352,6 +356,58 @@ export const ImportFromText = () => {
 		[store, setImportFromTextDialog],
 	);
 
+	const handleProcessLyrics = useCallback(() => {
+		const text = store.get(textValueAtom);
+		
+		const lines = text.split("\n");
+		const processedLines: string[] = [];
+
+		const processLineContent = (content: string) => {
+			let result = content.trim();
+			// 1. Wrap hyphens with separator: - -> -\
+			result = result.replace(/-/g, "-\\");
+			// 2. Wrap spaces with separator and a literal space word: " " -> "\ \"
+			result = result.replace(/ /g, "\\ \\");
+			return result;
+		};
+
+		for (const line of lines) {
+			const currentLine = line.trim();
+			if (!currentLine) {
+				processedLines.push("");
+				continue;
+			}
+
+			// Handle background vocals in parentheses at the end of the line
+			const bgMatch = currentLine.match(/^(.*?)\s*\((.*)\)\s*$/);
+			if (bgMatch) {
+				const mainPart = bgMatch[1].trim();
+				const bgPart = bgMatch[2].trim();
+				
+				if (mainPart) {
+					processedLines.push(processLineContent(mainPart));
+				}
+				if (bgPart) {
+					processedLines.push("<" + processLineContent(bgPart));
+				}
+			} else if (currentLine.startsWith("(") && currentLine.endsWith(")")) {
+				// Handle case where the whole line is in parentheses
+				processedLines.push("<" + processLineContent(currentLine.slice(1, -1)));
+			} else {
+				processedLines.push(processLineContent(currentLine));
+			}
+		}
+
+		setValue(processedLines.join("\n"));
+		
+		// Set settings to match this format
+		setWordSeparator("\\");
+		setAddSpaces(false);
+		setSplitHyphens(false);
+		
+		toast.success(t("textImportDialog.processedSuccess", "Lyrics automated for syllable sync."));
+	}, [store, setValue, t, setWordSeparator, setAddSpaces, setSplitHyphens]);
+
 
 	return (
 		<Dialog.Root
@@ -394,9 +450,7 @@ export const ImportFromText = () => {
 								<Flex justify="end" gap="2">
 									<Button
 										variant="soft"
-										onClick={() =>
-											window.open("https://lyrprep.spicylyrics.org/", "_blank")
-										}
+										onClick={handleProcessLyrics}
 									>
 										{t("textImportDialog.processLyrics", "Process Lyrics")}
 									</Button>
@@ -538,21 +592,10 @@ export const ImportFromText = () => {
 											onChange={(evt) => setWordSeparator(evt.currentTarget.value)}
 										/>
 
-										<PrefText>
-											{t("textImportDialog.addSpaces", "补全单词空格")}
-										</PrefText>
-										<Switch
-											checked={addSpaces}
-											onCheckedChange={setAddSpaces}
-										/>
-
-										<PrefText>
-											{t("textImportDialog.splitHyphens", "拆分连字符单词")}
-										</PrefText>
-										<Switch
-											checked={splitHyphens}
-											onCheckedChange={setSplitHyphens}
-										/>
+<div style={{ display: "none" }}>
+    <Switch checked={addSpaces} onCheckedChange={setAddSpaces} />
+    <Switch checked={splitHyphens} onCheckedChange={setSplitHyphens} />
+</div>
 
 
 
@@ -615,8 +658,8 @@ export const ImportFromText = () => {
 											<Text color="gray">
 												{t("textImportDialog.guide.prepare.desc", "推荐使用 Lyrprep 工具来准备您的歌词。您可以搜索歌曲、选择版本并复制输出文本。")}
 											</Text>
-											<Button variant="soft" onClick={() => window.open("https://lyrprep.spicylyrics.org/", "_blank")}>
-												<Open16Regular /> {t("textImportDialog.processLyrics", "Process Lyrics")}
+											<Button variant="soft" onClick={handleProcessLyrics}>
+												{t("textImportDialog.processLyrics", "Process Lyrics")}
 											</Button>
 										</Flex>
 									</Card>

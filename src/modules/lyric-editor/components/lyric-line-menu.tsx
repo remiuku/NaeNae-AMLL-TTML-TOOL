@@ -1,4 +1,4 @@
-import { ContextMenu } from "@radix-ui/themes";
+import { ContextMenu, Flex } from "@radix-ui/themes";
 import { atom, useAtomValue, useSetAtom } from "jotai";
 import { useSetImmerAtom } from "jotai-immer";
 import * as React from "react";
@@ -7,18 +7,22 @@ import { lyricLinesAtom, selectedLinesAtom } from "$/states/main";
 
 import { type LyricLine, newLyricLine, newLyricWord } from "$/types/ttml";
 import { globalEnableInsertAtom } from "./lyric-line-view-states";
+import { aiAutoSyncDialogAtom } from "$/states/dialogs";
+import { Sparkle24Filled } from "@fluentui/react-icons";
 
 const selectedLinesSizeAtom = atom((get) => get(selectedLinesAtom).size);
 
 export const LyricLineMenu = ({ lineIndex }: { lineIndex: number }) => {
 	const { t } = useTranslation();
 	const setGlobalEnableInsert = useSetAtom(globalEnableInsertAtom);
+	const setAiSyncDialog = useSetAtom(aiAutoSyncDialogAtom);
 
 	const selectedLinesSize = useAtomValue(selectedLinesSizeAtom);
 	const selectedLines = useAtomValue(selectedLinesAtom);
 	const editLyricLines = useSetImmerAtom(lyricLinesAtom);
 
 	const lineObjs = useAtomValue(lyricLinesAtom);
+	const currentLineId = lineObjs.lyricLines[lineIndex]?.id;
 	const selectedLineObjs = lineObjs.lyricLines.filter((line) =>
 		selectedLines.has(line.id),
 	);
@@ -75,6 +79,19 @@ export const LyricLineMenu = ({ lineIndex }: { lineIndex: number }) => {
 			>
 				{t("contextMenu.duetLyric", "对唱歌词")}
 			</ContextMenu.CheckboxItem>
+			<ContextMenu.Separator />
+			<ContextMenu.Item
+				onSelect={() => {
+					setAiSyncDialog({ open: true, lineId: currentLineId });
+				}}
+				disabled={!currentLineId}
+				style={{ color: "var(--accent-9)" }}
+			>
+				<Flex gap="2" align="center">
+					<Sparkle24Filled />
+					{t("contextMenu.aiAutoSync", "AI Auto-Sync")}
+				</Flex>
+			</ContextMenu.Item>
 			<ContextMenu.Separator />
 			<ContextMenu.Item
 				onSelect={() => {

@@ -73,6 +73,8 @@
 			"auxiliaryLineDisplay": "辅助行显示",
 			"previewPanel": "预览面板",
 			"grammarCheck": "语法检查",
+			"aiTools": "AI 工具",
+			"aiAutoSync": "AI 自动打轴",
 			"tools": "检查"
 		},
 		"previewMode": {

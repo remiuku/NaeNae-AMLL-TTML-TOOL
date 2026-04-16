@@ -73,6 +73,8 @@
 			"auxiliaryLineDisplay": "Auxiliary Line Display",
 			"previewPanel": "Preview Panel",
 			"grammarCheck": "Grammar Check",
+			"aiTools": "AI Tools",
+			"aiAutoSync": "AI Auto-Sync",
 			"tools": "Check"
 		},
 		"previewMode": {
