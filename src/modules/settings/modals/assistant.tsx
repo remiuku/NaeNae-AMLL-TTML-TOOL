@@ -7,10 +7,6 @@ import {
 	enableManualTimestampEditAtom,
 	quickFixesAtom,
 	highlightErrorsAtom,
-	aiProviderAtom,
-	aiModelAtom,
-	aiApiKeyAtom,
-	aiEndpointAtom,
 } from "$/modules/settings/states";
 import { visualizeTimestampUpdateAtom } from "$/modules/settings/states/sync";
 import { 
@@ -18,8 +14,6 @@ import {
 	TimeAndWeather24Regular, 
 	ErrorCircle24Regular, 
 	TextT24Regular,
-	Key24Regular,
-	Bot24Regular
 } from "@fluentui/react-icons";
 
 export const SettingsAssistantTab = () => {
@@ -31,11 +25,6 @@ export const SettingsAssistantTab = () => {
 		visualizeTimestampUpdateAtom,
 	);
 	const [highlightErrors, setHighlightErrors] = useAtom(highlightErrorsAtom);
-
-	const [aiProvider, setAiProvider] = useAtom(aiProviderAtom);
-	const [aiModel, setAiModel] = useAtom(aiModelAtom);
-	const [aiApiKey, setAiApiKey] = useAtom(aiApiKeyAtom);
-	const [aiEndpoint, setAiEndpoint] = useAtom(aiEndpointAtom);
 
 	const { t } = useTranslation();
 
@@ -125,65 +114,6 @@ export const SettingsAssistantTab = () => {
 				</Text>
 			</Card>
 
-			<Separator size="4" />
-
-			<Heading size="4">AI Auto-Sync Configuration</Heading>
-			
-			<Card>
-				<Flex direction="column" gap="3">
-					<Flex gap="3" align="center">
-						<Bot24Regular />
-						<Box flexGrow="1">
-							<Text size="2" weight="bold" as="div">AI Provider</Text>
-							<Select.Root value={aiProvider} onValueChange={(v: "google" | "openrouter") => setAiProvider(v)}>
-								<Select.Trigger style={{ width: "100%" }} />
-								<Select.Content>
-									<Select.Item value="google">Google Gemini (GenAI)</Select.Item>
-									<Select.Item value="openrouter">OpenRouter</Select.Item>
-								</Select.Content>
-							</Select.Root>
-						</Box>
-					</Flex>
-
-					<Flex gap="3" align="center">
-						<Sparkle24Regular />
-						<Box flexGrow="1">
-							<Text size="2" weight="bold" as="div">Model</Text>
-							<TextField.Root 
-								placeholder="e.g. gemini-1.5-flash" 
-								value={aiModel}
-								onChange={(e) => setAiModel(e.target.value.trim())}
-							/>
-						</Box>
-					</Flex>
-
-					<Flex gap="3" align="center">
-						<Key24Regular />
-						<Box flexGrow="1">
-							<Text size="2" weight="bold" as="div">API Key</Text>
-							<TextField.Root 
-								placeholder="Enter your API Key..." 
-								type="password"
-								value={aiApiKey}
-								onChange={(e) => setAiApiKey(e.target.value.trim())}
-							/>
-						</Box>
-					</Flex>
-
-					{aiProvider === "openrouter" && (
-						<Flex gap="3" align="center">
-							<Box flexGrow="1" style={{ paddingLeft: "36px" }}>
-								<Text size="2" weight="bold" as="div">Custom Endpoint (Optional)</Text>
-								<TextField.Root 
-									placeholder="https://openrouter.ai/api/v1/chat/completions" 
-									value={aiEndpoint}
-									onChange={(e) => setAiEndpoint(e.target.value)}
-								/>
-							</Box>
-						</Flex>
-					)}
-				</Flex>
-			</Card>
 		</Flex>
 	);
 };

@@ -199,10 +199,6 @@ export const importSplitHyphensAtom = atomWithStorage<boolean>(
 	true,
 );
 
-export const aiProviderAtom = atomWithStorage<"google" | "openrouter">("aiProvider", "google");
-export const aiModelAtom = atomWithStorage<string>("aiModel", "gemini-2.0-flash");
-export const aiApiKeyAtom = atomWithStorage<string>("aiApiKey", "");
-export const aiEndpointAtom = atomWithStorage<string>("aiEndpoint", "");
 
 
 

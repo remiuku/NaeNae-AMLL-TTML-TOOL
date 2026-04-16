@@ -35,9 +35,6 @@ const ToolMenuItems = () => {
 			<DropdownMenu.Item onSelect={menu.onSyncLineTimestamps}>
 				{t("topBar.menu.syncLineTimestamps", "同步行时间戳")}
 			</DropdownMenu.Item>
-			<DropdownMenu.Item onSelect={menu.onOpenAiAutoSync}>
-				{t("ribbonBar.editMode.aiAutoSync", "AI 自动打轴")}
-			</DropdownMenu.Item>
 			<DropdownMenu.Item onSelect={menu.onOpenLatencyTest}>
 				{t("settingsDialog.common.latencyTest", "音频/输入延迟测试")}
 			</DropdownMenu.Item>

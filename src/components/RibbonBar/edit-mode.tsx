@@ -51,8 +51,6 @@ import { grammarCheckDialogAtom } from "$/modules/lyric-editor/modals/GrammarChe
 import { type LyricLine, type LyricWord, newLyricLine } from "$/types/ttml";
 import { msToTimestamp, parseTimespan } from "$/utils/timestamp.ts";
 import { RibbonFrame, RibbonSection } from "./common";
-import { aiAutoSyncDialogAtom } from "$/states/dialogs.ts";
-import { Sparkle24Filled } from "@fluentui/react-icons";
 
 const GrammarCheckButton = () => {
 	const { t } = useTranslation();
@@ -730,7 +728,6 @@ const AuxiliaryDisplayField: FC = () => {
 export const EditModeRibbonBar: FC = forwardRef<HTMLDivElement>(
 	(_props, ref) => {
 		const editLyricLines = useSetImmerAtom(lyricLinesAtom);
-		const setAiSyncDialog = useSetAtom(aiAutoSyncDialogAtom);
 		const { t } = useTranslation();
 
 		return (

@@ -46,6 +46,9 @@ export function ChangelogDialog() {
 								<Text size="2">
 									<strong>Syllable-Level Alignment:</strong> Refined the processing logic to match professional synchronization standards. It automatically converts plain text into a syllable-sync-ready format with escaped spaces and hyphens, saving hours of manual formatting.
 								</Text>
+								<Text size="2">
+									<strong>Feature Retirement:</strong> Removed the experimental AI Auto-Sync tool in favor of more predictable and stable local lyrics processing workflows.
+								</Text>
 							</Flex>
 						</Box>
 

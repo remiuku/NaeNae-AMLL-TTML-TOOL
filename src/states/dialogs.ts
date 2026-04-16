@@ -31,7 +31,3 @@ export const changelogDialogAtom = atom(false);
 export const geniusImportLyricsDialogAtom = atom(false);
 export const fontSelectionDialogAtom = atom(false);
 export const lyricallyImportLyricsDialogAtom = atom(false);
-export const aiAutoSyncDialogAtom = atom<{
-	open: boolean;
-	lineId: string;
-}>({ open: false, lineId: "" });

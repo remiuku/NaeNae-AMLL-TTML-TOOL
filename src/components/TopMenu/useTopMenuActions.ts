@@ -14,7 +14,6 @@ import {
 import { useSegmentationConfig } from "$/modules/segmentation/utils/useSegmentationConfig";
 import {
 	advancedSegmentationDialogAtom,
-	aiAutoSyncDialogAtom,
 	confirmDialogAtom,
 	historyRestoreDialogAtom,
 	latencyTestDialogAtom,
@@ -390,9 +389,6 @@ export const useTopMenuActions = () => {
 		setAdvancedSegmentationDialog(true);
 	}, [setAdvancedSegmentationDialog]);
 
-	const onOpenAiAutoSync = useCallback(() => {
-		store.set(aiAutoSyncDialogAtom, { open: true, lineId: "" });
-	}, [store]);
 
 	return {
 		newFileKey,
@@ -428,7 +424,6 @@ export const useTopMenuActions = () => {
 		onRubySegment,
 		onOpenAdvancedSegmentation,
 		onSyncLineTimestamps,
-		onOpenAiAutoSync,
 		onOpenLatencyTest,
 		onOpenGitHub,
 		onOpenWiki,
