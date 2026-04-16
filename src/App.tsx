@@ -37,6 +37,7 @@ import { backgroundGradients } from "$/modules/settings/states/gradients";
 import {
 	accentColorAtom,
 	backgroundModeAtom,
+	boykisserModeAtom,
 	customAccentColorAtom,
 	customGradientAngleAtom,
 	customGradientCenterAtom,
@@ -175,6 +176,7 @@ function App() {
 	const appFontStyle = useAtomValue(appFontStyleAtom);
 	const customFontData = useAtomValue(customFontDataAtom);
 	const customFontName = useAtomValue(customFontNameAtom);
+	const boykisserMode = useAtomValue(boykisserModeAtom);
 
 	useEffect(() => {
 		// Extract font name from appFont string (e.g., '"Inter", sans-serif' -> 'Inter')
@@ -560,6 +562,22 @@ function App() {
 						<Dialogs />
 					</Suspense>
 					<ToastContainer theme={effectiveTheme} />
+					{boykisserMode && (
+						<img
+							src="/boykisser/ids2sq.gif"
+							alt=""
+							style={{
+								position: "fixed",
+								top: "28px",
+								right: "120px",
+								width: "20px",
+								height: "20px",
+								pointerEvents: "none",
+								zIndex: 9999,
+								objectFit: "contain",
+							}}
+						/>
+					)}
 				</div>
 			</ErrorBoundary>
 		</Theme>

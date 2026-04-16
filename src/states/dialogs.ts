@@ -31,3 +31,14 @@ export const changelogDialogAtom = atom(false);
 export const geniusImportLyricsDialogAtom = atom(false);
 export const fontSelectionDialogAtom = atom(false);
 export const lyricallyImportLyricsDialogAtom = atom(false);
+export const mp3ConversionDialogAtom = atom<{
+	open: boolean;
+	fileName: string;
+	onConvert: () => void;
+	onSkip: () => void;
+}>({
+	open: false,
+	fileName: "",
+	onConvert: () => {},
+	onSkip: () => {},
+});

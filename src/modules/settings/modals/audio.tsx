@@ -6,6 +6,7 @@ import {
 import {
 	Box,
 	Button,
+	Card,
 	Flex,
 	Grid,
 	IconButton,
@@ -27,6 +28,10 @@ import {
 	equalizerGainsAtom,
 	equalizerPresetAtom,
 } from "$/modules/audio/states/index.ts";
+import {
+	Mp3ConversionMode,
+	mp3ConversionModeAtom,
+} from "$/modules/settings/states";
 
 export const AudioSettingsTab = () => {
 	const { t } = useTranslation();
@@ -35,6 +40,9 @@ export const AudioSettingsTab = () => {
 	const [preset, setPreset] = useAtom(equalizerPresetAtom);
 	const [customPresets, setCustomPresets] = useAtom(customEqualizerPresetsAtom);
 	const [newPresetName, setNewPresetName] = useState("");
+	const [mp3ConversionMode, setMp3ConversionMode] = useAtom(
+		mp3ConversionModeAtom,
+	);
 
 	const allPresets = useMemo(
 		() => ({
@@ -251,6 +259,43 @@ export const AudioSettingsTab = () => {
 					))}
 				</Grid>
 			</Flex>
+
+			<Card>
+				<Flex gap="3" align="center">
+					<Box flexGrow="1">
+						<Flex align="center" justify="between" gap="4">
+							<Flex direction="column" gap="1">
+								<Text>{t("settings.audio.mp3Conversion", "MP3 to FLAC")}</Text>
+								<Text size="1" color="gray">
+									{t(
+										"settings.audio.mp3ConversionDesc",
+										"Convert MP3 to FLAC when importing for better sync",
+									)}
+								</Text>
+							</Flex>
+							<Select.Root
+								value={mp3ConversionMode}
+								onValueChange={(val) =>
+									setMp3ConversionMode(val as Mp3ConversionMode)
+								}
+							>
+								<Select.Trigger />
+								<Select.Content>
+									<Select.Item value={Mp3ConversionMode.Ask}>
+										{t("settings.audio.mp3ConversionAsk", "Ask")}
+									</Select.Item>
+									<Select.Item value={Mp3ConversionMode.Always}>
+										{t("settings.audio.mp3ConversionAlways", "Auto")}
+									</Select.Item>
+									<Select.Item value={Mp3ConversionMode.Never}>
+										{t("settings.audio.mp3ConversionNever", "Off")}
+									</Select.Item>
+								</Select.Content>
+							</Select.Root>
+						</Flex>
+					</Box>
+				</Flex>
+			</Card>
 		</Flex>
 	);
 };

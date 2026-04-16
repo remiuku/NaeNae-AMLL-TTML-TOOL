@@ -87,8 +87,6 @@ export const smartFirstWordAtom = atomWithStorage("smartFirstWord", false);
 export const smartLastWordAtom = atomWithStorage("smartLastWord", false);
 export const compactBGInSyncAtom = atomWithStorage("compactBGInSync", true);
 
-
-
 export const accentColorAtom = atomWithStorage<
 	| "gray"
 	| "gold"
@@ -118,10 +116,9 @@ export const accentColorAtom = atomWithStorage<
 	| "sky"
 >("accentColor", "red");
 
-export const backgroundModeAtom = atomWithStorage<"none" | "image" | "gradient">(
-	"backgroundMode",
-	"none",
-);
+export const backgroundModeAtom = atomWithStorage<
+	"none" | "image" | "gradient"
+>("backgroundMode", "none");
 
 export const selectedGradientAtom = atomWithStorage<string>(
 	"selectedGradient",
@@ -148,10 +145,9 @@ export const customGradientColorsAtom = atomWithStorage<string[]>(
 	["#7028e4"],
 );
 
-export const customGradientTypeAtom = atomWithStorage<"linear" | "radial" | "conic">(
-	"customGradientType",
-	"linear",
-);
+export const customGradientTypeAtom = atomWithStorage<
+	"linear" | "radial" | "conic"
+>("customGradientType", "linear");
 
 export const customGradientOpacityAtom = atomWithStorage<number>(
 	"customGradientOpacity",
@@ -183,11 +179,23 @@ export const appFontAtom = atomWithStorage<string>(
 	'"MiSans", Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
 );
 
-export const customFontDataAtom = atomWithStorage<string | null>("customFontData", null);
-export const customFontNameAtom = atomWithStorage<string | null>("customFontName", null);
+export const customFontDataAtom = atomWithStorage<string | null>(
+	"customFontData",
+	null,
+);
+export const customFontNameAtom = atomWithStorage<string | null>(
+	"customFontName",
+	null,
+);
 
-export const appFontWeightAtom = atomWithStorage<string>("appFontWeight", "400");
-export const appFontStyleAtom = atomWithStorage<string>("appFontStyle", "normal");
+export const appFontWeightAtom = atomWithStorage<string>(
+	"appFontWeight",
+	"400",
+);
+export const appFontStyleAtom = atomWithStorage<string>(
+	"appFontStyle",
+	"normal",
+);
 
 export const importAddSpacesAtom = atomWithStorage<boolean>(
 	"importAddSpaces",
@@ -199,6 +207,23 @@ export const importSplitHyphensAtom = atomWithStorage<boolean>(
 	true,
 );
 
+export enum Mp3ConversionMode {
+	Never = "never",
+	Always = "always",
+	Ask = "ask",
+}
 
+export const mp3ConversionModeAtom = atomWithStorage<Mp3ConversionMode>(
+	"mp3ConversionMode",
+	Mp3ConversionMode.Ask,
+);
 
+export const hideMp3ConversionWarningAtom = atomWithStorage<boolean>(
+	"hideMp3ConversionWarning",
+	false,
+);
 
+export const boykisserModeAtom = atomWithStorage<boolean>(
+	"boykisserMode",
+	false,
+);
