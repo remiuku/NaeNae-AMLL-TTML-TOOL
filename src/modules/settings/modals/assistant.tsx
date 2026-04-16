@@ -1,4 +1,6 @@
-import { Card, Flex, Heading, Switch, Text } from "@radix-ui/themes";
+import { 
+	Card, Flex, Heading, Switch, Text, Box, TextField, Select, Separator 
+} from "@radix-ui/themes";
 import { useAtom } from "jotai";
 import { useTranslation } from "react-i18next";
 import {
@@ -7,7 +9,12 @@ import {
 	highlightErrorsAtom,
 } from "$/modules/settings/states";
 import { visualizeTimestampUpdateAtom } from "$/modules/settings/states/sync";
-import { Sparkle24Regular, TimeAndWeather24Regular, ErrorCircle24Regular, TextT24Regular } from "@fluentui/react-icons";
+import { 
+	Sparkle24Regular, 
+	TimeAndWeather24Regular, 
+	ErrorCircle24Regular, 
+	TextT24Regular,
+} from "@fluentui/react-icons";
 
 export const SettingsAssistantTab = () => {
 	const [quickFixes, setQuickFixes] = useAtom(quickFixesAtom);
@@ -18,6 +25,7 @@ export const SettingsAssistantTab = () => {
 		visualizeTimestampUpdateAtom,
 	);
 	const [highlightErrors, setHighlightErrors] = useAtom(highlightErrorsAtom);
+
 	const { t } = useTranslation();
 
 	return (
@@ -105,10 +113,7 @@ export const SettingsAssistantTab = () => {
 					</Flex>
 				</Text>
 			</Card>
+
 		</Flex>
 	);
 };
-
-// Also export Box for consistent imports
-import { Box as RadixBox } from "@radix-ui/themes";
-const Box = RadixBox;

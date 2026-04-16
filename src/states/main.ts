@@ -28,7 +28,8 @@ export enum ToolMode {
 	Preview = "preview",
 }
 
-export const toolModeAtom = atom(ToolMode.Edit);
+export const toolModeAtom = atom<ToolMode>(ToolMode.Edit);
+export const aiSyncPickModeAtom = atom(false);
 
 export const showPreviewPanelAtom = atom(false);
 export const previewPanelWidthAtom = atomWithStorage("previewPanelWidth", 400);

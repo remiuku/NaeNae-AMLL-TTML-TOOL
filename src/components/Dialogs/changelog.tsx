@@ -38,7 +38,22 @@ export function ChangelogDialog() {
 				<ScrollArea type="always" scrollbars="vertical" style={{ height: "calc(100% - 60px)" }}>
 					<Flex direction="column" gap="5" pr="4">
 						<Box>
-							<Heading size="4" mb="2" color="teal">v0.1.7 Updates (Latest)</Heading>
+							<Heading size="4" mb="2" color="gold">v0.1.8 Updates (Latest)</Heading>
+							<Flex direction="column" gap="3">
+								<Text size="2">
+									<strong>Automated Lyrics Prep Engine:</strong> Completely replaced the external <code>Lyrprep</code> dependency with a built-in, local processing engine. The new <strong>"Process Lyrics"</strong> button handles background vocal splitting, space escaping (<code>\ </code>), and hyphen splitting (<code>sh-\sh-</code>) on the spot without leaving the app.
+								</Text>
+								<Text size="2">
+									<strong>Syllable-Level Alignment:</strong> Refined the processing logic to match professional synchronization standards. It automatically converts plain text into a syllable-sync-ready format with escaped spaces and hyphens, saving hours of manual formatting.
+								</Text>
+								<Text size="2">
+									<strong>Feature Retirement:</strong> Removed the experimental AI Auto-Sync tool in favor of more predictable and stable local lyrics processing workflows.
+								</Text>
+							</Flex>
+						</Box>
+
+						<Box>
+							<Heading size="4" mb="2" color="teal">v0.1.7 Updates</Heading>
 							<Flex direction="column" gap="3">
 								<Text size="2">
 									<strong>Compact Sync Layout:</strong> Added a new "Compact Background Vocals" feature for the Time tab. This reduces vertical space for background vocals during synchronization, making it easier to manage dense projects. This behavior is toggleable in the Display settings.

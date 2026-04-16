@@ -1,4 +1,4 @@
-import { ContextMenu } from "@radix-ui/themes";
+import { ContextMenu, Flex } from "@radix-ui/themes";
 import { atom, useAtomValue, useSetAtom } from "jotai";
 import { useSetImmerAtom } from "jotai-immer";
 import * as React from "react";
@@ -19,6 +19,7 @@ export const LyricLineMenu = ({ lineIndex }: { lineIndex: number }) => {
 	const editLyricLines = useSetImmerAtom(lyricLinesAtom);
 
 	const lineObjs = useAtomValue(lyricLinesAtom);
+	const currentLineId = lineObjs.lyricLines[lineIndex]?.id;
 	const selectedLineObjs = lineObjs.lyricLines.filter((line) =>
 		selectedLines.has(line.id),
 	);

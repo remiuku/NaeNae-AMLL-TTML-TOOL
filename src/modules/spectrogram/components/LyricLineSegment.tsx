@@ -4,6 +4,7 @@ import type { ProcessedLyricLine } from "$/modules/segmentation/utils/segment-pr
 import {
 	previewLineAtom,
 	selectedWordIdAtom,
+	timelineDragAtom,
 } from "$/modules/spectrogram/states/dnd.ts";
 import { editingTimeFieldAtom, selectedLinesAtom } from "$/states/main.ts";
 import { DividerSegment } from "./DividerSegment.tsx";
@@ -24,8 +25,9 @@ export const LyricLineSegment: FC<LyricLineSegmentProps> = ({
 	const previewLine = useAtomValue(previewLineAtom);
 	const setSelectedLines = useSetAtom(selectedLinesAtom);
 	const setSelectedWordId = useSetAtom(selectedWordIdAtom);
-	const { zoom } = useContext(SpectrogramContext);
+	const { scrollContainerRef, zoom, scrollLeft } = useContext(SpectrogramContext);
 	const editingTimeField = useAtomValue(editingTimeFieldAtom);
+	const setTimelineDrag = useSetAtom(timelineDragAtom);
 
 	let displayLine: ProcessedLyricLine;
 	if (previewLine && previewLine.id === line.id) {
@@ -41,12 +43,35 @@ export const LyricLineSegment: FC<LyricLineSegmentProps> = ({
 			if (!displayLine) return;
 			e.stopPropagation();
 
-			const { id } = displayLine;
+			const { id, startTime } = displayLine;
+
+			const scrollContainer = scrollContainerRef.current;
+			if (!scrollContainer) return;
+
+			const rect = scrollContainer.getBoundingClientRect();
+			const mouseXPx = e.clientX - rect.left;
+			const initialMouseTimeMS = ((scrollLeft + mouseXPx) / zoom) * 1000;
+
+			setTimelineDrag({
+				type: "line-pan",
+				lineId: id,
+				initialMouseTimeMS,
+				initialLineStartMS: startTime,
+			});
 
 			setSelectedLines(new Set([id]));
 			setSelectedWordId(null);
 		},
-		[editingTimeField, displayLine, setSelectedLines, setSelectedWordId],
+		[
+			editingTimeField,
+			displayLine,
+			setSelectedLines,
+			setSelectedWordId,
+			scrollContainerRef,
+			scrollLeft,
+			zoom,
+			setTimelineDrag,
+		],
 	);
 
 	if (!displayLine) {

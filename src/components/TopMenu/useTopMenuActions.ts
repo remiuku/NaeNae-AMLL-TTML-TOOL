@@ -389,6 +389,7 @@ export const useTopMenuActions = () => {
 		setAdvancedSegmentationDialog(true);
 	}, [setAdvancedSegmentationDialog]);
 
+
 	return {
 		newFileKey,
 		openFileKey,
