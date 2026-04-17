@@ -152,6 +152,13 @@
 			"paletteCustom": "Пользовательская",
 			"gradientEditorDesc": "Значение Pos 0.0 соответствует самой тихой части, а 1.0 — самой громкой. Рекомендуется использовать более яркие цвета для больших значений Pos.",
 			"addStop": "Добавить цветовую точку"
+		},
+		"audio": {
+			"mp3Conversion": "MP3 в FLAC",
+			"mp3ConversionDesc": "Конвертировать MP3 в FLAC при импорте для лучшей синхронизации",
+			"mp3ConversionAsk": "Спрашивать",
+			"mp3ConversionAlways": "Авто",
+			"mp3ConversionNever": "Выкл"
 		}
 	},
 	"topBar": {
@@ -610,5 +617,18 @@
 		"ignoredWords": "Игнорируемые слова",
 		"clearIgnoredWords": "Очистить все",
 		"noIgnoredWords": "Нет игнорируемых слов"
+	},
+	"dialog": {
+		"mp3Conversion": {
+			"title": "Конвертировать MP3 в FLAC?",
+			"description": "Вы импортируете файл MP3: {fileName}",
+			"warning": "Файлы MP3 могут вызвать рассинхронизацию звука в этом приложении. Рекомендуется конвертировать в FLAC для лучшей совместимости.",
+			"dontShowAgain": "Больше не показывать это предупреждение",
+			"skip": "Использовать MP3",
+			"convert": "Конвертировать в FLAC",
+			"converting": "Конвертация MP3 в FLAC...",
+			"success": "Конвертация успешна",
+			"failed": "Ошибка конвертации: {error}"
+		}
 	}
 }
