@@ -152,6 +152,13 @@
 			"paletteCustom": "Brugerdefineret",
 			"gradientEditorDesc": "En Pos-værdi på 0.0 svarer til den roligste del, og 1.0 svarer til den højeste del. Det anbefales at bruge lysere farver for større Pos-værdier.",
 			"addStop": "Tilføj farvepunkt"
+		},
+		"audio": {
+			"mp3Conversion": "MP3 til FLAC",
+			"mp3ConversionDesc": "Konverter MP3 til FLAC ved import for bedre synkronisering",
+			"mp3ConversionAsk": "Spørg",
+			"mp3ConversionAlways": "Auto",
+			"mp3ConversionNever": "Fra"
 		}
 	},
 	"topBar": {
@@ -610,5 +617,18 @@
 		"ignoredWords": "Ignorerede ord",
 		"clearIgnoredWords": "Ryd alle",
 		"noIgnoredWords": "Ingen ignorerede ord"
+	},
+	"dialog": {
+		"mp3Conversion": {
+			"title": "Konverter MP3 til FLAC?",
+			"description": "Du importerer en MP3-fil: {fileName}",
+			"warning": "MP3-filer kan forårsage lyddesynkronisering i denne app. Konvertering til FLAC anbefales for bedre kompatibilitet.",
+			"dontShowAgain": "Vis ikke denne advarsel igen",
+			"skip": "Brug MP3",
+			"convert": "Konverter til FLAC",
+			"converting": "Konverterer MP3 til FLAC...",
+			"success": "Konvertering vellykket",
+			"failed": "Konvertering mislykkedes: {error}"
+		}
 	}
 }

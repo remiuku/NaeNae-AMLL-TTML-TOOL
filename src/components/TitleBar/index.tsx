@@ -4,6 +4,7 @@ import { useSetImmerAtom } from "jotai-immer";
 import { type FC, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import WindowControls from "$/components/WindowControls";
+import { boykisserModeAtom } from "$/modules/settings/states";
 import {
 	keySwitchEditModeAtom,
 	keySwitchPreviewModeAtom,
@@ -24,6 +25,7 @@ export const TitleBar: FC = () => {
 	const setSelectedLines = useSetImmerAtom(selectedLinesAtom);
 	const setSelectedWords = useSetImmerAtom(selectedWordsAtom);
 	const { t } = useTranslation();
+	const [boykisserMode, setBoykisserMode] = useAtom(boykisserModeAtom);
 
 	const onSwitchEditMode = useCallback(() => {
 		setToolMode(ToolMode.Edit);
@@ -61,21 +63,43 @@ export const TitleBar: FC = () => {
 			}
 			endChildren={
 				!import.meta.env.TAURI_ENV_PLATFORM && (
-					<Flex
-						direction="column"
-						align="end"
-						justify="center"
-						mr="2"
-						style={{ lineHeight: 1.2 }}
-					>
-						<Text style={{ color: "var(--accent-11)" }} wrap="nowrap" size="2">
-							<span className={styles.title}>
-								{t("topBar.appName", "Apple Music-like Lyrics TTML Tool")}
-							</span>
-						</Text>
-						<Text size="1" color="gray" style={{ opacity: 0.7 }}>
-							Forked by NaeNae
-						</Text>
+					<Flex align="center" gap="2" mr="2">
+						<button
+							type="button"
+							style={{
+								width: "6px",
+								height: "6px",
+								borderRadius: "50%",
+								background: "var(--accent-9)",
+								border: "none",
+								cursor: "pointer",
+								opacity: 0.2,
+								transition: "opacity 0.2s",
+								outline: "none",
+								marginRight: "4px",
+							}}
+							onClick={() => setBoykisserMode(!boykisserMode)}
+							title={t("topBar.boykisser", "boykisser")}
+						/>
+						<Flex
+							direction="column"
+							align="end"
+							justify="center"
+							style={{ lineHeight: 1.2 }}
+						>
+							<Text
+								style={{ color: "var(--accent-11)" }}
+								wrap="nowrap"
+								size="2"
+							>
+								<span className={styles.title}>
+									{t("topBar.appName", "Apple Music-like Lyrics TTML Tool")}
+								</span>
+							</Text>
+							<Text size="1" color="gray" style={{ opacity: 0.7 }}>
+								Forked by NaeNae
+							</Text>
+						</Flex>
 					</Flex>
 				)
 			}
