@@ -1,13 +1,11 @@
 project_id: 890690
 api_token_env: CROWDIN_PERSONAL_TOKEN
-base_path: "."
-
+base_path: .
 files:
   - source: locales/en-US/translation.json
     translation: locales/%locale%/translation.json
     languages_mapping:
       locale:
-        # Existing languages in your locales/ folder
         cs: cs-CZ
         da: da-DK
         es-ES: es-ES
