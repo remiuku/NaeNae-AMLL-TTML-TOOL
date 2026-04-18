@@ -79,7 +79,7 @@ export const SettingsAboutTab = () => {
 					<Flex gap="3" mt="1">
 						<Button
 							variant="soft"
-							onClick={() => open("https://github.com/spicylyrics/ttml-tool")}
+							onClick={() => open("https://github.com/NaeNaeTart/Vercel-AMLL-TTML-TOOL")}
 						>
 							{t("aboutModal.github", "GitHub Repository")}
 						</Button>
