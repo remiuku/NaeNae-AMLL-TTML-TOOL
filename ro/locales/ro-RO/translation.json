@@ -1,12 +1,12 @@
 {
 	"app": {
 		"error": {
-			"title": "Oops, an error occurred!",
-			"description": "An error occurred while running AMLL TTML Tools",
-			"checkDevTools": "Details can be found in Developer Tools",
-			"saveLyrics": "Try saving current lyrics",
-			"tryRestart": "Try reloading the app",
-			"details": "Approximate error info:"
+			"title": "Ups, a apărut o eroare!",
+			"description": "A apărut o eroare la rularea AMLL TTML Tools",
+			"checkDevTools": "Detalii pot fi găsite în Developer Tools",
+			"saveLyrics": "Încercați să salvați Lyric-urile curente",
+			"tryRestart": "Încercați să reîncărcați aplicația",
+			"details": "Informații eroare aproximativă:"
 		},
 		"update": {
 			"updateAvailable": "Update available: {version}",
@@ -14,7 +14,7 @@
 		},
 		"empty": {
 			"title": "No lyric lines",
-			"description": "Add new lyric lines in the top panel or open/import existing lyrics from the menu"
+			"description": "Adăugați noi linii de text în panoul de sus sau deschideți/importați versuri existente din meniu"
 		}
 	},
 	"confirmDialog": {
