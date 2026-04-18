@@ -18,6 +18,7 @@ import {
 	SegmentedControl,
 	Text,
 	TextField,
+	VisuallyHidden,
 } from "@radix-ui/themes";
 import { useAtom, useSetAtom } from "jotai";
 import { useState, useMemo, useRef } from "react";
@@ -140,6 +141,11 @@ export const FontSelectionDialog = () => {
 	return (
 		<Dialog.Root open={isOpen} onOpenChange={setIsOpen}>
 			<Dialog.Content style={{ maxWidth: 850, width: "95vw", height: "90vh", maxHeight: 900, padding: "32px" }}>
+				<VisuallyHidden>
+					<Dialog.Description>
+						Select a font from standard, system, or Google fonts library.
+					</Dialog.Description>
+				</VisuallyHidden>
 				<Flex justify="between" align="center" mb="5">
 					<Flex align="center" gap="3">
 						<TextFont24Regular />

@@ -10,6 +10,7 @@ import {
 	Text,
 	TextArea,
 	TextField,
+	VisuallyHidden,
 } from "@radix-ui/themes";
 import type { TFunction } from "i18next";
 import { atom, useAtom, useAtomValue, useStore } from "jotai";
@@ -242,12 +243,15 @@ ${comment}
 
 	return (
 		<Dialog.Root open={dialogOpen} onOpenChange={setDialogOpen}>
-			<Dialog.Content
-				aria-description={t(
-					"submitToAMLLDB.description",
-					"提交歌词到 AMLL 歌词数据库",
-				)}
-			>
+			<Dialog.Content>
+				<VisuallyHidden>
+					<Dialog.Description>
+						{t(
+							"submitToAMLLDB.description",
+							"提交歌词到 AMLL 歌词数据库",
+						)}
+					</Dialog.Description>
+				</VisuallyHidden>
 				<Dialog.Title>
 					{t(
 						"submitToAMLLDB.title",

@@ -174,4 +174,9 @@ export default defineConfig({
 	worker: {
 		format: "es",
 	},
+	define: {
+		global: "globalThis",
+		module: "{}",
+		"process.env": "{}",
+	},
 });

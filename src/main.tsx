@@ -25,12 +25,14 @@ import "./index.css";
 import "./utils/pwa.tsx";
 import { wasm_start } from "@applemusic-like-lyrics/lyric";
 import { globalStore } from "./states/store.ts";
+import { pluginManager } from "$/modules/plugins/plugin-manager";
 
 async function startApp() {
 	try {
 		wasm_start();
+		await pluginManager.loadEnabledPlugins();
 	} catch (e) {
-		console.error("Error calling wasm_start:", e);
+		console.error("Error during WASM initialization:", e);
 	}
 
 	enableMapSet();

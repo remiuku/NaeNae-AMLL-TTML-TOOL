@@ -14,13 +14,18 @@ import {
 	Checkbox,
 	Flex,
 	Grid,
+	IconButton,
+	Popover,
 	RadioGroup,
+	Select,
+	Spinner,
+	Switch,
 	Text,
 	TextField,
 } from "@radix-ui/themes";
 import { atom, useAtom, useAtomValue, useSetAtom, useStore } from "jotai";
 import { useSetImmerAtom } from "jotai-immer";
-import {
+import React, {
 	type FC,
 	forwardRef,
 	useCallback,
@@ -33,6 +38,7 @@ import {
 } from "react";
 import { useTranslation } from "react-i18next";
 import {
+	displayRomanizationInSyncAtom,
 	LayoutMode,
 	layoutModeAtom,
 	showLineRomanizationAtom,
@@ -51,6 +57,9 @@ import { grammarCheckDialogAtom } from "$/modules/lyric-editor/modals/GrammarChe
 import { type LyricLine, type LyricWord, newLyricLine } from "$/types/ttml";
 import { msToTimestamp, parseTimespan } from "$/utils/timestamp.ts";
 import { RibbonFrame, RibbonSection } from "./common";
+import { getPhonetic, getPhoneticSyllables } from "$/utils/phonetic";
+import { toast } from "react-toastify";
+import { QuestionCircle16Regular } from "@fluentui/react-icons";
 
 const GrammarCheckButton = () => {
 	const { t } = useTranslation();
@@ -725,6 +734,150 @@ const AuxiliaryDisplayField: FC = () => {
 	);
 };
 
+const PhoneticSection = () => {
+	const { t } = useTranslation();
+	const editLyricLines = useSetImmerAtom(lyricLinesAtom);
+	const selectedLines = useAtomValue(selectedLinesAtom);
+	const selectedWords = useAtomValue(selectedWordsAtom);
+	const store = useStore();
+	const [loading, setLoading] = useState(false);
+	const [lang, setLang] = useState<"auto" | "ja" | "zh" | "ko">("auto");
+
+
+	const handleAutoFetch = useCallback(async () => {
+		setLoading(true);
+		try {
+			const { lyricLines: originalLines } = store.get(lyricLinesAtom);
+			
+			if (selectedLines.size === 0 && selectedWords.size === 0) {
+				toast.info(t("ribbonBar.editMode.phonetic.noSelection", "Please select lines or words first"));
+				return;
+			}
+
+			// Detect project-level language priority for context
+			const fullProjectText = originalLines.map(l => l.words.map(w => w.word).join("")).join("");
+			let projectLangPriority = lang;
+			if (lang === "auto") {
+				if (/[\u3040-\u309F\u30A0-\u30FF]/.test(fullProjectText)) projectLangPriority = "ja";
+				else if (/[\uAC00-\uD7AF]/.test(fullProjectText)) projectLangPriority = "ko";
+				else if (/[\u4E00-\u9FA5]/.test(fullProjectText)) projectLangPriority = "zh";
+			}
+
+			const lineUpdates: Record<string, string> = {};
+			const wordUpdates: Record<string, string> = {};
+
+			if (selectedWords.size > 0) {
+				for (const line of originalLines) {
+					// Pass word arrays directly to ensure capsule-aware mapping
+					const capsuleTexts = line.words.map(w => w.word);
+					if (capsuleTexts.join("").trim().length === 0) continue;
+					
+					// Get line-level phonetic data
+					const lineSyllables = await getPhoneticSyllables(capsuleTexts, projectLangPriority as "auto" | "ja" | "zh" | "ko");
+
+					for (let i = 0; i < line.words.length; i++) {
+						const word = line.words[i];
+						if (selectedWords.has(word.id) && lineSyllables[i]) {
+							wordUpdates[word.id] = lineSyllables[i];
+						}
+					}
+				}
+			} else {
+				const targetLines = originalLines.filter((l) => selectedLines.has(l.id));
+				for (const line of targetLines) {
+					// Join for the line summary, but process capsules for word updates
+					const capsuleTexts = line.words.map(w => w.word);
+					const joinedText = capsuleTexts.join("");
+					const linePhonetic = await getPhonetic(joinedText, projectLangPriority as "auto" | "ja" | "zh" | "ko");
+					lineUpdates[line.id] = linePhonetic;
+
+					if (line.words.length > 0) {
+						// Distribute using capsule-aware mapping
+						const syllables = await getPhoneticSyllables(capsuleTexts, projectLangPriority as "auto" | "ja" | "zh" | "ko");
+						for (let i = 0; i < line.words.length; i++) {
+							if (syllables[i]) {
+								wordUpdates[line.words[i].id] = syllables[i];
+							}
+						}
+					}
+				}
+			}
+
+			editLyricLines((draft) => {
+				for (const line of draft.lyricLines) {
+					if (lineUpdates[line.id] !== undefined) {
+						line.romanLyric = lineUpdates[line.id];
+					}
+					for (const word of line.words) {
+						if (wordUpdates[word.id] !== undefined) {
+							word.romanWord = wordUpdates[word.id];
+						}
+					}
+				}
+			});
+			toast.success(t("ribbonBar.editMode.phonetic.success", "Phonetics fetched successfully"));
+		} catch (e) {
+			console.error(e);
+			toast.error(t("ribbonBar.editMode.phonetic.error", "Failed to fetch phonetics"));
+		} finally {
+			setLoading(false);
+		}
+	}, [editLyricLines, selectedLines, selectedWords, store, t, lang]);
+
+	const displayRomanization = useAtomValue(displayRomanizationInSyncAtom);
+
+	return (
+		<RibbonSection 
+			label={
+				<Flex gap="1" align="center">
+					{t("ribbonBar.editMode.romanization.section", "Romanization")}
+					<Popover.Root>
+						<Popover.Trigger>
+							<IconButton size="1" variant="ghost" style={{ cursor: "pointer" }}>
+								<QuestionCircle16Regular />
+							</IconButton>
+						</Popover.Trigger>
+						<Popover.Content size="1" style={{ width: 300 }}>
+							<Flex direction="column" gap="2">
+								<Text size="2" weight="bold">{t("ribbonBar.editMode.romanization.info.title", "About Romanization")}</Text>
+								<Text size="1">
+									{t("ribbonBar.editMode.romanization.info.canDo", "✓ Can do: Auto-generate Romaji (JA), Pinyin (ZH), and Romaji (KO). Supports Kanji!")}
+								</Text>
+								<Text size="1">
+									{t("ribbonBar.editMode.romanization.info.cannotDo", "✗ Cannot do: 100% accuracy for rare Kanji or proper names. CJK only. Minor errors may occur.")}
+								</Text>
+							</Flex>
+						</Popover.Content>
+					</Popover.Root>
+				</Flex>
+			}
+		>
+			<Grid columns="2" gap="2" align="center">
+				<Select.Root value={lang} onValueChange={(v) => setLang(v as "auto" | "ja" | "zh" | "ko")} size="1">
+					<Select.Trigger />
+					<Select.Content>
+						<Select.Item value="auto">{t("common.autoDetect", "Auto")}</Select.Item>
+						<Select.Item value="ja">Japanese (Romaji)</Select.Item>
+						<Select.Item value="zh">Chinese (Pinyin)</Select.Item>
+						<Select.Item value="ko">Korean (Romaji)</Select.Item>
+					</Select.Content>
+				</Select.Root>
+				<Button size="1" variant="soft" onClick={handleAutoFetch} disabled={loading}>
+					{loading ? <Spinner size="1" /> : t("ribbonBar.editMode.romanization.autoFetch", "Romanize")}
+				</Button>
+				<Flex gap="2" align="center" style={{ gridColumn: "span 2", justifyContent: "center" }}>
+					<Text size="1" color="gray">{t("settings.appearance.displayRomanization", "Show")}</Text>
+					<Switch 
+						size="1" 
+						checked={displayRomanization} 
+						onCheckedChange={(checked) => store.set(displayRomanizationInSyncAtom, checked)} 
+					/>
+				</Flex>
+			</Grid>
+		</RibbonSection>
+	);
+};
+
 export const EditModeRibbonBar: FC = forwardRef<HTMLDivElement>(
 	(_props, ref) => {
 		const editLyricLines = useSetImmerAtom(lyricLinesAtom);
@@ -785,6 +938,7 @@ export const EditModeRibbonBar: FC = forwardRef<HTMLDivElement>(
 						/>
 					</Grid>
 				</RibbonSection>
+				<PhoneticSection />
 				<RibbonSection label={t("ribbonBar.editMode.wordTiming", "词时间戳")}>
 					<Grid columns="0fr 1fr" gap="2" gapY="1" flexGrow="1" align="center">
 						<EditField

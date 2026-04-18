@@ -75,7 +75,14 @@
 			"grammarCheck": "语法检查",
 			"aiTools": "AI 工具",
 			"aiAutoSync": "AI 自动打轴",
-			"tools": "检查"
+			"tools": "检查",
+			"phonetic": {
+				"section": "音译",
+				"autoFetch": "自动获取",
+				"noSelection": "请先选择行或单词",
+				"success": "音译获取成功",
+				"error": "获取音译失败"
+			}
 		},
 		"previewMode": {
 			"lyrics": "歌词",
@@ -167,7 +174,22 @@
 			"useCustomAccent": "自定义强调色",
 			"useCustomAccentDesc": "使用自定义色阶覆盖预设颜色。",
 			"background": "背景",
-			"backgroundFilterTip": "提示：您仍可以在“自定义背景”设置中调整透明度、模糊和亮度。"
+			"backgroundFilterTip": "提示：您仍可以在“自定义背景”设置中调整透明度、模糊和亮度。",
+			"fontLibrary": "字体库",
+			"fontWeight": "字重",
+			"fontStyle": "字体样式",
+			"importFont": "导入字体文件",
+			"defaultFonts": "标准字体栈",
+			"systemFonts": "系统字体",
+			"googleFonts Library": "Google 字体库",
+			"weight": {
+				"regular": "常规",
+				"bold": "加粗"
+			},
+			"style": {
+				"normal": "常规",
+				"italic": "斜体"
+			}
 		},
 		"about": {
 			"update": "软件更新",
@@ -238,7 +260,8 @@
 				"fromESLyRiC": "从 ESLyRiC 文件导入…",
 				"fromQRC": "从 QRC 文件导入…",
 				"fromYRC": "从 YRC 文件导入…",
-				"fromLrcfySylb": "从 Lyricify Syllable 文件导入…"
+				"fromLrcfySylb": "从 Lyricify Syllable 文件导入…",
+				"fromLyrically": "从 Lyrically 导入..."
 			},
 			"exportLyric": {
 				"export": "导出歌词…",
@@ -336,7 +359,9 @@
 			"common": "常规",
 			"appearance": "外观",
 			"keybindings": "按键绑定",
-			"spectrogram": "频谱图"
+			"spectrogram": "频谱图",
+			"assistant": "智能助手",
+			"audio": "音频"
 		}
 	},
 	"error": {
@@ -395,6 +420,7 @@
 	},
 	"common": {
 		"search": "搜索",
+		"autoDetect": "自动检测",
 		"close": "关闭",
 		"cancel": "取消",
 		"confirm": "确认",
@@ -417,7 +443,9 @@
 		"restore": "恢复",
 		"about": "关于",
 		"remove": "移除",
-		"clickToSet": "点击设置"
+		"clickToSet": "点击设置",
+		"save": "保存",
+		"saveAndContinue": "保存并继续"
 	},
 	"lyricLineView": {
 		"translatedLabel": "翻译：",
@@ -584,7 +612,8 @@
 			"ttmlAuthorGithub": "歌词作者 GitHub ID",
 			"ttmlAuthorGithubInvalidMsg": "GitHub ID 应为纯数字",
 			"ttmlAuthorGithubLogin": "歌词作者 GitHub 用户名",
-			"ttmlAuthorGithubLoginInvalidMsg": "GitHub 用户名应为不长于 39 字符的字母、数字或短横线"
+			"ttmlAuthorGithubLoginInvalidMsg": "GitHub 用户名应为不长于 39 字符的字母、数字或短横线",
+			"coverArt": "封面图片 URL"
 		},
 		"title": "元数据编辑器",
 		"key": "元数据类型",
@@ -607,7 +636,11 @@
 			"fetchError": "无法获取歌词: {error}",
 			"button": "通过 Genius 获取词曲作者",
 			"findingRealName": "正在查找 {name} 的真名 ({current}/{total})...",
-			"tryFindRealNames": "尝试查找真名 (法定姓名)"
+			"tryFindRealNames": "尝试查找真名 (法定姓名)",
+			"setupTitle": "Genius API 密钥设置",
+			"setupDesc": "要使用此功能，请配置您的 Genius API 密钥（具体来说，您需要“CLIENT ACCESS TOKEN”）。您可以从 ",
+			"setupDescEnd": " 开发者门户生成一个。",
+			"keyPlaceholder": "输入 CLIENT ACCESS TOKEN"
 		}
 	},
 	"submitToAMLLDB": {
@@ -748,5 +781,11 @@
 		"ignoredWords": "忽略的词语",
 		"clearIgnoredWords": "清除全部",
 		"noIgnoredWords": "没有忽略的词语"
+	},
+	"lyrically": {
+		"importTitle": "通过 Lyrically 安全导入歌词（无需 CORS，使用 API 代理）"
+	},
+	"lyricEditor": {
+		"locate": "定位"
 	}
 }

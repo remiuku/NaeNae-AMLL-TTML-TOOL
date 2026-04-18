@@ -11,15 +11,9 @@
 
 import { Flex, Separator, Text } from "@radix-ui/themes";
 import { motion } from "framer-motion";
-import {
-	type FC,
-	forwardRef,
-	type PropsWithChildren,
-	useImperativeHandle,
-	useRef,
-} from "react";
+import { type FC, forwardRef, type PropsWithChildren, type ReactNode, useImperativeHandle, useRef } from "react";
 
-export const RibbonSection: FC<PropsWithChildren<{ label: string }>> = ({
+export const RibbonSection: FC<PropsWithChildren<{ label: ReactNode }>> = ({
 	children,
 	label,
 }) => (
@@ -35,9 +29,9 @@ export const RibbonSection: FC<PropsWithChildren<{ label: string }>> = ({
 			<Flex flexGrow="1" align="center" justify="center">
 				{children}
 			</Flex>
-			<Text align="center" wrap="nowrap" size="1" style={{ color: "var(--accent-11)" }}>
+			<Flex align="center" justify="center" px="2" style={{ color: "var(--accent-11)", fontSize: "var(--font-size-1)", whiteSpace: "nowrap" }}>
 				{label}
-			</Text>
+			</Flex>
 		</Flex>
 		<Separator
 			orientation="vertical"
@@ -61,9 +55,12 @@ export const RibbonFrame = forwardRef<HTMLDivElement, PropsWithChildren>(
 				align="center"
 				style={{
 					overflowX: "auto",
-					overflowY: "visible",
+					overflowY: "clip",
 					height: "100%",
+					scrollbarWidth: "none",
+					msOverflowStyle: "none",
 				}}
+				className="hide-scrollbar"
 				asChild
 			><motion.div
 					initial={{ x: 10, opacity: 0 }}

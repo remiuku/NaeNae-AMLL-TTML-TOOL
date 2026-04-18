@@ -13,6 +13,8 @@ import {
 	Card,
 	Badge,
 	Separator,
+	VisuallyHidden,
+	Box,
 } from "@radix-ui/themes";
 import { Open16Regular, QuestionCircle16Regular } from "@fluentui/react-icons";
 import { atom, useAtom, useAtomValue, useSetAtom, useStore } from "jotai";
@@ -37,10 +39,10 @@ import { importAddSpacesAtom, importSplitHyphensAtom } from "$/modules/settings/
 
 
 import { error as logError } from "$/utils/logging.ts";
-
-
+import { pluginManager } from "$/modules/plugins/plugin-manager";
+import { getAllPlugins } from "$/modules/plugins/plugin-store";
+import type { WASMPlugin } from "$/modules/plugins/types";
 import styles from "./ImportFromText.module.css";
-import error = toast.error;
 
 import { useTranslation } from "react-i18next";
 
@@ -388,11 +390,11 @@ export const ImportFromText = () => {
 					processedLines.push(processLineContent(mainPart));
 				}
 				if (bgPart) {
-					processedLines.push("<" + processLineContent(bgPart));
+					processedLines.push(`<${processLineContent(bgPart)}`);
 				}
 			} else if (currentLine.startsWith("(") && currentLine.endsWith(")")) {
 				// Handle case where the whole line is in parentheses
-				processedLines.push("<" + processLineContent(currentLine.slice(1, -1)));
+				processedLines.push(`<${processLineContent(currentLine.slice(1, -1))}`);
 			} else {
 				processedLines.push(processLineContent(currentLine));
 			}
@@ -415,6 +417,11 @@ export const ImportFromText = () => {
 			onOpenChange={setImportFromTextDialog}
 		>
 			<Dialog.Content maxWidth="1100px" maxHeight="90vh">
+				<VisuallyHidden>
+					<Dialog.Description>
+						Import lyrics from plain text or other formats.
+					</Dialog.Description>
+				</VisuallyHidden>
 				<Tabs.Root
 					defaultValue="import"
 					style={{ display: "flex", flexDirection: "column", minHeight: "80vh" }}
@@ -430,6 +437,9 @@ export const ImportFromText = () => {
 							<Tabs.List size="2">
 								<Tabs.Trigger value="import">
 									{t("textImportDialog.tab.import", "Import")}
+								</Tabs.Trigger>
+								<Tabs.Trigger value="plugins">
+									Community Plugins
 								</Tabs.Trigger>
 								<Tabs.Trigger
 									value="guide"
@@ -644,6 +654,58 @@ export const ImportFromText = () => {
 										/>
 									</Grid>
 								</Flex>
+							</Flex>
+						</Tabs.Content>
+						
+						<Tabs.Content value="plugins">
+							<Flex direction="column" gap="4">
+								<Text size="2" color="gray">
+									Run custom importers written by the community. You can manage these in the "Plugins" section of the Ribbon Bar.
+								</Text>
+								<Box p="4" style={{ backgroundColor: "var(--gray-2)", borderRadius: "var(--radius-3)" }}>
+									<Grid columns="2" gap="3">
+										{pluginManager.getImporters().map(instance => (
+											<Card key={instance.metadata.id} variant="surface">
+												<Flex direction="column" gap="2">
+													<Flex justify="between" align="start">
+														<Box>
+															<Text weight="bold" size="2">{instance.metadata.name}</Text>
+															<Text size="1" color="gray" as="div">v{instance.metadata.version} by {instance.metadata.author}</Text>
+														</Box>
+														<Badge color="indigo">WASM</Badge>
+													</Flex>
+													<Text size="1" truncate>{instance.metadata.description}</Text>
+													<Button 
+														size="1" 
+														variant="soft" 
+														onClick={async () => {
+															try {
+																const input = store.get(textValueAtom);
+																if (!input) {
+																	toast.error("Please enter some text in the Import tab first!");
+																	return;
+																}
+																const result = await pluginManager.runImporter(instance.metadata.id, input);
+																setValue(result);
+																toast.success(`Imported using ${instance.metadata.name}`);
+															} catch (e) {
+																toast.error(`Plugin error: ${e instanceof Error ? e.message : String(e)}`);
+															}
+														}}
+													>
+														Run Importer
+													</Button>
+												</Flex>
+											</Card>
+										))}
+									</Grid>
+									{pluginManager.getImporters().length === 0 && (
+										<Flex direction="column" align="center" justify="center" p="6" gap="2">
+											<Text size="2" color="gray">No enabled community importers found.</Text>
+											<Text size="1" color="gray">Upload a .wasm plugin in the Ribbon Bar to get started.</Text>
+										</Flex>
+									)}
+								</Box>
 							</Flex>
 						</Tabs.Content>
 
