@@ -2,8 +2,10 @@ import { LatencyTestDialog } from "$/modules/audio/modals/LatencyTest.tsx";
 import { GeniusSearchDialog } from "$/modules/genius/modals/GeniusSearchDialog.tsx";
 import { GeniusImportLyricsDialog } from "$/modules/genius/modals/GeniusImportLyricsDialog.tsx";
 import { ImportFromLRCLIB } from "$/modules/lrclib/modals/ImportDialog.tsx";
+import { LyricallyImportDialog } from "$/modules/lyrically/modals/LyricallyImportDialog.tsx";
 import { ReplaceWordDialog } from "$/modules/lyric-editor/tools/ReplaceWordDialog.tsx";
 import { TimeShiftDialog } from "$/modules/lyric-editor/tools/TimeShift.tsx";
+import { GrammarCheckDialog } from "$/modules/lyric-editor/modals/GrammarCheckDialog.tsx";
 
 import { HistoryRestoreDialog } from "$/modules/project/modals/HistoryRestore.tsx";
 import { ImportFromText } from "$/modules/project/modals/ImportFromText.tsx";
@@ -14,6 +16,7 @@ import { SplitWordDialog } from "$/modules/segmentation/components/split-word.ts
 import { SettingsDialog } from "$/modules/settings/modals/index.tsx";
 import { ChangelogDialog } from "./changelog.tsx";
 import { ConfirmationDialog } from "./confirmation.tsx";
+import { Mp3ConversionDialog } from "./mp3-conversion.tsx";
 import { FontSelectionDialog } from "$/modules/settings/modals/FontSelectionDialog.tsx";
 
 export const Dialogs = () => {
@@ -21,6 +24,7 @@ export const Dialogs = () => {
 		<>
 			<ImportFromText />
 			<ImportFromLRCLIB />
+			<LyricallyImportDialog />
 			<MetadataEditor />
 			<SettingsDialog />
 			<SplitWordDialog />
@@ -28,9 +32,11 @@ export const Dialogs = () => {
 			<SubmitToAMLLDBDialog />
 			<LatencyTestDialog />
 			<ConfirmationDialog />
+			<Mp3ConversionDialog />
 			<HistoryRestoreDialog />
 			<AdvancedSegmentationDialog />
 			<TimeShiftDialog />
+			<GrammarCheckDialog />
 
 			<GeniusSearchDialog />
 			<GeniusImportLyricsDialog />

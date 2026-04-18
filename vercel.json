@@ -1,5 +1,11 @@
 {
 	"$schema": "https://openapi.vercel.sh/vercel.json",
+	"rewrites": [
+		{
+			"source": "/boykisser/(.*)",
+			"destination": "https://files.catbox.moe/$1"
+		}
+	],
 	"headers": [
 		{
 			"source": "(.*)",

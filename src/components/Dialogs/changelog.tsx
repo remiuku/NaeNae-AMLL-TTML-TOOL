@@ -1,8 +1,8 @@
-import { Box, Button, Dialog, Flex, Text, Heading, ScrollArea } from "@radix-ui/themes";
+import { DismissRegular } from "@fluentui/react-icons";
+import { Box, Button, Dialog, Flex, Heading, ScrollArea, Text } from "@radix-ui/themes";
 import { open } from "@tauri-apps/plugin-shell";
 import { useAtom } from "jotai";
 import { changelogDialogAtom } from "$/states/dialogs.ts";
-import { DismissRegular } from "@fluentui/react-icons";
 
 export function ChangelogDialog() {
 	const [isOpen, setIsOpen] = useAtom(changelogDialogAtom);
@@ -38,7 +38,151 @@ export function ChangelogDialog() {
 				<ScrollArea type="always" scrollbars="vertical" style={{ height: "calc(100% - 60px)" }}>
 					<Flex direction="column" gap="5" pr="4">
 						<Box>
-							<Heading size="4" mb="2" color="ruby">v0.1.2 Updates (Latest)</Heading>
+							<Heading size="4" mb="2" color="gold">v0.2.0 Updates (Major)</Heading>
+							<Flex direction="column" gap="3">
+								<Text size="2">
+									<strong>Community WASM Plugin System:</strong> A revolutionary extension framework allowing developers to write high-performance importers and exporters in C++ or Rust. Features persistent IndexedDB storage and a dedicated management console located in the brand new <strong>Dev</strong> preferences tab.
+								</Text>
+								<Text size="2">
+									<strong>Advanced Romanization Engine:</strong> Completely rebuilt the phonetic system for professional-grade synchronization. Supports automated Romaji (JA), Pinyin (ZH), and Romaji (KO) generation with project-level language priority and <strong>capsule-aware distribution</strong> for perfect Japanese mora syncing.
+								</Text>
+								<Text size="2">
+									<strong>Developer Preferences Tab:</strong> Introduced a dedicated "Dev" category in the Preferences dialog to house advanced technical features, plugin management, and system debug information. Access it to manage your community extensions or check build environments.
+								</Text>
+								<Text size="2">
+									<strong>UI Performance & Stability:</strong> Resolved critical Ribbon Bar layout issues, implemented invisible scrollbar utilities for horizontal navigation, and fixed dynamic import failures to ensure a 100% stable and fluid editing experience.
+								</Text>
+								<Text size="2">
+									<strong>Integrated MP3-to-FLAC Converter:</strong> Added a high-fidelity audio processing bridge powered by <strong>FFmpeg.wasm</strong>. The tool now automatically detects MP3 files and offers a streamlined conversion to FLAC format to ensure 100% timing accuracy and eliminate browser-level audio decoding drift during synchronization.
+								</Text>
+								<Text size="2">
+									<strong>Type-Safe Plugin Architecture:</strong> Refactored the internal core to be fully type-safe, preventing runtime crashes and improving the developer experience for community contributors.
+								</Text>
+							</Flex>
+						</Box>
+
+						<Box>
+							<Heading size="4" mb="2" color="teal">v0.1.8 Updates</Heading>
+							<Flex direction="column" gap="3">
+								<Text size="2">
+									<strong>Automated Lyrics Prep Engine:</strong> Completely replaced the external <code>Lyrprep</code> dependency with a built-in, local processing engine. The new <strong>"Process Lyrics"</strong> button handles background vocal splitting, space escaping (<code>\ </code>), and hyphen splitting (<code>sh-\sh-</code>) on the spot without leaving the app.
+								</Text>
+								<Text size="2">
+									<strong>Syllable-Level Alignment:</strong> Refined the processing logic to match professional synchronization standards. It automatically converts plain text into a syllable-sync-ready format with escaped spaces and hyphens, saving hours of manual formatting.
+								</Text>
+								<Text size="2">
+									<strong>Feature Retirement:</strong> Removed the experimental AI Auto-Sync tool in favor of more predictable and stable local lyrics processing workflows.
+								</Text>
+							</Flex>
+						</Box>
+
+						<Box>
+							<Heading size="4" mb="2" color="teal">v0.1.7 Updates</Heading>
+							<Flex direction="column" gap="3">
+								<Text size="2">
+									<strong>Compact Sync Layout:</strong> Added a new "Compact Background Vocals" feature for the Time tab. This reduces vertical space for background vocals during synchronization, making it easier to manage dense projects. This behavior is toggleable in the Display settings.
+								</Text>
+								<Text size="2">
+									<strong>Smart Space Handling:</strong> Refined synchronization logic to automatically skip over whitespace-only words. Navigation shortcuts like <strong>H</strong> (Set End Time) and <strong>D</strong> (Next Word) now always land on syllables with actual content.
+								</Text>
+								<Text size="2">
+									<strong>Clean Imports:</strong> Standardized lyric cleaning during import to automatically strip backslashes (<code>\</code>) across all major sources (Genius, Lyrically, Text, LRC) for higher project stability and quality.
+								</Text>
+								<Text size="2">
+									<strong>UI Refinements:</strong> Improved word separation in Plain Text imports to cleanly remove delimiters without polluting the project with empty words or markers.
+								</Text>
+							</Flex>
+						</Box>
+
+						<Box>
+							<Heading size="4" mb="2" color="cyan">v0.1.6 Updates</Heading>
+							<Flex direction="column" gap="3">
+								<Text size="2">
+									<strong>Custom Audio Equalizer:</strong> Introduced a professional 10-band equalizer with support for custom presets. Save, name, and manage your own audio profiles for a tailored listening experience.
+								</Text>
+								<Text size="2">
+									<strong>Enhanced EQ Presets:</strong> Added a curated list of built-in presets including Bass Boost, Treble Boost, Vocal Boost, Rock, Jazz, Pop, and more.
+								</Text>
+								<Text size="2">
+									<strong>Persistence:</strong> Equalizer settings and custom presets are now automatically saved and persisted across application sessions.
+								</Text>
+								<Text size="2">
+									<strong>UI Stability Fixes:</strong> Resolved critical layout issues where "space-between" align properties were incorrectly applied, ensuring smoother rendering of settings panels.
+								</Text>
+								<Text size="2">
+									<strong>Type Safety Improvements:</strong> Optimized component prop typing to prevent runtime UI errors and layout shifts.
+								</Text>
+							</Flex>
+						</Box>
+
+						<Box>
+							<Heading size="4" mb="2" color="teal">v0.1.5 Updates</Heading>
+							<Flex direction="column" gap="3">
+								<Text size="2">
+									<strong>Duplicate-to-Spot:</strong> Introduced a "Duplicate to..." workflow. Click indicators between any two lines to instantly place copies of your selection at that exact position.
+								</Text>
+								<Text size="2">
+									<strong>Global Placement Mode:</strong> Activating "Duplicate to" reveals insertion spacers globally across the editor, providing a one-click visual map for project restructuring.
+								</Text>
+								<Text size="2">
+									<strong>Smart Selection Persistence:</strong> Right-clicking no longer clears multi-word selections. This enables powerful bulk operations like "Combine Words" for complex phonetic merging.
+								</Text>
+								<Text size="2">
+									<strong>Continuous Duplication (Shift):</strong> Holding <strong>Shift</strong> while clicking insertion points keeps the placement mode active, allowing for high-speed batch line replication.
+								</Text>
+								<Text size="2">
+									<strong>Clean UI Logic:</strong> Rebuilt the insertion spacer rendering to resolve stacking bugs and collision issues, ensuring a clutter-free interface with perfectly centered placement points.
+								</Text>
+								<Text size="2">
+									<strong>Redo Shortcut:</strong> Updated the Redo shortcut to <strong>Shift + Ctrl + Z</strong> across all platforms for a more intuitive editing workflow.
+								</Text>
+								<Text size="2">
+									<strong>Refined Plain Text Import:</strong> Disabled automatic space padding by default to prevent unwanted spacing in imported projects.
+								</Text>
+								<Text size="2">
+									<strong>Redo Memory:</strong> Optimized state management by limiting the Redo/Undo history to the 10 most recent actions for better performance.
+								</Text>
+								<Text size="2">
+									<strong>Static Highlighting:</strong> Disabled word move animations and glow effects during playback for a more focused and distraction-free synchronization experience.
+								</Text>
+								<Text size="2">
+									<strong>Assistant Tab:</strong> Introduced a dedicated "Assistant" tab in Settings to manage helper features like Quick Fixes and timing visualization in one place.
+								</Text>
+								<Text size="2">
+									<strong>Flexible Syncing:</strong> Added a toggle to enable or disable manual timestamp typing in Sync mode, allowing you to lock timings to prevent accidental changes.
+								</Text>
+							</Flex>
+						</Box>
+
+						<Box>
+							<Heading size="4" mb="2" color="cyan">v0.1.4 Updates</Heading>
+							<Flex direction="column" gap="3">
+								<Text size="2">
+									<strong>Lyrically Engine Integration:</strong> Added a high-reliability alternative lyrics source via the <strong>Lyrically API</strong> (powered by lyrics.ovh). This fallback completely bypasses CORS restrictions and Genius anti-bot measures using server-side aggregation.
+								</Text>
+								<Text size="2">
+									<strong>Bulletproof Scraper Engine:</strong> Rebuilt the Genius scraper with a <strong>Multi-Proxy Rotation</strong> system and deep <code>__PRELOADED_STATE__</code> JSON extraction, ensuring imports work even when the site's layout changes or blocks standard requests.
+								</Text>
+								<Text size="2">
+									<strong>Native CDN Image Loading:</strong> Switched to direct <strong>Genius CDN</strong> and <strong>HTTPS forced</strong> image links for cover arts. This resolves persistent "403 Forbidden" blocks and "Mixed Content" security errors in browser environments.
+								</Text>
+								<Text size="2">
+									<strong>Optimized Import Workflow:</strong> The import menu now features a dedicated <strong>English Translation</strong> layer with better fallbacks and a cleaner, more responsive preview panel for Lyrically-sourced lyrics.
+								</Text>
+							</Flex>
+						</Box>
+
+						<Box>
+							<Heading size="4" mb="2" color="gold">v0.1.3 Updates</Heading>
+							<Flex direction="column" gap="3">
+								<Text size="2">
+									<strong>Multi-Provider Scaling:</strong> Improved backend logic for handling concurrent requests across different lyric providers.
+								</Text>
+							</Flex>
+						</Box>
+
+						<Box>
+							<Heading size="4" mb="2" color="ruby">v0.1.2 Updates</Heading>
 							<Flex direction="column" gap="3">
 								<Text size="2">
 									<strong>Advanced Font Selection Menu:</strong> Replaced the basic font list with a high-performance Gallery interface. Features over 300+ of the most popular Google Fonts and system font stacks for total visual control.
@@ -111,5 +255,3 @@ export function ChangelogDialog() {
 		</Dialog.Root>
 	);
 }
-
-// Ensure Box is imported. Oops, let me just add it above.

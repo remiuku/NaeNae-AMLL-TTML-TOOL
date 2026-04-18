@@ -26,7 +26,12 @@
 		align-items: center;
 
 		border-right: solid 1px var(--gray-a5);
+
+		transition:
+			box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+			background-color 0.2s ease;
 	}
+
 
 	&.dropLeft {
 		border-left: solid 3px var(--accent-a11);
@@ -75,6 +80,28 @@
 	display: inline-flex;
 	align-items: center;
 	gap: var(--space-2);
+}
+
+.wordMainContainer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	min-width: 2em;
+}
+
+.wordMainText {
+	font-weight: 500;
+	font-size: 1.1em;
+}
+
+.wordRomanSecondary {
+	font-size: 0.75em;
+	color: var(--gray-10);
+	font-style: italic;
+	margin-top: -1px;
+	line-height: 1;
+	opacity: 0.8;
 }
 
 .rubyEditorCompact {
@@ -156,6 +183,18 @@
 	max-lines: 1;
 }
 
+.insertWordField {
+	opacity: 0;
+	transition: opacity 0.2s ease-in-out;
+
+	&:has(> input:active),
+	&:has(> input:focus),
+	&:has(> input:hover),
+	&.empty {
+		opacity: 1;
+	}
+}
+
 .lyricLine {
 	border-radius: var(--radius-4);
 	box-shadow: var(--base-card-surface-box-shadow);
@@ -166,6 +205,7 @@
 		opacity 0.1s ease-in-out,
 		background-color 0.1s ease,
 		box-shadow 0.1s ease;
+
 
 	&.dropTop {
 		border-top: solid 3px var(--accent-a11);
@@ -189,21 +229,26 @@
 			opacity: 1;
 		}
 	}
-}
 
-.insertWordField {
-	opacity: 0;
-	transition: opacity 0.2s ease-in-out;
+	&.bg {
+		.lyricLineContainer {
+			padding-top: 2px;
+			padding-bottom: 2px;
+		}
 
-	&:has(> input:active),
-	&:has(> input:focus),
-	&:has(> input:hover),
-	&.empty {
-		opacity: 1;
+		.lyricWord.sync {
+			padding-top: 0;
+			padding-bottom: 0;
+		}
+
+		.displayWord {
+			font-size: 1.1em;
+		}
 	}
 }
 
 .lyricLineContainer {
+
 	min-width: 0;
 	padding: var(--space-3);
 	flex-grow: 1;
@@ -273,12 +318,13 @@
 .lyricWord.selected:not(.error),
 .lyricLine.selected:not(.error) {
 	box-shadow: 0 0 0 2px var(--accent-a11);
-	background-color: var(--accent-a5);
+	background-color: var(--accent-a3);
 	&:hover {
 		box-shadow: 0 0 0 2px var(--accent-a11);
-		background-color: var(--accent-a6);
+		background-color: var(--accent-a4);
 	}
 }
+
 
 .lyricWord.error,
 .lyricLine.error {
@@ -310,13 +356,6 @@
 	background-color: var(--orange-a2);
 }
 
-:global(.radix-themes.light) .lyricWord.selected {
-	.startTime,
-	.endTime {
-		color: var(--white-a12);
-	}
-}
-
 .lyricWord.selected {
 	.startTime,
 	.endTime {
@@ -324,13 +363,51 @@
 	}
 }
 
-.lyricWord.sync.active {
-	background-color: var(--accent-a4);
-
-	&.selected {
-		background-color: var(--accent-a6);
+:global(.radix-themes.light) .lyricWord.selected {
+	.startTime,
+	.endTime {
+		color: var(--white-a12);
 	}
 }
+
+
+.lyricWord.sync.active {
+	background-color: var(--accent-a4);
+	position: relative;
+	z-index: 2;
+
+	&.animated {
+		transition:
+			opacity 0.1s ease-in-out,
+			background-color 0.1s ease,
+			box-shadow 0.1s ease;
+
+		animation: highlightBurst 0.15s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+		box-shadow: 0 0 25px var(--accent-a7);
+		
+		.displayWord {
+			transition: text-shadow 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+			text-shadow: 0 0 15px var(--accent-a11);
+		}
+	}
+
+
+
+
+	.displayWord {
+		color: #fff;
+		font-weight: normal;
+	}
+
+	&.selected {
+		background-color: var(--accent-a4);
+		box-shadow: 0 0 30px var(--accent-a5);
+	}
+
+}
+
+
+
 
 .lineNumber {
 	min-width: 2em;
@@ -379,3 +456,16 @@
 	z-index: 5;
 	box-shadow: var(--base-card-surface-box-shadow);
 }
+
+@keyframes highlightBurst {
+	0% {
+		box-shadow: 0 0 0px var(--accent-a7);
+		background-color: transparent;
+	}
+	100% {
+		box-shadow: 0 0 25px var(--accent-a7);
+		background-color: var(--accent-a4);
+	}
+}
+
+

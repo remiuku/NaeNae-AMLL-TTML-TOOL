@@ -63,7 +63,9 @@
 			"romanLyric": "Romanização",
 			"layoutMode": "Layout",
 			"auxiliaryLineDisplay": "Exibição de linha auxiliar",
-			"previewPanel": "Painel de visualização"
+			"previewPanel": "Painel de visualização",
+			"grammarCheck": "Verificação gramatical",
+			"tools": "Verificar"
 		},
 		"previewMode": {
 			"lyrics": "Letras",
@@ -150,6 +152,13 @@
 			"paletteCustom": "Personalizada",
 			"gradientEditorDesc": "Um valor de Pos de 0.0 corresponde à parte mais silenciosa, e 1.0 corresponde à parte mais alta. É recomendado usar cores mais brilhantes para valores de Pos maiores.",
 			"addStop": "Adicionar ponto de cor"
+		},
+		"audio": {
+			"mp3Conversion": "MP3 para FLAC",
+			"mp3ConversionDesc": "Converter MP3 para FLAC ao importar para melhor sincronização",
+			"mp3ConversionAsk": "Perguntar",
+			"mp3ConversionAlways": "Automático",
+			"mp3ConversionNever": "Desativado"
 		}
 	},
 	"topBar": {
@@ -590,5 +599,36 @@
 		"offlineReady": "Site armazenado em cache com sucesso para uso offline",
 		"updateRefresh": "Site atualizado, atualize para usar a versão mais recente!",
 		"refresh": "Atualizar"
+	},
+	"grammarCheck": {
+		"title": "Verificação de Gramática e Ortografia",
+		"history": "Histórico",
+		"noIssues": "Nenhum problema encontrado!",
+		"issuesFound": "problemas encontrados",
+		"noIssuesMessage": "Nenhum problema encontrado! Suas letras estão boas.",
+		"clearHistory": "Limpar Histórico",
+		"noHistory": "Nenhuma alteração feita ainda",
+		"fixed": "corrigido",
+		"ignored": "ignorado",
+		"line": "Linha",
+		"repeatedWord": "Palavra repetida detectada",
+		"capitalization": "Palavra deve ser capitalizada",
+		"undoLast": "Desfazer Última",
+		"ignoredWords": "Palavras Ignoradas",
+		"clearIgnoredWords": "Limpar Tudo",
+		"noIgnoredWords": "Nenhuma palavra ignorada"
+	},
+	"dialog": {
+		"mp3Conversion": {
+			"title": "Converter MP3 para FLAC?",
+			"description": "Você está importando um arquivo MP3: {fileName}",
+			"warning": "Arquivos MP3 podem causar dessincronização de áudio neste aplicativo. É recomendável converter para FLAC para melhor compatibilidade.",
+			"dontShowAgain": "Não mostrar este aviso novamente",
+			"skip": "Usar MP3",
+			"convert": "Converter para FLAC",
+			"converting": "Convertendo MP3 para FLAC...",
+			"success": "Conversão bem-sucedida",
+			"failed": "Falha na conversão: {error}"
+		}
 	}
 }

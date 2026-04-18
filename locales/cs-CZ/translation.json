@@ -63,7 +63,9 @@
 			"romanLyric": "Romanizace",
 			"layoutMode": "Rozložení",
 			"auxiliaryLineDisplay": "Zobrazení pomocného řádku",
-			"previewPanel": "Náhledový panel"
+			"previewPanel": "Náhledový panel",
+			"grammarCheck": "Kontrola gramatiky",
+			"tools": "Kontrola"
 		},
 		"previewMode": {
 			"lyrics": "titulky",
@@ -150,6 +152,13 @@
 			"paletteCustom": "Vlastní",
 			"gradientEditorDesc": "Hodnota Pos 0.0 odpovídá nejtišší části a 1.0 nejhlasitější části. Doporučuje se používat jasnější barvy pro větší hodnoty Pos.",
 			"addStop": "Přidat barevný bod"
+		},
+		"audio": {
+			"mp3Conversion": "MP3 na FLAC",
+			"mp3ConversionDesc": "Převést MP3 na FLAC při importu pro lepší synchronizaci",
+			"mp3ConversionAsk": "Zeptat se",
+			"mp3ConversionAlways": "Auto",
+			"mp3ConversionNever": "Vypnuto"
 		}
 	},
 	"topBar": {
@@ -590,5 +599,36 @@
 		"offlineReady": "Stránka úspěšně uložena do mezipaměti pro offline použití",
 		"updateRefresh": "Stránka aktualizována, obnovte pro použití nejnovější verze!",
 		"refresh": "Obnovit"
+	},
+	"grammarCheck": {
+		"title": "Kontrola gramatiky a pravopisu",
+		"history": "Historie",
+		"noIssues": "Žádné problémy nenalezeny!",
+		"issuesFound": "problémů nalezeno",
+		"noIssuesMessage": "Žádné problémy nenalezeny! Vaše texty vypadají dobře.",
+		"clearHistory": "Vymazat historii",
+		"noHistory": "Zatím nebyly provedeny žádné změny",
+		"fixed": "opraveno",
+		"ignored": "ignorováno",
+		"line": "Řádek",
+		"repeatedWord": "Detekováno opakované slovo",
+		"capitalization": "Slovo by mělo být velkým písmenem",
+		"undoLast": "Zpět poslední",
+		"ignoredWords": "Ignorovaná slova",
+		"clearIgnoredWords": "Vymazat vše",
+		"noIgnoredWords": "Žádná ignorovaná slova"
+	},
+	"dialog": {
+		"mp3Conversion": {
+			"title": "Převést MP3 na FLAC?",
+			"description": "Importujete soubor MP3: {fileName}",
+			"warning": "Soubory MP3 mohou v této aplikaci způsobit desynchronizaci zvuku. Pro lepší kompatibilitu se doporučuje převod na FLAC.",
+			"dontShowAgain": "Toto varování již nezobrazovat",
+			"skip": "Použít MP3",
+			"convert": "Převést na FLAC",
+			"converting": "Převádění MP3 na FLAC...",
+			"success": "Převod byl úspěšný",
+			"failed": "Převod se nezdařil: {error}"
+		}
 	}
 }

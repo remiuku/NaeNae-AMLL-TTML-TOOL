@@ -63,7 +63,9 @@
 			"romanLyric": "Romanizácia",
 			"layoutMode": "Rozloženie",
 			"auxiliaryLineDisplay": "Zobrazenie pomocného riadku",
-			"previewPanel": "Náhľadový panel"
+			"previewPanel": "Náhľadový panel",
+			"grammarCheck": "Kontrola gramatiky",
+			"tools": "Kontrola"
 		},
 		"previewMode": {
 			"lyrics": "Texty",
@@ -150,6 +152,13 @@
 			"paletteCustom": "Vlastná",
 			"gradientEditorDesc": "Hodnota Pos 0.0 zodpovedá najtichšej časti a 1.0 najhlasnejšej časti. Odporúča sa používať jasnejšie farby pre väčšie hodnoty Pos.",
 			"addStop": "Pridať farebný bod"
+		},
+		"audio": {
+			"mp3Conversion": "MP3 na FLAC",
+			"mp3ConversionDesc": "Previesť MP3 na FLAC pri importe pre lepšiu synchronizáciu",
+			"mp3ConversionAsk": "Opýtať sa",
+			"mp3ConversionAlways": "Auto",
+			"mp3ConversionNever": "Vypnuté"
 		}
 	},
 	"topBar": {
@@ -590,5 +599,36 @@
 		"offlineReady": "Stránka úspešne uložená do vyrovnávacej pamäte pre offline použitie",
 		"updateRefresh": "Stránka aktualizovaná, obnovte pre použitie najnovšej verzie!",
 		"refresh": "Obnoviť"
+	},
+	"grammarCheck": {
+		"title": "Kontrola gramatiky a pravopisu",
+		"history": "História",
+		"noIssues": "Žiadne problémy!",
+		"issuesFound": "problémov nájdených",
+		"noIssuesMessage": "Žiadne problémy! Vaše texty vyzerajú dobre.",
+		"clearHistory": "Vymazať históriu",
+		"noHistory": "Zatiaľ žiadne zmeny",
+		"fixed": "opravené",
+		"ignored": "ignoresované",
+		"line": "Riadok",
+		"repeatedWord": "Opakované slovo",
+		"capitalization": "Slovo by malo byť veľké",
+		"undoLast": "Vrátiť posledné",
+		"ignoredWords": "Ignorované slová",
+		"clearIgnoredWords": "Vymazať všetky",
+		"noIgnoredWords": "Žiadne ignorované slová"
+	},
+	"dialog": {
+		"mp3Conversion": {
+			"title": "Previesť MP3 na FLAC?",
+			"description": "Importujete súbor MP3: {fileName}",
+			"warning": "Súbory MP3 môžu v tejto aplikácii spôsobiť desynchronizáciu zvuku. Pre lepšiu kompatibilitu sa odporúča prevod na FLAC.",
+			"dontShowAgain": "Toto varovanie už nezobrazovať",
+			"skip": "Použiť MP3",
+			"convert": "Previesť na FLAC",
+			"converting": "Prevod MP3 na FLAC...",
+			"success": "Prevod bol úspešný",
+			"failed": "Prevod zlyhal: {error}"
+		}
 	}
 }

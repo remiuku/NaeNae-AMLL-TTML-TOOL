@@ -14,6 +14,7 @@ import {
 import {
 	commitUpdatedLine,
 	getUpdatedLineForDivider,
+	getUpdatedLineForLinePan,
 	getUpdatedLineForWordPan,
 } from "$/modules/spectrogram/utils/timeline-mutations.ts";
 import { selectedLinesAtom, showUnselectedLinesAtom } from "$/states/main.ts";
@@ -113,6 +114,28 @@ export const LyricTimelineOverlay: FC<LyricTimelineOverlayProps> = ({
 						wordId,
 						desiredNewStartMS,
 						zoom,
+					);
+					setPreviewLine(preview);
+					break;
+				}
+				case "line-pan": {
+					const { lineId, initialMouseTimeMS, initialLineStartMS } =
+						timelineDrag;
+					const processedLine = processedLines.find((l) => l.id === lineId);
+					if (!processedLine) return;
+
+					const scrollContainer = scrollContainerRef.current;
+					if (!scrollContainer) return;
+					const rect = scrollContainer.getBoundingClientRect();
+
+					const mouseXPx = event.clientX - rect.left;
+					const currentMouseTimeMS = ((scrollLeft + mouseXPx) / zoom) * 1000;
+					const timeDeltaMS = currentMouseTimeMS - initialMouseTimeMS;
+					const desiredNewStartMS = initialLineStartMS + timeDeltaMS;
+
+					const preview = getUpdatedLineForLinePan(
+						processedLine,
+						desiredNewStartMS,
 					);
 					setPreviewLine(preview);
 					break;

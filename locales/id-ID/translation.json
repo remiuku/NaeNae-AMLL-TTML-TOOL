@@ -67,7 +67,9 @@
 			"romanLyric": "Lirik Romanisasi",
 			"layoutMode": "Mode Tata Letak",
 			"auxiliaryLineDisplay": "Tampilan Baris Tambahan",
-			"previewPanel": "Panel Pratinjau"
+			"previewPanel": "Panel Pratinjau",
+			"grammarCheck": "Pemeriksaan Tata Bahasa",
+			"tools": "Periksa"
 		},
 		"previewMode": {
 			"lyrics": "Lirik",
@@ -165,6 +167,13 @@
 			"paletteCustom": "Kostum",
 			"gradientEditorDesc": "Pos 0.0 sesuai bagian paling sunyi, 1.0 sesuai bagian paling keras. Disarankan makin besar Pos, menggunakan warna yang lebih cerah.",
 			"addStop": "Tambah Warna"
+		},
+		"audio": {
+			"mp3Conversion": "MP3 ke FLAC",
+			"mp3ConversionDesc": "Konversi MP3 ke FLAC saat mengimpor untuk sinkronisasi yang lebih baik",
+			"mp3ConversionAsk": "Tanya",
+			"mp3ConversionAlways": "Otomatis",
+			"mp3ConversionNever": "Mati"
 		}
 	},
 	"topBar": {
@@ -643,5 +652,36 @@
 		"bpm": "BPM",
 		"start": "Mulai",
 		"stop": "Selesai"
+	},
+	"grammarCheck": {
+		"title": "Pemeriksaan Tata Bahasa & Ejaan",
+		"history": "Riwayat",
+		"noIssues": "Tidak ada masalah ditemukan!",
+		"issuesFound": "masalah ditemukan",
+		"noIssuesMessage": "Tidak ada masalah ditemukan! Lirik Anda terlihat baik.",
+		"clearHistory": "Hapus Riwayat",
+		"noHistory": "Belum ada perubahan yang dilakukan",
+		"fixed": "diperbaiki",
+		"ignored": "diabaikan",
+		"line": "Baris",
+		"repeatedWord": "Kata berulang terdeteksi",
+		"capitalization": "Kata harus menggunakan huruf kapital",
+		"undoLast": "Batalkan Terakhir",
+		"ignoredWords": "Kata yang Diabaikan",
+		"clearIgnoredWords": "Hapus Semua",
+		"noIgnoredWords": "Tidak ada kata yang diabaikan"
+	},
+	"dialog": {
+		"mp3Conversion": {
+			"title": "Konversi MP3 ke FLAC?",
+			"description": "Anda mengimpor file MP3: {fileName}",
+			"warning": "File MP3 dapat menyebabkan desinkronisasi audio di aplikasi ini. Mengonversi ke FLAC direkomendasikan untuk kompatibilitas yang lebih baik.",
+			"dontShowAgain": "Jangan tampilkan peringatan ini lagi",
+			"skip": "Gunakan MP3",
+			"convert": "Konversi ke FLAC",
+			"converting": "Mengonversi MP3 ke FLAC...",
+			"success": "Konversi berhasil",
+			"failed": "Konversi gagal: {error}"
+		}
 	}
 }

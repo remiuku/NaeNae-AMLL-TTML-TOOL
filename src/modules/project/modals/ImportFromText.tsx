@@ -13,6 +13,8 @@ import {
 	Card,
 	Badge,
 	Separator,
+	VisuallyHidden,
+	Box,
 } from "@radix-ui/themes";
 import { Open16Regular, QuestionCircle16Regular } from "@fluentui/react-icons";
 import { atom, useAtom, useAtomValue, useSetAtom, useStore } from "jotai";
@@ -23,12 +25,24 @@ import {
 	confirmDialogAtom,
 	importFromTextDialogAtom,
 } from "$/states/dialogs.ts";
-import { isDirtyAtom, lyricLinesAtom } from "$/states/main.ts";
-import { type LyricLine, newLyricLine, newLyricWord } from "$/types/ttml";
-import { error as logError } from "$/utils/logging.ts";
 
+
+import {
+	isDirtyAtom,
+	lyricLinesAtom,
+	selectedLinesAtom,
+	selectedWordsAtom,
+} from "$/states/main.ts";
+
+import { type LyricLine, newLyricLine, newLyricWord } from "$/types/ttml";
+import { importAddSpacesAtom, importSplitHyphensAtom } from "$/modules/settings/states/index.ts";
+
+
+import { error as logError } from "$/utils/logging.ts";
+import { pluginManager } from "$/modules/plugins/plugin-manager";
+import { getAllPlugins } from "$/modules/plugins/plugin-store";
+import type { WASMPlugin } from "$/modules/plugins/types";
 import styles from "./ImportFromText.module.css";
-import error = toast.error;
 
 import { useTranslation } from "react-i18next";
 
@@ -90,6 +104,8 @@ const isGuideClickedAtom = atomWithStorage(
 );
 const textValueAtom = atom("");
 
+
+
 const ImportFromTextEditor = memo(() => {
 	const [value, setValue] = useAtom(textValueAtom);
 	return (
@@ -129,7 +145,14 @@ export const ImportFromText = () => {
 	const [duetLyricPrefix, setDuetLyricPrefix] = useAtom(duetLyricPrefixAtom);
 	const [enableEmptyBeat, setEnableEmptyBeat] = useAtom(enableEmptyBeatAtom);
 	const [emptyBeatSymbol, setEmptyBeatSymbol] = useAtom(emptyBeatSymbolAtom);
+	const [addSpaces, setAddSpaces] = useAtom(importAddSpacesAtom);
+	const [splitHyphens, setSplitHyphens] = useAtom(importSplitHyphensAtom);
 	const [isGuideClicked, setIsGuideClicked] = useAtom(isGuideClickedAtom);
+	const setValue = useSetAtom(textValueAtom);
+
+
+
+
 
 	const store = useStore();
 
@@ -145,6 +168,12 @@ export const ImportFromText = () => {
 			const duetLyricPrefix = store.get(duetLyricPrefixAtom);
 			const enableEmptyBeat = store.get(enableEmptyBeatAtom);
 			const emptyBeatSymbol = store.get(emptyBeatSymbolAtom);
+			const addSpaces = store.get(importAddSpacesAtom);
+			const splitHyphens = store.get(importSplitHyphensAtom);
+
+
+
+
 
 			const lines = text.split("\n");
 			const result: LyricLine[] = [];
@@ -177,8 +206,8 @@ export const ImportFromText = () => {
 							word: finalOrig,
 						},
 					],
-					translatedLyric: trans,
-					romanLyric: roman,
+					translatedLyric: trans.replace(/\\/g, ""),
+					romanLyric: roman.replace(/\\/g, ""),
 					isBG,
 					isDuet,
 				};
@@ -256,15 +285,49 @@ export const ImportFromText = () => {
 				}
 			}
 
-			if (wordSeparator.length > 0) {
+			if (wordSeparator.length > 0 || addSpaces || splitHyphens) {
 				for (const line of result) {
 					const wholeLine = line.words.map((word) => word.word).join("");
-					line.words = wholeLine.split(wordSeparator).map((word) => ({
+					let words: string[];
+					if (wordSeparator.length > 0) {
+						const regex = new RegExp(`${wordSeparator.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`, 'g');
+						words = wholeLine.split(regex).filter(p => p.length > 0);
+					} else if (addSpaces) {
+						// If no separator but addSpaces is on, split by whitespace
+						words = wholeLine.split(/\s+/).filter(p => p.length > 0);
+					} else {
+						words = [wholeLine];
+					}
+
+					if (splitHyphens) {
+						// Split by hyphen but KEEP the hyphen at the end of the previous segment
+						words = words.flatMap((w) => w.split(/(?<=-)/g));
+					}
+
+					if (addSpaces) {
+						const spacedWords: string[] = [];
+						for (let i = 0; i < words.length; i++) {
+							spacedWords.push(words[i]);
+							if (
+								i < words.length - 1 &&
+								!/\s$/.test(words[i]) &&
+								!/^\s/.test(words[i + 1])
+							) {
+								spacedWords.push(" ");
+							}
+						}
+						words = spacedWords;
+					}
+					
+					line.words = words.map((word) => ({
 						...newLyricWord(),
-						word,
+						word: word.replace(/\\/g, ""),
 					}));
 				}
 			}
+
+
+
 
 			if (enableEmptyBeat && emptyBeatSymbol.length > 0) {
 				for (const line of result) {
@@ -281,9 +344,72 @@ export const ImportFromText = () => {
 				lyricLines: result,
 				metadata: [],
 			});
+			if (result.length > 0) {
+				store.set(selectedLinesAtom, new Set([result[0].id]));
+				if (result[0].words.length > 0) {
+					store.set(selectedWordsAtom, new Set([result[0].words[0].id]));
+				}
+			} else {
+				store.set(selectedLinesAtom, new Set());
+				store.set(selectedWordsAtom, new Set());
+			}
+			setImportFromTextDialog(false);
 		},
-		[store],
+		[store, setImportFromTextDialog],
 	);
+
+	const handleProcessLyrics = useCallback(() => {
+		const text = store.get(textValueAtom);
+		
+		const lines = text.split("\n");
+		const processedLines: string[] = [];
+
+		const processLineContent = (content: string) => {
+			let result = content.trim();
+			// 1. Wrap hyphens with separator: - -> -\
+			result = result.replace(/-/g, "-\\");
+			// 2. Wrap spaces with separator and a literal space word: " " -> "\ \"
+			result = result.replace(/ /g, "\\ \\");
+			return result;
+		};
+
+		for (const line of lines) {
+			const currentLine = line.trim();
+			if (!currentLine) {
+				processedLines.push("");
+				continue;
+			}
+
+			// Handle background vocals in parentheses at the end of the line
+			const bgMatch = currentLine.match(/^(.*?)\s*\((.*)\)\s*$/);
+			if (bgMatch) {
+				const mainPart = bgMatch[1].trim();
+				const bgPart = bgMatch[2].trim();
+				
+				if (mainPart) {
+					processedLines.push(processLineContent(mainPart));
+				}
+				if (bgPart) {
+					processedLines.push(`<${processLineContent(bgPart)}`);
+				}
+			} else if (currentLine.startsWith("(") && currentLine.endsWith(")")) {
+				// Handle case where the whole line is in parentheses
+				processedLines.push(`<${processLineContent(currentLine.slice(1, -1))}`);
+			} else {
+				processedLines.push(processLineContent(currentLine));
+			}
+		}
+
+		setValue(processedLines.join("\n"));
+		
+		// Set settings to match this format
+		setWordSeparator("\\");
+		setAddSpaces(false);
+		setSplitHyphens(false);
+		
+		toast.success(t("textImportDialog.processedSuccess", "Lyrics automated for syllable sync."));
+	}, [store, setValue, t, setWordSeparator, setAddSpaces, setSplitHyphens]);
+
 
 	return (
 		<Dialog.Root
@@ -291,6 +417,11 @@ export const ImportFromText = () => {
 			onOpenChange={setImportFromTextDialog}
 		>
 			<Dialog.Content maxWidth="1100px" maxHeight="90vh">
+				<VisuallyHidden>
+					<Dialog.Description>
+						Import lyrics from plain text or other formats.
+					</Dialog.Description>
+				</VisuallyHidden>
 				<Tabs.Root
 					defaultValue="import"
 					style={{ display: "flex", flexDirection: "column", minHeight: "80vh" }}
@@ -306,6 +437,9 @@ export const ImportFromText = () => {
 							<Tabs.List size="2">
 								<Tabs.Trigger value="import">
 									{t("textImportDialog.tab.import", "Import")}
+								</Tabs.Trigger>
+								<Tabs.Trigger value="plugins">
+									Community Plugins
 								</Tabs.Trigger>
 								<Tabs.Trigger
 									value="guide"
@@ -326,9 +460,7 @@ export const ImportFromText = () => {
 								<Flex justify="end" gap="2">
 									<Button
 										variant="soft"
-										onClick={() =>
-											window.open("https://lyrprep.spicylyrics.org/", "_blank")
-										}
+										onClick={handleProcessLyrics}
 									>
 										{t("textImportDialog.processLyrics", "Process Lyrics")}
 									</Button>
@@ -470,6 +602,14 @@ export const ImportFromText = () => {
 											onChange={(evt) => setWordSeparator(evt.currentTarget.value)}
 										/>
 
+<div style={{ display: "none" }}>
+    <Switch checked={addSpaces} onCheckedChange={setAddSpaces} />
+    <Switch checked={splitHyphens} onCheckedChange={setSplitHyphens} />
+</div>
+
+
+
+
 										<PrefText>
 											{t("textImportDialog.enableSpecialPrefix", "启用特殊前缀")}
 										</PrefText>
@@ -516,6 +656,58 @@ export const ImportFromText = () => {
 								</Flex>
 							</Flex>
 						</Tabs.Content>
+						
+						<Tabs.Content value="plugins">
+							<Flex direction="column" gap="4">
+								<Text size="2" color="gray">
+									Run custom importers written by the community. You can manage these in the "Plugins" section of the Ribbon Bar.
+								</Text>
+								<Box p="4" style={{ backgroundColor: "var(--gray-2)", borderRadius: "var(--radius-3)" }}>
+									<Grid columns="2" gap="3">
+										{pluginManager.getImporters().map(instance => (
+											<Card key={instance.metadata.id} variant="surface">
+												<Flex direction="column" gap="2">
+													<Flex justify="between" align="start">
+														<Box>
+															<Text weight="bold" size="2">{instance.metadata.name}</Text>
+															<Text size="1" color="gray" as="div">v{instance.metadata.version} by {instance.metadata.author}</Text>
+														</Box>
+														<Badge color="indigo">WASM</Badge>
+													</Flex>
+													<Text size="1" truncate>{instance.metadata.description}</Text>
+													<Button 
+														size="1" 
+														variant="soft" 
+														onClick={async () => {
+															try {
+																const input = store.get(textValueAtom);
+																if (!input) {
+																	toast.error("Please enter some text in the Import tab first!");
+																	return;
+																}
+																const result = await pluginManager.runImporter(instance.metadata.id, input);
+																setValue(result);
+																toast.success(`Imported using ${instance.metadata.name}`);
+															} catch (e) {
+																toast.error(`Plugin error: ${e instanceof Error ? e.message : String(e)}`);
+															}
+														}}
+													>
+														Run Importer
+													</Button>
+												</Flex>
+											</Card>
+										))}
+									</Grid>
+									{pluginManager.getImporters().length === 0 && (
+										<Flex direction="column" align="center" justify="center" p="6" gap="2">
+											<Text size="2" color="gray">No enabled community importers found.</Text>
+											<Text size="1" color="gray">Upload a .wasm plugin in the Ribbon Bar to get started.</Text>
+										</Flex>
+									)}
+								</Box>
+							</Flex>
+						</Tabs.Content>
 
 						<Tabs.Content
 							value="guide"
@@ -528,8 +720,8 @@ export const ImportFromText = () => {
 											<Text color="gray">
 												{t("textImportDialog.guide.prepare.desc", "推荐使用 Lyrprep 工具来准备您的歌词。您可以搜索歌曲、选择版本并复制输出文本。")}
 											</Text>
-											<Button variant="soft" onClick={() => window.open("https://lyrprep.spicylyrics.org/", "_blank")}>
-												<Open16Regular /> {t("textImportDialog.processLyrics", "Process Lyrics")}
+											<Button variant="soft" onClick={handleProcessLyrics}>
+												{t("textImportDialog.processLyrics", "Process Lyrics")}
 											</Button>
 										</Flex>
 									</Card>

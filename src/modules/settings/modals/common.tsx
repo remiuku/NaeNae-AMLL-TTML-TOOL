@@ -11,12 +11,14 @@ import {
 	Stack24Regular,
 	Timer24Regular,
 	TopSpeed24Regular,
+	VideoBackgroundEffect24Regular,
 } from "@fluentui/react-icons";
 import {
 	Box,
 	Card,
 	Flex,
 	Heading,
+	Link,
 	Select,
 	Slider,
 	Switch,
@@ -36,6 +38,7 @@ import {
 	smartFirstWordAtom,
 	smartLastWordAtom,
 	syncJudgeModeAtom,
+	compactBGInSyncAtom,
 } from "$/modules/settings/states";
 import {
 	enableUpcomingWordHighlightAtom,
@@ -70,6 +73,8 @@ export const SettingsCommonTab = () => {
 	const [upcomingWordHighlightColor, setUpcomingWordHighlightColor] = useAtom(
 		upcomingWordHighlightColorAtom,
 	);
+
+	const [compactBGInSync, setCompactBGInSync] = useAtom(compactBGInSyncAtom);
 
 	const { t, i18n } = useTranslation();
 	const currentLanguage = i18n.resolvedLanguage || i18n.language;
@@ -123,22 +128,31 @@ export const SettingsCommonTab = () => {
 									</Text>
 								</Flex>
 
-								<Select.Root
-									value={currentLanguage}
-									onValueChange={(lng) => {
-										i18n.changeLanguage(lng).then(() => {
-											localStorage.setItem("language", lng);
-										});
-									}}
-								>
-									<Select.Trigger /><Select.Content>
-										{languageOptions.map((code) => (
-											<Select.Item key={code} value={code}>
-												{getLanguageName(code, currentLanguage)}
-											</Select.Item>
-										))}
-									</Select.Content>
-								</Select.Root>
+								<Flex direction="column" gap="2" align="end">
+									<Select.Root
+										value={currentLanguage}
+										onValueChange={(lng) => {
+											i18n.changeLanguage(lng).then(() => {
+												localStorage.setItem("language", lng);
+											});
+										}}
+									>
+										<Select.Trigger /><Select.Content>
+											{languageOptions.map((code) => (
+												<Select.Item key={code} value={code}>
+													{getLanguageName(code, currentLanguage)}
+												</Select.Item>
+											))}
+										</Select.Content>
+									</Select.Root>
+									<Link
+										size="1"
+										href="https://crowdin.com/project/very-cool-ttml-tool"
+										target="_blank"
+									>
+										{t("settings.common.helpTranslate", "Help translate this app")}
+									</Link>
+								</Flex>
 							</Flex>
 						</Box>
 					</Flex>
@@ -186,6 +200,32 @@ export const SettingsCommonTab = () => {
 							</Flex>
 						</Box>
 					</Flex>
+				</Card>
+				<Card>
+					<Text as="label">
+						<Flex gap="3" align="center">
+							<VideoBackgroundEffect24Regular />
+							<Box flexGrow="1">
+								<Flex gap="2" align="center" justify="between">
+									<Flex direction="column" gap="1">
+										<Text>
+											{t("settings.common.compactBGInSync", "Compact Background Vocals (Sync Mode)")}
+										</Text>
+										<Text size="1" color="gray">
+											{t(
+												"settings.common.compactBGInSyncDesc",
+												"Automatically compress vertical space for background vocal lines during synchronization.",
+											)}
+										</Text>
+									</Flex>
+									<Switch
+										checked={compactBGInSync}
+										onCheckedChange={setCompactBGInSync}
+									/>
+								</Flex>
+							</Box>
+						</Flex>
+					</Text>
 				</Card>
 			</Flex>
 

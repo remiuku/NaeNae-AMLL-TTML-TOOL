@@ -65,6 +65,35 @@ export const SettingsAboutTab = () => {
 				</Flex>
 			</Card>
 
+			<Card>
+				<Flex direction="column" gap="3">
+					<Heading size="3">
+						{t("aboutModal.community", "Community & Contributions")}
+					</Heading>
+					<Text size="2" color="gray">
+						{t(
+							"aboutModal.communityDesc",
+							"Help us make the tool better by contributing code, reporting issues, or providing translations.",
+						)}
+					</Text>
+					<Flex gap="3" mt="1">
+						<Button
+							variant="soft"
+							onClick={() => open("https://github.com/NaeNaeTart/Vercel-AMLL-TTML-TOOL")}
+						>
+							{t("aboutModal.github", "GitHub Repository")}
+						</Button>
+						<Button
+							variant="soft"
+							color="indigo"
+							onClick={() => open("https://crowdin.com/project/very-cool-ttml-tool")}
+						>
+							{t("aboutModal.crowdin", "Help Translate in Crowdin")}
+						</Button>
+					</Flex>
+				</Flex>
+			</Card>
+
 			{showUpdateCard && (
 				<Card>
 					<Flex direction="column" gap="3">

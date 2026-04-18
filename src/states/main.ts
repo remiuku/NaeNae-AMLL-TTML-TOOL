@@ -28,9 +28,11 @@ export enum ToolMode {
 	Preview = "preview",
 }
 
-export const toolModeAtom = atom(ToolMode.Edit);
+export const toolModeAtom = atom<ToolMode>(ToolMode.Edit);
+export const aiSyncPickModeAtom = atom(false);
 
 export const showPreviewPanelAtom = atom(false);
+export const previewPanelWidthAtom = atomWithStorage("previewPanelWidth", 400);
 
 export const darkModeAtom = atom(DarkMode.Auto);
 export const isDarkThemeAtom = atom((get) => {
@@ -106,7 +108,7 @@ export const saveStatusAtom = atom<SaveStatus>(SaveStatus.Saved);
  */
 export const lastSavedTimeAtom = atom<number | null>(null);
 
-export const undoableLyricLinesAtom = withHistory(lyricLinesAtom, 256);
+export const undoableLyricLinesAtom = withHistory(lyricLinesAtom, 10);
 export const isDirtyAtom = atom((get) => get(undoableLyricLinesAtom).canUndo);
 export const undoLyricLinesAtom = atom(null, (_get, set) => {
 	set(undoableLyricLinesAtom, UNDO);

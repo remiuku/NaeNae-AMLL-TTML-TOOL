@@ -33,7 +33,7 @@ const plugins: Plugin[] = [
 		babel: {
 			presets: ["jotai/babel/preset"],
 			plugins: [
-				["babel-plugin-react-compiler", ReactCompilerConfig],
+				// ["babel-plugin-react-compiler", ReactCompilerConfig],
 				jotaiDebugLabel,
 				jotaiReactRefresh,
 			],
@@ -131,15 +131,38 @@ const plugins: Plugin[] = [
 
 // https://vitejs.dev/config/
 export default defineConfig({
-	plugins,
+	plugins: [
+		{
+			name: "shim-module",
+			transform(code, id) {
+				if (id.includes("node_modules/hangul-romanize") || id.includes("node_modules/pinyin-pro") || id.includes("node_modules/wanakana")) {
+					return {
+						code: `var module = { exports: {} };\n${code}`,
+						map: null,
+					};
+				}
+			},
+		},
+		...plugins,
+	],
 	base: process.env.TAURI_ENV_PLATFORM ? "/" : "./",
 	clearScreen: false,
+	optimizeDeps: {
+		exclude: ["@ffmpeg/ffmpeg", "@ffmpeg/util", "hangul-romanize"],
+	},
 	server: {
 		headers: {
 			"Cross-Origin-Embedder-Policy": "require-corp",
 			"Cross-Origin-Opener-Policy": "same-origin",
 		},
 		strictPort: true,
+		proxy: {
+			"/boykisser": {
+				target: "https://files.catbox.moe",
+				changeOrigin: true,
+				rewrite: (path) => path.replace(/^\/boykisser/, ""),
+			},
+		},
 	},
 	envPrefix: ["VITE_", "TAURI_", "AMLL_", "SENTRY_"],
 	build: {
@@ -173,5 +196,8 @@ export default defineConfig({
 	},
 	worker: {
 		format: "es",
+	},
+	define: {
+		global: "globalThis",
 	},
 });

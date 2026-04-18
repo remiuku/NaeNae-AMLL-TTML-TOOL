@@ -37,6 +37,7 @@ import { backgroundGradients } from "$/modules/settings/states/gradients";
 import {
 	accentColorAtom,
 	backgroundModeAtom,
+	boykisserModeAtom,
 	customAccentColorAtom,
 	customGradientAngleAtom,
 	customGradientCenterAtom,
@@ -56,6 +57,7 @@ import {
 import styles from "./App.module.css";
 import DarkThemeDetector from "./components/DarkThemeDetector";
 import RibbonBar from "./components/RibbonBar";
+import { ResizablePanel } from "./components/ResizablePanel";
 import { TitleBar } from "./components/TitleBar";
 import { useFileOpener } from "./hooks/useFileOpener.ts";
 import AudioControls from "./modules/audio/components/index.tsx";
@@ -93,7 +95,7 @@ const AppErrorPage = ({
 	error,
 	resetErrorBoundary,
 }: {
-	error: Error;
+	error: unknown;
 	resetErrorBoundary: () => void;
 }) => {
 	const store = useStore();
@@ -174,6 +176,7 @@ function App() {
 	const appFontStyle = useAtomValue(appFontStyleAtom);
 	const customFontData = useAtomValue(customFontDataAtom);
 	const customFontName = useAtomValue(customFontNameAtom);
+	const boykisserMode = useAtomValue(boykisserModeAtom);
 
 	useEffect(() => {
 		// Extract font name from appFont string (e.g., '"Inter", sans-serif' -> 'Inter')
@@ -181,7 +184,10 @@ function App() {
 		if (match) {
 			const fontName = match[1];
 			// Only load if it's not the custom font and not a system default
-			if (fontName !== customFontName && !["MiSans", "Inter", "system-ui"].includes(fontName)) {
+			if (
+				fontName !== customFontName &&
+				!["MiSans", "Inter", "system-ui"].includes(fontName)
+			) {
 				const fontId = `google-font-${fontName.replace(/\s+/g, "-")}`;
 				if (!document.getElementById(fontId)) {
 					const link = document.createElement("link");
@@ -206,7 +212,7 @@ function App() {
 				.map(([k, v]) => `${k}: ${v} !important;`)
 				.join("\n\t\t");
 		}
-		
+
 		let customFontFace = "";
 		if (customFontData && customFontName) {
 			customFontFace = `
@@ -232,7 +238,14 @@ function App() {
 			${vars}
 		}
 		`;
-	}, [customThemeStyles, appFont, appFontWeight, appFontStyle, customFontData, customFontName]);
+	}, [
+		customThemeStyles,
+		appFont,
+		appFontWeight,
+		appFontStyle,
+		customFontData,
+		customFontName,
+	]);
 
 	const backgroundMode = useAtomValue(backgroundModeAtom);
 	const selectedGradientId = useAtomValue(selectedGradientAtom);
@@ -488,7 +501,7 @@ function App() {
 											)}
 										</AnimatePresence>
 									</Box>
-									<Box width="400px" flexShrink="0">
+									<ResizablePanel>
 										<SuspensePlaceHolder key="preview-panel">
 											<motion.div
 												layout="position"
@@ -500,7 +513,7 @@ function App() {
 												<AMLLWrapper />
 											</motion.div>
 										</SuspensePlaceHolder>
-									</Box>
+									</ResizablePanel>
 								</Flex>
 							) : (
 								<AnimatePresence mode="wait">
@@ -549,6 +562,22 @@ function App() {
 						<Dialogs />
 					</Suspense>
 					<ToastContainer theme={effectiveTheme} />
+					{boykisserMode && (
+						<img
+							src="/boykisser/ids2sq.gif"
+							alt=""
+							style={{
+								position: "fixed",
+								top: "28px",
+								right: "120px",
+								width: "20px",
+								height: "20px",
+								pointerEvents: "none",
+								zIndex: 9999,
+								objectFit: "contain",
+							}}
+						/>
+					)}
 				</div>
 			</ErrorBoundary>
 		</Theme>

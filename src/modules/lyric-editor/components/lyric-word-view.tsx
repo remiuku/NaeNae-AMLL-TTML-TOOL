@@ -47,6 +47,8 @@ import { useTranslation } from "react-i18next";
 import { currentTimeAtom } from "$/modules/audio/states/index.ts";
 import {
 	displayRomanizationInSyncAtom,
+	enableManualTimestampEditAtom,
+	enableSyncGlowAnimationAtom,
 	highlightActiveWordAtom,
 	highlightErrorsAtom,
 	LayoutMode,
@@ -54,6 +56,7 @@ import {
 	quickFixesAtom,
 	showTimestampsAtom,
 } from "$/modules/settings/states/index.ts";
+
 import {
 	enableUpcomingWordHighlightAtom,
 	upcomingWordHighlightColorAtom,
@@ -496,10 +499,7 @@ const LyricWordViewEditAdvance = ({
 				if (!open) return;
 				const currentStore = store;
 				const currentSelectedWords = currentStore.get(selectedWordsAtom);
-				if (
-					currentSelectedWords.has(currentWord.id) &&
-					currentSelectedWords.size === 1
-				)
+				if (currentSelectedWords.has(currentWord.id))
 					return;
 				setSelectedWords((state) => {
 					state.clear();
@@ -584,6 +584,11 @@ const LyricWordViewEditAdvance = ({
 							showIcon
 							className={styles.rubyEditorCompact}
 						/>
+						{currentWord.romanWord && (
+							<Text size="1" color="gray" style={{ fontStyle: "italic", marginLeft: "4px" }}>
+								{currentWord.romanWord}
+							</Text>
+						)}
 					</div>
 					<WordEditField
 						size="1"
@@ -664,8 +669,11 @@ const LyricWorldViewEdit = ({
 	const [editing, setEditing] = useState(false);
 	const store = useStore();
 	const toolMode = useAtomValue(toolModeAtom);
+	const displayRomanizationInSync = useAtomValue(displayRomanizationInSyncAtom);
 	const isWordBlank = useWordBlank(word.word);
-	const displayWord = getDisplayWordText(t, word.word, isWordBlank);
+	// In Edit Mode, we always want to see the original word in the capsule.
+	// We only show romanization in the sync display or as secondary text in advance view.
+	const displayWord = getDisplayWordText(t, word.word, isWordBlank, word.romanWord, false);
 	const showRubyEditor = useMemo(() => word.ruby !== undefined, [word.ruby]);
 
 	const hasError = useMemo(
@@ -725,10 +733,7 @@ const LyricWorldViewEdit = ({
 				if (!open) return;
 				const currentStore = store;
 				const currentSelectedWords = currentStore.get(selectedWordsAtom);
-				if (
-					currentSelectedWords.has(word.id) &&
-					currentSelectedWords.size === 1
-				)
+				if (currentSelectedWords.has(word.id))
 					return;
 				setSelectedWords((state) => {
 					state.clear();
@@ -752,7 +757,14 @@ const LyricWorldViewEdit = ({
 					}}
 				>
 					<span className={styles.wordEditRow}>
-						{displayWord}
+						<div className={styles.wordMainContainer}>
+							<div className={styles.wordMainText}>{displayWord}</div>
+							{displayRomanizationInSync && word.romanWord && (
+								<div className={styles.wordRomanSecondary}>
+									{word.romanWord}
+								</div>
+							)}
+						</div>
 						{showRubyEditor && <RubyEditor wordAtom={wordAtom} />}
 					</span>
 				</LyricWordViewEditSpan>
@@ -968,7 +980,10 @@ const LyricSyncWordView: FC<{
 		};
 	}, [endTime, visualizeTimestampUpdate]);
 
+	const enableSyncGlowAnimation = useAtomValue(enableSyncGlowAnimationAtom);
+	const enableManualTimestampEdit = useAtomValue(enableManualTimestampEditAtom);
 	const hasError = useMemo(() => startTime > endTime, [startTime, endTime]);
+
 
 	const className = useMemo(
 		() =>
@@ -978,6 +993,10 @@ const LyricSyncWordView: FC<{
 				isWordSelected && styles.selected,
 				isWordBlank && styles.blank,
 				isWordActive && highlightActiveWord && styles.active,
+				isWordActive &&
+					highlightActiveWord &&
+					enableSyncGlowAnimation &&
+					styles.animated,
 				hasError &&
 					(toolMode === ToolMode.Edit ||
 						(toolMode === ToolMode.Sync &&
@@ -995,8 +1014,10 @@ const LyricSyncWordView: FC<{
 			highlightActiveWord,
 			showTimestamps,
 			highlightErrors,
+			enableSyncGlowAnimation,
 		],
 	);
+
 
 	return (
 		<div
@@ -1069,9 +1090,10 @@ const LyricSyncWordView: FC<{
 				<div
 					className={classNames(styles.startTime)}
 					ref={startTimeRef}
-					title="Click to edit start time"
-					style={{ cursor: "text" }}
+					title={enableManualTimestampEdit ? "Click to edit start time" : undefined}
+					style={{ cursor: enableManualTimestampEdit ? "text" : "default" }}
 					onClick={(e) => {
+						if (!enableManualTimestampEdit) return;
 						e.stopPropagation();
 						setEditingInput(startTimeDisplay);
 						setEditingTime("start");
@@ -1112,9 +1134,10 @@ const LyricSyncWordView: FC<{
 				<div
 					className={classNames(styles.endTime)}
 					ref={endTimeRef}
-					title="Click to edit end time"
-					style={{ cursor: "text" }}
+					title={enableManualTimestampEdit ? "Click to edit end time" : undefined}
+					style={{ cursor: enableManualTimestampEdit ? "text" : "default" }}
 					onClick={(e) => {
+						if (!enableManualTimestampEdit) return;
 						e.stopPropagation();
 						setEditingInput(
 							showEndTimeAsDuration ? msToTimestamp(endTime) : endTimeDisplay,

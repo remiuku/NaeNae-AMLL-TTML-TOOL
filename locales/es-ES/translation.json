@@ -62,8 +62,10 @@
 			"translatedLyric": "Traducción",
 			"romanLyric": "Romanización",
 			"layoutMode": "Diseño",
-			"auxiliaryLineDisplay": "Mostrar línea auxiliar",
-			"previewPanel": "Panel de vista previa"
+			"auxiliaryLineDisplay": "Visualización de línea auxiliar",
+			"previewPanel": "Panel de vista previa",
+			"grammarCheck": "Revisión de gramática",
+			"tools": "Verificar"
 		},
 		"previewMode": {
 			"lyrics": "Letras",
@@ -150,6 +152,13 @@
 			"paletteCustom": "Personalizada",
 			"gradientEditorDesc": "Un valor de Pos de 0.0 corresponde a la parte más silenciosa, y 1.0 corresponde a la parte más fuerte. Se recomienda usar colores más brillantes para valores de Pos más grandes.",
 			"addStop": "Añadir punto de color"
+		},
+		"audio": {
+			"mp3Conversion": "MP3 a FLAC",
+			"mp3ConversionDesc": "Convertir MP3 a FLAC al importar para una mejor sincronización",
+			"mp3ConversionAsk": "Preguntar",
+			"mp3ConversionAlways": "Automático",
+			"mp3ConversionNever": "Desactivado"
 		}
 	},
 	"topBar": {
@@ -590,5 +599,36 @@
 		"offlineReady": "Sitio almacenado en caché exitosamente para uso sin conexión",
 		"updateRefresh": "Sitio actualizado, ¡actualiza para usar la última versión!",
 		"refresh": "Actualizar"
+	},
+	"grammarCheck": {
+		"title": "Revisión de gramática y ortografía",
+		"history": "Historial",
+		"noIssues": "¡No se encontraron problemas!",
+		"issuesFound": "problemas encontrados",
+		"noIssuesMessage": "¡No se encontraron problemas! Tus letras se ven bien.",
+		"clearHistory": "Borrar historial",
+		"noHistory": "Aún no se han realizado cambios",
+		"fixed": "arreglado",
+		"ignored": "ignorado",
+		"line": "Línea",
+		"repeatedWord": "Palabra repetida detectada",
+		"capitalization": "La palabra debería estar capitalizada",
+		"undoLast": "Deshacer último",
+		"ignoredWords": "Palabras ignoradas",
+		"clearIgnoredWords": "Borrar todo",
+		"noIgnoredWords": "No hay palabras ignoradas"
+	},
+	"dialog": {
+		"mp3Conversion": {
+			"title": "¿Convertir MP3 a FLAC?",
+			"description": "Estás importando un archivo MP3: {fileName}",
+			"warning": "Los archivos MP3 pueden causar desincronización de audio en esta aplicación. Se recomienda convertir a FLAC para una mejor compatibilidad.",
+			"dontShowAgain": "No volver a mostrar esta advertencia",
+			"skip": "Usar MP3",
+			"convert": "Convertir a FLAC",
+			"converting": "Convirtiendo MP3 a FLAC...",
+			"success": "Conversión exitosa",
+			"failed": "Fallo en la conversión: {error}"
+		}
 	}
 }

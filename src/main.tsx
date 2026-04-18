@@ -9,28 +9,29 @@
  * https://github.com/amll-dev/amll-ttml-tool/blob/main/LICENSE
  */
 
+import { wasm_start } from "@applemusic-like-lyrics/lyric";
 import * as Sentry from "@sentry/react";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import { enableMapSet } from "immer";
 import { Provider } from "jotai";
-// import { DevTools } from "jotai-devtools";
-// import "jotai-devtools/styles.css";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "react-toastify/dist/ReactToastify.css";
+
 import App from "./App.tsx";
 import "./i18n/index.ts";
 import "./index.css";
 import "./utils/pwa.tsx";
-import { wasm_start } from "@applemusic-like-lyrics/lyric";
+import { pluginManager } from "$/modules/plugins/plugin-manager";
 import { globalStore } from "./states/store.ts";
 
 async function startApp() {
 	try {
 		wasm_start();
+		await pluginManager.loadEnabledPlugins();
 	} catch (e) {
-		console.error("Error calling wasm_start:", e);
+		console.error("Error during WASM initialization:", e);
 	}
 
 	enableMapSet();
