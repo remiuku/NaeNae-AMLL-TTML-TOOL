@@ -147,6 +147,7 @@
 				"line1": "简单布局能够满足大多数基础需求",
 				"line2": "如果你需要更高效的对齐，请切换到高级模式"
 			},
+			"helpTranslate": "帮助翻译此程序",
 			"compactBGInSync": "精简背景歌词（同步模式）",
 			"compactBGInSyncDesc": "在同步过程中自动压缩背景歌词行的垂直空间。",
 			"syncJudgeMode": "同步时间点判定模式",
@@ -197,6 +198,12 @@
 			"downloading": "正在下载更新...",
 			"ready": "更新已就绪。重启应用程序使其生效。",
 			"restart": "重启"
+		},
+		"aboutModal": {
+			"community": "社区与贡献",
+			"communityDesc": "通过贡献代码、报告问题或提供翻译，帮助我们完善工具。",
+			"github": "GitHub 仓库",
+			"crowdin": "在 Crowdin 中协助翻译"
 		},
 		"appearance": {
 			"theme": "主题",

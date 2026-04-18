@@ -127,22 +127,31 @@ export const SettingsCommonTab = () => {
 									</Text>
 								</Flex>
 
-								<Select.Root
-									value={currentLanguage}
-									onValueChange={(lng) => {
-										i18n.changeLanguage(lng).then(() => {
-											localStorage.setItem("language", lng);
-										});
-									}}
-								>
-									<Select.Trigger /><Select.Content>
-										{languageOptions.map((code) => (
-											<Select.Item key={code} value={code}>
-												{getLanguageName(code, currentLanguage)}
-											</Select.Item>
-										))}
-									</Select.Content>
-								</Select.Root>
+								<Flex direction="column" gap="2" align="end">
+									<Select.Root
+										value={currentLanguage}
+										onValueChange={(lng) => {
+											i18n.changeLanguage(lng).then(() => {
+												localStorage.setItem("language", lng);
+											});
+										}}
+									>
+										<Select.Trigger /><Select.Content>
+											{languageOptions.map((code) => (
+												<Select.Item key={code} value={code}>
+													{getLanguageName(code, currentLanguage)}
+												</Select.Item>
+											))}
+										</Select.Content>
+									</Select.Root>
+									<Link
+										size="1"
+										href="https://crowdin.com/project/very-cool-ttml-tool"
+										target="_blank"
+									>
+										{t("settings.common.helpTranslate", "Help translate this app")}
+									</Link>
+								</Flex>
 							</Flex>
 						</Box>
 					</Flex>

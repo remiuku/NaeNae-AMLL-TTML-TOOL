@@ -1,0 +1,21 @@
+project_id: 890690
+api_token_env: CROWDIN_PERSONAL_TOKEN
+base_path: .
+files:
+  - source: locales/en-US/translation.json
+    translation: locales/%locale%/translation.json
+    languages_mapping:
+      locale:
+        cs: cs-CZ
+        da: da-DK
+        es-ES: es-ES
+        fr: fr-FR
+        id: id-ID
+        it: it-IT
+        pl: pl-PL
+        pt-BR: pt-BR
+        ro: ro-RO
+        ru: ru-RU
+        sk: sk-SK
+        tr: tr-TR
+        zh-CN: zh-CN
