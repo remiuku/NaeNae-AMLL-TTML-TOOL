@@ -105,7 +105,7 @@ export const PluginManagerDialog: FC = () => {
                     </Text>
 
                     <Flex direction="column" gap="3">
-                        {plugins.map((plugin) => (
+                        {plugins.map((plugin: WASMPlugin) => (
                             <Card key={plugin.id} variant="surface">
                                 <Flex justify="between" align="center">
                                     <Box>
