@@ -1,40 +1,40 @@
 {
 	"app": {
 		"error": {
-			"title": "Oops, an error occurred!",
-			"description": "An error occurred while running AMLL TTML Tools",
-			"checkDevTools": "Details can be found in Developer Tools",
-			"saveLyrics": "Try saving current lyrics",
-			"tryRestart": "Try reloading the app",
-			"details": "Approximate error info:"
+			"title": "Jejda, došlo k chybě!",
+			"description": "Při běhu AMLL TTML Tools došlo k chybě",
+			"checkDevTools": "Podrobnosti najdete v Nástrojích pro vývojáře",
+			"saveLyrics": "Zkuste uložit aktuální titulky",
+			"tryRestart": "Zkuste aplikaci znovu načíst",
+			"details": "Přibližné informace o chybě:"
 		},
 		"update": {
-			"updateAvailable": "Update available: {version}",
-			"installError": "Error when installing update"
+			"updateAvailable": "Dostupná aktualizace: {version}",
+			"installError": "Chyba při instalaci aktualizace"
 		},
 		"empty": {
-			"title": "No lyric lines",
-			"description": "Add new lyric lines in the top panel or open/import existing lyrics from the menu"
+			"title": "Žádné řádky titulek",
+			"description": "Přidejte nové řádky titulek v horním panelu nebo otevřete/importujte existující titulky z nabídky"
 		}
 	},
 	"confirmDialog": {
-		"cancel": "Cancel",
-		"confirm": "Confirm",
+		"cancel": "Zrušit",
+		"confirm": "Potvrdit",
 		"newFile": {
-			"title": "Confirm New File",
-			"description": "You have unsaved changes. If you proceed, these changes will be lost. Are you sure you want to create a new file?"
+			"title": "Potvrdit nový soubor",
+			"description": "Máte neuložené změny. Pokud budete pokračovat, tyto změny budou ztraceny. Opravdu chcete vytvořit nový soubor?"
 		},
 		"syncLineTimestamps": {
-			"title": "Confirm Sync Line Timestamps",
-			"description": "This action will automatically synchronize the start and end times of all lines based on the timestamps of each word in the line, matching the start and end times of the first and last syllables. Are you sure you want to proceed?"
+			"title": "Potvrdit synchronizaci časových značek",
+			"description": "Tato akce automaticky synchronizuje časy začátku a konce všech řádků na základě časových značek každého slova v řádku, odpovídající časům začátku a konce první a poslední slabiky. Opravdu chcete pokračovat?"
 		},
 		"openFile": {
-			"title": "Confirm Open File",
-			"description": "You have unsaved changes. If you proceed, these changes will be lost. Are you sure you want to open a new file?"
+			"title": "Potvrdit otevření souboru",
+			"description": "Máte neuložené změny. Pokud budete pokračovat, tyto změny budou ztraceny. Opravdu chcete otevřít nový soubor?"
 		},
 		"importFile": {
-			"title": "Confirm Import Lyrics",
-			"description": "You have unsaved changes. If you proceed, these changes will be lost. Are you sure you want to import new lyrics?"
+			"title": "Potvrdit import titulek",
+			"description": "Máte neuložené změny. Pokud budete pokračovat, tyto změny budou ztraceny. Opravdu chcete importovat nové titulky?"
 		},
 		"useMetadataName": {
 			"title": "Use metadata name?",
@@ -47,48 +47,48 @@
 	},
 	"dialog": {
 		"mp3Conversion": {
-			"title": "Convert MP3 to FLAC?",
-			"description": "You are importing an MP3 file: {fileName}",
-			"warning": "MP3 files may cause audio desyncing in this app. Converting to FLAC is recommended for better compatibility.",
-			"dontShowAgain": "Don't show this warning again",
-			"skip": "Use MP3",
-			"convert": "Convert to FLAC",
-			"converting": "Converting MP3 to FLAC...",
-			"success": "Conversion successful",
-			"failed": "Conversion failed: {error}"
+			"title": "Převést MP3 na FLAC?",
+			"description": "Importujete soubor MP3: {fileName}",
+			"warning": "Soubory MP3 mohou v této aplikaci způsobit desynchronizaci zvuku. Pro lepší kompatibilitu se doporučuje převod na FLAC.",
+			"dontShowAgain": "Toto varování již nezobrazovat",
+			"skip": "Použít MP3",
+			"convert": "Převést na FLAC",
+			"converting": "Převádění MP3 na FLAC...",
+			"success": "Převod byl úspěšný",
+			"failed": "Převod se nezdařil: {error}"
 		}
 	},
 	"ribbonBar": {
 		"editMode": {
-			"multipleValues": "Multiple values…",
-			"showTranslation": "Show Translation Line",
-			"showRomanization": "Show Romanization Line",
-			"showWordRomanizationInput": "Show Per-Word Romanization",
-			"new": "New",
-			"lyricLine": "Lyric Line",
-			"lineTiming": "Line Timing",
-			"startTime": "Start Time",
-			"endTime": "End Time",
-			"lineProperties": "Line Properties",
-			"bgLyric": "Background Vocal",
-			"duetLyric": "Duet Vocal",
-			"ignoreSync": "Ignore Sync",
-			"wordTiming": "Word Timing",
-			"emptyBeatCount": "Empty Beat Count",
-			"wordProperties": "Word Properties",
-			"wordContent": "Word Content",
-			"romanWord": "Word Romanization",
-			"obscene": "Obscene",
-			"secondaryContent": "Secondary Content",
-			"translatedLyric": "Translation",
-			"romanLyric": "Romanization",
-			"layoutMode": "Layout",
-			"auxiliaryLineDisplay": "Auxiliary Line Display",
-			"previewPanel": "Preview Panel",
-			"grammarCheck": "Grammar Check",
+			"multipleValues": "Více hodnot…",
+			"showTranslation": "Zobrazit řádek překladu",
+			"showRomanization": "Zobrazit řádek romanizace",
+			"showWordRomanizationInput": "Zobrazit romanizaci po slovech",
+			"new": "Nový",
+			"lyricLine": "Řádek textu",
+			"lineTiming": "Časování řádku",
+			"startTime": "Čas začátku",
+			"endTime": "Čas konce",
+			"lineProperties": "Vlastnosti řádku",
+			"bgLyric": "Doprovodný vokál",
+			"duetLyric": "Duetový vokál",
+			"ignoreSync": "Ignorovat synchronizaci",
+			"wordTiming": "Časování slova",
+			"emptyBeatCount": "Počet prázdných dob",
+			"wordProperties": "Vlastnosti slova",
+			"wordContent": "Obsah slova",
+			"romanWord": "Romanizace slova",
+			"obscene": "Obscénní",
+			"secondaryContent": "Sekundární obsah",
+			"translatedLyric": "Překlad",
+			"romanLyric": "Romanizace",
+			"layoutMode": "Rozložení",
+			"auxiliaryLineDisplay": "Zobrazení pomocného řádku",
+			"previewPanel": "Náhledový panel",
+			"grammarCheck": "Kontrola gramatiky",
 			"aiTools": "AI Tools",
 			"aiAutoSync": "AI Auto-Sync",
-			"tools": "Check",
+			"tools": "Kontrola",
 			"phonetic": {
 				"section": "Phonetic",
 				"autoFetch": "Auto Fetch",
@@ -99,85 +99,85 @@
 			}
 		},
 		"previewMode": {
-			"lyrics": "Lyrics",
-			"showTranslation": "Show Translation",
-			"showRoman": "Show Romanization",
-			"maskObsceneWords": "Mask Obscene Words",
-			"word": "Word",
-			"fadeWidth": "Fade Width"
+			"lyrics": "titulky",
+			"showTranslation": "Zobrazit překlad",
+			"showRoman": "Zobrazit romanizaci",
+			"maskObsceneWords": "Skrýt obscénní slova",
+			"word": "Slovo",
+			"fadeWidth": "Šířka prolínání"
 		},
 		"syncMode": {
-			"currentEmptyBeat": "Empty Beat",
-			"syncAdjustment": "Timing Adjustment",
-			"timeOffset": "Time Offset",
+			"currentEmptyBeat": "Prázdná doba",
+			"syncAdjustment": "Úprava časování",
+			"timeOffset": "Časový posun",
 			"syncLevel": "Sync Level",
 			"syncLevelWord": "Word Sync",
 			"syncLevelLine": "Line Sync",
-			"assistSettings": "Assistant Settings",
-			"showTimestampUpdate": "Show Timestamp Updates",
-			"touchSyncPanel": "Touch Sync Panel",
+			"assistSettings": "Nastavení asistenta",
+			"showTimestampUpdate": "Zobrazit aktualizace časových značek",
+			"touchSyncPanel": "Dotykový panel synchronizace",
 			"bgLyricIgnoreSync": "Ignore Background Vocals",
 			"quickFixes": "Quick Fixes",
 			"manualTimestampEdit": "Manual Timestamp Editing",
-			"displayOptions": "Display Options",
-			"showTimestamps": "Show Timestamps",
-			"highlightActiveWord": "Highlight Active Word",
+			"displayOptions": "Možnosti zobrazení",
+			"showTimestamps": "Zobrazit časové značky",
+			"highlightActiveWord": "Zvýraznit aktivní slovo",
 			"enableGlowAnimation": "Enable Glow Animation",
-			"highlightErrors": "Highlight Errors",
-			"showPerWordRomanization": "Show Per-Word Romanization",
-			"keyBindingReference": "Hotkey Cheatsheet",
-			"startSync": "Mark Begin",
-			"continuousSync": "Commit",
-			"endSync": "Mark End",
+			"highlightErrors": "Zvýraznit chyby",
+			"showPerWordRomanization": "Zobrazit romanizaci po slovech",
+			"keyBindingReference": "Přehled klávesových zkratek",
+			"startSync": "Označit začátek",
+			"continuousSync": "Potvrdit",
+			"endSync": "Označit konec",
 			"loading": "Panel loading…"
 		}
 	},
 	"settings": {
 		"common": {
 			"layoutModeOptions": {
-				"simple": "Simple Mode",
-				"advance": "Advanced Mode"
+				"simple": "Jednoduchý režim",
+				"advance": "Pokročilý režim"
 			},
 			"enabled": "Enabled",
 			"disabled": "Disabled",
-			"language": "Interface Language",
-			"languageDesc": "Select the language for the interface",
-			"layoutMode": "Editor Layout Mode",
+			"language": "Jazyk rozhraní",
+			"languageDesc": "Vyberte jazyk rozhraní",
+			"layoutMode": "Režim rozložení editoru",
 			"layoutModeDesc": {
-				"line1": "Simple layout satisfies most basic needs",
-				"line2": "Switch to Advanced Mode if you need more efficient syncing"
+				"line1": "Jednoduché rozložení vyhovuje většině základních potřeb",
+				"line2": "Přepněte na pokročilý režim, pokud potřebujete efektivnější synchronizaci"
 			},
 			"helpTranslate": "Help translate this app",
 			"compactBGInSync": "Compact Background Vocals (Sync Mode)",
 			"compactBGInSyncDesc": "Automatically compress vertical space for background vocal lines during synchronization.",
-			"syncJudgeMode": "Sync Timestamp Judgment Mode",
-			"syncJudgeModeDesc": "Set how timestamps are judged when syncing. Default is 'First key down'.",
+			"syncJudgeMode": "Režim vyhodnocení synchronizace",
+			"syncJudgeModeDesc": "Nastavte, jak jsou časové značky vyhodnocovány při synchronizaci. Výchozí je 'První stisk klávesy'.",
 			"syncJudgeModeOptions": {
-				"firstKeyDown": "First key down time",
-				"lastKeyUp": "Last key up time",
-				"middleKey": "Middle of key down & up",
-				"firstKeyDownLegacy": "First key down time (legacy)"
+				"firstKeyDown": "Čas prvního stisku klávesy",
+				"lastKeyUp": "Čas posledního uvolnění klávesy",
+				"middleKey": "Střed mezi stiskem a uvolněním",
+				"firstKeyDownLegacy": "Čas prvního stisku klávesy (zastaralé)"
 			},
-			"keyBindingTrigger": "Key Binding Trigger",
-			"keyBindingTriggerDesc": "Determines whether shortcuts are triggered when a key is pressed or released.",
+			"keyBindingTrigger": "Spouštění klávesových zkratek",
+			"keyBindingTriggerDesc": "Určuje, zda se zkratky spouštějí při stisku nebo uvolnění klávesy.",
 			"keyBindingTriggerOptions": {
-				"keyDown": "Trigger on Key Down",
-				"keyUp": "Trigger on Key Up"
+				"keyDown": "Spustit při stisku",
+				"keyUp": "Spustit při uvolnění"
 			},
-			"smartFirstWord": "Smart First Word",
-			"smartFirstWordDesc": "When syncing the first word of a line, the first key press sets its start time only, without immediately setting its end time.",
-			"smartLastWord": "Smart Last Word",
-			"smartLastWordDesc": "When syncing the last word of a line, the key press sets its end time without automatically setting the start time of the next line's first word.",
+			"smartFirstWord": "Chytré první slovo",
+			"smartFirstWordDesc": "Při synchronizaci prvního slova řádku první stisk nastaví pouze čas začátku, aniž by okamžitě nastavil čas konce.",
+			"smartLastWord": "Chytré poslední slovo",
+			"smartLastWordDesc": "Při synchronizaci posledního slova řádku stisk nastaví čas konce bez automatického nastavení času začátku prvního slova dalšího řádku.",
 			"enableUpcomingWordHighlight": "Enable Upcoming Word Pre-Highlight",
 			"enableUpcomingWordHighlightDesc": "Fades in a highlight color shortly before a word plays during Sync mode to improve precision.",
 			"upcomingWordHighlightThreshold": "Pre-Highlight Time Threshold (ms)",
 			"upcomingWordHighlightColor": "Highlight Color (CSS Value)",
-			"volume": "Music Volume",
-			"playbackRate": "Playback Speed",
+			"volume": "Hlasitost hudby",
+			"playbackRate": "Rychlost přehrávání",
 			"autosave": {
-				"enable": "Enable Autosave",
-				"interval": "Save Interval (minutes)",
-				"limit": "Snapshots to keep"
+				"enable": "Povolit automatické ukládání",
+				"interval": "Interval ukládání (minuty)",
+				"limit": "Počet snímků k uchování"
 			},
 			"customBackground": "Custom Background",
 			"customBackgroundDesc": "Choose an image to use as the background.",
@@ -192,12 +192,12 @@
 			"customBackgroundManage": "Settings"
 		},
 		"about": {
-			"update": "Update",
-			"newVersion": "New version",
-			"updateNow": "Update now",
-			"downloading": "Downloading update...",
-			"ready": "Update is ready. Restart the application for it to take effect.",
-			"restart": "Restart"
+			"update": "Aktualizace",
+			"newVersion": "Nová verze",
+			"updateNow": "Aktualizovat nyní",
+			"downloading": "Stahování aktualizace...",
+			"ready": "Aktualizace je připravena. Restartujte aplikaci, aby se projevila.",
+			"restart": "Restartovat"
 		},
 		"aboutModal": {
 			"community": "Community & Contributions",
@@ -254,11 +254,11 @@
 		},
 		"group": {
 			"assistant": "Assistant",
-			"display": "Display",
-			"timing": "Syncing",
+			"display": "Zobrazení",
+			"timing": "Časování",
 			"timingHighlight": "Visual Timing Cue (Sync)",
-			"playback": "Playback",
-			"autosave": "Auto Save"
+			"playback": "Přehrávání",
+			"autosave": "Automatické ukládání"
 		},
 		"assistant": {
 			"quickFixes": "Quick Fixes (Grammar)",
@@ -282,11 +282,11 @@
 			"reset": "Reset",
 			"newPresetName": "New Preset Name",
 			"save": "Save Preset",
-			"mp3Conversion": "MP3 to FLAC",
-			"mp3ConversionDesc": "Convert MP3 to FLAC when importing for better sync",
-			"mp3ConversionAsk": "Ask",
+			"mp3Conversion": "MP3 na FLAC",
+			"mp3ConversionDesc": "Převést MP3 na FLAC při importu pro lepší synchronizaci",
+			"mp3ConversionAsk": "Zeptat se",
 			"mp3ConversionAlways": "Auto",
-			"mp3ConversionNever": "Off"
+			"mp3ConversionNever": "Vypnuto"
 		},
 		"dev": {
 			"wasmPlugins": {
@@ -298,66 +298,66 @@
 			}
 		},
 		"spectrogram": {
-			"palette": "Color Palette",
-			"paletteCustom": "Custom",
-			"gradientEditorDesc": "A Pos value of 0.0 corresponds to the quietest part, and 1.0 corresponds to the loudest part. It is recommended to use brighter colors for larger Pos values.",
-			"addStop": "Add Color Stop"
+			"palette": "Barevná paleta",
+			"paletteCustom": "Vlastní",
+			"gradientEditorDesc": "Hodnota Pos 0.0 odpovídá nejtišší části a 1.0 nejhlasitější části. Doporučuje se používat jasnější barvy pro větší hodnoty Pos.",
+			"addStop": "Přidat barevný bod"
 		}
 	},
 	"topBar": {
 		"modeBtns": {
-			"edit": "Edit",
-			"sync": "Time",
-			"preview": "Preview"
+			"edit": "Úpravy",
+			"sync": "Čas",
+			"preview": "Náhled"
 		},
 		"boykisser": "boykisser",
-		"appName": "Apple Music-like Lyrics TTML Tool",
+		"appName": "Nástroj TTML pro titulky ve stylu Apple Music",
 		"menu": {
-			"undo": "Undo",
-			"redo": "Redo",
-			"selectAllLines": "Select all lines",
-			"unselectAllLines": "Deselect all lines",
-			"invertSelectAllLines": "Invert line selections",
-			"selectWordsOfMatchedSelection": "Select words matching selection",
-			"timeShift": "Time Shift...",
-			"editMetadata": "Edit lyrics metadata…",
-			"edit": "Edit",
-			"newLyric": "New lyrics",
-			"openLyric": "Open lyrics",
-			"openFromClipboard": "Open TTML from clipboard",
-			"saveLyric": "Save lyrics",
-			"restoreFromHistory": "Restore from history…",
-			"saveLyricToClipboard": "Save TTML to clipboard",
-			"uploadToAMLLDB": "Upload to database (CN only)",
-			"file": "File",
-			"helpDoc": "Documentation (CN)",
-			"help": "Help",
-			"segmentationTools": "Segmentation Tools",
-			"autoSegment": "Auto Segment",
+			"undo": "Zpět",
+			"redo": "Znovu",
+			"selectAllLines": "Vybrat všechny řádky",
+			"unselectAllLines": "Zrušit výběr všech řádků",
+			"invertSelectAllLines": "Invertovat výběr řádků",
+			"selectWordsOfMatchedSelection": "Vybrat odpovídající slova",
+			"timeShift": "Časový posun...",
+			"editMetadata": "Upravit metadata titulek…",
+			"edit": "Úpravy",
+			"newLyric": "Nové titulky",
+			"openLyric": "Otevřít titulky",
+			"openFromClipboard": "Otevřít TTML ze schránky",
+			"saveLyric": "Uložit titulky",
+			"restoreFromHistory": "Obnovit z historie…",
+			"saveLyricToClipboard": "Uložit TTML do schránky",
+			"uploadToAMLLDB": "Nahrát do databáze (pouze ČLR)",
+			"file": "Soubor",
+			"helpDoc": "Dokumentace (ČLR)",
+			"help": "Nápověda",
+			"segmentationTools": "Nástroje segmentace",
+			"autoSegment": "Automatická segmentace",
 			"rubySegment": "Ruby Segmentation",
-			"advancedSegment": "Advanced Segment...",
-			"syncLineTimestamps": "Sync Line Timestamps",
-			"tool": "Tools",
+			"advancedSegment": "Pokročilá segmentace...",
+			"syncLineTimestamps": "Synchronizovat časové značky řádků",
+			"tool": "Nástroje",
 			"importLyric": {
-				"import": "Import lyrics",
-				"fromPlainText": "Import from plain text…",
-				"fromLRCLIB": "Import from LRCLIB...",
+				"import": "Importovat titulky",
+				"fromPlainText": "Importovat z prostého textu…",
+				"fromLRCLIB": "Importovat z LRCLIB...",
 				"fromLyrically": "Import from Lyrically...",
 				"fromGenius": "Import from Genius…",
-				"fromLyRiC": "Import from LyRiC file…",
-				"fromESLyRiC": "Import from ESLyRiC file…",
-				"fromQRC": "Import from QRC file…",
-				"fromYRC": "Import from YRC file…",
-				"fromLrcfySylb": "Import from Lyricify Syllable file…"
+				"fromLyRiC": "Importovat ze souboru LyRiC…",
+				"fromESLyRiC": "Importovat ze souboru ESLyRiC…",
+				"fromQRC": "Importovat ze souboru QRC…",
+				"fromYRC": "Importovat ze souboru YRC…",
+				"fromLrcfySylb": "Importovat ze souboru Lyricify Syllable…"
 			},
 			"exportLyric": {
-				"export": "Export lyrics",
-				"toLyRiC": "Export to LyRiC",
-				"toESLyRiC": "Export to ESLyRiC",
-				"toQRC": "Export to QRC",
-				"toYRC": "Export to YRC",
-				"toLrcfySylb": "Export to Lyricify Syllable",
-				"toASS": "Export to ASS subtitles"
+				"export": "Exportovat titulky",
+				"toLyRiC": "Exportovat do LyRiC",
+				"toESLyRiC": "Exportovat do ESLyRiC",
+				"toQRC": "Exportovat do QRC",
+				"toYRC": "Exportovat do YRC",
+				"toLrcfySylb": "Exportovat do Lyricify Syllable",
+				"toASS": "Exportovat do titulků ASS"
 			}
 		}
 	},
@@ -367,103 +367,103 @@
 		}
 	},
 	"contextMenu": {
-		"deleteWords": "Delete {count} word(s)",
-		"bgLyric": "Background line",
-		"duetLyric": "Duet line",
-		"insertLineBefore": "Insert new line before",
-		"insertLineAfter": "Insert new line after",
-		"copyLine": "Duplicate {count} line(s)",
+		"deleteWords": "Smazat {count, plural, one {slovo} few {slova} other {slov}",
+		"bgLyric": "Doprovodný řádek",
+		"duetLyric": "Duetový řádek",
+		"insertLineBefore": "Vložit nový řádek před",
+		"insertLineAfter": "Vložit nový řádek za",
+		"copyLine": "Duplikovat {count, plural, one {řádek} few {řádky} other {řádků}",
 		"duplicateTo": "Duplicate to...",
-		"combineLine": "Combine lines",
-		"deleteLine": "Delete {count} line(s)",
-		"splitWord": "Split word…",
-		"replaceWord": "Replace word…",
-		"combineWords": "Combine words",
-		"moveFollowingWordToNewLine": "Move followings to new line",
-		"moveWordToNewLine": "Move {count} word(s) to new line"
+		"combineLine": "Sloučit řádky",
+		"deleteLine": "Smazat {count, plural, one {řádek} few {řádky} other {řádků}",
+		"splitWord": "Rozdělit slovo…",
+		"replaceWord": "Nahradit slovo…",
+		"combineWords": "Sloučit slova",
+		"moveFollowingWordToNewLine": "Přesunout následující na nový řádek",
+		"moveWordToNewLine": "Přesunout {count, plural, one {slovo} few {slova} other {slov} na nový řádek"
 	},
 	"settingsDialog": {
-		"title": "Preferences",
+		"title": "Předvolby",
 		"common": {
-			"latencyTest": "Audio/input latency test"
+			"latencyTest": "Test latence zvuku/vstupu"
 		},
 		"keybindings": {
-			"newFile": "New File",
-			"openFile": "Open File",
-			"saveFile": "Save File",
-			"undo": "Undo",
-			"redo": "Redo",
-			"selectAll": "Select All",
+			"newFile": "Nový soubor",
+			"openFile": "Otevřít soubor",
+			"saveFile": "Uložit soubor",
+			"undo": "Zpět",
+			"redo": "Znovu",
+			"selectAll": "Vybrat vše",
 			"unselectAll": "Deselect All",
-			"selectInverted": "Invert Selection",
-			"selectWordsOfMatchedSelection": "Select similar words",
-			"deleteSelection": "Delete Selection",
-			"switchEditMode": "Mode Switch - Switch to Edit Mode",
-			"switchSyncMode": "Mode Switch - Switch to Timing Mode",
-			"switchPreviewMode": "Mode Switch - Switch to Preview Mode",
-			"moveNextWord": "Timing - Move to next word",
-			"movePrevWord": "Timing - Move to previous word",
-			"moveNextLine": "Timing - Move to next line start",
-			"movePrevLine": "Timing - Move to previous line start",
-			"movePrevWordAndPlay": "Timing - Move to previous word and play",
-			"moveNextWordAndPlay": "Timing - Move to next word and play",
-			"syncStart": "Timing - Mark begin",
-			"syncNext": "Timing - Commit",
-			"syncEnd": "Timing - Mark end",
+			"selectInverted": "Invertovat výběr",
+			"selectWordsOfMatchedSelection": "Vybrat podobná slova",
+			"deleteSelection": "Smazat výběr",
+			"switchEditMode": "Přepnutí režimu - Přepnout na režim úprav",
+			"switchSyncMode": "Přepnutí režimu - Přepnout na režim časování",
+			"switchPreviewMode": "Přepnutí režimu - Přepnout na režim náhledu",
+			"moveNextWord": "Časování - Přejít na další slovo",
+			"movePrevWord": "Časování - Přejít na předchozí slovo",
+			"moveNextLine": "Časování - Přejít na začátek dalšího řádku",
+			"movePrevLine": "Časování - Přejít na začátek předchozího řádku",
+			"movePrevWordAndPlay": "Časování - Přejít na předchozí slovo a přehrát",
+			"moveNextWordAndPlay": "Časování - Přejít na další slovo a přehrát",
+			"syncStart": "Časování - Označit začátek",
+			"syncNext": "Časování - Potvrdit",
+			"syncEnd": "Časování - Označit konec",
 			"toggleWordHighlight": "Timing - Toggle active word highlight",
 			"moveFirstWordAndPlay": "Timing - Move to first word and play",
 			"moveLastWordAndPlay": "Timing - Move to last word and play",
-			"playPause": "Playback - Play/Pause",
-			"seekForward": "Playback - Seek forward 5s",
-			"seekBackward": "Playback - Seek backward 5s",
-			"volumeUp": "Playback - Volume up",
-			"volumeDown": "Playback - Volume down",
-			"playbackRateUp": "Playback - Increase speed",
-			"playbackRateDown": "Playback - Decrease speed",
-			"playbackRateReset": "Playback - Reset speed",
-			"auditionSelectionBefore": "Spectrogram - Audition selection (500ms before)",
-			"auditionSelection": "Spectrogram - Audition selection",
-			"auditionSelectionAfter": "Spectrogram - Audition selection (500ms after)",
+			"playPause": "Přehrávání - Přehrát/Pozastavit",
+			"seekForward": "Přehrávání - Přetočit vpřed o 5 s",
+			"seekBackward": "Přehrávání - Přetočit zpět o 5 s",
+			"volumeUp": "Přehrávání - Zvýšit hlasitost",
+			"volumeDown": "Přehrávání - Snížit hlasitost",
+			"playbackRateUp": "Přehrávání - Zvýšit rychlost",
+			"playbackRateDown": "Přehrávání - Snížit rychlost",
+			"playbackRateReset": "Přehrávání - Obnovit rychlost",
+			"auditionSelectionBefore": "Spektrogram - Poslechnout výběr (500 ms před)",
+			"auditionSelection": "Spektrogram - Poslechnout výběr",
+			"auditionSelectionAfter": "Spektrogram - Poslechnout výběr (500 ms po)",
 			"category": {
-				"File": "File",
-				"Edit": "Edit",
-				"View": "View",
-				"Sync": "Sync",
-				"Audio": "Audio",
-				"Spectrogram": "Spectrogram"
+				"File": "Soubor",
+				"Edit": "Úpravy",
+				"View": "Zobrazení",
+				"Sync": "Synchronizace",
+				"Audio": "Zvuk",
+				"Spectrogram": "Spektrogram"
 			}
 		},
 		"tab": {
-			"common": "General",
+			"common": "Obecné",
 			"assistant": "Assistant",
 			"appearance": "Appearance",
 			"audio": "Audio",
-			"keybindings": "Keybindings",
-			"spectrogram": "Spectrogram",
+			"keybindings": "Klávesové zkratky",
+			"spectrogram": "Spektrogram",
 			"about": "About",
 			"dev": "Dev"
 		}
 	},
 	"error": {
-		"unsupportedFileFormat": "Unsupported file format: {ext}",
-		"openFileFailed": "Failed to open file",
+		"unsupportedFileFormat": "Nepodporovaný formát souboru: {ext}",
+		"openFileFailed": "Nepodařilo se otevřít soubor",
 		"audioNotLoaded": "Audio not loaded. Please ensure an audio file is playing."
 	},
 	"audioPanel": {
-		"volume": "Volume",
-		"playbackRate": "Playback rate",
-		"clickToLoadMusic": "Click the icon button to load music",
-		"playPause": "Play / pause music",
-		"expandSpectrogram": "Expand / collapse spectrogram"
+		"volume": "Hlasitost",
+		"playbackRate": "Rychlost přehrávání",
+		"clickToLoadMusic": "Klikněte na ikonu pro načtení hudby",
+		"playPause": "Přehrát / pozastavit hudbu",
+		"expandSpectrogram": "Rozbalit / sbalit spektrogram"
 	},
 	"audio": {
 		"status": {
-			"transcoding": "Decoding failed, attempting to transcode audio...",
-			"loading": "Loading audio...",
-			"processing": "Processing..."
+			"transcoding": "Dekódování selhalo, pokus o překódování zvuku...",
+			"loading": "Načítání zvuku...",
+			"processing": "Zpracování..."
 		},
 		"error": {
-			"workerError": "Error processing audio"
+			"workerError": "Chyba při zpracování zvuku"
 		}
 	},
 	"latencyTestDialog": {
@@ -501,40 +501,40 @@
 			"button": "Fetch Songwriters from Genius",
 			"tryFindRealNames": "Try to find real names (Legal Names)"
 		},
-		"openLink": "Open link",
-		"duplicateMsg": "Found duplicate metadata values",
-		"addValue": "Add",
+		"openLink": "Otevřít odkaz",
+		"duplicateMsg": "Nalezeny duplicitní hodnoty metadat",
+		"addValue": "Přidat",
 		"builtinOptions": {
-			"musicName": "Track Name",
-			"artists": "Track Artists",
-			"artistsInvalidMsg": "If there are multiple artists, please add this key multiple times instead of using delimiters; if an artist name contains delimiters, please ignore this message",
-			"songwriter": "Songwriter",
-			"songwriterInvalidMsg": "If there are multiple songwriters, please add this key multiple times instead of using delimiters",
-			"album": "Album Name",
+			"musicName": "Název skladby",
+			"artists": "Umělci skladby",
+			"artistsInvalidMsg": "Pokud je více umělců, přidejte tento klíč vícekrát místo použití oddělovačů; pokud jméno umělce obsahuje oddělovače, ignorujte tuto zprávu",
+			"songwriter": "Skladatel",
+			"songwriterInvalidMsg": "Pokud je více skladatelů, přidejte tento klíč vícekrát místo použití oddělovačů",
+			"album": "Název alba",
 			"coverArt": "Cover URL",
-			"ncmMusicId": "NetEase Music ID",
-			"ncmMusicIdInvalidMsg": "NetEase Music ID should be numeric",
-			"qqMusicId": "QQ Music ID",
-			"qqMusicIdInvalidMsg": "QQ Music ID should be alphanumeric",
-			"spotifyId": "Spotify Track ID",
-			"spotifyIdInvalidMsg": "Spotify Track ID should be alphanumeric",
-			"appleMusicId": "Apple Music Track ID",
-			"appleMusicIdInvalidMsg": "Apple Music Track ID should be numeric",
-			"isrc": "Track ISRC Code",
-			"isrcInvalidMsg": "ISRC code format should be CC-XXX-YY-NNNNN",
-			"ttmlAuthorGithub": "Lyrics Author GitHub ID",
-			"ttmlAuthorGithubInvalidMsg": "GitHub ID should be numeric",
-			"ttmlAuthorGithubLogin": "Lyrics Author GitHub Username",
-			"ttmlAuthorGithubLoginInvalidMsg": "GitHub username should be alphanumeric or hyphens, up to 39 characters"
+			"ncmMusicId": "ID NetEase Music",
+			"ncmMusicIdInvalidMsg": "ID NetEase Music musí být číselné",
+			"qqMusicId": "ID QQ Music",
+			"qqMusicIdInvalidMsg": "ID QQ Music musí být alfanumerické",
+			"spotifyId": "ID skladby Spotify",
+			"spotifyIdInvalidMsg": "ID skladby Spotify musí být alfanumerické",
+			"appleMusicId": "ID skladby Apple Music",
+			"appleMusicIdInvalidMsg": "ID skladby Apple Music musí být číselné",
+			"isrc": "ISRC kód skladby",
+			"isrcInvalidMsg": "Formát ISRC kódu musí být CC-XXX-YY-NNNNN",
+			"ttmlAuthorGithub": "GitHub ID autora titulek",
+			"ttmlAuthorGithubInvalidMsg": "GitHub ID musí být číselné",
+			"ttmlAuthorGithubLogin": "GitHub uživatelské jméno autora titulek",
+			"ttmlAuthorGithubLoginInvalidMsg": "GitHub uživatelské jméno musí být alfanumerické nebo obsahovat pomlčky, max. 39 znaků"
 		},
-		"title": "Metadata Editor",
-		"key": "Key",
-		"value": "Value",
-		"empty": "No metadata",
-		"addKeyValue": "Add new key-value",
-		"customKey": "Custom Key",
-		"addPresets": "Add all preset keys",
-		"clear": "Clear"
+		"title": "Editor metadat",
+		"key": "Klíč",
+		"value": "Hodnota",
+		"empty": "Žádná metadata",
+		"addKeyValue": "Přidat nový pár klíč-hodnota",
+		"customKey": "Vlastní klíč",
+		"addPresets": "Přidat všechny předdefinované klíče",
+		"clear": "Vymazat"
 	},
 	"genius": {
 		"setupTitle": "Genius API Key Setup",
@@ -552,54 +552,54 @@
 		"changeKey": "Change API Key"
 	},
 	"common": {
-		"cancel": "Cancel",
+		"cancel": "Zrušit",
 		"save": "Save",
-		"search": "Search",
-		"close": "Close",
+		"search": "Hledat",
+		"close": "Zavřít",
 		"resultsFound": "Found {count} results",
-		"apply": "Apply",
-		"confirm": "Confirm",
-		"success": "Restore successful",
-		"error": "Data corrupted or lost",
-		"deleteSuccess": "Delete Success",
-		"time": "Time",
-		"restore": "Restore",
+		"apply": "Použít",
+		"confirm": "Potvrdit",
+		"success": "Obnovení úspěšné",
+		"error": "Data poškozena nebo ztracena",
+		"deleteSuccess": "Smazání úspěšné",
+		"time": "Čas",
+		"restore": "Obnovit",
 		"sync": "Sync",
-		"remove": "Remove",
-		"about": "About",
-		"clickToSet": "Click to set "
+		"remove": "Odstranit",
+		"about": "O aplikaci",
+		"clickToSet": "Klikněte pro nastavení "
 	},
 	"textImportDialog": {
 		"addSpaces": "Add Spaces",
 		"splitHyphens": "Split Hyphenated Words",
 		"processedSuccess": "Lyrics automated for syllable sync.",
-		"title": "Import Lyrics from Plain Text",
+		"title": "Importovat titulky z prostého textu",
 		"tab": {
 			"import": "Import"
 		},
 		"guides": "Guides",
 		"processLyrics": "Process Lyrics",
-		"actionButton": "Import",
+		"actionButton": "Importovat",
 		"contentMode": {
-			"caption": "Text content",
-			"lyric": "Lyrics Only",
-			"withTranslation": "Lyrics with translation",
-			"withRoman": "Lyrics with romanization",
-			"withBoth": "Lyrics with both"
+			"caption": "Obsah textu",
+			"lyric": "Pouze titulky",
+			"withTranslation": "titulky s překladem",
+			"withRoman": "titulky s romanizací",
+			"withBoth": "titulky s obojím"
 		},
 		"separationMode": {
-			"caption": "Translation/Romanization Format",
-			"multipleLine": "Interleaved Multiple Lines",
-			"sameLine": "Same Line Separation"
+			"caption": "Formát překladu/romanizace",
+			"multipleLine": "Prokládané více řádků",
+			"sameLine": "Oddělení na stejném řádku"
 		},
-		"separator": "Line Separator",
-		"swapTransAndRoman": "Swap translation and romanization lines",
-		"wordSeparator": "Word Separator",
-		"enableSpecialPrefix": "Enable Special Prefix",
-		"bgLyricPrefix": "Background Lyric Prefix",
-		"duetLyricPrefix": "Duet Lyric Prefix",
-		"enableEmptyBeat": "Enable Empty Beat",
-		"emptyBeatSymbol": "Empty Beat Symbol",
+		"separator": "Oddělovač řádků",
+		"swapTransAndRoman": "Prohodit řádky překladu a romanizace",
+		"wordSeparator": "Oddělovač slov",
+		"enableSpecialPrefix": "Povolit speciální předponu",
+		"bgLyricPrefix": "Předpona doprovodné titulky",
+		"duetLyricPrefix": "Předpona duetové titulky",
+		"enableEmptyBeat": "Povolit prázdnou dobu",
+		"emptyBeatSymbol": "Symbol prázdné doby",
 		"guide": {
 			"prepare": {
 				"title": "1. Prepare Lyrics",
@@ -627,18 +627,18 @@
 		}
 	},
 	"lrclib": {
-		"placeholder": "Title Artist...",
-		"notFound": "No results found, please try different keywords",
-		"noResult": "Enter keywords to start searching",
-		"searchError": "Search failed, please check network or try again later",
-		"importError": "Error occurred while importing lyrics",
-		"title": "Import Lyric from LRCLIB",
-		"synced": "Synced",
-		"unsynced": "Unsynced",
-		"noLyrics": "No lyrics content available for this track",
-		"extractBg": "Extract parentheses as background vocals",
-		"autoSegment": "Auto Segment",
-		"import": "Import Lyric"
+		"placeholder": "Název Umělec...",
+		"notFound": "Žádné výsledky, zkuste jiná klíčová slova",
+		"noResult": "Zadejte klíčová slova pro zahájení vyhledávání",
+		"searchError": "Vyhledávání selhalo, zkontrolujte síť nebo to zkuste později",
+		"importError": "Při importu titulek došlo k chybě",
+		"title": "Importovat titulky z LRCLIB",
+		"synced": "Synchronizováno",
+		"unsynced": "Nesynchronizováno",
+		"noLyrics": "Pro tuto skladbu není k dispozici žádný obsah titulek",
+		"extractBg": "Extrahovat závorky jako doprovodný vokál",
+		"autoSegment": "Automatická segmentace",
+		"import": "Importovat titulky"
 	},
 	"lyricEditor": {
 		"locate": "Locate",
@@ -652,66 +652,66 @@
 		}
 	},
 	"lyricLineView": {
-		"translatedLabel": "Translation:",
-		"romanLabel": "Romanization:",
-		"empty": "None",
+		"translatedLabel": "Překlad:",
+		"romanLabel": "Romanizace:",
+		"empty": "Žádný",
 		"duplicateLinesHere": "Duplicate {count} selected line(s) here",
-		"insertLine": "Insert new line here",
-		"insertWord": "Insert word here…"
+		"insertLine": "Vložit nový řádek zde",
+		"insertWord": "Vložit slovo zde…"
 	},
 	"lyricWordView": {
-		"empty": "Empty",
-		"spaceCount": "Space x{count}",
+		"empty": "Prázdné",
+		"spaceCount": "Mezera x{count}",
 		"removeWord": "Remove Duplicate Word",
 		"editingWordTitle": "Editing Word",
 		"editingWordDesc": "Edit the word or apply suggested quick fixes.",
 		"noSuggestions": "No suggestions"
 	},
 	"touchSyncPanel": {
-		"prevWord": "Jump Previous Word",
-		"nextWord": "Jump Next Word"
+		"prevWord": "Přejít na předchozí slovo",
+		"nextWord": "Přejít na další slovo"
 	},
 	"grammarCheck": {
-		"capitalization": "Word should be capitalized",
+		"capitalization": "Slovo by mělo být velkým písmenem",
 		"capitalInMiddle": "Word has capital letters in middle",
-		"title": "Grammar & Spelling Check",
+		"title": "Kontrola gramatiky a pravopisu",
 		"issues": "Issues",
-		"history": "History",
-		"ignoredWords": "Ignored Words",
-		"noIssues": "No issues found!",
-		"issuesFound": "issues found",
-		"undoLast": "Undo Last",
-		"clearHistory": "Clear History",
-		"noHistory": "No changes made yet",
-		"fixed": "fixed",
-		"ignored": "ignored",
-		"line": "Line",
-		"clearIgnoredWords": "Clear All",
-		"noIgnoredWords": "No ignored words",
-		"noIssuesMessage": "No issues found! Your lyrics look good."
+		"history": "Historie",
+		"ignoredWords": "Ignorovaná slova",
+		"noIssues": "Žádné problémy nenalezeny!",
+		"issuesFound": "problémů nalezeno",
+		"undoLast": "Zpět poslední",
+		"clearHistory": "Vymazat historii",
+		"noHistory": "Zatím nebyly provedeny žádné změny",
+		"fixed": "opraveno",
+		"ignored": "ignorováno",
+		"line": "Řádek",
+		"clearIgnoredWords": "Vymazat vše",
+		"noIgnoredWords": "Žádná ignorovaná slova",
+		"noIssuesMessage": "Žádné problémy nenalezeny! Vaše texty vypadají dobře."
 	},
 	"replaceWordDialog": {
-		"title": "Replace Word",
-		"description": "New word:",
-		"placeholder": "New word",
-		"applyToAll": "Apply this replacing to all identical words",
+		"title": "Nahradit slovo",
+		"description": "Nové slovo:",
+		"placeholder": "Nové slovo",
+		"applyToAll": "Použít tuto náhradu na všechna identická slova",
 		"caseSensitive": "Match case (Exact match)"
 	},
 	"timeShiftDialog": {
-		"title": "Time Shift",
-		"amount": "Offset (ms)",
-		"direction": "Direction",
-		"advance": "Advance (-)",
-		"delay": "Delay (+)",
-		"scopeLabel": "Scope",
+		"title": "Časový posun",
+		"amount": "Posun (ms)",
+		"direction": "Směr",
+		"advance": "Dopředu (-)",
+		"delay": "Zpozdit (+)",
+		"scopeLabel": "Rozsah",
 		"scope": {
-			"all": "All lyric lines",
-			"selected": "Selected lyric lines",
-			"selectedFollowing": "Selected and followings",
-			"custom": "Custom Range"
+			"all": "Všechny řádky titulek",
+			"selected": "Vybrané řádky titulek",
+			"selectedFollowing": "Vybrané a následující",
+			"custom": "Vlastní rozsah"
 		},
-		"fromLine": "From line",
-		"toLine": "to line",
+		"fromLine": "Od řádku",
+		"toLine": "do řádku",
 		"line": ""
 	},
 	"lyrically": {
@@ -720,143 +720,143 @@
 		"importTitle": "Import Lyrics safely via Lyrically (No CORS via API endpoint)"
 	},
 	"globalDragOverlay": {
-		"title": "Release to load"
+		"title": "Uvolněte pro načtení"
 	},
 	"historyRestoreDialog": {
-		"loadError": "Failed to load history",
+		"loadError": "Nepodařilo se načíst historii",
 		"confirm": {
-			"title": "Confirm Restore",
-			"description": "This will overwrite all content in the current editor. Are you sure you want to restore this snapshot?"
+			"title": "Potvrdit obnovení",
+			"description": "Tím se přepíše veškerý obsah v aktuálním editoru. Opravdu chcete obnovit tento snímek?"
 		},
 		"deleteProject": {
-			"title": "Delete project history",
-			"description": "Are you sure you want to delete all autosaved records for this project? This action cannot be undone."
+			"title": "Smazat historii projektu",
+			"description": "Opravdu chcete smazat všechny automaticky uložené záznamy pro tento projekt? Tuto akci nelze vrátit zpět."
 		},
-		"projects": "Recent Projects",
-		"noProjects": "No records were automatically saved.",
-		"latestState": "Latest version",
-		"restoreLatest": "Restore this version",
-		"historyVersions": "Other versions",
-		"noHistory": "No history available",
-		"selectProject": "Please select an item from the left panel"
+		"projects": "Nedávné projekty",
+		"noProjects": "Nebyly automaticky uloženy žádné záznamy.",
+		"latestState": "Nejnovější verze",
+		"restoreLatest": "Obnovit tuto verzi",
+		"historyVersions": "Ostatní verze",
+		"noHistory": "Žádná historie k dispozici",
+		"selectProject": "Vyberte prosím položku z levého panelu"
 	},
 	"autosave": {
-		"legacyProjectName": "Legacy snapshots",
-		"untitledProjectName": "Untitled Project"
+		"legacyProjectName": "Starší snímky",
+		"untitledProjectName": "Projekt bez názvu"
 	},
 	"time": {
-		"daysAgo": "{count} days ago",
-		"hoursAgo": "{count} hours ago",
-		"minutesAgo": "{count} minutes ago",
-		"justNow": "Just now"
+		"daysAgo": "Před {count} dny",
+		"hoursAgo": "Před {count} hodinami",
+		"minutesAgo": "Před {count} minutami",
+		"justNow": "Právě teď"
 	},
 	"metadata": {
 		"title": "Metadata"
 	},
 	"submitToAMLLDB": {
 		"validation": {
-			"missingMusicName": "Metadata missing track name",
-			"missingArtists": "Metadata missing track artists",
-			"missingAlbum": "Metadata missing album name",
-			"missingMusicId": "Metadata missing platform track ID"
+			"missingMusicName": "V metadatech chybí název skladby",
+			"missingArtists": "V metadatech chybí umělci skladby",
+			"missingAlbum": "V metadatech chybí název alba",
+			"missingMusicId": "V metadatech chybí ID skladby platformy"
 		},
-		"defaultReason": "New lyrics submission",
+		"defaultReason": "Nové odeslání titulek",
 		"errors": {
-			"validation": "Submission validation failed:\n{errors}",
-			"noLyrics": "There's no lyrics content yet?",
-			"uploadFailed": "Failed to request upload lyrics file: {status} {statusText}",
-			"submitFailed": "Submission failed, check console for reason!"
+			"validation": "Ověření odeslání selhalo:\n{errors}",
+			"noLyrics": "Ještě není žádný obsah titulek?",
+			"uploadFailed": "Nepodařilo se požádat o nahrání souboru titulek: {status} {statusText}",
+			"submitFailed": "Odeslání selhalo, zkontrolujte konzoli pro zjištění důvodu!"
 		},
 		"labels": {
-			"submit": "Lyrics Submit/Correction"
+			"submit": "Odeslat/Opravit titulky"
 		},
-		"issueTitle": "[Lyrics Submit/Fix] {name}",
-		"unknownTitle": "Unknown Title",
-		"unknownArtist": "Unknown Artist",
-		"description": "Submit lyrics to AMLL Lyrics Database",
-		"title": "Submit lyrics to AMLL Lyrics Database (Simplified Chinese users only)",
-		"chineseOnlyWarning": "This feature is only available to Simplified Chinese users of AMLL Lyrics Database. If you are editing lyrics to use them in other software, please follow that software's way to submit lyrics!",
-		"thankYou": "First of all, thank you for your generous lyrics contribution!",
-		"cc0Agreement": "By submitting you agree to",
-		"cc0Rights": "use the CC0 license and fully waive ownership of the lyrics",
-		"andSubmit": "and submit to the lyrics database!",
-		"futureUse": "And the lyrics will be used as default TTML source by AMLL systems in the future!",
-		"rightsWarning": "If you value retaining ownership, please do NOT submit!",
-		"submitInstructions": "Enter the following info then jump to the GitHub issue submission page!",
-		"closeWarning": "Close warning message"
+		"issueTitle": "[Odeslání/Oprava titulek] {name}",
+		"unknownTitle": "Neznámý název",
+		"unknownArtist": "Neznámý umělec",
+		"description": "Odeslat titulky do databáze AMLL",
+		"title": "Odeslat titulky do databáze AMLL (pouze pro uživatele zjednodušené čínštiny)",
+		"chineseOnlyWarning": "Tato funkce je dostupná pouze pro uživatele zjednodušené čínštiny databáze AMLL. Pokud upravujete titulky pro použití v jiném softwaru, postupujte podle způsobu odesílání titulek daného softwaru!",
+		"thankYou": "Především děkujeme za váš štědrý příspěvek titulek!",
+		"cc0Agreement": "Odesláním souhlasíte s",
+		"cc0Rights": "použitím licence CC0 a úplným vzdáním se vlastnictví titulek",
+		"andSubmit": "a odesláním do databáze titulek!",
+		"futureUse": "A titulky budou v budoucnu používány jako výchozí TTML zdroj systémy AMLL!",
+		"rightsWarning": "Pokud si ceníte zachování vlastnictví, NEODESÍLEJTE!",
+		"submitInstructions": "Zadejte následující informace a přejděte na stránku odeslání issue na GitHub!",
+		"closeWarning": "Zavřít varovnou zprávu"
 	},
 	"splitWordDialog": {
-		"spaceCount": "Space x{count}",
-		"empty": "Empty",
-		"title": "Split Word",
-		"tip": "After splitting, new words will evenly divide the original word's start/end time. Empty beats will be cleared.",
+		"spaceCount": "Mezera x{count}",
+		"empty": "Prázdné",
+		"title": "Rozdělit slovo",
+		"tip": "Po rozdělení nová slova rovnoměrně rozdělí čas začátku/konce původního slova. Prázdné doby budou vymazány.",
 		"syllableSplit": "Syllable Split",
-		"applyToAll": "Apply this splitting to all identical words",
-		"ignoreCase": "Ignore case",
-		"actionButton": "Confirm"
+		"applyToAll": "Použít toto rozdělení na všechna identická slova",
+		"ignoreCase": "Ignorovat velikost písmen",
+		"actionButton": "Potvrdit"
 	},
 	"advancedSegmentDialog": {
 		"test": {
-			"outputError": "Splitting preview error",
-			"title": "Splitting Test",
-			"input": "Enter a lyric line or word to test...",
-			"output": "Preview result:"
+			"outputError": "Chyba náhledu rozdělení",
+			"title": "Test rozdělení",
+			"input": "Zadejte řádek titulky nebo slovo k otestování...",
+			"output": "Náhled výsledku:"
 		},
-		"title": "Advanced Segmentation",
+		"title": "Pokročilá segmentace",
 		"scope": {
-			"title": "Application Scope",
-			"all": "All lyric lines",
+			"title": "Rozsah použití",
+			"all": "Všechny řádky titulek",
 			"range": {
-				"from": "From line",
-				"to": "to line",
+				"from": "Od řádku",
+				"to": "do řádku",
 				"end": ""
 			}
 		},
 		"rules": {
-			"title": "Auto Segmentation Rules",
-			"cjk": "Split CJK characters",
-			"syllable": "Split Western words by syllables"
+			"title": "Pravidla automatické segmentace",
+			"cjk": "Rozdělit CJK znaky",
+			"syllable": "Rozdělit západní slova po slabikách"
 		},
 		"language": {
-			"select": "Select a hyphenation language model:"
+			"select": "Vyberte jazykový model pro dělení slov:"
 		},
-		"tip": "After splitting, the original word's total duration will be redistributed based on the number of characters and their weights.",
+		"tip": "Po rozdělení bude celková délka původního slova přerozdělena na základě počtu znaků a jejich vah.",
 		"postProcess": {
-			"title": "Post-processing",
+			"title": "Následné zpracování",
 			"punct": {
-				"caption": "Punctuation handling:",
-				"merge": "Merge to adjacent syllable",
-				"standalone": "Set as standalone segment",
-				"weight": "Punctuation time weight:"
+				"caption": "Zpracování interpunkce:",
+				"merge": "Sloučit se sousední slabikou",
+				"standalone": "Nastavit jako samostatný segment",
+				"weight": "Váha času interpunkce:"
 			},
-			"empty": "Remove empty segments"
+			"empty": "Odstranit prázdné segmenty"
 		},
 		"custom": {
-			"title": "Custom Segmentation Rules",
-			"input": "Enter word for manual splitting...",
-			"add": "Add to custom rules",
-			"list": "Custom rules list:"
+			"title": "Vlastní pravidla segmentace",
+			"input": "Zadejte slovo pro ruční rozdělení...",
+			"add": "Přidat do vlastních pravidel",
+			"list": "Seznam vlastních pravidel:"
 		},
 		"ignore": {
-			"title": "Ignore List",
-			"placeholder": "One word per line, words in this list will not be auto-segmented"
+			"title": "Seznam ignorovaných",
+			"placeholder": "Jedno slovo na řádek, slova v tomto seznamu nebudou automaticky segmentována"
 		}
 	},
 	"aboutModal": {
-		"appName": "Apple Music-like Lyrics TTML Tool",
-		"description": "A Word-by-Word TTML Editing and Timeline Tool for Apple Music-like Lyrics",
-		"buildDate": "Build Date: {date}",
-		"gitCommit": "Git Commit: {commit}"
+		"appName": "Nástroj TTML pro titulky ve stylu Apple Music",
+		"description": "Nástroj pro úpravu a časování TTML po slovech pro titulky ve stylu Apple Music",
+		"buildDate": "Datum sestavení: {date}",
+		"gitCommit": "Git commit: {commit}"
 	},
 	"spectrogram": {
-		"invalidEndTime": "Cannot select this end time",
-		"noAudioLoaded": "Please load an audio file to render the spectrogram",
-		"loadAudio": "Load an audio file",
-		"showUnselectedLines": "Show unselected lines"
+		"invalidEndTime": "Nelze vybrat tento čas konce",
+		"noAudioLoaded": "Prosím načtěte zvukový soubor pro vykreslení spektrogramu",
+		"loadAudio": "Načíst zvukový soubor",
+		"showUnselectedLines": "Zobrazit nevybrané řádky"
 	},
 	"pwa": {
-		"offlineReady": "Site successfully cached for offline use",
-		"updateRefresh": "Site updated, refresh to use the latest version!",
-		"refresh": "Refresh"
+		"offlineReady": "Stránka úspěšně uložena do mezipaměti pro offline použití",
+		"updateRefresh": "Stránka aktualizována, obnovte pro použití nejnovější verze!",
+		"refresh": "Obnovit"
 	}
 }
