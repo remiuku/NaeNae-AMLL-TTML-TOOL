@@ -35,6 +35,9 @@ identifier = "decorum:allow-show-snap-overlay"
 identifier = "shell:allow-open"
 
 [[permissions]]
+identifier = "shell:allow-execute"
+
+[[permissions]]
 identifier = "updater:default"
 
 [[permissions]]

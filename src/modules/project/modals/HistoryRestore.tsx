@@ -16,6 +16,7 @@ import {
 	ScrollArea,
 	Table,
 	Text,
+	VisuallyHidden,
 } from "@radix-ui/themes";
 import { useAtom, useSetAtom } from "jotai";
 import { useCallback, useEffect, useState } from "react";
@@ -184,6 +185,14 @@ export const HistoryRestoreDialog = () => {
 					padding: 0,
 				}}
 			>
+				<VisuallyHidden>
+					<Dialog.Title>
+						{t("historyRestoreDialog.projects", "最近项目")}
+					</Dialog.Title>
+					<Dialog.Description>
+						{t("historyRestoreDialog.confirm.description", "恢复或管理项目历史快照")}
+					</Dialog.Description>
+				</VisuallyHidden>
 				<Flex style={{ height: 700 }}>
 					<Flex
 						direction="column"

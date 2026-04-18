@@ -38,7 +38,31 @@ export function ChangelogDialog() {
 				<ScrollArea type="always" scrollbars="vertical" style={{ height: "calc(100% - 60px)" }}>
 					<Flex direction="column" gap="5" pr="4">
 						<Box>
-							<Heading size="4" mb="2" color="gold">v0.1.8 Updates (Latest)</Heading>
+							<Heading size="4" mb="2" color="gold">v0.2.0 Updates (Major)</Heading>
+							<Flex direction="column" gap="3">
+								<Text size="2">
+									<strong>Community WASM Plugin System:</strong> A revolutionary extension framework allowing developers to write high-performance importers and exporters in C++ or Rust. Features persistent IndexedDB storage and a dedicated management console located in the brand new <strong>Dev</strong> preferences tab.
+								</Text>
+								<Text size="2">
+									<strong>Advanced Romanization Engine:</strong> Completely rebuilt the phonetic system for professional-grade synchronization. Supports automated Romaji (JA), Pinyin (ZH), and Romaji (KO) generation with project-level language priority and <strong>capsule-aware distribution</strong> for perfect Japanese mora syncing.
+								</Text>
+								<Text size="2">
+									<strong>Developer Preferences Tab:</strong> Introduced a dedicated "Dev" category in the Preferences dialog to house advanced technical features, plugin management, and system debug information. Access it to manage your community extensions or check build environments.
+								</Text>
+								<Text size="2">
+									<strong>UI Performance & Stability:</strong> Resolved critical Ribbon Bar layout issues, implemented invisible scrollbar utilities for horizontal navigation, and fixed dynamic import failures to ensure a 100% stable and fluid editing experience.
+								</Text>
+								<Text size="2">
+									<strong>Integrated MP3-to-FLAC Converter:</strong> Added a high-fidelity audio processing bridge powered by <strong>FFmpeg.wasm</strong>. The tool now automatically detects MP3 files and offers a streamlined conversion to FLAC format to ensure 100% timing accuracy and eliminate browser-level audio decoding drift during synchronization.
+								</Text>
+								<Text size="2">
+									<strong>Type-Safe Plugin Architecture:</strong> Refactored the internal core to be fully type-safe, preventing runtime crashes and improving the developer experience for community contributors.
+								</Text>
+							</Flex>
+						</Box>
+
+						<Box>
+							<Heading size="4" mb="2" color="teal">v0.1.8 Updates</Heading>
 							<Flex direction="column" gap="3">
 								<Text size="2">
 									<strong>Automated Lyrics Prep Engine:</strong> Completely replaced the external <code>Lyrprep</code> dependency with a built-in, local processing engine. The new <strong>"Process Lyrics"</strong> button handles background vocal splitting, space escaping (<code>\ </code>), and hyphen splitting (<code>sh-\sh-</code>) on the spot without leaving the app.

@@ -19,7 +19,6 @@ export const LyricLineMenu = ({ lineIndex }: { lineIndex: number }) => {
 	const editLyricLines = useSetImmerAtom(lyricLinesAtom);
 
 	const lineObjs = useAtomValue(lyricLinesAtom);
-	const currentLineId = lineObjs.lyricLines[lineIndex]?.id;
 	const selectedLineObjs = lineObjs.lyricLines.filter((line) =>
 		selectedLines.has(line.id),
 	);

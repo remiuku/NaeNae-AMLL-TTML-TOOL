@@ -152,6 +152,13 @@
 			"paletteCustom": "Personnalisée",
 			"gradientEditorDesc": "Une valeur Pos de 0.0 correspond à la partie la plus silencieuse, et 1.0 à la partie la plus forte. Il est recommandé d'utiliser des couleurs plus vives pour les valeurs Pos plus grandes.",
 			"addStop": "Ajouter un point de couleur"
+		},
+		"audio": {
+			"mp3Conversion": "MP3 en FLAC",
+			"mp3ConversionDesc": "Convertir le MP3 en FLAC lors de l'importation pour une meilleure synchronisation",
+			"mp3ConversionAsk": "Demander",
+			"mp3ConversionAlways": "Automatique",
+			"mp3ConversionNever": "Désactivé"
 		}
 	},
 	"topBar": {
@@ -610,5 +617,18 @@
 		"ignoredWords": "Mots ignorés",
 		"clearIgnoredWords": "Tout effacer",
 		"noIgnoredWords": "Aucun mot ignoré"
+	},
+	"dialog": {
+		"mp3Conversion": {
+			"title": "Convertir le MP3 en FLAC ?",
+			"description": "Vous importez un fichier MP3 : {fileName}",
+			"warning": "Les fichiers MP3 peuvent causer une désynchronisation audio dans cette application. La conversion en FLAC est recommandée pour une meilleure compatibilité.",
+			"dontShowAgain": "Ne plus afficher cet avertissement",
+			"skip": "Utiliser MP3",
+			"convert": "Convertir en FLAC",
+			"converting": "Conversion de MP3 en FLAC...",
+			"success": "Conversion réussie",
+			"failed": "Échec de la conversion : {error}"
+		}
 	}
 }

@@ -1,6 +1,15 @@
 import { Box, Flex } from "@radix-ui/themes";
 import { Toolbar } from "radix-ui";
 import { type FC, useEffect, useState } from "react";
+
+import { HeaderFileInfo } from "./HeaderFileInfo";
+import { EditMenu } from "./modals/EditMenu";
+import { FileMenu } from "./modals/FileMenu";
+import { HelpMenu } from "./modals/HelpMenu";
+import { HomeMenu } from "./modals/HomeMenu";
+import { ToolMenu } from "./modals/ToolMenu";
+import { useTopMenuActions } from "./useTopMenuActions";
+
 import {
 	keyDeleteSelectionAtom,
 	keyNewFileAtom,
@@ -11,15 +20,8 @@ import {
 	keySelectInvertedAtom,
 	keySelectWordsOfMatchedSelectionAtom,
 	keyUndoAtom,
-} from "$/states/keybindings.ts";
-import { registerKeyBindings, useKeyBindingAtom } from "$/utils/keybindings.ts";
-import { HeaderFileInfo } from "./HeaderFileInfo";
-import { EditMenu } from "./modals/EditMenu";
-import { FileMenu } from "./modals/FileMenu";
-import { HelpMenu } from "./modals/HelpMenu";
-import { HomeMenu } from "./modals/HomeMenu";
-import { ToolMenu } from "./modals/ToolMenu";
-import { useTopMenuActions } from "./useTopMenuActions";
+} from "$/states/keybindings";
+import { registerKeyBindings, useKeyBindingAtom } from "$/utils/keybindings";
 // top menu actions are used inside individual menu components
 
 const useWindowSize = () => {
@@ -60,7 +62,9 @@ export const TopMenu: FC = () => {
 			registerKeyBindings(["Shift", "Control", "KeyZ"], menu.onRedo),
 		];
 		return () => {
-			unbinds.forEach((unbind) => unbind());
+			unbinds.forEach((unbind) => {
+				unbind();
+			});
 		};
 	}, [menu.onRedo]);
 	useKeyBindingAtom(keySelectAllAtom, menu.onUnselectAll, [menu.onUnselectAll]);
