@@ -33,7 +33,7 @@ const plugins: Plugin[] = [
 		babel: {
 			presets: ["jotai/babel/preset"],
 			plugins: [
-				["babel-plugin-react-compiler", ReactCompilerConfig],
+				// ["babel-plugin-react-compiler", ReactCompilerConfig],
 				jotaiDebugLabel,
 				jotaiReactRefresh,
 			],
@@ -187,6 +187,5 @@ export default defineConfig({
 	define: {
 		global: "globalThis",
 		module: "{}",
-		"process.env": "{}",
 	},
 });
