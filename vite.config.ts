@@ -136,6 +136,7 @@ export default defineConfig({
 	clearScreen: false,
 	optimizeDeps: {
 		exclude: ["@ffmpeg/ffmpeg", "@ffmpeg/util"],
+		include: ["hangul-romanize"],
 	},
 	server: {
 		headers: {
@@ -186,6 +187,5 @@ export default defineConfig({
 	},
 	define: {
 		global: "globalThis",
-		module: "undefined",
 	},
 });
