@@ -53,6 +53,9 @@ export function ChangelogDialog() {
 									<strong>UI Performance & Stability:</strong> Resolved critical Ribbon Bar layout issues, implemented invisible scrollbar utilities for horizontal navigation, and fixed dynamic import failures to ensure a 100% stable and fluid editing experience.
 								</Text>
 								<Text size="2">
+									<strong>Integrated MP3-to-FLAC Converter:</strong> Added a high-fidelity audio processing bridge powered by <strong>FFmpeg.wasm</strong>. The tool now automatically detects MP3 files and offers a streamlined conversion to FLAC format to ensure 100% timing accuracy and eliminate browser-level audio decoding drift during synchronization.
+								</Text>
+								<Text size="2">
 									<strong>Type-Safe Plugin Architecture:</strong> Refactored the internal core to be fully type-safe, preventing runtime crashes and improving the developer experience for community contributors.
 								</Text>
 							</Flex>

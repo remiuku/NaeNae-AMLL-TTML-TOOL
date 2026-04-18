@@ -1,5 +1,5 @@
-import { pinyin as getPinyin } from "pinyin-pro";
 import { Romanize } from "hangul-romanize";
+import { pinyin as getPinyin } from "pinyin-pro";
 import * as wanakana from "wanakana";
 
 export type PhoneticLanguage = "ja" | "zh" | "ko" | "auto";
@@ -25,7 +25,7 @@ export async function getPhonetic(text: string, lang: PhoneticLanguage = "auto")
 					
 					// Transliteration is at data[0][x][3]
 					if (data?.[0]) {
-						return data[0].map((s: any) => s?.[3] || "").join("");
+						return data[0].map((s: unknown[]) => (s as string[])?.[3] || "").join("");
 					}
 				} catch (e) {
 					console.warn(`${detectedLang} API failed, falling back to local libs`, e);

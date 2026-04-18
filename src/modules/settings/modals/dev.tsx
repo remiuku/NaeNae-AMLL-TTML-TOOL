@@ -1,4 +1,4 @@
-import { Flex, Text, Card, Box, Grid } from "@radix-ui/themes";
+import { Box, Card, Flex, Text } from "@radix-ui/themes";
 import { memo } from "react";
 import { useTranslation } from "react-i18next";
 import { PluginManagerDialog } from "$/modules/plugins/components/PluginManagerDialog";

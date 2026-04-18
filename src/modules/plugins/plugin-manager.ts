@@ -94,7 +94,9 @@ class PluginManager {
 				env: {
 					log: (ptr: number) => {
 						// Simple logging bridge for plugins
-						const memory = new Uint8Array(instance.exports.memory.buffer);
+						const memory = new Uint8Array(
+							(instance.exports.memory as WebAssembly.Memory).buffer,
+						);
 						let end = ptr;
 						while (memory[end] !== 0) end++;
 						console.log(`[Plugin: ${plugin.name}]`, new TextDecoder().decode(memory.slice(ptr, end)));

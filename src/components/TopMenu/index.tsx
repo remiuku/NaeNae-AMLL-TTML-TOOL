@@ -60,7 +60,9 @@ export const TopMenu: FC = () => {
 			registerKeyBindings(["Shift", "Control", "KeyZ"], menu.onRedo),
 		];
 		return () => {
-			unbinds.forEach((unbind) => unbind());
+			unbinds.forEach((unbind) => {
+				unbind();
+			});
 		};
 	}, [menu.onRedo]);
 	useKeyBindingAtom(keySelectAllAtom, menu.onUnselectAll, [menu.onUnselectAll]);

@@ -134,12 +134,22 @@ export default defineConfig({
 	plugins,
 	base: process.env.TAURI_ENV_PLATFORM ? "/" : "./",
 	clearScreen: false,
+	optimizeDeps: {
+		exclude: ["@ffmpeg/ffmpeg", "@ffmpeg/util"],
+	},
 	server: {
 		headers: {
 			"Cross-Origin-Embedder-Policy": "require-corp",
 			"Cross-Origin-Opener-Policy": "same-origin",
 		},
 		strictPort: true,
+		proxy: {
+			"/boykisser": {
+				target: "https://files.catbox.moe",
+				changeOrigin: true,
+				rewrite: (path) => path.replace(/^\/boykisser/, ""),
+			},
+		},
 	},
 	envPrefix: ["VITE_", "TAURI_", "AMLL_", "SENTRY_"],
 	build: {

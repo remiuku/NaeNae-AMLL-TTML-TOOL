@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { type FC, useCallback, useEffect, useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Button, Flex, Text, TextField, Card, Switch, Box, Grid } from "@radix-ui/themes";
 import { 
@@ -11,18 +11,17 @@ import { getAllPlugins, savePlugin, deletePlugin, togglePlugin } from "../plugin
 import type { WASMPlugin } from "../types";
 import { pluginManager } from "../plugin-manager";
 
-export const PluginManagerDialog: React.FC = () => {
+export const PluginManagerDialog: FC = () => {
     const [plugins, setPlugins] = useState<WASMPlugin[]>([]);
-    const [isUploading, setIsUploading] = useState(false);
 
-    const loadPlugins = async () => {
+    const loadPlugins = useCallback(async () => {
         const p = await getAllPlugins();
         setPlugins(p);
-    };
+    }, []);
 
     useEffect(() => {
         loadPlugins();
-    }, []);
+    }, [loadPlugins]);
 
     const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
@@ -144,8 +143,8 @@ export const PluginManagerDialog: React.FC = () => {
                                     cursor: "pointer",
                                     transition: "background-color 0.2s",
                                 }}
-                                onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.05)")}
-                                onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "transparent")}
+                                onMouseOver={(e) => { e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.05)"; }}
+                                onMouseOut={(e) => { e.currentTarget.style.backgroundColor = "transparent"; }}
                             >
                                 <Flex direction="column" align="center" gap="2">
                                     <UploadIcon width={24} height={24} />

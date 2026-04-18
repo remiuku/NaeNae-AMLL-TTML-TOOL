@@ -16,6 +16,7 @@ import { SplitWordDialog } from "$/modules/segmentation/components/split-word.ts
 import { SettingsDialog } from "$/modules/settings/modals/index.tsx";
 import { ChangelogDialog } from "./changelog.tsx";
 import { ConfirmationDialog } from "./confirmation.tsx";
+import { Mp3ConversionDialog } from "./mp3-conversion.tsx";
 import { FontSelectionDialog } from "$/modules/settings/modals/FontSelectionDialog.tsx";
 
 export const Dialogs = () => {
@@ -31,6 +32,7 @@ export const Dialogs = () => {
 			<SubmitToAMLLDBDialog />
 			<LatencyTestDialog />
 			<ConfirmationDialog />
+			<Mp3ConversionDialog />
 			<HistoryRestoreDialog />
 			<AdvancedSegmentationDialog />
 			<TimeShiftDialog />

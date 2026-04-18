@@ -45,6 +45,19 @@
 			"description": "The song has no songwriters. Do you want to continue saving?"
 		}
 	},
+	"dialog": {
+		"mp3Conversion": {
+			"title": "Convert MP3 to FLAC?",
+			"description": "You are importing an MP3 file: {fileName}",
+			"warning": "MP3 files may cause audio desyncing in this app. Converting to FLAC is recommended for better compatibility.",
+			"dontShowAgain": "Don't show this warning again",
+			"skip": "Use MP3",
+			"convert": "Convert to FLAC",
+			"converting": "Converting MP3 to FLAC...",
+			"success": "Conversion successful",
+			"failed": "Conversion failed: {error}"
+		}
+	},
 	"ribbonBar": {
 		"editMode": {
 			"multipleValues": "Multiple values…",
@@ -81,7 +94,8 @@
 				"autoFetch": "Auto Fetch",
 				"noSelection": "Please select lines or words first",
 				"success": "Phonetics fetched successfully",
-				"error": "Failed to fetch phonetics"
+				"error": "Failed to fetch phonetics",
+                "romanize": "Romanize"
 			}
 		},
 		"previewMode": {
@@ -96,53 +110,36 @@
 			"currentEmptyBeat": "Empty Beat",
 			"syncAdjustment": "Timing Adjustment",
 			"timeOffset": "Time Offset",
+			"syncLevel": "Sync Level",
+			"syncLevelWord": "Word Sync",
+			"syncLevelLine": "Line Sync",
 			"assistSettings": "Assistant Settings",
 			"showTimestampUpdate": "Show Timestamp Updates",
 			"touchSyncPanel": "Touch Sync Panel",
-			"quickFixes": "Quick Fixes",
 			"bgLyricIgnoreSync": "Ignore Background Vocals",
+			"quickFixes": "Quick Fixes",
+			"manualTimestampEdit": "Manual Timestamp Editing",
 			"displayOptions": "Display Options",
 			"showTimestamps": "Show Timestamps",
 			"highlightActiveWord": "Highlight Active Word",
 			"enableGlowAnimation": "Enable Glow Animation",
 			"highlightErrors": "Highlight Errors",
-
 			"showPerWordRomanization": "Show Per-Word Romanization",
 			"keyBindingReference": "Hotkey Cheatsheet",
 			"startSync": "Mark Begin",
 			"continuousSync": "Commit",
 			"endSync": "Mark End",
-			"syncLevel": "Sync Level",
-			"syncLevelWord": "Word Sync",
-			"syncLevelLine": "Line Sync"
-		},
-		"loading": "Panel loading…"
+			"loading": "Panel loading…"
+		}
 	},
 	"settings": {
-		"group": {
-			"display": "Display",
-			"romanization": "Auto-Romanization",
-			"timing": "Syncing",
-			"timingHighlight": "Visual Timing Cue (Sync)",
-			"playback": "Playback",
-			"autosave": "Auto Save"
-		},
 		"common": {
 			"layoutModeOptions": {
 				"simple": "Simple Mode",
 				"advance": "Advanced Mode"
 			},
-			"customBackground": "Custom Background",
-			"customBackgroundDesc": "Choose an image to use as the background.",
-			"customBackgroundPick": "Choose Image",
-			"customBackgroundClear": "Clear",
-			"customBackgroundManage": "Settings",
-			"customBackgroundEnabled": "Background set",
-			"customBackgroundOpacity": "Opacity",
-			"customBackgroundOpacityWarning": "If this value is too high, the page content may be hard to read.",
-			"customBackgroundMask": "Mask",
-			"customBackgroundBlur": "Blur Radius",
-			"customBackgroundBrightness": "Brightness",
+			"enabled": "Enabled",
+			"disabled": "Disabled",
 			"language": "Interface Language",
 			"languageDesc": "Select the language for the interface",
 			"layoutMode": "Editor Layout Mode",
@@ -150,6 +147,8 @@
 				"line1": "Simple layout satisfies most basic needs",
 				"line2": "Switch to Advanced Mode if you need more efficient syncing"
 			},
+			"compactBGInSync": "Compact Background Vocals (Sync Mode)",
+			"compactBGInSyncDesc": "Automatically compress vertical space for background vocal lines during synchronization.",
 			"syncJudgeMode": "Sync Timestamp Judgment Mode",
 			"syncJudgeModeDesc": "Set how timestamps are judged when syncing. Default is 'First key down'.",
 			"syncJudgeModeOptions": {
@@ -168,13 +167,28 @@
 			"smartFirstWordDesc": "When syncing the first word of a line, the first key press sets its start time only, without immediately setting its end time.",
 			"smartLastWord": "Smart Last Word",
 			"smartLastWordDesc": "When syncing the last word of a line, the key press sets its end time without automatically setting the start time of the next line's first word.",
+			"enableUpcomingWordHighlight": "Enable Upcoming Word Pre-Highlight",
+			"enableUpcomingWordHighlightDesc": "Fades in a highlight color shortly before a word plays during Sync mode to improve precision.",
+			"upcomingWordHighlightThreshold": "Pre-Highlight Time Threshold (ms)",
+			"upcomingWordHighlightColor": "Highlight Color (CSS Value)",
 			"volume": "Music Volume",
 			"playbackRate": "Playback Speed",
 			"autosave": {
 				"enable": "Enable Autosave",
 				"interval": "Save Interval (minutes)",
 				"limit": "Snapshots to keep"
-			}
+			},
+			"customBackground": "Custom Background",
+			"customBackgroundDesc": "Choose an image to use as the background.",
+			"customBackgroundPick": "Choose Image",
+			"customBackgroundClear": "Clear",
+			"customBackgroundOpacity": "Opacity",
+			"customBackgroundOpacityWarning": "If this value is too high, the page content may be hard to read.",
+			"customBackgroundMask": "Mask",
+			"customBackgroundBlur": "Blur Radius",
+			"customBackgroundBrightness": "Brightness",
+			"customBackgroundEnabled": "Background set",
+			"customBackgroundManage": "Settings"
 		},
 		"about": {
 			"update": "Update",
@@ -186,8 +200,6 @@
 		},
 		"appearance": {
 			"theme": "Theme",
-			"accentColor": "Accent Color",
-			"accentColorDesc": "Select the primary accent color for the application interface.",
 			"useCustomAccent": "Custom Accent Color",
 			"useCustomAccentDesc": "Set Accent color",
 			"background": "Background",
@@ -196,27 +208,88 @@
 				"image": "Image",
 				"gradient": "Gradient"
 			},
-			"gradientStyle": "Gradient Style",
-			"gradientStyleDesc": "Choose a premium gradient style for your background.",
 			"useCustomGradient": "Custom Gradient Color",
 			"useCustomGradientDesc": "Generate a gradient from a single color.",
-			"backgroundFilterTip": "Tip: You can still adjust opacity, blur, and brightness in the background settings.",
+			"syncGradientToAccent": "Sync first color with Accent",
+			"addGradientColor": "Add Color",
+			"gradientType": "Gradient Type",
+			"type": {
+				"linear": "Linear",
+				"radial": "Radial",
+				"conic": "Conic"
+			},
+			"gradientOpacity": "Gradient Opacity",
+			"gradientSize": "Gradient Scale",
+			"gradientPositionSettings": "Center & Angle",
+			"gradientCenterX": "Center X (Horizontal)",
+			"gradientCenterY": "Center Y (Vertical)",
+			"gradientAngle": "Angle",
+			"font": "Application Font",
+			"currentFont": "Current Font",
+			"changeFont": "Change Font...",
+			"fontImportSuccess": "Font imported successfully!",
 			"fontLibrary": "Font Library",
 			"fontWeight": "Font Weight",
-			"fontStyle": "Font Style",
-			"importFont": "Import Font File",
-			"defaultFonts": "Standard Stacks",
-			"systemFonts": "System Fonts",
-			"googleFonts Library": "Google Fonts Library",
 			"weight": {
 				"regular": "Regular",
 				"bold": "Bold"
 			},
+			"fontStyle": "Font Style",
 			"style": {
 				"normal": "Normal",
 				"italic": "Italic"
-			}
+			},
+			"importFont": "Import Font File",
+			"customFontActive": "LOCAL CUSTOM FONT",
+			"defaultFonts": "Standard Stacks",
+			"systemFonts": "System Fonts",
+			"googleFonts": "Google Fonts Library"
 		},
+		"group": {
+			"assistant": "Assistant",
+			"display": "Display",
+			"timing": "Syncing",
+			"timingHighlight": "Visual Timing Cue (Sync)",
+			"playback": "Playback",
+			"autosave": "Auto Save"
+		},
+		"assistant": {
+			"quickFixes": "Quick Fixes (Grammar)",
+			"quickFixesDesc": "Enable suggestions for repeated words and common transcription errors.",
+			"manualTimestampEdit": "Manual Timestamp Editing",
+			"manualTimestampEditDesc": "Allow clicking on timestamps in Sync mode to manually type values.",
+			"visualizeTimestampUpdate": "Visualize Timestamp Updates",
+			"visualizeTimestampUpdateDesc": "Show a brief flash on timestamps when they are updated via shortcuts.",
+			"highlightErrors": "Highlight Timing Errors",
+			"highlightErrorsDesc": "Visually mark words where start time is greater than end time."
+		},
+		"audio": {
+			"equalizer": "Audio Equalizer",
+			"eqDescription": "Adjust gains for different frequencies to optimize your audio experience.",
+			"preset": "Presets",
+			"standardPresets": "Standard",
+			"presets": {
+				"custom": "Manual"
+			},
+			"customPresets": "Custom",
+			"reset": "Reset",
+			"newPresetName": "New Preset Name",
+			"save": "Save Preset",
+			"mp3Conversion": "MP3 to FLAC",
+			"mp3ConversionDesc": "Convert MP3 to FLAC when importing for better sync",
+			"mp3ConversionAsk": "Ask",
+			"mp3ConversionAlways": "Auto",
+			"mp3ConversionNever": "Off"
+		},
+        "dev": {
+            "wasmPlugins": {
+                "title": "Community Plugin System (WASM)",
+                "description": "Manage and upload custom WebAssembly plugins to extend the tool's importing and exporting capabilities."
+            },
+            "debugInfo": {
+                "title": "Debug Information"
+            }
+        },
 		"spectrogram": {
 			"palette": "Color Palette",
 			"paletteCustom": "Custom",
@@ -230,17 +303,9 @@
 			"sync": "Time",
 			"preview": "Preview"
 		},
+		"boykisser": "boykisser",
 		"appName": "Apple Music-like Lyrics TTML Tool",
 		"menu": {
-			"file": "File",
-			"newLyric": "New lyrics",
-			"openLyric": "Open lyrics",
-			"openFromClipboard": "Open TTML from clipboard",
-			"saveLyric": "Save lyrics",
-			"restoreFromHistory": "Restore from history…",
-			"saveLyricToClipboard": "Save TTML to clipboard",
-			"uploadToAMLLDB": "Upload to database (CN only)",
-			"edit": "Edit",
 			"undo": "Undo",
 			"redo": "Redo",
 			"selectAllLines": "Select all lines",
@@ -249,31 +314,34 @@
 			"selectWordsOfMatchedSelection": "Select words matching selection",
 			"timeShift": "Time Shift...",
 			"editMetadata": "Edit lyrics metadata…",
-			"tool": "Tools",
+			"edit": "Edit",
+			"newLyric": "New lyrics",
+			"openLyric": "Open lyrics",
+			"openFromClipboard": "Open TTML from clipboard",
+			"saveLyric": "Save lyrics",
+			"restoreFromHistory": "Restore from history…",
+			"saveLyricToClipboard": "Save TTML to clipboard",
+			"uploadToAMLLDB": "Upload to database (CN only)",
+			"file": "File",
+			"helpDoc": "Documentation (CN)",
+			"help": "Help",
 			"segmentationTools": "Segmentation Tools",
 			"autoSegment": "Auto Segment",
 			"rubySegment": "Ruby Segmentation",
 			"advancedSegment": "Advanced Segment...",
 			"syncLineTimestamps": "Sync Line Timestamps",
-			"perWordRomanization": {
-				"index": "Per-Word Romanization",
-				"check": "Check Per-Word Romanization",
-				"distribute": "Distribute Romanization...",
-				"autoRuby": "Auto Ruby"
-			},
-			"help": "Help",
-			"helpDoc": "Documentation (CN)",
+			"tool": "Tools",
 			"importLyric": {
 				"import": "Import lyrics",
 				"fromPlainText": "Import from plain text…",
 				"fromLRCLIB": "Import from LRCLIB...",
+				"fromLyrically": "Import from Lyrically...",
 				"fromGenius": "Import from Genius…",
 				"fromLyRiC": "Import from LyRiC file…",
 				"fromESLyRiC": "Import from ESLyRiC file…",
 				"fromQRC": "Import from QRC file…",
 				"fromYRC": "Import from YRC file…",
-				"fromLrcfySylb": "Import from Lyricify Syllable file…",
-				"fromLyrically": "Import from Lyrically..."
+				"fromLrcfySylb": "Import from Lyricify Syllable file…"
 			},
 			"exportLyric": {
 				"export": "Export lyrics",
@@ -288,15 +356,7 @@
 	},
 	"header": {
 		"status": {
-			"saving": "Saving...",
-			"pending": "Saving...",
-			"savedAt": "Last saved at",
-			"saved": "Saved",
 			"autoSavedAt": "Autosaved at {time}"
-		},
-		"popover": {
-			"filename": "File Name",
-			"versionHistory": "Version History..."
 		}
 	},
 	"contextMenu": {
@@ -320,23 +380,14 @@
 		"common": {
 			"latencyTest": "Audio/input latency test"
 		},
-		"tab": {
-			"common": "General",
-			"appearance": "Appearance",
-			"keybindings": "Keybindings",
-			"spectrogram": "Spectrogram",
-			"assistant": "Assistant",
-			"audio": "Audio"
-		},
 		"keybindings": {
 			"newFile": "New File",
 			"openFile": "Open File",
 			"saveFile": "Save File",
-			"openAudio": "Open Audio File",
 			"undo": "Undo",
 			"redo": "Redo",
 			"selectAll": "Select All",
-			"unselectAll": "",
+			"unselectAll": "Deselect All",
 			"selectInverted": "Invert Selection",
 			"selectWordsOfMatchedSelection": "Select similar words",
 			"deleteSelection": "Delete Selection",
@@ -353,7 +404,6 @@
 			"syncNext": "Timing - Commit",
 			"syncEnd": "Timing - Mark end",
 			"toggleWordHighlight": "Timing - Toggle active word highlight",
-
 			"moveFirstWordAndPlay": "Timing - Move to first word and play",
 			"moveLastWordAndPlay": "Timing - Move to last word and play",
 			"playPause": "Playback - Play/Pause",
@@ -375,11 +425,22 @@
 				"Audio": "Audio",
 				"Spectrogram": "Spectrogram"
 			}
+		},
+		"tab": {
+			"common": "General",
+			"assistant": "Assistant",
+			"appearance": "Appearance",
+			"audio": "Audio",
+			"keybindings": "Keybindings",
+			"spectrogram": "Spectrogram",
+            "about": "About",
+            "dev": "Dev"
 		}
 	},
 	"error": {
 		"unsupportedFileFormat": "Unsupported file format: {ext}",
-		"openFileFailed": "Failed to open file"
+		"openFileFailed": "Failed to open file",
+		"audioNotLoaded": "Audio not loaded. Please ensure an audio file is playing."
 	},
 	"audioPanel": {
 		"volume": "Volume",
@@ -400,7 +461,6 @@
 	},
 	"latencyTestDialog": {
 		"title": "Timing Offset Latency Test",
-		"description": "Choose your preferred BPM, then press the {key} key on each beep to measure the audio and input latency.",
 		"latencyDisplay": {
 			"fastest": "Fastest",
 			"current": {
@@ -413,77 +473,221 @@
 		},
 		"bpmInputLabel": "Tempo (BPM)",
 		"button": {
-			"start": "Start",
-			"stop": "Stop"
+			"stop": "Stop",
+			"start": "Start"
 		}
 	},
-	"lrclib": {
-		"searchError": "Search failed, please check network or try again later",
-		"importError": "Error occurred while importing lyrics",
-		"title": "Import Lyric from LRCLIB",
-		"placeholder": "Title Artist...",
-		"synced": "Synced",
-		"unsynced": "Unsynced",
-		"notFound": "No results found, please try different keywords",
-		"noResult": "Enter keywords to start searching",
-		"noLyrics": "No lyrics content available for this track",
-		"extractBg": "Extract parentheses as background vocals",
-		"autoSegment": "Auto Segment",
-		"import": "Import Lyric"
+	"metadataDialog": {
+		"fetchSongwriters": {
+			"searchError": "Search failed: {error}",
+			"fetchError": "Could not fetch lyrics: {error}",
+			"noLyricsError": "No lyrics to import.",
+			"importSuccess": "Imported {count} lines from Genius.",
+			"error": "Failed to fetch songwriters",
+			"noSongwriters": "No songwriting credits recorded for this song",
+			"findingRealName": "Finding real name for {name} ({current}/{total})...",
+			"success": "Songwriters successfully fetched from Genius",
+			"setupTitle": "Genius API Key Setup",
+			"setupDesc": "To use this feature, please configure your Genius API Key (specifically, you need the \"CLIENT ACCESS TOKEN\"). You can generate one from the ",
+			"setupDescEnd": " developer portal.",
+			"keyPlaceholder": "Enter CLIENT ACCESS TOKEN",
+			"button": "Fetch Songwriters from Genius",
+			"tryFindRealNames": "Try to find real names (Legal Names)"
+		},
+		"openLink": "Open link",
+		"duplicateMsg": "Found duplicate metadata values",
+		"addValue": "Add",
+		"builtinOptions": {
+			"musicName": "Track Name",
+			"artists": "Track Artists",
+			"artistsInvalidMsg": "If there are multiple artists, please add this key multiple times instead of using delimiters; if an artist name contains delimiters, please ignore this message",
+			"songwriter": "Songwriter",
+			"songwriterInvalidMsg": "If there are multiple songwriters, please add this key multiple times instead of using delimiters",
+			"album": "Album Name",
+			"coverArt": "Cover URL",
+			"ncmMusicId": "NetEase Music ID",
+			"ncmMusicIdInvalidMsg": "NetEase Music ID should be numeric",
+			"qqMusicId": "QQ Music ID",
+			"qqMusicIdInvalidMsg": "QQ Music ID should be alphanumeric",
+			"spotifyId": "Spotify Track ID",
+			"spotifyIdInvalidMsg": "Spotify Track ID should be alphanumeric",
+			"appleMusicId": "Apple Music Track ID",
+			"appleMusicIdInvalidMsg": "Apple Music Track ID should be numeric",
+			"isrc": "Track ISRC Code",
+			"isrcInvalidMsg": "ISRC code format should be CC-XXX-YY-NNNNN",
+			"ttmlAuthorGithub": "Lyrics Author GitHub ID",
+			"ttmlAuthorGithubInvalidMsg": "GitHub ID should be numeric",
+			"ttmlAuthorGithubLogin": "Lyrics Author GitHub Username",
+			"ttmlAuthorGithubLoginInvalidMsg": "GitHub username should be alphanumeric or hyphens, up to 39 characters"
+		},
+		"title": "Metadata Editor",
+		"key": "Key",
+		"value": "Value",
+		"empty": "No metadata",
+		"addKeyValue": "Add new key-value",
+		"customKey": "Custom Key",
+		"addPresets": "Add all preset keys",
+		"clear": "Clear"
+	},
+	"genius": {
+		"setupTitle": "Genius API Key Setup",
+		"setupDesc": "To import lyrics from Genius you need a CLIENT ACCESS TOKEN. You can generate one from the Genius developer portal.",
+		"keyPlaceholder": "Paste CLIENT ACCESS TOKEN here…",
+		"previewTitle": "Genius — Lyrics Preview",
+		"back": "Back",
+		"previewSubtitle": "You can edit the lyrics below before importing.",
+		"linesCount": "{count} lines",
+		"importButton": "Import Lyrics",
+		"importTitle": "Import Lyrics from Genius",
+		"searchPlaceholder": "Artist – Song title…",
+		"notFound": "No results found. Try different keywords.",
+		"noResult": "Enter a song name or artist to start.",
+		"changeKey": "Change API Key"
 	},
 	"common": {
-		"search": "Search",
-		"autoDetect": "Auto",
-		"close": "Close",
 		"cancel": "Cancel",
-		"confirm": "Confirm",
+		"save": "Save",
+		"search": "Search",
+		"close": "Close",
 		"resultsFound": "Found {count} results",
 		"apply": "Apply",
-		"applyScope": "Scope",
-		"scope": {
-			"all": "All lyric lines",
-			"selected": "Selected lyric lines",
-			"selectedFollowing": "Selected and followings",
-			"custom": "Custom Range"
-		},
-		"fromLine": "From line",
-		"toLine": "to line",
-		"line": "",
+		"confirm": "Confirm",
 		"success": "Restore successful",
 		"error": "Data corrupted or lost",
 		"deleteSuccess": "Delete Success",
 		"time": "Time",
 		"restore": "Restore",
-		"about": "About",
+		"sync": "Sync",
 		"remove": "Remove",
-		"clickToSet": "Click to set ",
-		"save": "Save",
-		"saveAndContinue": "Save & Continue"
+		"about": "About",
+		"clickToSet": "Click to set "
+	},
+	"textImportDialog": {
+		"addSpaces": "Add Spaces",
+		"splitHyphens": "Split Hyphenated Words",
+		"processedSuccess": "Lyrics automated for syllable sync.",
+		"title": "Import Lyrics from Plain Text",
+		"tab": {
+			"import": "Import"
+		},
+		"guides": "Guides",
+		"processLyrics": "Process Lyrics",
+		"actionButton": "Import",
+		"contentMode": {
+			"caption": "Text content",
+			"lyric": "Lyrics Only",
+			"withTranslation": "Lyrics with translation",
+			"withRoman": "Lyrics with romanization",
+			"withBoth": "Lyrics with both"
+		},
+		"separationMode": {
+			"caption": "Translation/Romanization Format",
+			"multipleLine": "Interleaved Multiple Lines",
+			"sameLine": "Same Line Separation"
+		},
+		"separator": "Line Separator",
+		"swapTransAndRoman": "Swap translation and romanization lines",
+		"wordSeparator": "Word Separator",
+		"enableSpecialPrefix": "Enable Special Prefix",
+		"bgLyricPrefix": "Background Lyric Prefix",
+		"duetLyricPrefix": "Duet Lyric Prefix",
+		"enableEmptyBeat": "Enable Empty Beat",
+		"emptyBeatSymbol": "Empty Beat Symbol",
+		"guide": {
+			"prepare": {
+				"title": "1. Prepare Lyrics",
+				"desc": "It is recommended to use the Lyrprep tool to prepare your lyrics. You can search for songs, select a version, and copy the output text."
+			},
+			"import": {
+				"title": "2. Import to TTML Tool",
+				"desc": "Paste the prepared text into the editor on the left. Make sure to select the correct \"Import Mode\" based on your text format. If your text contains special prefixes (like background vocal markers), ensure \"Special Prefix\" is enabled."
+			},
+			"sync": {
+				"title": "3. Start Syncing",
+				"desc": "After clicking \"Import\", switch to the \"Time\" (Sync) mode. Use hotkeys for precise alignment:",
+				"f": "Set word start time",
+				"g": "Set word end & start next",
+				"h": "Set word end only",
+				"ad": "Switch between words"
+			},
+			"community": {
+				"title": "Community Guides & Cheat Sheets",
+				"desc": "Helpful resources from the community for specific languages and genres."
+			}
+		},
+		"guidesMenu": {
+			"full": "Full TTML Guide"
+		}
+	},
+	"lrclib": {
+		"placeholder": "Title Artist...",
+		"notFound": "No results found, please try different keywords",
+		"noResult": "Enter keywords to start searching",
+		"searchError": "Search failed, please check network or try again later",
+		"importError": "Error occurred while importing lyrics",
+		"title": "Import Lyric from LRCLIB",
+		"synced": "Synced",
+		"unsynced": "Unsynced",
+		"noLyrics": "No lyrics content available for this track",
+		"extractBg": "Extract parentheses as background vocals",
+		"autoSegment": "Auto Segment",
+		"import": "Import Lyric"
+	},
+	"lyricEditor": {
+		"locate": "Locate",
+		"lineSpectrogram": {
+			"title": "Line Spectrogram Alignment",
+			"desc": "Adjust the start and end points of this line using the spectrogram. The line duration will be split proportionally into its words based on character count.",
+			"startTime": "Start:",
+			"endTime": "End:",
+			"duration": "Duration:",
+			"playPause": "Play/Pause"
+		}
 	},
 	"lyricLineView": {
 		"translatedLabel": "Translation:",
 		"romanLabel": "Romanization:",
 		"empty": "None",
-		"insertLine": "Insert new line here",
 		"duplicateLinesHere": "Duplicate {count} selected line(s) here",
+		"insertLine": "Insert new line here",
 		"insertWord": "Insert word here…"
 	},
 	"lyricWordView": {
 		"empty": "Empty",
 		"spaceCount": "Space x{count}",
+		"removeWord": "Remove Duplicate Word",
 		"editingWordTitle": "Editing Word",
-		"editingWordDesc": "Edit the word or apply suggested quick fixes."
+		"editingWordDesc": "Edit the word or apply suggested quick fixes.",
+		"noSuggestions": "No suggestions"
 	},
 	"touchSyncPanel": {
 		"prevWord": "Jump Previous Word",
 		"nextWord": "Jump Next Word"
+	},
+	"grammarCheck": {
+		"capitalization": "Word should be capitalized",
+		"capitalInMiddle": "Word has capital letters in middle",
+		"title": "Grammar & Spelling Check",
+		"issues": "Issues",
+		"history": "History",
+		"ignoredWords": "Ignored Words",
+		"noIssues": "No issues found!",
+		"issuesFound": "issues found",
+		"undoLast": "Undo Last",
+		"clearHistory": "Clear History",
+		"noHistory": "No changes made yet",
+		"fixed": "fixed",
+		"ignored": "ignored",
+		"line": "Line",
+		"clearIgnoredWords": "Clear All",
+		"noIgnoredWords": "No ignored words",
+		"noIssuesMessage": "No issues found! Your lyrics look good."
 	},
 	"replaceWordDialog": {
 		"title": "Replace Word",
 		"description": "New word:",
 		"placeholder": "New word",
 		"applyToAll": "Apply this replacing to all identical words",
-		"ignoreCase": "Ignore case",
 		"caseSensitive": "Match case (Exact match)"
 	},
 	"timeShiftDialog": {
@@ -503,9 +707,10 @@
 		"toLine": "to line",
 		"line": ""
 	},
-	"distributeRomanDialog": {
-		"title": "Distribute Line Romanization to Words",
-		"warning": "This action reads the line-level transliteration and distributes it to individual words. The algorithm is optimized for Japanese Romaji and may not work as expected for other languages."
+	"lyrically": {
+		"noLyricsLabel": "No lyrics available for this track.",
+		"previewTitle": "Lyrically — Lyrics Preview",
+		"importTitle": "Import Lyrics safely via Lyrically (No CORS via API endpoint)"
 	},
 	"globalDragOverlay": {
 		"title": "Release to load"
@@ -540,125 +745,6 @@
 	},
 	"metadata": {
 		"title": "Metadata"
-	},
-	"textImportDialog": {
-		"title": "Import Lyrics from Plain Text",
-		"guides": "Guides",
-		"tab": {
-			"import": "Import",
-			"guide": "Guides"
-		},
-		"guide": {
-			"prepare": {
-				"title": "1. Prepare Lyrics",
-				"desc": "It is recommended to use the Lyrprep tool to prepare your lyrics. You can search for songs, select a version, and copy the output text."
-			},
-			"import": {
-				"title": "2. Import to TTML Tool",
-				"desc": "Paste the prepared text into the editor on the left. Make sure to select the correct \"Import Mode\" based on your text format. If your text contains special prefixes (like background vocal markers), ensure \"Special Prefix\" is enabled."
-			},
-			"sync": {
-				"title": "3. Start Syncing",
-				"desc": "After clicking \"Import\", switch to the \"Time\" (Sync) mode. Use hotkeys for precise alignment:",
-				"f": "Set word start time",
-				"g": "Set word end & start next",
-				"h": "Set word end only",
-				"ad": "Switch between words"
-			},
-			"community": {
-				"title": "Community Guides & Cheat Sheets",
-				"desc": "Helpful resources from the community for specific languages and genres."
-			}
-		},
-		"guidesMenu": {
-			"plainText": "Plain Text Import Guide",
-			"full": "Full TTML Guide"
-		},
-		"processLyrics": "Process Lyrics",
-		"actionButton": "Import",
-		"contentMode": {
-			"caption": "Text content",
-			"lyric": "Lyrics Only",
-			"withTranslation": "Lyrics with translation",
-			"withRoman": "Lyrics with romanization",
-			"withBoth": "Lyrics with both"
-		},
-		"separationMode": {
-			"caption": "Translation/Romanization Format",
-			"multipleLine": "Interleaved Multiple Lines",
-			"sameLine": "Same Line Separation"
-		},
-		"separator": "Line Separator",
-		"swapTransAndRoman": "Swap translation and romanization lines",
-		"wordSeparator": "Word Separator",
-		"addSpaces": "Add Spaces",
-		"splitHyphens": "Split Hyphenated Words",
-		"enableSpecialPrefix": "Enable Special Prefix",
-
-		"bgLyricPrefix": "Background Lyric Prefix",
-		"duetLyricPrefix": "Duet Lyric Prefix",
-		"enableEmptyBeat": "Enable Empty Beat",
-		"emptyBeatSymbol": "Empty Beat Symbol",
-		"guide": {
-			"import": {
-				"desc": "Paste the prepared text into the editor on the left. Make sure to select the correct \"Import Mode\" based on your text format. If your text contains special prefixes (like background vocal markers), ensure \"Special Prefix\" is enabled."
-			}
-		}
-	},
-	"metadataDialog": {
-		"openLink": "Open link",
-		"duplicateMsg": "Found duplicate metadata values",
-		"addValue": "Add",
-		"builtinOptions": {
-			"musicName": "Track Name",
-			"artists": "Track Artists",
-			"artistsInvalidMsg": "If there are multiple artists, please add this key multiple times instead of using delimiters; if an artist name contains delimiters, please ignore this message",
-			"songwriter": "Songwriter",
-			"songwriterInvalidMsg": "If there are multiple songwriters, please add this key multiple times instead of using delimiters",
-			"album": "Album Name",
-			"ncmMusicId": "NetEase Music ID",
-			"ncmMusicIdInvalidMsg": "NetEase Music ID should be numeric",
-			"qqMusicId": "QQ Music ID",
-			"qqMusicIdInvalidMsg": "QQ Music ID should be alphanumeric",
-			"spotifyId": "Spotify Track ID",
-			"spotifyIdInvalidMsg": "Spotify Track ID should be alphanumeric",
-			"appleMusicId": "Apple Music Track ID",
-			"appleMusicIdInvalidMsg": "Apple Music Track ID should be numeric",
-			"isrc": "Track ISRC Code",
-			"isrcInvalidMsg": "ISRC code format should be CC-XXX-YY-NNNNN",
-			"ttmlAuthorGithub": "Lyrics Author GitHub ID",
-			"ttmlAuthorGithubInvalidMsg": "GitHub ID should be numeric",
-			"ttmlAuthorGithubLogin": "Lyrics Author GitHub Username",
-			"ttmlAuthorGithubLoginInvalidMsg": "GitHub username should be alphanumeric or hyphens, up to 39 characters",
-			"coverArt": "Cover URL"
-		},
-		"title": "Metadata Editor",
-		"key": "Key",
-		"value": "Value",
-		"empty": "No metadata",
-		"addKeyValue": "Add new key-value",
-		"customKey": "Custom Key",
-		"addPresets": "Add all preset keys",
-		"clear": "Clear",
-		"info": "Learn more",
-		"fetchSongwriters": {
-			"noMusicName": "Music Name not found",
-			"notFound": "Song not found on Genius",
-			"noSongwriters": "No songwriting credits recorded for this song",
-			"success": "Songwriters successfully fetched from Genius",
-			"error": "Failed to fetch songwriters",
-			"importSuccess": "Imported {count} lines from Genius.",
-			"noLyricsError": "No lyrics to import.",
-			"searchError": "Search failed: {error}",
-			"fetchError": "Could not fetch lyrics: {error}",
-			"button": "Fetch Songwriters from Genius",
-			"findingRealName": "Finding real name for {name} ({current}/{total})...",
-			"tryFindRealNames": "Try to find real names (Legal Names)",
-			"setupTitle": "Genius API Key Setup",
-			"setupDesc": "To use this feature, please configure your Genius API Key (specifically, you need the \"CLIENT ACCESS TOKEN\"). You can generate one from the ",
-			"setupDescEnd": " developer portal.",
-			"keyPlaceholder": "Enter CLIENT ACCESS TOKEN"
-		}
 	},
 	"submitToAMLLDB": {
 		"validation": {
@@ -697,9 +783,9 @@
 		"empty": "Empty",
 		"title": "Split Word",
 		"tip": "After splitting, new words will evenly divide the original word's start/end time. Empty beats will be cleared.",
+		"syllableSplit": "Syllable Split",
 		"applyToAll": "Apply this splitting to all identical words",
 		"ignoreCase": "Ignore case",
-		"syllableSplit": "Syllable Split",
 		"actionButton": "Confirm"
 	},
 	"advancedSegmentDialog": {
@@ -765,43 +851,5 @@
 		"offlineReady": "Site successfully cached for offline use",
 		"updateRefresh": "Site updated, refresh to use the latest version!",
 		"refresh": "Refresh"
-	},
-	"genius": {
-		"setupTitle": "Genius API Key Setup",
-		"setupDesc": "To import lyrics from Genius you need a CLIENT ACCESS TOKEN. You can generate one from the Genius developer portal.",
-		"keyPlaceholder": "Paste CLIENT ACCESS TOKEN here…",
-		"importTitle": "Import Lyrics from Genius",
-		"searchPlaceholder": "Artist – Song title…",
-		"previewTitle": "Genius — Lyrics Preview",
-		"previewSubtitle": "You can edit the lyrics below before importing.",
-		"importButton": "Import Lyrics",
-		"linesCount": "{count} lines",
-		"notFound": "No results found. Try different keywords.",
-		"noResult": "Enter a song name or artist to start.",
-		"changeKey": "Change API Key",
-		"back": "Back"
-	},
-	"grammarCheck": {
-		"title": "Grammar & Spelling Check",
-		"history": "History",
-		"noIssues": "No issues found!",
-		"issuesFound": "issues found",
-		"noIssuesMessage": "No issues found! Your lyrics look good.",
-		"clearHistory": "Clear History",
-		"noHistory": "No changes made yet",
-		"fixed": "fixed",
-		"ignored": "ignored",
-		"line": "Line",
-		"capitalization": "Word should be capitalized",
-		"undoLast": "Undo Last",
-		"ignoredWords": "Ignored Words",
-		"clearIgnoredWords": "Clear All",
-		"noIgnoredWords": "No ignored words"
-	},
-	"lyrically": {
-		"importTitle": "Import Lyrics safely via Lyrically (No CORS via API endpoint)"
-	},
-	"lyricEditor": {
-		"locate": "Locate"
 	}
 }

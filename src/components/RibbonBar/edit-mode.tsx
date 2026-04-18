@@ -9,6 +9,17 @@
  * https://github.com/amll-dev/amll-ttml-tool/blob/main/LICENSE
  */
 
+import React, {
+	forwardRef,
+	useCallback,
+	useEffect,
+	useId,
+	useLayoutEffect,
+	useMemo,
+	useRef,
+	useState,
+	type FC,
+} from "react";
 import {
 	Button,
 	Checkbox,
@@ -23,20 +34,12 @@ import {
 	Text,
 	TextField,
 } from "@radix-ui/themes";
+import { QuestionCircle16Regular } from "@fluentui/react-icons";
 import { atom, useAtom, useAtomValue, useSetAtom, useStore } from "jotai";
 import { useSetImmerAtom } from "jotai-immer";
-import React, {
-	type FC,
-	forwardRef,
-	useCallback,
-	useEffect,
-	useId,
-	useLayoutEffect,
-	useMemo,
-	useRef,
-	useState,
-} from "react";
 import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
+
 import {
 	displayRomanizationInSyncAtom,
 	LayoutMode,
@@ -56,10 +59,8 @@ import {
 import { grammarCheckDialogAtom } from "$/modules/lyric-editor/modals/GrammarCheckDialog.tsx";
 import { type LyricLine, type LyricWord, newLyricLine } from "$/types/ttml";
 import { msToTimestamp, parseTimespan } from "$/utils/timestamp.ts";
-import { RibbonFrame, RibbonSection } from "./common";
 import { getPhonetic, getPhoneticSyllables } from "$/utils/phonetic";
-import { toast } from "react-toastify";
-import { QuestionCircle16Regular } from "@fluentui/react-icons";
+import { RibbonFrame, RibbonSection } from "./common";
 
 const GrammarCheckButton = () => {
 	const { t } = useTranslation();

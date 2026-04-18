@@ -1,0 +1,93 @@
+{
+  "app": {
+    "useMetadataName": {
+      "title": "使用元数据命名？",
+      "description": "是否使用\"{name}\"作为文件名？"
+    }
+  },
+  "confirmDialog": {
+    "noSongwriter": {
+      "title": "确认导出"
+    }
+  },
+  "ribbonBar": {
+    "editMode": {
+      "aiTools": "AI 工具",
+      "aiAutoSync": "AI 自动打轴"
+    }
+  },
+  "settings": {
+    "appearance": {
+      "accentColor": "强调色",
+      "accentColorDesc": "选择应用程序界面的主要强调颜色。",
+      "backgroundFilterTip": "提示：您仍可以在“自定义背景”设置中调整透明度、模糊和亮度。"
+    }
+  },
+  "topBar": {
+    "menu": {
+      "perWordRomanization": {
+        "index": "逐字音译",
+        "check": "检查逐字音译一致性",
+        "distribute": "自动分配罗马音...",
+        "autoRuby": "自动注音"
+      }
+    }
+  },
+  "header": {
+    "status": {
+      "saving": "正在保存...",
+      "pending": "正在保存...",
+      "savedAt": "已保存",
+      "saved": "已保存"
+    },
+    "popover": {
+      "filename": "文件名",
+      "versionHistory": "版本历史记录..."
+    }
+  },
+  "settingsDialog": {
+    "keybindings": {
+      "openAudio": "打开音频文件"
+    }
+  },
+  "latencyTestDialog": {
+    "description": "请选择自己喜欢的 BPM，并在每个蜂鸣声响起时按下 {key} 键，以测量音频/输入延迟差"
+  },
+  "common": {
+    "applyScope": "应用于",
+    "scope": {
+      "all": "所有行",
+      "selected": "所选行",
+      "selectedFollowing": "所选行及其后续",
+      "custom": "自定义范围"
+    },
+    "fromLine": "从",
+    "toLine": "行 到",
+    "line": "行"
+  },
+  "replaceWordDialog": {
+    "ignoreCase": "忽略大小写"
+  },
+  "distributeRomanDialog": {
+    "title": "应用逐行音译到逐字",
+    "warning": "此功能将读取整行音译并自动分配给每个单词。算法专为日语罗马音设计，对其他语言可能效果不佳。"
+  },
+  "textImportDialog": {
+    "tab": {
+      "guide": "攻略"
+    },
+    "guidesMenu": {
+      "plainText": "纯文本导入教程"
+    }
+  },
+  "metadataDialog": {
+    "info": "了解详情",
+    "fetchSongwriters": {
+      "noMusicName": "未找到歌曲名称",
+      "notFound": "在 Genius 上未找到该歌曲"
+    }
+  },
+  "grammarCheck": {
+    "repeatedWord": "检测到重复单词"
+  }
+}

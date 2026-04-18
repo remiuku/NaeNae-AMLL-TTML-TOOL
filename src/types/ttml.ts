@@ -44,7 +44,7 @@ export interface LyricWord extends AMLLLyricWord {
 	romanWarning?: boolean;
 	grammarWarning?: boolean;
 	ruby?: LyricWordBase[];
-	romanWord?: string;
+	romanWord: string;
 }
 
 export const newLyricWord = (): LyricWord => ({

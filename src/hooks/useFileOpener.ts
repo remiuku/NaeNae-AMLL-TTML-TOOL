@@ -9,25 +9,34 @@ import {
 	parseQrc,
 	parseYrc,
 } from "@applemusic-like-lyrics/lyric";
-import { useAtomValue, useSetAtom } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import { uid } from "uid";
+
 import { audioEngine } from "$/modules/audio/audio-engine";
+import { convertMp3ToFlac } from "$/modules/audio/utils/mp3-converter";
 import { getProjectList } from "$/modules/project/autosave/autosave";
 import { getSuggestedTtmlFileName } from "$/modules/project/logic/metadata-filename";
 import { isProjectMatch } from "$/modules/project/logic/project-match";
 import { parseLyric as parseTTML } from "$/modules/project/logic/ttml-parser";
-import { confirmDialogAtom } from "$/states/dialogs.ts";
+import {
+	Mp3ConversionMode,
+	mp3ConversionModeAtom,
+} from "$/modules/settings/states";
+import {
+	confirmDialogAtom,
+	mp3ConversionDialogAtom,
+} from "$/states/dialogs";
 import {
 	isDirtyAtom,
 	newLyricLinesAtom,
 	projectIdAtom,
 	saveFileNameAtom,
-} from "$/states/main.ts";
+} from "$/states/main";
 import type { TTMLLyric } from "$/types/ttml";
-import { log, error as logError } from "$/utils/logging.ts";
+import { error as logError, log } from "$/utils/logging";
 import { parseLrc } from "$/utils/parse-lrc";
 
 const LYRIC_PARSERS: Record<string, (text: string) => LyricLine[]> = {
@@ -59,8 +68,11 @@ export const useFileOpener = () => {
 	const setProjectId = useSetAtom(projectIdAtom);
 	const setSaveFileName = useSetAtom(saveFileNameAtom);
 	const setConfirmDialog = useSetAtom(confirmDialogAtom);
+	const setMp3ConversionDialog = useSetAtom(mp3ConversionDialogAtom);
 	const isDirty = useAtomValue(isDirtyAtom);
 	const { t } = useTranslation();
+
+	const [conversionMode] = useAtom(mp3ConversionModeAtom);
 
 	const normalizeLyricLines = useCallback(
 		(lyricLines: LyricLine[]): TTMLLyric => {
@@ -89,6 +101,98 @@ export const useFileOpener = () => {
 
 			try {
 				if (AUDIO_EXTENSIONS.has(ext)) {
+					if (ext === "mp3") {
+						if (conversionMode === Mp3ConversionMode.Always) {
+							const fileData = await file.arrayBuffer();
+							const uint8Array = new Uint8Array(fileData);
+
+							try {
+								toast.info(
+									t(
+										"dialog.mp3Conversion.converting",
+										"正在转换 MP3 到 FLAC...",
+									),
+								);
+								const flacData = await convertMp3ToFlac(uint8Array, file.name);
+								const flacArray = new Uint8Array(flacData);
+								const flacBlob = new Blob([flacArray], {
+									type: "audio/flac",
+								});
+								const flacFile = new File(
+									[flacBlob],
+									file.name.replace(/\.mp3$/i, ".flac"),
+									{
+										type: "audio/flac",
+									},
+								);
+								await audioEngine.loadMusic(flacFile);
+								toast.success(t("dialog.mp3Conversion.success", "转换成功"));
+								return;
+							} catch (e) {
+								toast.error(
+									t("dialog.mp3Conversion.failed", "转换失败: {error}", {
+										error: e instanceof Error ? e.message : String(e),
+									}),
+								);
+								audioEngine.loadMusic(file);
+								return;
+							}
+						}
+
+						if (conversionMode === Mp3ConversionMode.Ask) {
+							const fileData = await file.arrayBuffer();
+							const uint8Array = new Uint8Array(fileData);
+
+							const doConvert = await new Promise<boolean>((resolve) => {
+								setMp3ConversionDialog({
+									open: true,
+									fileName: file.name,
+									onConvert: () => resolve(true),
+									onSkip: () => resolve(false),
+								});
+							});
+
+							if (!doConvert) {
+								audioEngine.loadMusic(file);
+								return;
+							}
+
+							try {
+								toast.info(
+									t(
+										"dialog.mp3Conversion.converting",
+										"正在转换 MP3 到 FLAC...",
+									),
+								);
+								const flacData = await convertMp3ToFlac(uint8Array, file.name);
+								const flacArray = new Uint8Array(flacData);
+								const flacBlob = new Blob([flacArray], {
+									type: "audio/flac",
+								});
+								const flacFile = new File(
+									[flacBlob],
+									file.name.replace(/\.mp3$/i, ".flac"),
+									{
+										type: "audio/flac",
+									},
+								);
+								await audioEngine.loadMusic(flacFile);
+								toast.success(t("dialog.mp3Conversion.success", "转换成功"));
+								return;
+							} catch (e) {
+								toast.error(
+									t("dialog.mp3Conversion.failed", "转换失败: {error}", {
+										error: e instanceof Error ? e.message : String(e),
+									}),
+								);
+								audioEngine.loadMusic(file);
+								return;
+							}
+						}
+
+						audioEngine.loadMusic(file);
+						return;
+					}
 					audioEngine.loadMusic(file);
 					return;
 				}
@@ -146,7 +250,15 @@ export const useFileOpener = () => {
 				toast.error(t("error.openFileFailed", "打开文件失败"));
 			}
 		},
-		[setNewLyricLines, setProjectId, setSaveFileName, normalizeLyricLines, t],
+		[
+			setNewLyricLines,
+			setProjectId,
+			setSaveFileName,
+			normalizeLyricLines,
+			t,
+			conversionMode,
+			setMp3ConversionDialog,
+		],
 	);
 
 	const openFile = useCallback(
