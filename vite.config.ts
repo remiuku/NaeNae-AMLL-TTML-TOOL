@@ -131,11 +131,24 @@ const plugins: Plugin[] = [
 
 // https://vitejs.dev/config/
 export default defineConfig({
-	plugins,
+	plugins: [
+		{
+			name: "shim-module",
+			transform(code, id) {
+				if (id.includes("node_modules/hangul-romanize") || id.includes("node_modules/pinyin-pro") || id.includes("node_modules/wanakana")) {
+					return {
+						code: `var module = { exports: {} };\n${code}`,
+						map: null,
+					};
+				}
+			},
+		},
+		...plugins,
+	],
 	base: process.env.TAURI_ENV_PLATFORM ? "/" : "./",
 	clearScreen: false,
 	optimizeDeps: {
-		exclude: ["@ffmpeg/ffmpeg", "@ffmpeg/util"],
+		exclude: ["@ffmpeg/ffmpeg", "@ffmpeg/util", "hangul-romanize"],
 	},
 	server: {
 		headers: {
@@ -186,6 +199,5 @@ export default defineConfig({
 	},
 	define: {
 		global: "globalThis",
-		module: "{}",
 	},
 });
