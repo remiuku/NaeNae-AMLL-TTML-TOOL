@@ -400,6 +400,7 @@ function EditField<
 				<Button
 					size="1"
 					variant="ghost"
+					style={{ justifyContent: "flex-start", paddingLeft: "0px", marginLeft: 0 }}
 					onClick={() => setShowDurationInput((v) => !v)}
 				>
 					{showDurationInput
@@ -902,7 +903,7 @@ export const EditModeRibbonBar: FC = forwardRef<HTMLDivElement>(
 					</Grid>
 				</RibbonSection>
 				<RibbonSection label={t("ribbonBar.editMode.lineTiming", "行时间戳")}>
-					<Grid columns="0fr 1fr" gap="2" gapY="1" flexGrow="1" align="center">
+					<Grid columns="max-content 1fr" gap="2" gapY="1" flexGrow="1" align="center">
 						<EditField
 							label={t("ribbonBar.editMode.startTime", "起始时间")}
 							fieldName="startTime"
@@ -918,7 +919,7 @@ export const EditModeRibbonBar: FC = forwardRef<HTMLDivElement>(
 					</Grid>
 				</RibbonSection>
 				<RibbonSection label={t("ribbonBar.editMode.lineProperties", "行属性")}>
-					<Grid columns="0fr 0fr" gap="4" gapY="1" flexGrow="1" align="center">
+					<Grid columns="max-content max-content" gap="4" gapY="1" flexGrow="1" align="center">
 						<CheckboxField
 							label={t("ribbonBar.editMode.bgLyric", "背景歌词")}
 							defaultValue={false}
@@ -941,7 +942,7 @@ export const EditModeRibbonBar: FC = forwardRef<HTMLDivElement>(
 				</RibbonSection>
 				<PhoneticSection />
 				<RibbonSection label={t("ribbonBar.editMode.wordTiming", "词时间戳")}>
-					<Grid columns="0fr 1fr" gap="2" gapY="1" flexGrow="1" align="center">
+					<Grid columns="max-content 1fr" gap="2" gapY="1" flexGrow="1" align="center">
 						<EditField
 							label={t("ribbonBar.editMode.startTime", "起始时间")}
 							fieldName="startTime"
@@ -971,7 +972,7 @@ export const EditModeRibbonBar: FC = forwardRef<HTMLDivElement>(
 				<RibbonSection
 					label={t("ribbonBar.editMode.wordProperties", "单词属性")}
 				>
-					<Grid columns="0fr 1fr" gap="2" gapY="1" flexGrow="1" align="center">
+					<Grid columns="max-content 1fr" gap="2" gapY="1" flexGrow="1" align="center">
 						<EditField
 							label={t("ribbonBar.editMode.wordContent", "单词内容")}
 							fieldName="word"
@@ -997,7 +998,7 @@ export const EditModeRibbonBar: FC = forwardRef<HTMLDivElement>(
 				<RibbonSection
 					label={t("ribbonBar.editMode.secondaryContent", "次要内容")}
 				>
-					<Grid columns="0fr 1fr" gap="2" gapY="1" flexGrow="1" align="center">
+					<Grid columns="max-content 1fr" gap="2" gapY="1" flexGrow="1" align="center">
 						<EditField
 							label={t("ribbonBar.editMode.translatedLyric", "翻译歌词")}
 							fieldName="translatedLyric"
