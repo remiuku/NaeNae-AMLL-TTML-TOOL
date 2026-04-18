@@ -147,6 +147,7 @@
 				"line1": "Simple layout satisfies most basic needs",
 				"line2": "Switch to Advanced Mode if you need more efficient syncing"
 			},
+			"helpTranslate": "Help translate this app",
 			"compactBGInSync": "Compact Background Vocals (Sync Mode)",
 			"compactBGInSyncDesc": "Automatically compress vertical space for background vocal lines during synchronization.",
 			"syncJudgeMode": "Sync Timestamp Judgment Mode",
@@ -197,6 +198,12 @@
 			"downloading": "Downloading update...",
 			"ready": "Update is ready. Restart the application for it to take effect.",
 			"restart": "Restart"
+		},
+		"aboutModal": {
+			"community": "Community & Contributions",
+			"communityDesc": "Help us make the tool better by contributing code, reporting issues, or providing translations.",
+			"github": "GitHub Repository",
+			"crowdin": "Help Translate in Crowdin"
 		},
 		"appearance": {
 			"theme": "Theme",

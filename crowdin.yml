@@ -1,0 +1,19 @@
+project_id: 'very-cool-ttml-tool'
+api_token_env: CROWDIN_PERSONAL_TOKEN
+base_path: "."
+
+files:
+  - source: /locales/en-US/translation.json
+    translation: /locales/%locale%/translation.json
+    languages_mapping:
+      locale:
+        # Map Crowdin's internal codes to your folder names
+        ro: ro-RO
+        it: it-IT
+        tr: tr-TR
+        # Existing ones
+        "zh-CN": zh-CN
+        # Match other existing folders
+        "pt-BR": pt-BR
+        "es-ES": es-ES
+        "ru": ru-RU
