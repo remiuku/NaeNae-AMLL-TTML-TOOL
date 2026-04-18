@@ -1,15 +1,16 @@
-project_id: very-cool-ttml-tool
+project_id: 890690
 api_token_env: CROWDIN_PERSONAL_TOKEN
-base_path: .
+base_path: "."
+
 files:
-  - source: /locales/en-US/translation.json
-    translation: /locales/%locale%/translation.json
+  - source: locales/en-US/translation.json
+    translation: locales/%locale%/translation.json
     languages_mapping:
       locale:
         ro: ro-RO
         it: it-IT
         tr: tr-TR
-        zh-CN: zh-CN
-        pt-BR: pt-BR
-        es-ES: es-ES
-        ru: ru-RU
+        "zh-CN": zh-CN
+        "pt-BR": pt-BR
+        "es-ES": es-ES
+        "ru": ru-RU
