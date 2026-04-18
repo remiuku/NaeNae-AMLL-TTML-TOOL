@@ -1,70 +1,70 @@
 {
 	"app": {
 		"error": {
-			"title": "Oops, an error occurred!",
-			"description": "An error occurred while running AMLL TTML Tools",
-			"checkDevTools": "Details can be found in Developer Tools",
-			"saveLyrics": "Try saving current lyrics",
-			"tryRestart": "Try reloading the app",
-			"details": "Approximate error info:"
+			"title": "Ops, si è verificato un errore!",
+			"description": "Si è verificato un errore durante l'esecuzione di AMLL TTML Tools",
+			"checkDevTools": "I dettagli si possono trovare negli strumenti per sviluppatori",
+			"saveLyrics": "Prova a salvare il testo attuale",
+			"tryRestart": "Prova a ricaricare l'applicazione",
+			"details": "Informazioni approssimative di errore:"
 		},
 		"update": {
-			"updateAvailable": "Update available: {version}",
-			"installError": "Error when installing update"
+			"updateAvailable": "Aggiornamento disponibile: {version}",
+			"installError": "Errore durante l'installazione dell'aggiornamento"
 		},
 		"empty": {
-			"title": "No lyric lines",
-			"description": "Add new lyric lines in the top panel or open/import existing lyrics from the menu"
+			"title": "Nessun verso",
+			"description": "Aggiungi nuovi versi del testo nel pannello superiore oppure apri/importa testi esistenti dal menu"
 		}
 	},
 	"confirmDialog": {
-		"cancel": "Cancel",
-		"confirm": "Confirm",
+		"cancel": "Annulla",
+		"confirm": "Conferma",
 		"newFile": {
-			"title": "Confirm New File",
-			"description": "You have unsaved changes. If you proceed, these changes will be lost. Are you sure you want to create a new file?"
+			"title": "Conferma Nuovo File",
+			"description": "Ci sono modifiche non salvate. Se procedi, queste modifiche andranno perse. Sei sicuro di voler creare un nuovo file?"
 		},
 		"syncLineTimestamps": {
-			"title": "Confirm Sync Line Timestamps",
-			"description": "This action will automatically synchronize the start and end times of all lines based on the timestamps of each word in the line, matching the start and end times of the first and last syllables. Are you sure you want to proceed?"
+			"title": "Conferma la sincronizzazione dei timestamp dei versi",
+			"description": "Questa azione sincronizzerà automaticamente i tempi d'inizio e di fine di tutti i versi in base ai tempi di ogni parola nella riga, corrispondente ai tempi d'inizio e fine delle prime e delle ultime sillabe. Sei sicuro di voler continuare?"
 		},
 		"openFile": {
-			"title": "Confirm Open File",
-			"description": "You have unsaved changes. If you proceed, these changes will be lost. Are you sure you want to open a new file?"
+			"title": "Conferma Apri File",
+			"description": "Ci sono modifiche non salvate. Se procedi, queste modifiche andranno perse. Sei sicuro di voler aprire un nuovo file?"
 		},
 		"importFile": {
-			"title": "Confirm Import Lyrics",
-			"description": "You have unsaved changes. If you proceed, these changes will be lost. Are you sure you want to import new lyrics?"
+			"title": "Conferma Importazione Testo",
+			"description": "Ci sono modifiche non salvate. Se procedi, queste modifiche andranno perse. Sei sicuro di voler importare un nuovo testo?"
 		},
 		"useMetadataName": {
-			"title": "Use metadata name?",
-			"description": "Use \"{name}\" as the file name?"
+			"title": "Usare il nome dei metadati?",
+			"description": "Usare \"{name}\" come nome del file?"
 		},
 		"noSongwriter": {
-			"title": "Confirm Export",
-			"description": "The song has no songwriters. Do you want to continue saving?"
+			"title": "Confermare Esportazione",
+			"description": "La canzone non ha scrittori. Vuoi continuare a salvare?"
 		}
 	},
 	"dialog": {
 		"mp3Conversion": {
-			"title": "Convert MP3 to FLAC?",
-			"description": "You are importing an MP3 file: {fileName}",
-			"warning": "MP3 files may cause audio desyncing in this app. Converting to FLAC is recommended for better compatibility.",
-			"dontShowAgain": "Don't show this warning again",
-			"skip": "Use MP3",
-			"convert": "Convert to FLAC",
-			"converting": "Converting MP3 to FLAC...",
-			"success": "Conversion successful",
-			"failed": "Conversion failed: {error}"
+			"title": "Convertire MP3 in FLAC?",
+			"description": "Stai importando un file MP3: {fileName}",
+			"warning": "I file MP3 possono causare la desincronizzazione audio in questa app. La conversione in FLAC è consigliata per una migliore compatibilità.",
+			"dontShowAgain": "Non mostrare più questo avviso",
+			"skip": "Usa MP3",
+			"convert": "Converti in FLAC",
+			"converting": "Conversione MP3 in FLAC...",
+			"success": "Conversione riuscita",
+			"failed": "Conversione non riuscita: {error}"
 		}
 	},
 	"ribbonBar": {
 		"editMode": {
 			"multipleValues": "Multiple values…",
-			"showTranslation": "Show Translation Line",
-			"showRomanization": "Show Romanization Line",
-			"showWordRomanizationInput": "Show Per-Word Romanization",
-			"new": "New",
+			"showTranslation": "Mostra Linea di Traduzione",
+			"showRomanization": "Mostra Linea di Romanizzazione",
+			"showWordRomanizationInput": "Mostra Romanizzazione Per Parola",
+			"new": "Nuovo",
 			"lyricLine": "Lyric Line",
 			"lineTiming": "Line Timing",
 			"startTime": "Start Time",
