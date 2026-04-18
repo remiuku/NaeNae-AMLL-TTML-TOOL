@@ -16,7 +16,11 @@ export const LyricallyApi = {
 			const json = await res.json();
 			
 			// Map Deezer response to our track format
-			return (json.data || []).map((track: any) => {
+			return (json.data || []).map((track: {
+				title: string;
+				artist?: { name: string };
+				album?: { title: string; cover_xl?: string; cover_medium?: string };
+			}) => {
 				const rawCover = track.album?.cover_xl || track.album?.cover_medium || "";
 				// Deezer API returns http:// which causes mixed-content errors on Vercel
 				const secureCover = rawCover.replace("http://", "https://");
