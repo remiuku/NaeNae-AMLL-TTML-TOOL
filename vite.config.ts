@@ -186,6 +186,6 @@ export default defineConfig({
 	},
 	define: {
 		global: "globalThis",
-		module: "{}",
+		module: "undefined",
 	},
 });
