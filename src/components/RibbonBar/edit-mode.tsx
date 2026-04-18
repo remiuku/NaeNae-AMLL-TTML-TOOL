@@ -400,7 +400,7 @@ function EditField<
 				<Button
 					size="1"
 					variant="ghost"
-					style={{ justifyContent: "flex-start", padding: 0 }}
+					style={{ justifyContent: "flex-start", paddingLeft: 0, marginLeft: 0 }}
 					onClick={() => setShowDurationInput((v) => !v)}
 				>
 					{showDurationInput
