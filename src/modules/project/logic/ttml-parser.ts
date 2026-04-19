@@ -381,11 +381,13 @@ export function parseLyric(ttmlText: string): TTMLLyric {
 	let mainAgentId = "v1";
 
 	const metadata: TTMLMetadata[] = [];
-	for (const meta of ttmlDoc.querySelectorAll("meta")) {
-		if (meta.tagName === "amll:meta") {
-			const key = meta.getAttribute("key");
+	const metaTags = ttmlDoc.getElementsByTagNameNS("*", "meta");
+	for (let i = 0; i < metaTags.length; i++) {
+		const meta = metaTags[i];
+		if (localName(meta) === "meta") {
+			const key = getAttr(meta, "key");
 			if (key) {
-				const value = meta.getAttribute("value");
+				const value = getAttr(meta, "value");
 				if (value) {
 					const existing = metadata.find((m) => m.key === key);
 					if (existing) {
@@ -420,9 +422,11 @@ export function parseLyric(ttmlText: string): TTMLLyric {
 		}
 	}
 
-	for (const agent of ttmlDoc.querySelectorAll("ttm\\:agent")) {
-		if (agent.getAttribute("type") === "person") {
-			const id = agent.getAttribute("xml:id");
+	const agents = ttmlDoc.getElementsByTagNameNS("*", "agent");
+	for (let i = 0; i < agents.length; i++) {
+		const agent = agents[i];
+		if (getAttr(agent, "type") === "person") {
+			const id = getAttr(agent, "id");
 			if (id) {
 				mainAgentId = id;
 				break;
@@ -449,6 +453,8 @@ export function parseLyric(ttmlText: string): TTMLLyric {
 			parsedEndTime = parseTimespan(endTimeAttr);
 		}
 
+		const agentId = getAttr(lineEl, "agent") || getAttr(lineEl, "participant");
+
 		const line: LyricLine = {
 			id: uid(),
 			words: [],
@@ -457,8 +463,8 @@ export function parseLyric(ttmlText: string): TTMLLyric {
 			isBG,
 			isDuet: isBG
 				? isDuet
-				: !!lineEl.getAttribute("ttm:agent") &&
-					lineEl.getAttribute("ttm:agent") !== mainAgentId,
+				: !!agentId && agentId !== mainAgentId,
+			agent: agentId || undefined,
 			startTime: parsedStartTime,
 			endTime: parsedEndTime,
 			ignoreSync: false,
