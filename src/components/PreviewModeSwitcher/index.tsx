@@ -1,5 +1,6 @@
 import { useAtomValue } from "jotai";
-import { lazy, Suspense } from "react";
+import { Suspense } from "react";
+import { lazy } from "$/utils/lazy.ts";
 import { PreviewModeType, previewModeTypeAtom } from "$/modules/settings/states/preview";
 import SuspensePlaceHolder from "$/components/SuspensePlaceHolder";
 
