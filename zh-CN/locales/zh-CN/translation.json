@@ -1,862 +1,862 @@
 {
 	"app": {
 		"error": {
-			"title": "诶呀，出错了！",
-			"description": "AMLL TTML Tools 在运行时出现了错误",
-			"checkDevTools": "具体错误详情可以在开发者工具中查询",
-			"saveLyrics": "尝试保存当前歌词",
-			"tryRestart": "尝试重新进入程序",
-			"details": "大致错误信息："
+			"title": "Oops, an error occurred!",
+			"description": "An error occurred while running AMLL TTML Tools",
+			"checkDevTools": "Details can be found in Developer Tools",
+			"saveLyrics": "Try saving current lyrics",
+			"tryRestart": "Try reloading the app",
+			"details": "Approximate error info:"
 		},
 		"update": {
-			"updateAvailable": "发现新版本: {version}",
-			"installError": "安装更新失败"
+			"updateAvailable": "Update available: {version}",
+			"installError": "Error when installing update"
 		},
 		"empty": {
-			"title": "没有歌词行",
-			"description": "在顶部面板中添加新歌词行或从菜单栏打开 / 导入已有歌词"
+			"title": "No lyric lines",
+			"description": "Add new lyric lines in the top panel or open/import existing lyrics from the menu"
 		}
 	},
 	"confirmDialog": {
-		"cancel": "取消",
-		"confirm": "确定",
+		"cancel": "Cancel",
+		"confirm": "Confirm",
 		"newFile": {
-			"title": "确认新建文件",
-			"description": "当前文件有未保存的更改。如果继续，这些更改将会丢失。确定要新建文件吗？"
+			"title": "Confirm New File",
+			"description": "You have unsaved changes. If you proceed, these changes will be lost. Are you sure you want to create a new file?"
 		},
 		"syncLineTimestamps": {
-			"title": "确认同步行时间戳",
-			"description": "此操作将根据每行单词的时间戳自动同步所有行的起始和结束时间为第一个和最后一个音节的开始和结束时间。确定要继续吗？"
+			"title": "Confirm Sync Line Timestamps",
+			"description": "This action will automatically synchronize the start and end times of all lines based on the timestamps of each word in the line, matching the start and end times of the first and last syllables. Are you sure you want to proceed?"
 		},
 		"openFile": {
-			"title": "确认打开文件",
-			"description": "当前文件有未保存的更改。如果继续，这些更改将会丢失。确定要打开新文件吗？"
+			"title": "Confirm Open File",
+			"description": "You have unsaved changes. If you proceed, these changes will be lost. Are you sure you want to open a new file?"
 		},
 		"importFile": {
-			"title": "确认导入歌词",
-			"description": "当前文件有未保存的更改。如果继续，这些更改将会丢失。确定要导入歌词吗？"
+			"title": "Confirm Import Lyrics",
+			"description": "You have unsaved changes. If you proceed, these changes will be lost. Are you sure you want to import new lyrics?"
 		},
 		"useMetadataName": {
-			"title": "使用元数据命名？",
-			"description": "是否使用\"{name}\"作为文件名？"
+			"title": "Use metadata name?",
+			"description": "Use \"{name}\" as the file name?"
 		},
 		"noSongwriter": {
-			"title": "确认导出",
-			"description": "该歌曲没有记录词曲作者（songwriter），确定要保存吗？"
+			"title": "Confirm Export",
+			"description": "The song has no songwriters. Do you want to continue saving?"
 		}
 	},
 	"dialog": {
 		"mp3Conversion": {
-			"title": "是否将 MP3 转换为 FLAC？",
-			"description": "您正在导入 MP3 文件：{fileName}",
-			"warning": "MP3 文件可能导致此应用程序中的音频同步出现问题。建议转换为 FLAC 以获得更好的兼容性。",
-			"dontShowAgain": "不再显示此警告",
-			"skip": "使用 MP3",
-			"convert": "转换为 FLAC",
-			"converting": "正在将 MP3 转换为 FLAC...",
-			"success": "转换成功",
-			"failed": "转换失败：{error}"
+			"title": "Convert MP3 to FLAC?",
+			"description": "You are importing an MP3 file: {fileName}",
+			"warning": "MP3 files may cause audio desyncing in this app. Converting to FLAC is recommended for better compatibility.",
+			"dontShowAgain": "Don't show this warning again",
+			"skip": "Use MP3",
+			"convert": "Convert to FLAC",
+			"converting": "Converting MP3 to FLAC...",
+			"success": "Conversion successful",
+			"failed": "Conversion failed: {error}"
 		}
 	},
 	"ribbonBar": {
 		"editMode": {
-			"multipleValues": "多值…",
-			"showTranslation": "显示翻译行",
-			"showRomanization": "显示注音行",
-			"showWordRomanizationInput": "显示单词注音输入",
-			"new": "新建",
-			"lyricLine": "歌词行",
-			"lineTiming": "行时间",
-			"startTime": "开始时间",
-			"endTime": "结束时间",
-			"lineProperties": "行属性",
-			"bgLyric": "背景歌词",
-			"duetLyric": "双人对唱",
-			"ignoreSync": "忽略同步",
-			"wordTiming": "单词时间",
-			"emptyBeatCount": "空拍计数",
-			"wordProperties": "单词属性",
-			"wordContent": "单词内容",
-			"romanWord": "单词注音",
-			"obscene": "不雅词汇",
-			"secondaryContent": "附属内容",
-			"translatedLyric": "翻译",
-			"romanLyric": "注音",
-			"layoutMode": "布局",
-			"auxiliaryLineDisplay": "辅助行显示",
-			"previewPanel": "预览面板",
-			"grammarCheck": "语法校验",
-			"aiTools": "AI 工具",
-			"aiAutoSync": "AI 自动对齐",
-			"tools": "校验",
+			"multipleValues": "Multiple values…",
+			"showTranslation": "Show Translation Line",
+			"showRomanization": "Show Romanization Line",
+			"showWordRomanizationInput": "Show Per-Word Romanization",
+			"new": "New",
+			"lyricLine": "Lyric Line",
+			"lineTiming": "Line Timing",
+			"startTime": "Start Time",
+			"endTime": "End Time",
+			"lineProperties": "Line Properties",
+			"bgLyric": "Background Vocal",
+			"duetLyric": "Duet Vocal",
+			"ignoreSync": "Ignore Sync",
+			"wordTiming": "Word Timing",
+			"emptyBeatCount": "Empty Beat Count",
+			"wordProperties": "Word Properties",
+			"wordContent": "Word Content",
+			"romanWord": "Word Romanization",
+			"obscene": "Obscene",
+			"secondaryContent": "Secondary Content",
+			"translatedLyric": "Translation",
+			"romanLyric": "Romanization",
+			"layoutMode": "Layout",
+			"auxiliaryLineDisplay": "Auxiliary Line Display",
+			"previewPanel": "Preview Panel",
+			"grammarCheck": "Grammar Check",
+			"aiTools": "AI Tools",
+			"aiAutoSync": "AI Auto-Sync",
+			"tools": "Check",
 			"phonetic": {
-				"section": "注音/罗马音",
-				"autoFetch": "自动获取",
-				"noSelection": "请先选择行或单词",
-				"success": "获取注音成功",
-				"error": "获取注音失败",
-				"romanize": "注音"
+				"section": "Phonetic",
+				"autoFetch": "Auto Fetch",
+				"noSelection": "Please select lines or words first",
+				"success": "Phonetics fetched successfully",
+				"error": "Failed to fetch phonetics",
+				"romanize": "Romanize"
 			}
 		},
 		"previewMode": {
-			"lyrics": "歌词",
-			"showTranslation": "显示翻译",
-			"showRoman": "显示注音",
-			"maskObsceneWords": "屏蔽不雅词汇",
-			"word": "单词",
-			"fadeWidth": "淡化宽度"
+			"lyrics": "Lyrics",
+			"showTranslation": "Show Translation",
+			"showRoman": "Show Romanization",
+			"maskObsceneWords": "Mask Obscene Words",
+			"word": "Word",
+			"fadeWidth": "Fade Width"
 		},
 		"syncMode": {
-			"currentEmptyBeat": "当前空拍",
-			"syncAdjustment": "同步调整",
-			"timeOffset": "时间偏移",
-			"syncLevel": "同步精度",
-			"syncLevelWord": "逐词同步",
-			"syncLevelLine": "逐行同步",
-			"assistSettings": "辅助设置",
-			"showTimestampUpdate": "显示时间戳更新",
-			"touchSyncPanel": "触控同步面板",
-			"bgLyricIgnoreSync": "忽略背景歌词",
-			"quickFixes": "快速修复",
-			"manualTimestampEdit": "手动时间戳编辑",
-			"displayOptions": "显示选项",
-			"showTimestamps": "显示时间戳",
-			"highlightActiveWord": "高亮活动单词",
-			"enableGlowAnimation": "启用发光动画",
-			"highlightErrors": "高亮错误",
-			"showPerWordRomanization": "显示单词注音",
-			"keyBindingReference": "快捷键参考",
-			"startSync": "标记开始",
-			"continuousSync": "提交",
-			"endSync": "标记结束",
-			"loading": "面板加载中…"
+			"currentEmptyBeat": "Empty Beat",
+			"syncAdjustment": "Timing Adjustment",
+			"timeOffset": "Time Offset",
+			"syncLevel": "Sync Level",
+			"syncLevelWord": "Word Sync",
+			"syncLevelLine": "Line Sync",
+			"assistSettings": "Assistant Settings",
+			"showTimestampUpdate": "Show Timestamp Updates",
+			"touchSyncPanel": "Touch Sync Panel",
+			"bgLyricIgnoreSync": "Ignore Background Vocals",
+			"quickFixes": "Quick Fixes",
+			"manualTimestampEdit": "Manual Timestamp Editing",
+			"displayOptions": "Display Options",
+			"showTimestamps": "Show Timestamps",
+			"highlightActiveWord": "Highlight Active Word",
+			"enableGlowAnimation": "Enable Glow Animation",
+			"highlightErrors": "Highlight Errors",
+			"showPerWordRomanization": "Show Per-Word Romanization",
+			"keyBindingReference": "Hotkey Cheatsheet",
+			"startSync": "Mark Begin",
+			"continuousSync": "Commit",
+			"endSync": "Mark End",
+			"loading": "Panel loading…"
 		}
 	},
 	"settings": {
 		"common": {
 			"layoutModeOptions": {
-				"simple": "简单模式",
-				"advance": "高级模式"
+				"simple": "Simple Mode",
+				"advance": "Advanced Mode"
 			},
-			"enabled": "启用",
-			"disabled": "禁用",
-			"language": "界面语言",
-			"languageDesc": "选择界面显示的语言",
-			"layoutMode": "编辑器布局模式",
+			"enabled": "Enabled",
+			"disabled": "Disabled",
+			"language": "Interface Language",
+			"languageDesc": "Select the language for the interface",
+			"layoutMode": "Editor Layout Mode",
 			"layoutModeDesc": {
-				"line1": "简单布局能够满足大多数基础需求",
-				"line2": "如果你需要更高效的对齐，请切换到高级模式"
+				"line1": "Simple layout satisfies most basic needs",
+				"line2": "Switch to Advanced Mode if you need more efficient syncing"
 			},
-			"helpTranslate": "帮助翻译此程序",
-			"compactBGInSync": "精简背景歌词（同步模式）",
-			"compactBGInSyncDesc": "在同步过程中自动压缩背景歌词行的垂直空间。",
-			"syncJudgeMode": "同步时间点判定模式",
-			"syncJudgeModeDesc": "设置同步时如何判定时间戳。默认为“按下按键的第一时刻”。",
+			"helpTranslate": "Help translate this app",
+			"compactBGInSync": "Compact Background Vocals (Sync Mode)",
+			"compactBGInSyncDesc": "Automatically compress vertical space for background vocal lines during synchronization.",
+			"syncJudgeMode": "Sync Timestamp Judgment Mode",
+			"syncJudgeModeDesc": "Set how timestamps are judged when syncing. Default is 'First key down'.",
 			"syncJudgeModeOptions": {
-				"firstKeyDown": "按下按键的第一时刻",
-				"lastKeyUp": "松开按键的最后时刻",
-				"middleKey": "按下与松开的中间时刻",
-				"firstKeyDownLegacy": "按下按键的第一时刻（旧版）"
+				"firstKeyDown": "First key down time",
+				"lastKeyUp": "Last key up time",
+				"middleKey": "Middle of key down & up",
+				"firstKeyDownLegacy": "First key down time (legacy)"
 			},
-			"keyBindingTrigger": "按键触发方式",
-			"keyBindingTriggerDesc": "决定快捷键是在按键按下还是松开时触发。",
+			"keyBindingTrigger": "Key Binding Trigger",
+			"keyBindingTriggerDesc": "Determines whether shortcuts are triggered when a key is pressed or released.",
 			"keyBindingTriggerOptions": {
-				"keyDown": "按下时触发",
-				"keyUp": "松开时触发"
+				"keyDown": "Trigger on Key Down",
+				"keyUp": "Trigger on Key Up"
 			},
-			"smartFirstWord": "智能首词",
-			"smartFirstWordDesc": "同步每行的第一个单词时，第一次按下快捷键仅设置其开始时间，不会立即设置其结束时间。",
-			"smartLastWord": "智能末词",
-			"smartLastWordDesc": "同步每行的最后一个单词时，按下快捷键仅设置其结束时间，不会自动设置下一行第一个单词的开始时间。",
-			"enableUpcomingWordHighlight": "启用即将播放单词预检",
-			"enableUpcomingWordHighlightDesc": "在同步模式下，单词播放前片刻淡入高亮颜色以提高准确性。",
-			"upcomingWordHighlightThreshold": "预检时间阈值 (ms)",
-			"upcomingWordHighlightColor": "高亮颜色 (CSS 值)",
-			"volume": "音乐音量",
-			"playbackRate": "播放倍速",
+			"smartFirstWord": "Smart First Word",
+			"smartFirstWordDesc": "When syncing the first word of a line, the first key press sets its start time only, without immediately setting its end time.",
+			"smartLastWord": "Smart Last Word",
+			"smartLastWordDesc": "When syncing the last word of a line, the key press sets its end time without automatically setting the start time of the next line's first word.",
+			"enableUpcomingWordHighlight": "Enable Upcoming Word Pre-Highlight",
+			"enableUpcomingWordHighlightDesc": "Fades in a highlight color shortly before a word plays during Sync mode to improve precision.",
+			"upcomingWordHighlightThreshold": "Pre-Highlight Time Threshold (ms)",
+			"upcomingWordHighlightColor": "Highlight Color (CSS Value)",
+			"volume": "Music Volume",
+			"playbackRate": "Playback Speed",
 			"autosave": {
-				"enable": "启用自动保存",
-				"interval": "保存间隔（分钟）",
-				"limit": "保留快照数量"
+				"enable": "Enable Autosave",
+				"interval": "Save Interval (minutes)",
+				"limit": "Snapshots to keep"
 			},
-			"customBackground": "自定义背景",
-			"customBackgroundDesc": "选择一张图片作为背景。",
-			"customBackgroundPick": "选择图片",
-			"customBackgroundClear": "清除",
-			"customBackgroundOpacity": "不透明度",
-			"customBackgroundOpacityWarning": "如果此数值过高，页面内容可能变得难以阅读。",
-			"customBackgroundMask": "蒙层",
-			"customBackgroundBlur": "模糊半径",
-			"customBackgroundBrightness": "亮度",
-			"customBackgroundEnabled": "背景已设置",
-			"customBackgroundManage": "设置"
+			"customBackground": "Custom Background",
+			"customBackgroundDesc": "Choose an image to use as the background.",
+			"customBackgroundPick": "Choose Image",
+			"customBackgroundClear": "Clear",
+			"customBackgroundOpacity": "Opacity",
+			"customBackgroundOpacityWarning": "If this value is too high, the page content may be hard to read.",
+			"customBackgroundMask": "Mask",
+			"customBackgroundBlur": "Blur Radius",
+			"customBackgroundBrightness": "Brightness",
+			"customBackgroundEnabled": "Background set",
+			"customBackgroundManage": "Settings"
 		},
 		"about": {
-			"update": "更新",
-			"newVersion": "新版本",
-			"updateNow": "立即更新",
-			"downloading": "正在下载更新...",
-			"ready": "更新已就绪。重启应用程序使其生效。",
-			"restart": "重启"
+			"update": "Update",
+			"newVersion": "New version",
+			"updateNow": "Update now",
+			"downloading": "Downloading update...",
+			"ready": "Update is ready. Restart the application for it to take effect.",
+			"restart": "Restart"
 		},
 		"aboutModal": {
-			"community": "社区与贡献",
-			"communityDesc": "通过贡献代码、报告问题或提供翻译，帮助我们完善工具。",
-			"github": "GitHub 仓库",
-			"crowdin": "在 Crowdin 中协助翻译"
+			"community": "Community & Contributions",
+			"communityDesc": "Help us make the tool better by contributing code, reporting issues, or providing translations.",
+			"github": "GitHub Repository",
+			"crowdin": "Help Translate in Crowdin"
 		},
 		"appearance": {
-			"theme": "主题",
-			"useCustomAccent": "自定义强调色",
-			"useCustomAccentDesc": "设置主颜色",
-			"background": "背景",
+			"theme": "Theme",
+			"useCustomAccent": "Custom Accent Color",
+			"useCustomAccentDesc": "Set Accent color",
+			"background": "Background",
 			"mode": {
-				"none": "无",
-				"image": "图像",
-				"gradient": "渐变"
+				"none": "None",
+				"image": "Image",
+				"gradient": "Gradient"
 			},
-			"useCustomGradient": "自定义渐变颜色",
-			"useCustomGradientDesc": "从单一颜色生成渐变。",
-			"syncGradientToAccent": "同步强调色",
-			"addGradientColor": "添加颜色",
-			"gradientType": "渐变类型",
+			"useCustomGradient": "Custom Gradient Color",
+			"useCustomGradientDesc": "Generate a gradient from a single color.",
+			"syncGradientToAccent": "Sync first color with Accent",
+			"addGradientColor": "Add Color",
+			"gradientType": "Gradient Type",
 			"type": {
-				"linear": "线性",
-				"radial": "径向",
-				"conic": "锥形"
+				"linear": "Linear",
+				"radial": "Radial",
+				"conic": "Conic"
 			},
-			"gradientOpacity": "渐变不透明度",
-			"gradientSize": "渐变跨度",
-			"gradientPositionSettings": "中心和角度",
-			"gradientCenterX": "中点 X",
-			"gradientCenterY": "中点 Y",
-			"gradientAngle": "角度",
-			"font": "程序字体",
-			"currentFont": "当前字体",
-			"changeFont": "更改字体...",
-			"fontImportSuccess": "字体导入成功！",
-			"fontLibrary": "字体库",
-			"fontWeight": "字重",
+			"gradientOpacity": "Gradient Opacity",
+			"gradientSize": "Gradient Scale",
+			"gradientPositionSettings": "Center & Angle",
+			"gradientCenterX": "Center X (Horizontal)",
+			"gradientCenterY": "Center Y (Vertical)",
+			"gradientAngle": "Angle",
+			"font": "Application Font",
+			"currentFont": "Current Font",
+			"changeFont": "Change Font...",
+			"fontImportSuccess": "Font imported successfully!",
+			"fontLibrary": "Font Library",
+			"fontWeight": "Font Weight",
 			"weight": {
-				"regular": "标准",
-				"bold": "粗体"
+				"regular": "Regular",
+				"bold": "Bold"
 			},
-			"fontStyle": "字体样式",
+			"fontStyle": "Font Style",
 			"style": {
-				"normal": "标准",
-				"italic": "斜体"
+				"normal": "Normal",
+				"italic": "Italic"
 			},
-			"importFont": "导入字体文件",
-			"customFontActive": "本地自定义字体",
-			"defaultFonts": "标准字体族",
-			"systemFonts": "系统字体",
-			"googleFonts": "Google Fonts 字体库"
+			"importFont": "Import Font File",
+			"customFontActive": "LOCAL CUSTOM FONT",
+			"defaultFonts": "Standard Stacks",
+			"systemFonts": "System Fonts",
+			"googleFonts": "Google Fonts Library"
 		},
 		"group": {
-			"assistant": "助手",
-			"display": "显示",
-			"timing": "同步",
-			"timingHighlight": "视觉对齐提示 (同步)",
-			"playback": "播放",
-			"autosave": "自动保存"
+			"assistant": "Assistant",
+			"display": "Display",
+			"timing": "Syncing",
+			"timingHighlight": "Visual Timing Cue (Sync)",
+			"playback": "Playback",
+			"autosave": "Auto Save"
 		},
 		"assistant": {
-			"quickFixes": "快速修复 (语法)",
-			"quickFixesDesc": "启用针对重复单词 and 常见转录错误的建议。",
-			"manualTimestampEdit": "手动时间戳编辑",
-			"manualTimestampEditDesc": "允许在同步模式下点击时间戳来手动输入数值。",
-			"visualizeTimestampUpdate": "可视化时间戳更新",
-			"visualizeTimestampUpdateDesc": "通过快捷键更新时间戳时，在时间戳上显示短暂的闪烁。",
-			"highlightErrors": "高亮时间错误",
-			"highlightErrorsDesc": "视觉标记开始时间大于结束时间的单词。"
+			"quickFixes": "Quick Fixes (Grammar)",
+			"quickFixesDesc": "Enable suggestions for repeated words and common transcription errors.",
+			"manualTimestampEdit": "Manual Timestamp Editing",
+			"manualTimestampEditDesc": "Allow clicking on timestamps in Sync mode to manually type values.",
+			"visualizeTimestampUpdate": "Visualize Timestamp Updates",
+			"visualizeTimestampUpdateDesc": "Show a brief flash on timestamps when they are updated via shortcuts.",
+			"highlightErrors": "Highlight Timing Errors",
+			"highlightErrorsDesc": "Visually mark words where start time is greater than end time."
 		},
 		"audio": {
-			"equalizer": "音频均衡器",
-			"eqDescription": "调整不同频段的增益以优化您的音频体验。",
-			"preset": "预设",
-			"standardPresets": "标准预设",
+			"equalizer": "Audio Equalizer",
+			"eqDescription": "Adjust gains for different frequencies to optimize your audio experience.",
+			"preset": "Presets",
+			"standardPresets": "Standard",
 			"presets": {
-				"custom": "子定义"
+				"custom": "Manual"
 			},
-			"customPresets": "自定义预设",
-			"reset": "重置",
-			"newPresetName": "新预设名称",
-			"save": "保存预设",
-			"mp3Conversion": "MP3 转换为 FLAC",
-			"mp3ConversionDesc": "导入时将 MP3 转换为 FLAC 以获得更好的同步效果",
-			"mp3ConversionAsk": "提问",
-			"mp3ConversionAlways": "自动",
-			"mp3ConversionNever": "关闭"
+			"customPresets": "Custom",
+			"reset": "Reset",
+			"newPresetName": "New Preset Name",
+			"save": "Save Preset",
+			"mp3Conversion": "MP3 to FLAC",
+			"mp3ConversionDesc": "Convert MP3 to FLAC when importing for better sync",
+			"mp3ConversionAsk": "Ask",
+			"mp3ConversionAlways": "Auto",
+			"mp3ConversionNever": "Off"
 		},
 		"dev": {
 			"wasmPlugins": {
-				"title": "社区插件系统 (WASM)",
-				"description": "管理和上传自定义 WebAssembly 插件以扩展工具的导入和导出功能。"
+				"title": "Community Plugin System (WASM)",
+				"description": "Manage and upload custom WebAssembly plugins to extend the tool's importing and exporting capabilities."
 			},
 			"debugInfo": {
-				"title": "调试信息"
+				"title": "Debug Information"
 			}
 		},
 		"spectrogram": {
-			"palette": "调色板",
-			"paletteCustom": "自定义",
-			"gradientEditorDesc": "Pos 值为 0.0 对应最安静的部分，1.0 对应最响亮的部分。建议在更大的 Pos 值时使用更亮的颜色。",
-			"addStop": "添加色标"
+			"palette": "Color Palette",
+			"paletteCustom": "Custom",
+			"gradientEditorDesc": "A Pos value of 0.0 corresponds to the quietest part, and 1.0 corresponds to the loudest part. It is recommended to use brighter colors for larger Pos values.",
+			"addStop": "Add Color Stop"
 		}
 	},
 	"topBar": {
 		"modeBtns": {
-			"edit": "编辑",
-			"sync": "打轴",
-			"preview": "预览"
+			"edit": "Edit",
+			"sync": "Time",
+			"preview": "Preview"
 		},
 		"boykisser": "boykisser",
-		"appName": "Apple Music-like Lyrics TTML 工具",
+		"appName": "Apple Music-like Lyrics TTML Tool",
 		"menu": {
-			"undo": "撤销",
-			"redo": "重做",
-			"selectAllLines": "全选所有行",
-			"unselectAllLines": "取消全选所有行",
-			"invertSelectAllLines": "反向选择所有行",
-			"selectWordsOfMatchedSelection": "选择匹配的单词",
-			"timeShift": "时间平移...",
-			"editMetadata": "编辑歌词元数据...",
-			"edit": "编辑",
-			"newLyric": "新建歌词",
-			"openLyric": "打开歌词",
-			"openFromClipboard": "从剪贴板打开 TTML",
-			"saveLyric": "保存歌词",
-			"restoreFromHistory": "从历史记录恢复...",
-			"saveLyricToClipboard": "保存 TTML 到剪贴板",
-			"uploadToAMLLDB": "上传到数据库 (仅限 CN)",
-			"file": "文件",
-			"helpDoc": "文档 (CN)",
-			"help": "帮助",
-			"segmentationTools": "分词工具",
-			"autoSegment": "自动分词",
-			"rubySegment": "Ruby 分词",
-			"advancedSegment": "高级分词...",
-			"syncLineTimestamps": "同步行时间戳",
-			"tool": "工具",
+			"undo": "Undo",
+			"redo": "Redo",
+			"selectAllLines": "Select all lines",
+			"unselectAllLines": "Deselect all lines",
+			"invertSelectAllLines": "Invert line selections",
+			"selectWordsOfMatchedSelection": "Select words matching selection",
+			"timeShift": "Time Shift...",
+			"editMetadata": "Edit lyrics metadata…",
+			"edit": "Edit",
+			"newLyric": "New lyrics",
+			"openLyric": "Open lyrics",
+			"openFromClipboard": "Open TTML from clipboard",
+			"saveLyric": "Save lyrics",
+			"restoreFromHistory": "Restore from history…",
+			"saveLyricToClipboard": "Save TTML to clipboard",
+			"uploadToAMLLDB": "Upload to database (CN only)",
+			"file": "File",
+			"helpDoc": "Documentation (CN)",
+			"help": "Help",
+			"segmentationTools": "Segmentation Tools",
+			"autoSegment": "Auto Segment",
+			"rubySegment": "Ruby Segmentation",
+			"advancedSegment": "Advanced Segment...",
+			"syncLineTimestamps": "Sync Line Timestamps",
+			"tool": "Tools",
 			"importLyric": {
-				"import": "导入歌词",
-				"fromPlainText": "从纯文本导入...",
-				"fromLRCLIB": "从 LRCLIB 导入...",
-				"fromLyrically": "从 Lyrically 导入...",
-				"fromGenius": "从 Genius 导入...",
-				"fromLyRiC": "从 LyRiC 文件导入...",
-				"fromESLyRiC": "从 ESLyRiC 文件导入...",
-				"fromQRC": "从 QRC 文件导入...",
-				"fromYRC": "从 YRC 文件导入...",
-				"fromLrcfySylb": "从 Lyricify Syllable 文件导入..."
+				"import": "Import lyrics",
+				"fromPlainText": "Import from plain text…",
+				"fromLRCLIB": "Import from LRCLIB...",
+				"fromLyrically": "Import from Lyrically...",
+				"fromGenius": "Import from Genius…",
+				"fromLyRiC": "Import from LyRiC file…",
+				"fromESLyRiC": "Import from ESLyRiC file…",
+				"fromQRC": "Import from QRC file…",
+				"fromYRC": "Import from YRC file…",
+				"fromLrcfySylb": "Import from Lyricify Syllable file…"
 			},
 			"exportLyric": {
-				"export": "导出歌词",
-				"toLyRiC": "导出到 LyRiC",
-				"toESLyRiC": "导出到 ESLyRiC",
-				"toQRC": "导出到 QRC",
-				"toYRC": "导出到 YRC",
-				"toLrcfySylb": "导出到 Lyricify Syllable",
-				"toASS": "导出到 ASS 字幕"
+				"export": "Export lyrics",
+				"toLyRiC": "Export to LyRiC",
+				"toESLyRiC": "Export to ESLyRiC",
+				"toQRC": "Export to QRC",
+				"toYRC": "Export to YRC",
+				"toLrcfySylb": "Export to Lyricify Syllable",
+				"toASS": "Export to ASS subtitles"
 			}
 		}
 	},
 	"header": {
 		"status": {
-			"autoSavedAt": "已在 {time} 自动保存"
+			"autoSavedAt": "Autosaved at {time}"
 		}
 	},
 	"contextMenu": {
-		"deleteWords": "删除 {count} 个单词",
-		"bgLyric": "背景行",
-		"duetLyric": "合唱行",
-		"insertLineBefore": "在之前插入新行",
-		"insertLineAfter": "在之后插入新行",
-		"copyLine": "复制 {count} 行",
-		"duplicateTo": "复制到...",
-		"combineLine": "合并行",
-		"deleteLine": "删除 {count} 行",
-		"splitWord": "分割单词...",
-		"replaceWord": "替换单词...",
-		"combineWords": "合并单词",
-		"moveFollowingWordToNewLine": "将后续单词移动到新行",
-		"moveWordToNewLine": "将 {count} 个单词移动到新行"
+		"deleteWords": "Delete {count} word(s)",
+		"bgLyric": "Background line",
+		"duetLyric": "Duet line",
+		"insertLineBefore": "Insert new line before",
+		"insertLineAfter": "Insert new line after",
+		"copyLine": "Duplicate {count} line(s)",
+		"duplicateTo": "Duplicate to...",
+		"combineLine": "Combine lines",
+		"deleteLine": "Delete {count} line(s)",
+		"splitWord": "Split word…",
+		"replaceWord": "Replace word…",
+		"combineWords": "Combine words",
+		"moveFollowingWordToNewLine": "Move followings to new line",
+		"moveWordToNewLine": "Move {count} word(s) to new line"
 	},
 	"settingsDialog": {
-		"title": "偏好设置",
+		"title": "Preferences",
 		"common": {
-			"latencyTest": "音频/输入延迟测试"
+			"latencyTest": "Audio/input latency test"
 		},
 		"keybindings": {
-			"newFile": "新建文件",
-			"openFile": "打开文件",
-			"saveFile": "保存文件",
-			"undo": "撤销",
-			"redo": "重做",
-			"selectAll": "全选",
-			"unselectAll": "取消全选",
-			"selectInverted": "反向选择",
-			"selectWordsOfMatchedSelection": "选择相似单词",
-			"deleteSelection": "删除选择项",
-			"switchEditMode": "切换模式 - 编辑模式",
-			"switchSyncMode": "切换模式 - 对齐模式",
-			"switchPreviewMode": "切换模式 - 预览模式",
-			"moveNextWord": "对齐 - 移动到下一个单词",
-			"movePrevWord": "对齐 - 移动到上一个单词",
-			"moveNextLine": "对齐 - 移动到下一行开始",
-			"movePrevLine": "对齐 - 移动到上一行开始",
-			"movePrevWordAndPlay": "对齐 - 移动到上一个单词并播放",
-			"moveNextWordAndPlay": "对齐 - 移动到下一个单词并播放",
-			"syncStart": "对齐 - 标记开始",
-			"syncNext": "对齐 - 提交",
-			"syncEnd": "对齐 - 标记结束",
-			"toggleWordHighlight": "对齐 - 切换活动单词高亮",
-			"moveFirstWordAndPlay": "对齐 - 移动到第一个单词并播放",
-			"moveLastWordAndPlay": "对齐 - 移动到最后一个单词并播放",
-			"playPause": "回放 - 播放/暂停",
-			"seekForward": "回放 - 快进 5s",
-			"seekBackward": "回放 - 快退 5s",
-			"volumeUp": "回放 - 音量增加",
-			"volumeDown": "回放 - 音量减少",
-			"playbackRateUp": "回放 - 增加速度",
-			"playbackRateDown": "回放 - 降低速度",
-			"playbackRateReset": "回放 - 重置速度",
-			"auditionSelectionBefore": "频谱图 - 试听选区 (前 500ms)",
-			"auditionSelection": "频谱图 - 试听选区",
-			"auditionSelectionAfter": "频谱图 - 试听选区 (后 500ms)",
+			"newFile": "New File",
+			"openFile": "Open File",
+			"saveFile": "Save File",
+			"undo": "Undo",
+			"redo": "Redo",
+			"selectAll": "Select All",
+			"unselectAll": "Deselect All",
+			"selectInverted": "Invert Selection",
+			"selectWordsOfMatchedSelection": "Select similar words",
+			"deleteSelection": "Delete Selection",
+			"switchEditMode": "Mode Switch - Switch to Edit Mode",
+			"switchSyncMode": "Mode Switch - Switch to Timing Mode",
+			"switchPreviewMode": "Mode Switch - Switch to Preview Mode",
+			"moveNextWord": "Timing - Move to next word",
+			"movePrevWord": "Timing - Move to previous word",
+			"moveNextLine": "Timing - Move to next line start",
+			"movePrevLine": "Timing - Move to previous line start",
+			"movePrevWordAndPlay": "Timing - Move to previous word and play",
+			"moveNextWordAndPlay": "Timing - Move to next word and play",
+			"syncStart": "Timing - Mark begin",
+			"syncNext": "Timing - Commit",
+			"syncEnd": "Timing - Mark end",
+			"toggleWordHighlight": "Timing - Toggle active word highlight",
+			"moveFirstWordAndPlay": "Timing - Move to first word and play",
+			"moveLastWordAndPlay": "Timing - Move to last word and play",
+			"playPause": "Playback - Play/Pause",
+			"seekForward": "Playback - Seek forward 5s",
+			"seekBackward": "Playback - Seek backward 5s",
+			"volumeUp": "Playback - Volume up",
+			"volumeDown": "Playback - Volume down",
+			"playbackRateUp": "Playback - Increase speed",
+			"playbackRateDown": "Playback - Decrease speed",
+			"playbackRateReset": "Playback - Reset speed",
+			"auditionSelectionBefore": "Spectrogram - Audition selection (500ms before)",
+			"auditionSelection": "Spectrogram - Audition selection",
+			"auditionSelectionAfter": "Spectrogram - Audition selection (500ms after)",
 			"category": {
-				"File": "文件",
-				"Edit": "编辑",
-				"View": "视图",
-				"Sync": "同步",
-				"Audio": "音频",
-				"Spectrogram": "频谱图"
+				"File": "File",
+				"Edit": "Edit",
+				"View": "View",
+				"Sync": "Sync",
+				"Audio": "Audio",
+				"Spectrogram": "Spectrogram"
 			}
 		},
 		"tab": {
-			"common": "通用",
-			"assistant": "助手",
-			"appearance": "外观",
-			"audio": "音频",
-			"keybindings": "快捷键",
-			"spectrogram": "频谱图",
-			"about": "关于",
-			"dev": "开发"
+			"common": "General",
+			"assistant": "Assistant",
+			"appearance": "Appearance",
+			"audio": "Audio",
+			"keybindings": "Keybindings",
+			"spectrogram": "Spectrogram",
+			"about": "About",
+			"dev": "Dev"
 		}
 	},
 	"error": {
-		"unsupportedFileFormat": "不支持的文件格式: {ext}",
-		"openFileFailed": "打开文件失败",
-		"audioNotLoaded": "音频未加载。请确保音频文件正在播放。"
+		"unsupportedFileFormat": "Unsupported file format: {ext}",
+		"openFileFailed": "Failed to open file",
+		"audioNotLoaded": "Audio not loaded. Please ensure an audio file is playing."
 	},
 	"audioPanel": {
-		"volume": "音量",
-		"playbackRate": "回放速度",
-		"clickToLoadMusic": "点击图标按钮以加载音乐",
-		"playPause": "播放 / 暂停音乐",
-		"expandSpectrogram": "展开 / 折叠加频谱图"
+		"volume": "Volume",
+		"playbackRate": "Playback rate",
+		"clickToLoadMusic": "Click the icon button to load music",
+		"playPause": "Play / pause music",
+		"expandSpectrogram": "Expand / collapse spectrogram"
 	},
 	"audio": {
 		"status": {
-			"transcoding": "解码失败，正在尝试转码音频...",
-			"loading": "正在加载音频...",
-			"processing": "正在处理..."
+			"transcoding": "Decoding failed, attempting to transcode audio...",
+			"loading": "Loading audio...",
+			"processing": "Processing..."
 		},
 		"error": {
-			"workerError": "处理音频时出错"
+			"workerError": "Error processing audio"
 		}
 	},
 	"latencyTestDialog": {
-		"title": "打轴延迟测试",
+		"title": "Timing Offset Latency Test",
 		"latencyDisplay": {
-			"fastest": "最快",
+			"fastest": "Fastest",
 			"current": {
-				"none": "未测量",
-				"fast": "过早",
-				"slow": "过晚",
-				"perfect": "完美"
+				"none": "Not Measured",
+				"fast": "Early",
+				"slow": "Late",
+				"perfect": "Perfect"
 			},
-			"slowest": "最慢"
+			"slowest": "Slowest"
 		},
-		"bpmInputLabel": "节拍 (BPM)",
+		"bpmInputLabel": "Tempo (BPM)",
 		"button": {
-			"stop": "停止",
-			"start": "开始"
+			"stop": "Stop",
+			"start": "Start"
 		}
 	},
 	"metadataDialog": {
 		"fetchSongwriters": {
-			"searchError": "搜索失败: {error}",
-			"fetchError": "无法获取歌词: {error}",
-			"noLyricsError": "没有可导入的歌词。",
-			"importSuccess": "从 Genius 导入了 {count} 行。",
-			"error": "获取词曲作者失败",
-			"noSongwriters": "此歌曲没有记录词曲作者信息",
-			"findingRealName": "正在查找 {name} 的真实姓名 ({current}/{total})...",
-			"success": "成功从 Genius 获取词曲作者",
-			"setupTitle": "Genius API 密钥设置",
-			"setupDesc": "要使用此功能，请配置您的 Genius API 密钥（具体来说，您需要“CLIENT ACCESS TOKEN”）。您可以从 ",
-			"setupDescEnd": " 开发者门户生成一个。",
-			"keyPlaceholder": "输入 CLIENT ACCESS TOKEN",
-			"button": "从 Genius 获取词曲作者",
-			"tryFindRealNames": "尝试查找真实姓名 (Legal Names)"
+			"searchError": "Search failed: {error}",
+			"fetchError": "Could not fetch lyrics: {error}",
+			"noLyricsError": "No lyrics to import.",
+			"importSuccess": "Imported {count} lines from Genius.",
+			"error": "Failed to fetch songwriters",
+			"noSongwriters": "No songwriting credits recorded for this song",
+			"findingRealName": "Finding real name for {name} ({current}/{total})...",
+			"success": "Songwriters successfully fetched from Genius",
+			"setupTitle": "Genius API Key Setup",
+			"setupDesc": "To use this feature, please configure your Genius API Key (specifically, you need the \"CLIENT ACCESS TOKEN\"). You can generate one from the ",
+			"setupDescEnd": " developer portal.",
+			"keyPlaceholder": "Enter CLIENT ACCESS TOKEN",
+			"button": "Fetch Songwriters from Genius",
+			"tryFindRealNames": "Try to find real names (Legal Names)"
 		},
-		"openLink": "打开链接",
-		"duplicateMsg": "发现重复的元数据值",
-		"addValue": "添加",
+		"openLink": "Open link",
+		"duplicateMsg": "Found duplicate metadata values",
+		"addValue": "Add",
 		"builtinOptions": {
-			"musicName": "音轨名称",
-			"artists": "音轨艺术家",
-			"artistsInvalidMsg": "如果有多个艺术家，请多次添加此键，而不是使用分隔符；如果艺术家姓名包含分隔符，请忽略此消息",
-			"songwriter": "词曲作者",
-			"songwriterInvalidMsg": "如果有多个词曲作者，请多次添加此键，而不是使用分隔符",
-			"album": "专辑名称",
-			"coverArt": "封面 URL",
-			"ncmMusicId": "网易云音乐 ID",
-			"ncmMusicIdInvalidMsg": "网易云音乐 ID 应该是数字",
-			"qqMusicId": "QQ 音乐 ID",
-			"qqMusicIdInvalidMsg": "QQ 音乐 ID 应该是字母或数字",
-			"spotifyId": "Spotify 音轨 ID",
-			"spotifyIdInvalidMsg": "Spotify 音轨 ID 应该是字母或数字",
-			"appleMusicId": "Apple Music 音轨 ID",
-			"appleMusicIdInvalidMsg": "Apple Music 音轨 ID 应该是数字",
-			"isrc": "音轨 ISRC 代码",
-			"isrcInvalidMsg": "ISRC 代码格式应为 CC-XXX-YY-NNNNN",
-			"ttmlAuthorGithub": "歌词作者 GitHub ID",
-			"ttmlAuthorGithubInvalidMsg": "GitHub ID 应该是数字",
-			"ttmlAuthorGithubLogin": "歌词作者 GitHub 用户名",
-			"ttmlAuthorGithubLoginInvalidMsg": "GitHub 用户名应该是字母、数字或连字符，最多 39 个字符"
+			"musicName": "Track Name",
+			"artists": "Track Artists",
+			"artistsInvalidMsg": "If there are multiple artists, please add this key multiple times instead of using delimiters; if an artist name contains delimiters, please ignore this message",
+			"songwriter": "Songwriter",
+			"songwriterInvalidMsg": "If there are multiple songwriters, please add this key multiple times instead of using delimiters",
+			"album": "Album Name",
+			"coverArt": "Cover URL",
+			"ncmMusicId": "NetEase Music ID",
+			"ncmMusicIdInvalidMsg": "NetEase Music ID should be numeric",
+			"qqMusicId": "QQ Music ID",
+			"qqMusicIdInvalidMsg": "QQ Music ID should be alphanumeric",
+			"spotifyId": "Spotify Track ID",
+			"spotifyIdInvalidMsg": "Spotify Track ID should be alphanumeric",
+			"appleMusicId": "Apple Music Track ID",
+			"appleMusicIdInvalidMsg": "Apple Music Track ID should be numeric",
+			"isrc": "Track ISRC Code",
+			"isrcInvalidMsg": "ISRC code format should be CC-XXX-YY-NNNNN",
+			"ttmlAuthorGithub": "Lyrics Author GitHub ID",
+			"ttmlAuthorGithubInvalidMsg": "GitHub ID should be numeric",
+			"ttmlAuthorGithubLogin": "Lyrics Author GitHub Username",
+			"ttmlAuthorGithubLoginInvalidMsg": "GitHub username should be alphanumeric or hyphens, up to 39 characters"
 		},
-		"title": "元数据编辑器",
-		"key": "键",
-		"value": "值",
-		"empty": "无元数据",
-		"addKeyValue": "添加新键值对",
-		"customKey": "自定义键",
-		"addPresets": "添加所有预设键",
-		"clear": "清除"
+		"title": "Metadata Editor",
+		"key": "Key",
+		"value": "Value",
+		"empty": "No metadata",
+		"addKeyValue": "Add new key-value",
+		"customKey": "Custom Key",
+		"addPresets": "Add all preset keys",
+		"clear": "Clear"
 	},
 	"genius": {
-		"setupTitle": "Genius API 密钥设置",
-		"setupDesc": "要从 Genius 导入歌词，您需要一个 CLIENT ACCESS TOKEN。您可以从 Genius 开发者门户生成一个。",
-		"keyPlaceholder": "在此粘贴 CLIENT ACCESS TOKEN…",
-		"previewTitle": "Genius — 歌词预览",
-		"back": "返回",
-		"previewSubtitle": "在导入之前，您可以在下面编辑歌词。",
-		"linesCount": "{count} 行",
-		"importButton": "导入歌词",
-		"importTitle": "从 Genius 导入歌词",
-		"searchPlaceholder": "艺术家 – 歌曲标题…",
-		"notFound": "未找到结果。请尝试不同的关键词。",
-		"noResult": "输入歌曲名称或艺术家以开始。",
-		"changeKey": "更改 API 密钥"
+		"setupTitle": "Genius API Key Setup",
+		"setupDesc": "To import lyrics from Genius you need a CLIENT ACCESS TOKEN. You can generate one from the Genius developer portal.",
+		"keyPlaceholder": "Paste CLIENT ACCESS TOKEN here…",
+		"previewTitle": "Genius — Lyrics Preview",
+		"back": "Back",
+		"previewSubtitle": "You can edit the lyrics below before importing.",
+		"linesCount": "{count} lines",
+		"importButton": "Import Lyrics",
+		"importTitle": "Import Lyrics from Genius",
+		"searchPlaceholder": "Artist – Song title…",
+		"notFound": "No results found. Try different keywords.",
+		"noResult": "Enter a song name or artist to start.",
+		"changeKey": "Change API Key"
 	},
 	"common": {
-		"cancel": "取消",
-		"save": "保存",
-		"search": "搜索",
-		"close": "关闭",
-		"resultsFound": "找到 {count} 个结果",
-		"apply": "应用",
-		"confirm": "确定",
-		"success": "恢复成功",
-		"error": "数据损坏或丢失",
-		"deleteSuccess": "删除成功",
-		"time": "时间",
-		"restore": "恢复",
-		"sync": "同步",
-		"remove": "移除",
-		"about": "关于",
-		"clickToSet": "点击设置 "
+		"cancel": "Cancel",
+		"save": "Save",
+		"search": "Search",
+		"close": "Close",
+		"resultsFound": "Found {count} results",
+		"apply": "Apply",
+		"confirm": "Confirm",
+		"success": "Restore successful",
+		"error": "Data corrupted or lost",
+		"deleteSuccess": "Delete Success",
+		"time": "Time",
+		"restore": "Restore",
+		"sync": "Sync",
+		"remove": "Remove",
+		"about": "About",
+		"clickToSet": "Click to set "
 	},
 	"textImportDialog": {
-		"addSpaces": "添加空格",
-		"splitHyphens": "分割连字符单词",
-		"processedSuccess": "歌词已自动处理以进行音节对齐。",
-		"title": "从纯文本导入歌词",
+		"addSpaces": "Add Spaces",
+		"splitHyphens": "Split Hyphenated Words",
+		"processedSuccess": "Lyrics automated for syllable sync.",
+		"title": "Import Lyrics from Plain Text",
 		"tab": {
-			"import": "导入"
+			"import": "Import"
 		},
-		"guides": "指南",
-		"processLyrics": "处理歌词",
-		"actionButton": "导入",
+		"guides": "Guides",
+		"processLyrics": "Process Lyrics",
+		"actionButton": "Import",
 		"contentMode": {
-			"caption": "文本内容",
-			"lyric": "仅歌词",
-			"withTranslation": "带有翻译的歌词",
-			"withRoman": "带有注音的歌词",
-			"withBoth": "带有两者"
+			"caption": "Text content",
+			"lyric": "Lyrics Only",
+			"withTranslation": "Lyrics with translation",
+			"withRoman": "Lyrics with romanization",
+			"withBoth": "Lyrics with both"
 		},
 		"separationMode": {
-			"caption": "翻译/注音格式",
-			"multipleLine": "交错多行",
-			"sameLine": "同行分隔"
+			"caption": "Translation/Romanization Format",
+			"multipleLine": "Interleaved Multiple Lines",
+			"sameLine": "Same Line Separation"
 		},
-		"separator": "行分隔符",
-		"swapTransAndRoman": "交换翻译和注音行",
-		"wordSeparator": "单词分隔符",
-		"enableSpecialPrefix": "启用特殊前缀",
-		"bgLyricPrefix": "背景歌词前缀",
-		"duetLyricPrefix": "合唱歌词前缀",
-		"enableEmptyBeat": "启用空拍",
-		"emptyBeatSymbol": "空拍符号",
+		"separator": "Line Separator",
+		"swapTransAndRoman": "Swap translation and romanization lines",
+		"wordSeparator": "Word Separator",
+		"enableSpecialPrefix": "Enable Special Prefix",
+		"bgLyricPrefix": "Background Lyric Prefix",
+		"duetLyricPrefix": "Duet Lyric Prefix",
+		"enableEmptyBeat": "Enable Empty Beat",
+		"emptyBeatSymbol": "Empty Beat Symbol",
 		"guide": {
 			"prepare": {
-				"title": "1. 准备歌词",
-				"desc": "建议使用 Lyrprep 工具来准备您的歌词。您可以搜索歌曲，选择一个版本，然后复制输出文本。"
+				"title": "1. Prepare Lyrics",
+				"desc": "It is recommended to use the Lyrprep tool to prepare your lyrics. You can search for songs, select a version, and copy the output text."
 			},
 			"import": {
-				"title": "2. 导入到 TTML 工具",
-				"desc": "将准备好的文本粘贴到左侧的编辑器中。确保根据您的文本格式选择正确的“导入模式”。如果您的文本包含特殊前缀（如背景人声标记），请确保已启用“特殊前缀”。"
+				"title": "2. Import to TTML Tool",
+				"desc": "Paste the prepared text into the editor on the left. Make sure to select the correct \"Import Mode\" based on your text format. If your text contains special prefixes (like background vocal markers), ensure \"Special Prefix\" is enabled."
 			},
 			"sync": {
-				"title": "3. 开始对齐",
-				"desc": "点击“导入”后，切换到“时间”（同步）模式。使用快捷键进行精确对齐：",
-				"f": "设置单词开始时间",
-				"g": "设置单词结束时间并跳到下个单词开始",
-				"h": "仅设置单词结束时间",
-				"ad": "在单词之间切换"
+				"title": "3. Start Syncing",
+				"desc": "After clicking \"Import\", switch to the \"Time\" (Sync) mode. Use hotkeys for precise alignment:",
+				"f": "Set word start time",
+				"g": "Set word end & start next",
+				"h": "Set word end only",
+				"ad": "Switch between words"
 			},
 			"community": {
-				"title": "社区指南与速查表",
-				"desc": "来自社区的针对特定语言和流派的有用资源。"
+				"title": "Community Guides & Cheat Sheets",
+				"desc": "Helpful resources from the community for specific languages and genres."
 			}
 		},
 		"guidesMenu": {
-			"full": "完整 TTML 指南"
+			"full": "Full TTML Guide"
 		}
 	},
 	"lrclib": {
-		"placeholder": "标题 艺术家...",
-		"notFound": "未找到结果，请尝试不同的关键词",
-		"noResult": "输入关键词开始搜索",
-		"searchError": "搜索失败，请检查网络或稍后重试",
-		"importError": "导入歌词时出错",
-		"title": "从 LRCLIB 导入歌词",
-		"synced": "已同步",
-		"unsynced": "未同步",
-		"noLyrics": "此曲目没有可用的歌词内容",
-		"extractBg": "将括号内容提取为背景人声",
-		"autoSegment": "自动分词",
-		"import": "导入歌词"
+		"placeholder": "Title Artist...",
+		"notFound": "No results found, please try different keywords",
+		"noResult": "Enter keywords to start searching",
+		"searchError": "Search failed, please check network or try again later",
+		"importError": "Error occurred while importing lyrics",
+		"title": "Import Lyric from LRCLIB",
+		"synced": "Synced",
+		"unsynced": "Unsynced",
+		"noLyrics": "No lyrics content available for this track",
+		"extractBg": "Extract parentheses as background vocals",
+		"autoSegment": "Auto Segment",
+		"import": "Import Lyric"
 	},
 	"lyricEditor": {
-		"locate": "定位",
+		"locate": "Locate",
 		"lineSpectrogram": {
-			"title": "行频谱图对齐",
-			"desc": "使用频谱图调整此行的起点和终点。行的时长将按字符数成比例地分配到各个单词中。",
-			"startTime": "开始:",
-			"endTime": "结束:",
-			"duration": "时长:",
-			"playPause": "播放/暂停"
+			"title": "Line Spectrogram Alignment",
+			"desc": "Adjust the start and end points of this line using the spectrogram. The line duration will be split proportionally into its words based on character count.",
+			"startTime": "Start:",
+			"endTime": "End:",
+			"duration": "Duration:",
+			"playPause": "Play/Pause"
 		}
 	},
 	"lyricLineView": {
-		"translatedLabel": "翻译:",
-		"romanLabel": "注音:",
-		"empty": "无",
-		"duplicateLinesHere": "在此处复制 {count} 条选定行",
-		"insertLine": "在此处插入新行",
-		"insertWord": "在此处插入单词…"
+		"translatedLabel": "Translation:",
+		"romanLabel": "Romanization:",
+		"empty": "None",
+		"duplicateLinesHere": "Duplicate {count} selected line(s) here",
+		"insertLine": "Insert new line here",
+		"insertWord": "Insert word here…"
 	},
 	"lyricWordView": {
-		"empty": "空白",
-		"spaceCount": "空格 x{count}",
-		"removeWord": "删除重复单词",
-		"editingWordTitle": "编辑单词",
-		"editingWordDesc": "编辑单词或应用建议的快速修复。",
-		"noSuggestions": "无建议"
+		"empty": "Empty",
+		"spaceCount": "Space x{count}",
+		"removeWord": "Remove Duplicate Word",
+		"editingWordTitle": "Editing Word",
+		"editingWordDesc": "Edit the word or apply suggested quick fixes.",
+		"noSuggestions": "No suggestions"
 	},
 	"touchSyncPanel": {
-		"prevWord": "跳到上个单词",
-		"nextWord": "跳到下个单词"
+		"prevWord": "Jump Previous Word",
+		"nextWord": "Jump Next Word"
 	},
 	"grammarCheck": {
-		"capitalization": "单词应该大写",
-		"capitalInMiddle": "单词中间有大写字母",
-		"title": "语法和拼写检查",
-		"issues": "问题",
-		"history": "历史记录",
-		"ignoredWords": "已忽略单词",
-		"noIssues": "未发现问题！",
-		"issuesFound": "项已发现问题",
-		"undoLast": "撤销上次",
-		"clearHistory": "清除历史记录",
-		"noHistory": "尚未进行任何修改",
-		"fixed": "已修复",
-		"ignored": "已忽略",
-		"line": "行",
-		"clearIgnoredWords": "清除全部",
-		"noIgnoredWords": "无忽略单词",
-		"noIssuesMessage": "未发现问题！您的歌词看起来很棒。"
+		"capitalization": "Word should be capitalized",
+		"capitalInMiddle": "Word has capital letters in middle",
+		"title": "Grammar & Spelling Check",
+		"issues": "Issues",
+		"history": "History",
+		"ignoredWords": "Ignored Words",
+		"noIssues": "No issues found!",
+		"issuesFound": "issues found",
+		"undoLast": "Undo Last",
+		"clearHistory": "Clear History",
+		"noHistory": "No changes made yet",
+		"fixed": "fixed",
+		"ignored": "ignored",
+		"line": "Line",
+		"clearIgnoredWords": "Clear All",
+		"noIgnoredWords": "No ignored words",
+		"noIssuesMessage": "No issues found! Your lyrics look good."
 	},
 	"replaceWordDialog": {
-		"title": "替换单词",
-		"description": "新单词:",
-		"placeholder": "新单词",
-		"applyToAll": "将此替换应用到所有相同的单词",
-		"caseSensitive": "匹配大小写 (精确匹配)"
+		"title": "Replace Word",
+		"description": "New word:",
+		"placeholder": "New word",
+		"applyToAll": "Apply this replacing to all identical words",
+		"caseSensitive": "Match case (Exact match)"
 	},
 	"timeShiftDialog": {
-		"title": "时间平移",
-		"amount": "偏移量 (ms)",
-		"direction": "方向",
-		"advance": "提前 (-)",
-		"delay": "延迟 (+)",
-		"scopeLabel": "范围",
+		"title": "Time Shift",
+		"amount": "Offset (ms)",
+		"direction": "Direction",
+		"advance": "Advance (-)",
+		"delay": "Delay (+)",
+		"scopeLabel": "Scope",
 		"scope": {
-			"all": "所有歌词行",
-			"selected": "选定的歌词行",
-			"selectedFollowing": "选定行及后续所有行",
-			"custom": "自定义范围"
+			"all": "All lyric lines",
+			"selected": "Selected lyric lines",
+			"selectedFollowing": "Selected and followings",
+			"custom": "Custom Range"
 		},
-		"fromLine": "从第",
-		"toLine": "行到第",
+		"fromLine": "From line",
+		"toLine": "to line",
 		"line": ""
 	},
 	"lyrically": {
-		"noLyricsLabel": "此曲目没有可用的歌词。",
-		"previewTitle": "Lyrically — 歌词预览",
-		"importTitle": "通过 Lyrically 安全导入歌词（无需 CORS，使用 API 代理）"
+		"noLyricsLabel": "No lyrics available for this track.",
+		"previewTitle": "Lyrically — Lyrics Preview",
+		"importTitle": "Import Lyrics safely via Lyrically (No CORS via API endpoint)"
 	},
 	"globalDragOverlay": {
-		"title": "松开以加载"
+		"title": "Release to load"
 	},
 	"historyRestoreDialog": {
-		"loadError": "加载历史记录失败",
+		"loadError": "Failed to load history",
 		"confirm": {
-			"title": "确认恢复",
-			"description": "这将覆盖当前编辑器中的所有内容。您确定要恢复此快照吗？"
+			"title": "Confirm Restore",
+			"description": "This will overwrite all content in the current editor. Are you sure you want to restore this snapshot?"
 		},
 		"deleteProject": {
-			"title": "删除项目历史",
-			"description": "您确定要删除此项目的所有自动保存记录吗？此操作不可撤销。"
+			"title": "Delete project history",
+			"description": "Are you sure you want to delete all autosaved records for this project? This action cannot be undone."
 		},
-		"projects": "最近项目",
-		"noProjects": "没有自动保存的记录。",
-		"latestState": "最新版本",
-		"restoreLatest": "恢复此版本",
-		"historyVersions": "其他版本",
-		"noHistory": "没有历史记录可用",
-		"selectProject": "请从左侧面板选择一项"
+		"projects": "Recent Projects",
+		"noProjects": "No records were automatically saved.",
+		"latestState": "Latest version",
+		"restoreLatest": "Restore this version",
+		"historyVersions": "Other versions",
+		"noHistory": "No history available",
+		"selectProject": "Please select an item from the left panel"
 	},
 	"autosave": {
-		"legacyProjectName": "旧版快照",
-		"untitledProjectName": "未命名项目"
+		"legacyProjectName": "Legacy snapshots",
+		"untitledProjectName": "Untitled Project"
 	},
 	"time": {
-		"daysAgo": "{count} 天前",
-		"hoursAgo": "{count} 小时前",
-		"minutesAgo": "{count} 分钟前",
-		"justNow": "刚刚"
+		"daysAgo": "{count} days ago",
+		"hoursAgo": "{count} hours ago",
+		"minutesAgo": "{count} minutes ago",
+		"justNow": "Just now"
 	},
 	"metadata": {
-		"title": "元数据"
+		"title": "Metadata"
 	},
 	"submitToAMLLDB": {
 		"validation": {
-			"missingMusicName": "元数据缺少音轨名称",
-			"missingArtists": "元数据缺少音轨艺术家",
-			"missingAlbum": "元数据缺少专辑名称",
-			"missingMusicId": "元数据缺少平台音轨 ID"
+			"missingMusicName": "Metadata missing track name",
+			"missingArtists": "Metadata missing track artists",
+			"missingAlbum": "Metadata missing album name",
+			"missingMusicId": "Metadata missing platform track ID"
 		},
-		"defaultReason": "新的歌词提交",
+		"defaultReason": "New lyrics submission",
 		"errors": {
-			"validation": "提交校验失败：\n{errors}",
-			"noLyrics": "还没有任何歌词内容哦？",
-			"uploadFailed": "请求上传歌词文件失败：{status} {statusText}",
-			"submitFailed": "提交失败，请检查控制台以了解原因！"
+			"validation": "Submission validation failed:\n{errors}",
+			"noLyrics": "There's no lyrics content yet?",
+			"uploadFailed": "Failed to request upload lyrics file: {status} {statusText}",
+			"submitFailed": "Submission failed, check console for reason!"
 		},
 		"labels": {
-			"submit": "歌词提交/反馈"
+			"submit": "Lyrics Submit/Correction"
 		},
-		"issueTitle": "[歌词提交/修复] {name}",
-		"unknownTitle": "未知标题",
-		"unknownArtist": "未知艺术家",
-		"description": "将歌词提交到 AMLL 歌词数据库",
-		"title": "将歌词提交到 AMLL 歌词数据库（仅限简体中文用户）",
-		"chineseOnlyWarning": "此功能仅供 AMLL 歌词数据库的简体中文用户使用。如果您编辑歌词是为了在其他软件中使用，请遵循该软件的提交方式！",
-		"thankYou": "首先，感谢您的无私歌词贡献！",
-		"cc0Agreement": "通过提交，您同意",
-		"cc0Rights": "使用 CC0 许可证并完全放弃歌词的所有权",
-		"andSubmit": "并提交到歌词数据库！",
-		"futureUse": "这些歌词将来由于 AMLL 系统作为默认 TTML 源码使用！",
-		"rightsWarning": "如果您重视保留所有权，请不要提交！",
-		"submitInstructions": "输入以下信息，然后跳到 GitHub issue 提交页面！",
-		"closeWarning": "关闭警告消息"
+		"issueTitle": "[Lyrics Submit/Fix] {name}",
+		"unknownTitle": "Unknown Title",
+		"unknownArtist": "Unknown Artist",
+		"description": "Submit lyrics to AMLL Lyrics Database",
+		"title": "Submit lyrics to AMLL Lyrics Database (Simplified Chinese users only)",
+		"chineseOnlyWarning": "This feature is only available to Simplified Chinese users of AMLL Lyrics Database. If you are editing lyrics to use them in other software, please follow that software's way to submit lyrics!",
+		"thankYou": "First of all, thank you for your generous lyrics contribution!",
+		"cc0Agreement": "By submitting you agree to",
+		"cc0Rights": "use the CC0 license and fully waive ownership of the lyrics",
+		"andSubmit": "and submit to the lyrics database!",
+		"futureUse": "And the lyrics will be used as default TTML source by AMLL systems in the future!",
+		"rightsWarning": "If you value retaining ownership, please do NOT submit!",
+		"submitInstructions": "Enter the following info then jump to the GitHub issue submission page!",
+		"closeWarning": "Close warning message"
 	},
 	"splitWordDialog": {
-		"spaceCount": "空格 x{count}",
-		"empty": "空白",
-		"title": "分割单词",
-		"tip": "分割后，新单词将平分布原单词的起始/结束时间。空拍将被清除。",
-		"syllableSplit": "音节分割",
-		"applyToAll": "将此分割应用到所有相同的单词",
-		"ignoreCase": "忽略大小写",
-		"actionButton": "确定"
+		"spaceCount": "Space x{count}",
+		"empty": "Empty",
+		"title": "Split Word",
+		"tip": "After splitting, new words will evenly divide the original word's start/end time. Empty beats will be cleared.",
+		"syllableSplit": "Syllable Split",
+		"applyToAll": "Apply this splitting to all identical words",
+		"ignoreCase": "Ignore case",
+		"actionButton": "Confirm"
 	},
 	"advancedSegmentDialog": {
 		"test": {
-			"outputError": "测试分词预览出错",
-			"title": "分词测试",
-			"input": "输入歌词行或单词以进行测试...",
-			"output": "预览结果:"
+			"outputError": "Splitting preview error",
+			"title": "Splitting Test",
+			"input": "Enter a lyric line or word to test...",
+			"output": "Preview result:"
 		},
-		"title": "高级分词",
+		"title": "Advanced Segmentation",
 		"scope": {
-			"title": "应用范围",
-			"all": "所有歌词行",
+			"title": "Application Scope",
+			"all": "All lyric lines",
 			"range": {
-				"from": "从第",
-				"to": "行到第",
+				"from": "From line",
+				"to": "to line",
 				"end": ""
 			}
 		},
 		"rules": {
-			"title": "自动分词规则",
-			"cjk": "CJK 按字符分词",
-			"syllable": "西文单词按音节分词"
+			"title": "Auto Segmentation Rules",
+			"cjk": "Split CJK characters",
+			"syllable": "Split Western words by syllables"
 		},
 		"language": {
-			"select": "选择一个分词语言模型："
+			"select": "Select a hyphenation language model:"
 		},
-		"tip": "分词后，原音节的时长会按照字符数 and 权重重新分配给新的音节",
+		"tip": "After splitting, the original word's total duration will be redistributed based on the number of characters and their weights.",
 		"postProcess": {
-			"title": "后处理",
+			"title": "Post-processing",
 			"punct": {
-				"caption": "标点符号处理:",
-				"merge": "合并到相邻音节",
-				"standalone": "设为新音节",
-				"weight": "标点时长权重:"
+				"caption": "Punctuation handling:",
+				"merge": "Merge to adjacent syllable",
+				"standalone": "Set as standalone segment",
+				"weight": "Punctuation time weight:"
 			},
-			"empty": "移除空白音节"
+			"empty": "Remove empty segments"
 		},
 		"custom": {
-			"title": "自定义分词规则",
-			"input": "输入单词进行手动分割...",
-			"add": "添加到自定义规则",
-			"list": "自定义规则列表:"
+			"title": "Custom Segmentation Rules",
+			"input": "Enter word for manual splitting...",
+			"add": "Add to custom rules",
+			"list": "Custom rules list:"
 		},
 		"ignore": {
-			"title": "忽略列表",
-			"placeholder": "每行一个单词，在此列表中的单词将不会被自动分词"
+			"title": "Ignore List",
+			"placeholder": "One word per line, words in this list will not be auto-segmented"
 		}
 	},
 	"aboutModal": {
-		"appName": "Apple Music-like lyrics TTML Tools",
-		"description": "一个用于 Apple Music-like lyrics 生态的逐词歌词 TTML 编辑和时间轴工具",
-		"buildDate": "构建日期：{date}",
-		"gitCommit": "Git 提交：{commit}"
+		"appName": "Apple Music-like Lyrics TTML Tool",
+		"description": "A Word-by-Word TTML Editing and Timeline Tool for Apple Music-like Lyrics",
+		"buildDate": "Build Date: {date}",
+		"gitCommit": "Git Commit: {commit}"
 	},
 	"spectrogram": {
-		"invalidEndTime": "不能选择此结束时间",
-		"noAudioLoaded": "请先加载一个音频文件来渲染频谱图哦",
-		"loadAudio": "加载音频文件",
-		"showUnselectedLines": "显示未选中行"
+		"invalidEndTime": "Cannot select this end time",
+		"noAudioLoaded": "Please load an audio file to render the spectrogram",
+		"loadAudio": "Load an audio file",
+		"showUnselectedLines": "Show unselected lines"
 	},
 	"pwa": {
-		"offlineReady": "网站已成功离线缓存，后续可离线访问本网页",
-		"updateRefresh": "网站已更新，刷新网页以使用最新版本！",
-		"refresh": "刷新"
+		"offlineReady": "Site successfully cached for offline use",
+		"updateRefresh": "Site updated, refresh to use the latest version!",
+		"refresh": "Refresh"
 	}
 }
