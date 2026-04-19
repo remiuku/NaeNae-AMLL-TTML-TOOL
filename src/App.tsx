@@ -88,7 +88,7 @@ import { generateGradient, generateRadixScale } from "./utils/colorScale.ts";
 import { useAppUpdate } from "./utils/useAppUpdate.ts";
 
 const LyricLinesView = lazy(() => import("./modules/lyric-editor/components"));
-const AMLLWrapper = lazy(() => import("./components/AMLLWrapper"));
+const PreviewModeSwitcher = lazy(() => import("./components/PreviewModeSwitcher"));
 const Dialogs = lazy(() => import("./components/Dialogs"));
 
 const AppErrorPage = ({
@@ -412,7 +412,7 @@ function App() {
 	return (
 		<Theme
 			appearance={effectiveTheme}
-			panelBackground="solid"
+			panelBackground="translucent"
 			hasBackground={hasBackground}
 			accentColor={accentColor}
 			className={styles.radixTheme}
@@ -488,14 +488,14 @@ function App() {
 												</SuspensePlaceHolder>
 											)}
 											{toolMode === ToolMode.Preview && (
-												<SuspensePlaceHolder key="amll-preview">
+												<SuspensePlaceHolder key="preview-switcher">
 													<motion.div
 														layout="position"
 														initial={{ opacity: 0 }}
 														animate={{ opacity: 1 }}
 														exit={{ opacity: 0 }}
 													>
-														<AMLLWrapper />
+														<PreviewModeSwitcher />
 													</motion.div>
 												</SuspensePlaceHolder>
 											)}
@@ -510,7 +510,7 @@ function App() {
 												exit={{ opacity: 0 }}
 												style={{ height: "100%" }}
 											>
-												<AMLLWrapper />
+												<PreviewModeSwitcher />
 											</motion.div>
 										</SuspensePlaceHolder>
 									</ResizablePanel>
@@ -535,15 +535,15 @@ function App() {
 										</SuspensePlaceHolder>
 									)}
 									{toolMode === ToolMode.Preview && (
-										<SuspensePlaceHolder key="amll-preview">
-											<Box height="100%" key="amll-preview" p="2" asChild>
+										<SuspensePlaceHolder key="preview-switcher">
+											<Box height="100%" key="preview-switcher" p="2" asChild>
 												<motion.div
 													layout="position"
 													initial={{ opacity: 0 }}
 													animate={{ opacity: 1 }}
 													exit={{ opacity: 0 }}
 												>
-													<AMLLWrapper />
+													<PreviewModeSwitcher />
 												</motion.div>
 											</Box>
 										</SuspensePlaceHolder>

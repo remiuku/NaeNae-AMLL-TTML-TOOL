@@ -99,6 +99,9 @@
 			}
 		},
 		"previewMode": {
+			"mode": "模式",
+			"standard": "标准",
+			"timing": "时轴",
 			"lyrics": "歌词",
 			"showTranslation": "显示翻译",
 			"showRoman": "显示注音",

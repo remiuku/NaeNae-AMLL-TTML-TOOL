@@ -69,6 +69,7 @@ export interface LyricLine extends AMLLLyricLine {
 	endTime: number;
 	ignoreSync: boolean;
 	language?: string;
+	agent?: string;
 	/**
 	 * @description 用于记录时间链接前的原始时间值，便于取消链接时恢复
 	 */

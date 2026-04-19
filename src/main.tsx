@@ -9,7 +9,7 @@
  * https://github.com/amll-dev/amll-ttml-tool/blob/main/LICENSE
  */
 
-import { wasm_start } from "@applemusic-like-lyrics/lyric";
+import * as AMLLLyric from "@applemusic-like-lyrics/lyric";
 import * as Sentry from "@sentry/react";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
@@ -28,10 +28,12 @@ import { globalStore } from "./states/store.ts";
 
 async function startApp() {
 	try {
-		wasm_start();
+		if ("wasm_start" in AMLLLyric && typeof AMLLLyric.wasm_start === "function") {
+			(AMLLLyric.wasm_start as () => void)();
+		}
 		await pluginManager.loadEnabledPlugins();
 	} catch (e) {
-		console.error("Error during WASM initialization:", e);
+		console.error("Error during App initialization:", e);
 	}
 
 	enableMapSet();

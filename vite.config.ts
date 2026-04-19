@@ -1,7 +1,7 @@
-// import MillionLint from "@million/lint";
 import { exec } from "node:child_process";
 import { existsSync } from "node:fs";
-import { resolve } from "node:path";
+import { resolve, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
 import react from "@vitejs/plugin-react";
 import jotaiDebugLabel from "jotai/babel/plugin-debug-label";
 import jotaiReactRefresh from "jotai/babel/plugin-react-refresh";
@@ -9,31 +9,22 @@ import ConditionalCompile from "unplugin-preprocessor-directives/vite";
 import { defineConfig, type Plugin } from "vite";
 import i18nextLoader from "vite-plugin-i18next-loader";
 import { VitePWA } from "vite-plugin-pwa";
-// 由于这个插件会除去 Source Map 注释，所以考虑移除
-// https://github.com/Menci/vite-plugin-top-level-await/issues/34
-// import topLevelAwait from "vite-plugin-top-level-await";
 import wasm from "vite-plugin-wasm";
 import svgLoader from "vite-svg-loader";
 
-const AMLL_LOCAL_EXISTS = existsSync(
-	resolve(__dirname, "../applemusic-like-lyrics"),
-);
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const ReactCompilerConfig = {
-	target: "19",
-};
+const AMLL_LOCAL_PATH = resolve(__dirname, "./applemusic-like-lyrics-main/applemusic-like-lyrics-main");
+const AMLL_LOCAL_EXISTS = existsSync(AMLL_LOCAL_PATH);
 
 process.env.AMLL_LOCAL_EXISTS = AMLL_LOCAL_EXISTS ? "true" : "false";
 
 const plugins: Plugin[] = [
 	ConditionalCompile(),
-	// topLevelAwait(),
-	// MillionLint.vite(),
 	react({
 		babel: {
 			presets: ["jotai/babel/preset"],
 			plugins: [
-				// ["babel-plugin-react-compiler", ReactCompilerConfig],
 				jotaiDebugLabel,
 				jotaiReactRefresh,
 			],
@@ -95,41 +86,15 @@ const plugins: Plugin[] = [
 					type: "image/png",
 				},
 				{
-					src: "./icons/Square44x44Logo.png",
-					sizes: "44x44",
-					type: "image/png",
-				},
-				{
-					src: "./icons/Square71x71Logo.png",
-					sizes: "71x71",
-					type: "image/png",
-				},
-				{
-					src: "./icons/Square89x89Logo.png",
-					sizes: "89x89",
-					type: "image/png",
-				},
-				{
-					src: "./icons/Square107x107Logo.png",
-					sizes: "107x107",
-					type: "image/png",
-				},
-				{
 					src: "./logo.png",
 					sizes: "1024x1024",
 					type: "image/png",
-				},
-				{
-					src: "./logo.svg",
-					sizes: "128x128",
-					type: "image/svg",
 				},
 			],
 		},
 	}),
 ];
 
-// https://vitejs.dev/config/
 export default defineConfig({
 	plugins: [
 		{
@@ -148,7 +113,13 @@ export default defineConfig({
 	base: process.env.TAURI_ENV_PLATFORM ? "/" : "./",
 	clearScreen: false,
 	optimizeDeps: {
-		exclude: ["@ffmpeg/ffmpeg", "@ffmpeg/util", "hangul-romanize"],
+		include: ["jotai"],
+		exclude: [
+			"url",
+			"@ffmpeg/ffmpeg", 
+			"@ffmpeg/util", 
+			"hangul-romanize"
+		],
 	},
 	server: {
 		headers: {
@@ -156,43 +127,41 @@ export default defineConfig({
 			"Cross-Origin-Opener-Policy": "same-origin",
 		},
 		strictPort: true,
-		proxy: {
-			"/boykisser": {
-				target: "https://files.catbox.moe",
-				changeOrigin: true,
-				rewrite: (path) => path.replace(/^\/boykisser/, ""),
-			},
-		},
 	},
 	envPrefix: ["VITE_", "TAURI_", "AMLL_", "SENTRY_"],
 	build: {
-		// Tauri uses Chromium on Windows and WebKit on macOS and Linux
-		target:
-			process.env.TAURI_ENV_PLATFORM === "windows" ? "chrome105" : "safari15",
-		// don't minify for debug builds
+		target: process.env.TAURI_ENV_PLATFORM === "windows" ? "chrome105" : "safari15",
 		minify: !process.env.TAURI_ENV_DEBUG ? "esbuild" : false,
-		// produce sourcemaps for debug builds
 		sourcemap: true,
 	},
 	resolve: {
 		alias: Object.assign(
 			{
 				$: resolve(__dirname, "src"),
+				url: resolve(__dirname, "src/utils/url-shim.ts"),
 			},
 			AMLL_LOCAL_EXISTS
 				? {
-						// for development, use the local copy of the AMLL library
 						"@applemusic-like-lyrics/core": resolve(
-							__dirname,
-							"../applemusic-like-lyrics/packages/core/src",
+							AMLL_LOCAL_PATH,
+							"packages/core/src",
 						),
 						"@applemusic-like-lyrics/react": resolve(
-							__dirname,
-							"../applemusic-like-lyrics/packages/react/src",
+							AMLL_LOCAL_PATH,
+							"packages/react/src",
+						),
+						"@applemusic-like-lyrics/lyric": resolve(
+							AMLL_LOCAL_PATH,
+							"packages/lyric/src",
+						),
+						"@applemusic-like-lyrics/ttml": resolve(
+							AMLL_LOCAL_PATH,
+							"packages/ttml/src",
 						),
 					}
 				: {},
-		) as Record<string, string>,
+		),
+		dedupe: ["react", "react-dom"],
 	},
 	worker: {
 		format: "es",
