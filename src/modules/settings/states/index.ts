@@ -227,3 +227,80 @@ export const boykisserModeAtom = atomWithStorage<boolean>(
 	"boykisserMode",
 	false,
 );
+
+export const glassmorphismBlurAtom = atomWithStorage<number>(
+	"glassmorphismBlur",
+	24,
+);
+
+export enum AppearanceEditorMode {
+	Basic = "basic",
+	Advanced = "advanced",
+}
+
+export const appearanceEditorModeAtom = atomWithStorage<AppearanceEditorMode>(
+	"appearanceEditorMode",
+	AppearanceEditorMode.Basic,
+);
+
+export const advancedWaveformColorAtom = atomWithStorage<string>(
+	"advancedWaveformColor",
+	"",
+);
+
+export const advancedWaveformProgressColorAtom = atomWithStorage<string>(
+	"advancedWaveformProgressColor",
+	"",
+);
+
+export const advancedPrimaryTextColorAtom = atomWithStorage<string>(
+	"advancedPrimaryTextColor",
+	"",
+);
+
+export const advancedSecondaryTextColorAtom = atomWithStorage<string>(
+	"advancedSecondaryTextColor",
+	"",
+);
+
+// --- 20+ Advanced Workspace Customizations ---
+export const advTitlebarBgAtom = atomWithStorage("advTitlebarBg", "");
+export const advSidebarBgAtom = atomWithStorage("advSidebarBg", "");
+export const advSidebarActiveAtom = atomWithStorage("advSidebarActive", "");
+export const advMenuHoverBgAtom = atomWithStorage("advMenuHoverBg", "");
+
+export const advEditorBgAtom = atomWithStorage("advEditorBg", "");
+export const advActiveLineBgAtom = atomWithStorage("advActiveLineBg", "");
+export const advLineHoverBgAtom = atomWithStorage("advLineHoverBg", "");
+
+export const advChipBorderRadiusAtom = atomWithStorage("advChipBorderRadius", 8);
+export const advChipGapAtom = atomWithStorage("advChipGap", 8);
+export const advChipPaddingVerticalAtom = atomWithStorage("advChipPaddingVertical", 4);
+export const advChipPaddingHorizontalAtom = atomWithStorage("advChipPaddingHorizontal", 12);
+
+export const advRomanizationColorAtom = atomWithStorage("advRomanizationColor", "");
+export const advTranslationColorAtom = atomWithStorage("advTranslationColor", "");
+
+export const advAudioBarBgAtom = atomWithStorage("advAudioBarBg", "");
+export const advAudioBarTextAtom = atomWithStorage("advAudioBarText", "");
+
+export const advScrollbarColorAtom = atomWithStorage("advScrollbarColor", "");
+export const advDialogBgAtom = atomWithStorage("advDialogBg", "");
+export const advDialogBorderAtom = atomWithStorage("advDialogBorder", "");
+
+export const advGlobalBorderRadiusAtom = atomWithStorage("advGlobalBorderRadius", 12);
+export const advGlobalBorderWidthAtom = atomWithStorage("advGlobalBorderWidth", 1);
+export const advShadowIntensityAtom = atomWithStorage("advShadowIntensity", 1);
+export const advSelectionColorAtom = atomWithStorage("advSelectionColor", "");
+export const advBackdropBlurAtom = atomWithStorage("advBackdropBlur", 16);
+
+export interface AppearancePreset {
+	id: string;
+	name: string;
+	settings: Record<string, any>;
+}
+
+export const appearancePresetsAtom = atomWithStorage<AppearancePreset[]>(
+	"appearancePresets",
+	[],
+);

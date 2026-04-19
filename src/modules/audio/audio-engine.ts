@@ -119,7 +119,6 @@ class AudioEngine extends EventTarget {
 		if (this._audioEl) return this._audioEl;
 		this._audioEl = document.createElement("audio");
 		this._audioEl.preload = "metadata";
-		this._audioEl.preservesPitch = false;
 		return this._audioEl;
 	}
 
@@ -202,6 +201,14 @@ class AudioEngine extends EventTarget {
 	set volume(v: number) {
 		this.gain.gain.value = v;
 		this.dispatchEvent(new Event("volume-change"));
+	}
+
+	get preservesPitch() {
+		return this.audioEl.preservesPitch;
+	}
+	set preservesPitch(v: boolean) {
+		this.audioEl.preservesPitch = v;
+		this.dispatchEvent(new Event("music-preserves-pitch-change"));
 	}
 
 	get ctxCurrentTime() {

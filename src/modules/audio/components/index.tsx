@@ -24,6 +24,7 @@ import {
 	IconButton,
 	Inset,
 	Slider,
+	Switch,
 	Text,
 	Tooltip,
 } from "@radix-ui/themes";
@@ -38,6 +39,7 @@ import {
 	currentDurationAtom,
 	currentTimeAtom,
 	playbackRateAtom,
+	preservesPitchAtom,
 	volumeAtom,
 } from "$/modules/audio/states";
 import { AuditionKeyBinding } from "$/modules/keyboard/components/AuditionKeyBinding";
@@ -98,12 +100,13 @@ const AudioPlaybackKeyBinding = memo(() => {
 
 export const AudioControls: FC = memo(() => {
 	const [audioLoaded, setAudioLoaded] = useState(false);
+	const [playbackRate, setPlaybackRate] = useAtom(playbackRateAtom);
+	const [preservesPitch, setPreservesPitch] = useAtom(preservesPitchAtom);
 	const [spectrogramVisible, setSpectrogramVisible] = useState(false);
 	const currentTime = useAtomValue(currentTimeAtom);
 	const currentDuration = useAtomValue(currentDurationAtom);
 	const [audioPlaying, setAudioPlaying] = useAtom(audioPlayingAtom);
 	const [volume, setVolume] = useAtom(volumeAtom);
-	const [playbackRate, setPlaybackRate] = useAtom(playbackRateAtom);
 	const { openFile } = useFileOpener();
 	const { t } = useTranslation();
 
@@ -177,8 +180,12 @@ export const AudioControls: FC = memo(() => {
 		audioEngine.musicPlayBackRate = playbackRate;
 	}, [playbackRate]);
 
+	useEffect(() => {
+		audioEngine.preservesPitch = preservesPitch;
+	}, [preservesPitch]);
+
 	return (
-		<Card m="2" mt="0">
+		<Card m="2" mt="0" style={{ backgroundColor: "var(--audio-bar-bg, var(--rt-color-panel-solid))" }}>
 			<Inset>
 				<AudioPlaybackKeyBinding />
 				<AuditionKeyBinding />
@@ -216,6 +223,18 @@ export const AudioControls: FC = memo(() => {
 										<Text wrap="nowrap" color="gray" size="1">
 											{playbackRate.toFixed(2)}x
 										</Text>
+										<Text wrap="nowrap">
+											{t("audioPanel.preservesPitch", "Preserve Pitch")}
+										</Text>
+										<Flex align="center" gap="2">
+											<Switch
+												checked={preservesPitch}
+												onCheckedChange={setPreservesPitch}
+											/>
+										</Flex>
+										<Text wrap="nowrap" color="gray" size="1">
+											{preservesPitch ? "ON" : "OFF"}
+										</Text>
 									</Grid>
 									<Text
 										wrap="nowrap"
@@ -243,6 +262,7 @@ export const AudioControls: FC = memo(() => {
 							style={{
 								minWidth: "5.5em",
 								textAlign: "left",
+								color: "var(--audio-bar-text, inherit)",
 							}}
 						>
 							{msToTimestamp(currentTime)}
@@ -252,6 +272,7 @@ export const AudioControls: FC = memo(() => {
 							size="2"
 							style={{
 								minWidth: "5.5em",
+								color: "var(--audio-bar-text, inherit)",
 							}}
 						>
 							{msToTimestamp(currentDuration)}

@@ -416,6 +416,8 @@
 			"toggleWordHighlight": "Timing - Toggle active word highlight",
 			"moveFirstWordAndPlay": "Sinkronisasi - Pindah ke Kata Pertama Baris dan Putar",
 			"moveLastWordAndPlay": "Sinkronisasi - Pindah ke Kata Terakhir Baris dan Putar",
+			"urbanDictionary": "Edit - Look up in Urban Dictionary",
+			"urbanDictionarySync": "Timing - Look up in Urban Dictionary",
 			"playPause": "Pemutaran - Jeda/Lanjutkan",
 			"seekForward": "Pemutaran - Maju 5 Detik",
 			"seekBackward": "Pemutaran - Mundur 5 Detik",
@@ -699,6 +701,13 @@
 		"placeholder": "Kata baru",
 		"applyToAll": "Terapkan aturan penggantian ini ke semua kata yang sama",
 		"caseSensitive": "Match case (Exact match)"
+	},
+	"urbanDictionary": {
+		"title": "Urban Dictionary",
+		"slang": "slang dictionary",
+		"noDefinitions": "No definitions found for \"{word}\"",
+		"viewOnline": "View online",
+		"by": "By"
 	},
 	"timeShiftDialog": {
 		"title": "Geser Waktu",

@@ -12,6 +12,8 @@ import { useSetAtom, useStore } from "jotai";
 import { useTranslation } from "react-i18next";
 import saveFile from "save-file";
 import { useFileOpener } from "$/hooks/useFileOpener.ts";
+import exportTTMLText from "$/modules/project/logic/ttml-writer";
+import { pluginManager } from "$/modules/plugins/plugin-manager";
 import {
 	geniusImportLyricsDialogAtom,
 	importFromLRCLIBDialogAtom,
@@ -48,6 +50,28 @@ export const ImportExportLyric = () => {
 		);
 		inputEl.click();
 	};
+
+	const onImportWithPlugin = (pluginId: string, extension: string) => async () => {
+		const inputEl = document.createElement("input");
+		inputEl.type = "file";
+		inputEl.accept = `.${extension}`;
+		inputEl.addEventListener("change", async () => {
+			const file = inputEl.files?.[0];
+			if (!file) return;
+
+			try {
+				const text = await file.text();
+				const transformed = await pluginManager.runImporter(pluginId, text);
+				const newFile = new File([transformed], file.name, { type: "application/xml" });
+				openFile(newFile, extension);
+			} catch (e: any) {
+				error(`Plugin import failed: ${pluginId}`, e);
+				alert(e.message || "Import failed. Please make sure you are using a valid TTML file.");
+			}
+		}, { once: true });
+		inputEl.click();
+	};
+
 	const onExportLyric =
 		(stringifier: (lines: LyricLine[]) => string, extension: string) =>
 		async () => {
@@ -88,6 +112,26 @@ export const ImportExportLyric = () => {
 			}
 		};
 
+	const exporters = pluginManager.getExporters();
+	const importers = pluginManager.getImporters();
+
+	const onExportWithPlugin = (pluginId: string, extension: string) => async () => {
+		const lyricState = store.get(lyricLinesAtom);
+		
+		// Use TTML as the primary interchange format for plugins
+		const ttmlData = exportTTMLText(lyricState);
+		
+		try {
+			const result = await pluginManager.runExporter(pluginId, ttmlData);
+			const saveFileName = store.get(saveFileNameAtom);
+			const baseName = saveFileName.replace(/\.[^.]*$/, "");
+			const fileName = `${baseName}.${extension}`;
+			await saveFile(new Blob([result]), fileName);
+		} catch (e) {
+			error(`Plugin export failed: ${pluginId}`, e);
+		}
+	};
+
 	return (
 		<>
 			<DropdownMenu.Sub>
@@ -127,6 +171,12 @@ export const ImportExportLyric = () => {
 							"从 Lyricify Syllable 文件导入",
 						)}
 					</DropdownMenu.Item>
+					{importers.length > 0 && <DropdownMenu.Separator />}
+					{importers.map(plugin => (
+						<DropdownMenu.Item key={plugin.metadata.id} onClick={onImportWithPlugin(plugin.metadata.id, "ttml")}>
+							{plugin.metadata.name}
+						</DropdownMenu.Item>
+					))}
 				</DropdownMenu.SubContent>
 			</DropdownMenu.Sub>
 			<DropdownMenu.Sub>
@@ -155,6 +205,13 @@ export const ImportExportLyric = () => {
 					<DropdownMenu.Item onClick={onExportLyric(stringifyAss, "ass")}>
 						{t("topBar.menu.exportLyric.toASS", "导出到 ASS 字幕")}
 					</DropdownMenu.Item>
+
+					{exporters.length > 0 && <DropdownMenu.Separator />}
+					{exporters.map(plugin => (
+						<DropdownMenu.Item key={plugin.metadata.id} onClick={onExportWithPlugin(plugin.metadata.id, "ttml")}>
+							Export to {plugin.metadata.name}
+						</DropdownMenu.Item>
+					))}
 				</DropdownMenu.SubContent>
 			</DropdownMenu.Sub>
 		</>

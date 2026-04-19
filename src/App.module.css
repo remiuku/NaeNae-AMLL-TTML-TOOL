@@ -5,8 +5,8 @@
 
 .glassPanel {
 	background-color: var(--gray-a5) !important;
-	backdrop-filter: blur(16px) saturate(160%) !important;
-	-webkit-backdrop-filter: blur(16px) saturate(160%) !important;
+	backdrop-filter: blur(var(--glass-blur, 16px)) saturate(160%) !important;
+	-webkit-backdrop-filter: blur(var(--glass-blur, 16px)) saturate(160%) !important;
 }
 
 .appContent {
