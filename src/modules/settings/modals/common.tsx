@@ -79,9 +79,8 @@ export const SettingsCommonTab = () => {
 	const { t, i18n } = useTranslation();
 	const currentLanguage = i18n.resolvedLanguage || i18n.language;
 
-	const getLanguageName = (code: string, locale: string) => {
+	const getLanguageName = (code: string) => {
 		try {
-			// Define a minimal interface to avoid using any
 			interface DisplayNamesLike {
 				new (
 					locales: string | string[],
@@ -96,12 +95,10 @@ export const SettingsCommonTab = () => {
 				}
 			).DisplayNames;
 			if (DN) {
-				const dn = new DN([locale], { type: "language" });
 				const nativeDn = new DN([code], { type: "language" });
-				const name = dn.of(code);
 				const nativeName = nativeDn.of(code) || code;
-				if (name && code !== locale) return `${nativeName} (${name})`;
-				return nativeName;
+				// Capitalize first letter (e.g., français -> Français)
+				return nativeName.charAt(0).toUpperCase() + nativeName.slice(1);
 			}
 		} catch {
 			// ignore errors and fallback
@@ -179,7 +176,7 @@ export const SettingsCommonTab = () => {
 												return (
 													<Select.Item key={code} value={code}>
 														<Flex justify="between" gap="4" align="center" style={{ width: "100%" }}>
-															<Text>{getLanguageName(code, currentLanguage)}</Text>
+															<Text>{getLanguageName(code)}</Text>
 															{code === "en-US" ? (
 																<Text size="1" color="gray">
 																	(Source)
