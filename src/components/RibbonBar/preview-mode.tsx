@@ -56,7 +56,7 @@ export const PreviewModeRibbonBar = forwardRef<HTMLDivElement>(
 					</SegmentedControl.Root>
 				</RibbonSection>
 				<RibbonSection label={t("ribbonBar.previewMode.lyrics", "歌词")}>
-					<Grid columns="0fr 0fr" gap="2" gapY="1" flexGrow="1" align="center">
+					<Grid columns="max-content auto" gap="2" gapY="1" flexGrow="1" align="center">
 						<Text wrap="nowrap" size="1" style={{ color: "var(--accent-11)" }}>
 							{t("ribbonBar.previewMode.showTranslation", "显示翻译")}
 						</Text>
@@ -81,7 +81,7 @@ export const PreviewModeRibbonBar = forwardRef<HTMLDivElement>(
 					</Grid>
 				</RibbonSection>
 				<RibbonSection label={t("ribbonBar.previewMode.word", "单词")}>
-					<Grid columns="0fr 0fr" gap="2" gapY="1" flexGrow="1" align="center">
+					<Grid columns="max-content auto" gap="2" gapY="1" flexGrow="1" align="center">
 						<Text wrap="nowrap" size="1" style={{ color: "var(--accent-11)" }}>
 							{t("ribbonBar.previewMode.fadeWidth", "过渡宽度")}
 						</Text>

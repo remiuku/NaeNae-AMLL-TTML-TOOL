@@ -157,11 +157,13 @@
 }
 
 .startTime {
-	background-color: var(--accent-a3);
+	background-color: var(--accent-a7);
+	color: #fff;
 }
 
 .endTime {
-	background-color: var(--accent-a5);
+	background-color: var(--accent-a9);
+	color: #fff;
 }
 
 .endTimeButton {
@@ -372,38 +374,34 @@
 
 
 .lyricWord.sync.active {
-	background-color: var(--accent-a4);
+	background-color: var(--accent-a9);
+	transition: background-color 0s;
 	position: relative;
 	z-index: 2;
 
 	&.animated {
 		transition:
 			opacity 0.1s ease-in-out,
-			background-color 0.1s ease,
-			box-shadow 0.1s ease;
+			box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 
-		animation: highlightBurst 0.15s cubic-bezier(0.55, 0.055, 0.675, 0.19);
-		box-shadow: 0 0 25px var(--accent-a7);
+		animation: highlightBurst 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+		box-shadow: 0 0 35px var(--accent-a9);
 		
 		.displayWord {
 			transition: text-shadow 0.1s cubic-bezier(0.4, 0, 0.2, 1);
-			text-shadow: 0 0 15px var(--accent-a11);
+			text-shadow: 0 0 20px var(--accent-a11);
 		}
 	}
 
-
-
-
 	.displayWord {
 		color: #fff;
-		font-weight: normal;
+		font-weight: 500;
 	}
 
 	&.selected {
-		background-color: var(--accent-a4);
-		box-shadow: 0 0 30px var(--accent-a5);
+		background-color: var(--accent-a11);
+		box-shadow: 0 0 40px var(--accent-a7);
 	}
-
 }
 
 
@@ -459,12 +457,12 @@
 
 @keyframes highlightBurst {
 	0% {
-		box-shadow: 0 0 0px var(--accent-a7);
-		background-color: transparent;
+		box-shadow: 0 0 5px var(--accent-a7);
+		background-color: var(--accent-a9);
 	}
 	100% {
-		box-shadow: 0 0 25px var(--accent-a7);
-		background-color: var(--accent-a4);
+		box-shadow: 0 0 35px var(--accent-a9);
+		background-color: var(--accent-a9);
 	}
 }
 

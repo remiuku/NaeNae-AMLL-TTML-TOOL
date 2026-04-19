@@ -138,7 +138,7 @@ export const SyncModeRibbonBar: FC = forwardRef<HTMLDivElement>(
 						label={t("ribbonBar.syncMode.currentEmptyBeat", "当前空拍")}
 					>
 						<Grid
-							columns="0fr 4em"
+							columns="max-content 4em"
 							gap="4"
 							gapY="1"
 							flexGrow="1"
@@ -151,7 +151,7 @@ export const SyncModeRibbonBar: FC = forwardRef<HTMLDivElement>(
 						label={t("ribbonBar.syncMode.syncAdjustment", "打轴调整")}
 					>
 						<Grid
-							columns="0fr 0fr"
+							columns="max-content auto"
 							gap="4"
 							gapY="1"
 							flexGrow="1"
@@ -211,7 +211,7 @@ export const SyncModeRibbonBar: FC = forwardRef<HTMLDivElement>(
 						label={t("ribbonBar.syncMode.assistSettings", "辅助设置")}
 					>
 						<Grid
-							columns="0fr 0fr"
+							columns="max-content auto"
 							gap="2"
 							gapY="1"
 							flexGrow="1"
@@ -298,7 +298,7 @@ export const SyncModeRibbonBar: FC = forwardRef<HTMLDivElement>(
 						label={t("ribbonBar.syncMode.displayOptions", "显示选项")}
 					>
 						<Grid
-							columns="0fr 0fr"
+							columns="max-content auto"
 							gap="2"
 							gapY="1"
 							flexGrow="1"
@@ -375,7 +375,7 @@ export const SyncModeRibbonBar: FC = forwardRef<HTMLDivElement>(
 					>
 						<Flex gap="4">
 							<Grid
-								columns="0fr 0fr"
+								columns="max-content auto"
 								gap="4"
 								gapY="1"
 								flexGrow="1"
