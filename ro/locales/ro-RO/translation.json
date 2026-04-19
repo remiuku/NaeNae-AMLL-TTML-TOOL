@@ -1,82 +1,82 @@
 {
 	"app": {
 		"error": {
-			"title": "Ups, a apărut o eroare!",
-			"description": "A apărut o eroare la rularea AMLL TTML Tools",
-			"checkDevTools": "Detalii pot fi găsite în Developer Tools",
-			"saveLyrics": "Încercați să salvați Lyric-urile curente",
-			"tryRestart": "Încercați să reîncărcați aplicația",
-			"details": "Informații eroare aproximativă:"
+			"title": "Oops, an error occurred!",
+			"description": "An error occurred while running AMLL TTML Tools",
+			"checkDevTools": "Details can be found in Developer Tools",
+			"saveLyrics": "Try saving current lyrics",
+			"tryRestart": "Try reloading the app",
+			"details": "Approximate error info:"
 		},
 		"update": {
-			"updateAvailable": "Actualizare disponibilă: {version}",
-			"installError": "Eroare la instalarea actualizării"
+			"updateAvailable": "Update available: {version}",
+			"installError": "Error when installing update"
 		},
 		"empty": {
-			"title": "Fără linii de lyric-uri",
-			"description": "Adăugați noi linii de text în panoul de sus sau deschideți/importați versuri existente din meniu"
+			"title": "No lyric lines",
+			"description": "Add new lyric lines in the top panel or open/import existing lyrics from the menu"
 		}
 	},
 	"confirmDialog": {
-		"cancel": "Anulează",
-		"confirm": "Confirma",
+		"cancel": "Cancel",
+		"confirm": "Confirm",
 		"newFile": {
-			"title": "Confirmare fișier nou",
-			"description": "Aveți modificări nesalvate. Dacă continuați, aceste modificări vor fi pierdute. Sigur doriți să creați un fișier nou?"
+			"title": "Confirm New File",
+			"description": "You have unsaved changes. If you proceed, these changes will be lost. Are you sure you want to create a new file?"
 		},
 		"syncLineTimestamps": {
-			"title": "Confirmă sincronizarea marcajelor de timp",
-			"description": "Această acțiune va sincroniza automat orele de început și de sfârșit ale tuturor liniilor pe baza marcajelor de timp ale fiecărui cuvânt din linie, potrivire cu timpii de început și de sfârșit ai primului și ultimelor silabe. Ești sigur că vrei să continui?"
+			"title": "Confirm Sync Line Timestamps",
+			"description": "This action will automatically synchronize the start and end times of all lines based on the timestamps of each word in the line, matching the start and end times of the first and last syllables. Are you sure you want to proceed?"
 		},
 		"openFile": {
-			"title": "Confirmați deschiderea fișierului",
-			"description": "Aveți modificări nesalvate. Dacă continuați, aceste modificări vor fi pierdute. Sigur doriți să deschideți un fișier nou?"
+			"title": "Confirm Open File",
+			"description": "You have unsaved changes. If you proceed, these changes will be lost. Are you sure you want to open a new file?"
 		},
 		"importFile": {
-			"title": "Confirmă importarea lyric-urilor",
-			"description": "Aveți modificări nesalvate. Dacă continuați, aceste modificări vor fi pierdute. Sigur doriți să importați lyric-uri noi?"
+			"title": "Confirm Import Lyrics",
+			"description": "You have unsaved changes. If you proceed, these changes will be lost. Are you sure you want to import new lyrics?"
 		},
 		"useMetadataName": {
-			"title": "Folosește numele metadatei?",
-			"description": "Folosiți \"{name}\" ca nume de fișier?"
+			"title": "Use metadata name?",
+			"description": "Use \"{name}\" as the file name?"
 		},
 		"noSongwriter": {
-			"title": "Confirmă exportul",
-			"description": "Cântecul nu are autori de melodii. Doriți să continuați să salvați?"
+			"title": "Confirm Export",
+			"description": "The song has no songwriters. Do you want to continue saving?"
 		}
 	},
 	"dialog": {
 		"mp3Conversion": {
-			"title": "Convertește MP3 în FLAC?",
-			"description": "Importați un fișier MP3: {fileName}",
-			"warning": "Fișierele MP3 pot cauza desincronizarea audio în această aplicație. Conversia în FLAC este recomandată pentru o compatibilitate mai bună.",
-			"dontShowAgain": "Nu mai arăta acest avertisment",
-			"skip": "Utilizează MP3",
-			"convert": "Convertește în FLAC",
-			"converting": "Conversia MP3 în FLAC...",
-			"success": "Convertire reușită",
-			"failed": "Conversie eșuată: {error}"
+			"title": "Convert MP3 to FLAC?",
+			"description": "You are importing an MP3 file: {fileName}",
+			"warning": "MP3 files may cause audio desyncing in this app. Converting to FLAC is recommended for better compatibility.",
+			"dontShowAgain": "Don't show this warning again",
+			"skip": "Use MP3",
+			"convert": "Convert to FLAC",
+			"converting": "Converting MP3 to FLAC...",
+			"success": "Conversion successful",
+			"failed": "Conversion failed: {error}"
 		}
 	},
 	"ribbonBar": {
 		"editMode": {
-			"multipleValues": "Valori multiple",
-			"showTranslation": "Arată linia de traducere",
-			"showRomanization": "Arată linia de Romanizare",
-			"showWordRomanizationInput": "Arată Romanizarea Per-Word",
-			"new": "Nou",
-			"lyricLine": "Linie Lyric",
-			"lineTiming": "Sincronizare linie",
-			"startTime": "Timpul de începere",
-			"endTime": "Timpul de sfârșit",
-			"lineProperties": "Proprietăți linie",
-			"bgLyric": "Vocal de fundal",
-			"duetLyric": "Vocal de duet",
-			"ignoreSync": "Ignoră sincronizarea",
-			"wordTiming": "Sincronizare Cuvânt",
-			"emptyBeatCount": "Număr de beat gol",
-			"wordProperties": "Proprietățile Cuvântului",
-			"wordContent": "Conținutul Cuvântului",
+			"multipleValues": "Multiple values…",
+			"showTranslation": "Show Translation Line",
+			"showRomanization": "Show Romanization Line",
+			"showWordRomanizationInput": "Show Per-Word Romanization",
+			"new": "New",
+			"lyricLine": "Lyric Line",
+			"lineTiming": "Line Timing",
+			"startTime": "Start Time",
+			"endTime": "End Time",
+			"lineProperties": "Line Properties",
+			"bgLyric": "Background Vocal",
+			"duetLyric": "Duet Vocal",
+			"ignoreSync": "Ignore Sync",
+			"wordTiming": "Word Timing",
+			"emptyBeatCount": "Empty Beat Count",
+			"wordProperties": "Word Properties",
+			"wordContent": "Word Content",
 			"romanWord": "Word Romanization",
 			"obscene": "Obscene",
 			"secondaryContent": "Secondary Content",

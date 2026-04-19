@@ -1,113 +1,113 @@
 {
 	"app": {
 		"error": {
-			"title": "Ops, si è verificato un errore!",
-			"description": "Si è verificato un errore durante l'esecuzione di AMLL TTML Tools",
-			"checkDevTools": "I dettagli si possono trovare negli strumenti per sviluppatori",
-			"saveLyrics": "Prova a salvare il testo attuale",
-			"tryRestart": "Prova a ricaricare l'applicazione",
-			"details": "Informazioni approssimative di errore:"
+			"title": "Oops, an error occurred!",
+			"description": "An error occurred while running AMLL TTML Tools",
+			"checkDevTools": "Details can be found in Developer Tools",
+			"saveLyrics": "Try saving current lyrics",
+			"tryRestart": "Try reloading the app",
+			"details": "Approximate error info:"
 		},
 		"update": {
-			"updateAvailable": "Aggiornamento disponibile: {version}",
-			"installError": "Errore durante l'installazione dell'aggiornamento"
+			"updateAvailable": "Update available: {version}",
+			"installError": "Error when installing update"
 		},
 		"empty": {
-			"title": "Nessun verso",
-			"description": "Aggiungi nuovi versi del testo nel pannello superiore oppure apri/importa testi esistenti dal menu"
+			"title": "No lyric lines",
+			"description": "Add new lyric lines in the top panel or open/import existing lyrics from the menu"
 		}
 	},
 	"confirmDialog": {
-		"cancel": "Annulla",
-		"confirm": "Conferma",
+		"cancel": "Cancel",
+		"confirm": "Confirm",
 		"newFile": {
-			"title": "Conferma Nuovo File",
-			"description": "Ci sono modifiche non salvate. Se procedi, queste modifiche andranno perse. Sei sicuro di voler creare un nuovo file?"
+			"title": "Confirm New File",
+			"description": "You have unsaved changes. If you proceed, these changes will be lost. Are you sure you want to create a new file?"
 		},
 		"syncLineTimestamps": {
-			"title": "Conferma la sincronizzazione dei timestamp dei versi",
-			"description": "Questa azione sincronizzerà automaticamente i tempi d'inizio e di fine di tutti i versi in base ai tempi di ogni parola nella riga, corrispondente ai tempi d'inizio e fine delle prime e delle ultime sillabe. Sei sicuro di voler continuare?"
+			"title": "Confirm Sync Line Timestamps",
+			"description": "This action will automatically synchronize the start and end times of all lines based on the timestamps of each word in the line, matching the start and end times of the first and last syllables. Are you sure you want to proceed?"
 		},
 		"openFile": {
-			"title": "Conferma Apri File",
-			"description": "Ci sono modifiche non salvate. Se procedi, queste modifiche andranno perse. Sei sicuro di voler aprire un nuovo file?"
+			"title": "Confirm Open File",
+			"description": "You have unsaved changes. If you proceed, these changes will be lost. Are you sure you want to open a new file?"
 		},
 		"importFile": {
-			"title": "Conferma Importazione Testo",
-			"description": "Ci sono modifiche non salvate. Se procedi, queste modifiche andranno perse. Sei sicuro di voler importare un nuovo testo?"
+			"title": "Confirm Import Lyrics",
+			"description": "You have unsaved changes. If you proceed, these changes will be lost. Are you sure you want to import new lyrics?"
 		},
 		"useMetadataName": {
-			"title": "Usare il nome dei metadati?",
-			"description": "Usare \"{name}\" come nome del file?"
+			"title": "Use metadata name?",
+			"description": "Use \"{name}\" as the file name?"
 		},
 		"noSongwriter": {
-			"title": "Confermare Esportazione",
-			"description": "La canzone non ha scrittori. Vuoi continuare a salvare?"
+			"title": "Confirm Export",
+			"description": "The song has no songwriters. Do you want to continue saving?"
 		}
 	},
 	"dialog": {
 		"mp3Conversion": {
-			"title": "Convertire MP3 in FLAC?",
-			"description": "Stai importando un file MP3: {fileName}",
-			"warning": "I file MP3 possono causare la desincronizzazione audio in questa app. La conversione in FLAC è consigliata per una migliore compatibilità.",
-			"dontShowAgain": "Non mostrare più questo avviso",
-			"skip": "Usa MP3",
-			"convert": "Converti in FLAC",
-			"converting": "Conversione MP3 in FLAC...",
-			"success": "Conversione riuscita",
-			"failed": "Conversione non riuscita: {error}"
+			"title": "Convert MP3 to FLAC?",
+			"description": "You are importing an MP3 file: {fileName}",
+			"warning": "MP3 files may cause audio desyncing in this app. Converting to FLAC is recommended for better compatibility.",
+			"dontShowAgain": "Don't show this warning again",
+			"skip": "Use MP3",
+			"convert": "Convert to FLAC",
+			"converting": "Converting MP3 to FLAC...",
+			"success": "Conversion successful",
+			"failed": "Conversion failed: {error}"
 		}
 	},
 	"ribbonBar": {
 		"editMode": {
-			"multipleValues": "Più valori…",
-			"showTranslation": "Mostra Linea di Traduzione",
-			"showRomanization": "Mostra Linea di Romanizzazione",
-			"showWordRomanizationInput": "Mostra Romanizzazione Per Parola",
-			"new": "Nuovo",
-			"lyricLine": "Verso di Testo",
-			"lineTiming": "Tempi dei versi",
-			"startTime": "Tempo d'Inizio",
-			"endTime": "Tempo di Fine",
-			"lineProperties": "Proprietà del Verso",
-			"bgLyric": "Verso di Sottofondo",
-			"duetLyric": "Verso del Duetto",
-			"ignoreSync": "Ignora Sincronizzazione",
-			"wordTiming": "Tempi delle Parole",
-			"emptyBeatCount": "Conteggio di Battute Vuote",
-			"wordProperties": "Proprietà delle Parole",
-			"wordContent": "Contenuto della Parola",
-			"romanWord": "Romanizzazione Parola",
-			"obscene": "Osceno",
-			"secondaryContent": "Contenuto Secondario",
-			"translatedLyric": "Traduzione",
-			"romanLyric": "Romanizzazione",
+			"multipleValues": "Multiple values…",
+			"showTranslation": "Show Translation Line",
+			"showRomanization": "Show Romanization Line",
+			"showWordRomanizationInput": "Show Per-Word Romanization",
+			"new": "New",
+			"lyricLine": "Lyric Line",
+			"lineTiming": "Line Timing",
+			"startTime": "Start Time",
+			"endTime": "End Time",
+			"lineProperties": "Line Properties",
+			"bgLyric": "Background Vocal",
+			"duetLyric": "Duet Vocal",
+			"ignoreSync": "Ignore Sync",
+			"wordTiming": "Word Timing",
+			"emptyBeatCount": "Empty Beat Count",
+			"wordProperties": "Word Properties",
+			"wordContent": "Word Content",
+			"romanWord": "Word Romanization",
+			"obscene": "Obscene",
+			"secondaryContent": "Secondary Content",
+			"translatedLyric": "Translation",
+			"romanLyric": "Romanization",
 			"layoutMode": "Layout",
-			"auxiliaryLineDisplay": "Visualizzazione Linea Ausiliare",
-			"previewPanel": "Pannello di anteprima",
-			"grammarCheck": "Controllo Grammatica",
-			"aiTools": "Strumenti IA",
-			"aiAutoSync": "Sincronizzazione Automatica IA",
-			"tools": "Controllo",
+			"auxiliaryLineDisplay": "Auxiliary Line Display",
+			"previewPanel": "Preview Panel",
+			"grammarCheck": "Grammar Check",
+			"aiTools": "AI Tools",
+			"aiAutoSync": "AI Auto-Sync",
+			"tools": "Check",
 			"phonetic": {
 				"section": "Phonetic",
 				"autoFetch": "Auto Fetch",
 				"noSelection": "Please select lines or words first",
 				"success": "Phonetics fetched successfully",
 				"error": "Failed to fetch phonetics",
-				"romanize": "Romanizza"
+				"romanize": "Romanize"
 			}
 		},
 		"previewMode": {
-			"lyrics": "Testo",
-			"showTranslation": "Mostra Traduzione",
-			"showRoman": "Mostra Romanizzazione",
-			"maskObsceneWords": "Maschera Parole Oscene",
+			"lyrics": "Lyrics",
+			"showTranslation": "Show Translation",
+			"showRoman": "Show Romanization",
+			"maskObsceneWords": "Mask Obscene Words",
 			"word": "Word",
 			"fadeWidth": "Fade Width"
 		},
 		"syncMode": {
-			"currentEmptyBeat": "Battuta Vuota",
+			"currentEmptyBeat": "Empty Beat",
 			"syncAdjustment": "Timing Adjustment",
 			"timeOffset": "Time Offset",
 			"syncLevel": "Sync Level",
@@ -139,24 +139,24 @@
 				"advance": "Advanced Mode"
 			},
 			"enabled": "Enabled",
-			"disabled": "Disabilitato",
-			"language": "Lingua dell'interfaccia",
-			"languageDesc": "Seleziona la lingua per l'interfaccia",
-			"layoutMode": "Modalità Layout dell'Editor",
+			"disabled": "Disabled",
+			"language": "Interface Language",
+			"languageDesc": "Select the language for the interface",
+			"layoutMode": "Editor Layout Mode",
 			"layoutModeDesc": {
-				"line1": "Il layout semplice soddisfa le esigenze più basilari",
-				"line2": "Passa alla modalità avanzata se hai bisogno di una sincronizzazione più efficiente"
+				"line1": "Simple layout satisfies most basic needs",
+				"line2": "Switch to Advanced Mode if you need more efficient syncing"
 			},
-			"helpTranslate": "Aiuta a tradurre questa app",
-			"compactBGInSync": "Versi di Sottofondo Compatti (Modalità Sincronizzazione)",
-			"compactBGInSyncDesc": "Comprimi automaticamente lo spazio verticale per i versi di sottofondo durante la sincronizzazione.",
-			"syncJudgeMode": "Modalità di Giudizio dei Tempi di Sincronizzazione",
-			"syncJudgeModeDesc": "Imposta come vengono giudicati i tempi durante la sincronizzazione. Il valore predefinito è 'Premo del primo tasto in giù'.",
+			"helpTranslate": "Help translate this app",
+			"compactBGInSync": "Compact Background Vocals (Sync Mode)",
+			"compactBGInSyncDesc": "Automatically compress vertical space for background vocal lines during synchronization.",
+			"syncJudgeMode": "Sync Timestamp Judgment Mode",
+			"syncJudgeModeDesc": "Set how timestamps are judged when syncing. Default is 'First key down'.",
 			"syncJudgeModeOptions": {
-				"firstKeyDown": "Tempo del premo del primo tasto in giù",
-				"lastKeyUp": "Tempo del premo dell'ultimo tasto in su",
-				"middleKey": "Metà del premo del tasto in giù e su",
-				"firstKeyDownLegacy": "Tempo del premo del primo tasto in giù (classico)"
+				"firstKeyDown": "First key down time",
+				"lastKeyUp": "Last key up time",
+				"middleKey": "Middle of key down & up",
+				"firstKeyDownLegacy": "First key down time (legacy)"
 			},
 			"keyBindingTrigger": "Key Binding Trigger",
 			"keyBindingTriggerDesc": "Determines whether shortcuts are triggered when a key is pressed or released.",
