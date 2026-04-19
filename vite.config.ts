@@ -21,7 +21,9 @@ process.env.AMLL_LOCAL_EXISTS = AMLL_LOCAL_EXISTS ? "true" : "false";
 
 // Find all directories in root that contain a "locales" subdirectory
 // This supports the new Crowdin structure where each language gets its own root folder
-const localePaths: string[] = [];
+// Find all directories in root that contain a "locales" subdirectory
+// This supports the new Crowdin structure where each language gets its own root folder
+const localePaths: string[] = [resolve(__dirname, "./locales")]; 
 try {
 	const rootItems = readdirSync(__dirname, { withFileTypes: true });
 	for (const item of rootItems) {
@@ -35,11 +37,6 @@ try {
 } catch (e) {
 	console.error("Failed to scan for locale folders:", e);
 }
-
-// Always include the old locales folder at the end as a safe fallback/override
-// This ensures that if new folders (from Crowdin root sync) accidentally contain English strings,
-// the existing translations from the legacy folder are preserved.
-localePaths.push(resolve(__dirname, "./locales"));
 
 const plugins: Plugin[] = [
 	ConditionalCompile(),

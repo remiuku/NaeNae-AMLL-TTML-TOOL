@@ -104,7 +104,10 @@
 			"showRoman": "Show Romanization",
 			"maskObsceneWords": "Mask Obscene Words",
 			"word": "Word",
-			"fadeWidth": "Fade Width"
+			"fadeWidth": "Fade Width",
+			"mode": "Mode",
+			"standard": "Standard",
+			"timing": "Timing"
 		},
 		"syncMode": {
 			"currentEmptyBeat": "Empty Beat",
