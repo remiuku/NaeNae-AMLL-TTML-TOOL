@@ -64,6 +64,7 @@ import { useFileOpener } from "./hooks/useFileOpener.ts";
 import AudioControls from "./modules/audio/components/index.tsx";
 import { useAudioFeedback } from "./modules/audio/hooks/useAudioFeedback.ts";
 import { SyncKeyBinding } from "./modules/lyric-editor/components/sync-keybinding.tsx";
+import { UrbanDictionaryKeybinding } from "./modules/lyric-editor/components/urban-dictionary-keybinding.tsx";
 import { AutosaveManager } from "./modules/project/autosave/AutosaveManager.tsx";
 import exportTTMLText from "./modules/project/logic/ttml-writer.ts";
 import { GlobalDragOverlay } from "./modules/project/modals/GlobalDragOverlay.tsx";
@@ -462,6 +463,7 @@ function App() {
 					<AutosaveManager />
 					<GlobalDragOverlay />
 					{toolMode === ToolMode.Sync && <SyncKeyBinding />}
+					<UrbanDictionaryKeybinding />
 					<DarkThemeDetector />
 					<Flex direction="column" height="100vh">
 						<TitleBar />

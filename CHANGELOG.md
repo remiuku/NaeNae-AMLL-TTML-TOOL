@@ -4,6 +4,20 @@ All notable changes to the AMLL TTML Tool are documented here.
 
 ---
 
+## [0.3.1] - 2026-04-19
+
+### ✨ New Features
+
+- **Urban Dictionary Syllable Concatenation**: When fetching from Urban Dictionary, if multiple syllables or words are selected, they are now automatically combined into a single query term. This is especially useful for slang words that are split across multiple timing segments.
+
+### 🎨 UI / UX
+
+- **Header Glassmorphism Overhaul**: Fixed inconsistent blur effects in the top bar area. The TitleBar and RibbonBar are now unified with a more robust glassmorphism effect, featuring improved backdrop-filter settings (`blur(16px) saturate(160%)`) and matching semi-transparent backgrounds (`var(--gray-a5)`).
+- **Integrated Header Layout**: Removed margins from the RibbonBar card and unified its style with the TitleBar to create a single, cohesive blurred header area.
+- **Improved Layout Stability**: Fixed several invalid `0fr` CSS Grid column definitions in the preview and sync mode ribbon bars, ensuring more stable rendering across different window sizes.
+
+---
+
 ## [0.3.0] - 2026-04-19
 
 ### ✨ New Features

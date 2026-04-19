@@ -35,6 +35,8 @@ import {
 	cmdToggleWordHighlight,
 	cmdUndo,
 	cmdUnselectAll,
+	cmdUrbanDictionary,
+	cmdUrbanDictionarySync,
 	cmdVolumeDown,
 	cmdVolumeUp,
 } from "$/modules/keyboard/commands";
@@ -75,6 +77,8 @@ export const keySyncStartAtom = cmdSyncStart.atom;
 export const keySyncNextAtom = cmdSyncNext.atom;
 export const keySyncEndAtom = cmdSyncEnd.atom;
 export const keyToggleWordHighlightAtom = cmdToggleWordHighlight.atom;
+export const keyUrbanDictionaryAtom = cmdUrbanDictionary.atom;
+export const keyUrbanDictionarySyncAtom = cmdUrbanDictionarySync.atom;
 
 
 export const keyMoveFirstWordAndPlayAtom = cmdMoveFirstWordAndPlay.atom;
