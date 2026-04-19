@@ -28,13 +28,13 @@ export const SettingsDialog = memo(() => {
 							overflowX: "auto", 
 							whiteSpace: "nowrap", 
 							flexShrink: 0, 
-							scrollbarWidth: "none",
-							msOverflowStyle: "none",
 							WebkitOverflowScrolling: "touch",
 							display: "flex",
-							flexWrap: "nowrap"
+							flexWrap: "nowrap",
+							width: "100%",
+							maskImage: "linear-gradient(to right, black calc(100% - 40px), transparent 100%)",
+							WebkitMaskImage: "linear-gradient(to right, black calc(100% - 40px), transparent 100%)"
 						}}
-						className="hide-scrollbar"
 					>
 						<Tabs.Trigger value="common" style={{ flexShrink: 0 }}>
 							{t("settingsDialog.tab.common", "General")}
