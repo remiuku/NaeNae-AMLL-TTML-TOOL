@@ -1,5 +1,12 @@
 .radixTheme {
-	--color-panel: var(--gray-a2);
+	--color-panel-translucent: var(--gray-a5) !important;
+	--color-panel-solid: var(--gray-2) !important;
+}
+
+.glassPanel {
+	background-color: var(--gray-a5) !important;
+	backdrop-filter: blur(16px) saturate(160%) !important;
+	-webkit-backdrop-filter: blur(16px) saturate(160%) !important;
 }
 
 .appContent {

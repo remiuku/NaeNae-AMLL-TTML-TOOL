@@ -18,6 +18,7 @@ import { ChangelogDialog } from "./changelog.tsx";
 import { ConfirmationDialog } from "./confirmation.tsx";
 import { Mp3ConversionDialog } from "./mp3-conversion.tsx";
 import { FontSelectionDialog } from "$/modules/settings/modals/FontSelectionDialog.tsx";
+import { UrbanDictionaryDialog } from "$/modules/lyric-editor/modals/UrbanDictionaryDialog.tsx";
 
 export const Dialogs = () => {
 	return (
@@ -42,6 +43,7 @@ export const Dialogs = () => {
 			<GeniusImportLyricsDialog />
 			<ChangelogDialog />
 			<FontSelectionDialog />
+			<UrbanDictionaryDialog />
 		</>
 	);
 };

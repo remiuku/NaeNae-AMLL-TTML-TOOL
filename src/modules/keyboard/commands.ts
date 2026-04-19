@@ -183,6 +183,20 @@ export const cmdToggleWordHighlight = registerCommand(
 	"Sync",
 );
 
+export const cmdUrbanDictionary = registerCommand(
+	"urbanDictionary",
+	["KeyF"],
+	t("settingsDialog.keybindings.urbanDictionary"),
+	"Edit",
+);
+
+export const cmdUrbanDictionarySync = registerCommand(
+	"urbanDictionarySync",
+	["Shift", "KeyF"],
+	t("settingsDialog.keybindings.urbanDictionarySync"),
+	"Sync",
+);
+
 
 export const cmdMoveFirstWordAndPlay = registerCommand(
 	"moveFirstWordAndPlay",

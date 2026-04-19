@@ -27,11 +27,16 @@ export const RibbonBar = memo(
 
 		return (
 			<Card
-				m="2"
-				mb="0"
 				style={{
 					minHeight: "fit-content",
 					flexShrink: "0",
+					borderRadius: 0,
+					borderLeft: "none",
+					borderRight: "none",
+					borderTop: "none",
+					borderBottom: "1px solid var(--gray-5)",
+					backgroundColor: "var(--color-panel-translucent)",
+					backdropFilter: "blur(16px) saturate(160%)",
 				}}
 				ref={ref}
 			>

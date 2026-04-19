@@ -38,6 +38,24 @@ export function ChangelogDialog() {
 				<ScrollArea type="always" scrollbars="vertical" style={{ height: "calc(100% - 60px)" }}>
 					<Flex direction="column" gap="5" pr="4">
 						<Box>
+							<Heading size="4" mb="2" color="cyan">v0.3.1 Updates (Syllables & UI)</Heading>
+							<Flex direction="column" gap="3">
+								<Text size="2">
+									<strong>Urban Dictionary Syllable Concatenation:</strong> When fetching from Urban Dictionary, if multiple syllables or words are selected, they are now automatically combined into a single query term. This is especially useful for slang words that are split across multiple timing segments.
+								</Text>
+								<Text size="2">
+									<strong>Header Glassmorphism Overhaul:</strong> Fixed inconsistent blur effects in the top bar area. The TitleBar and RibbonBar are now unified with a robust glassmorphism effect, featuring improved backdrop-filter settings (<code>blur(16px) saturate(160%)</code>) and matching semi-transparent backgrounds (<code>var(--gray-a5)</code>).
+								</Text>
+								<Text size="2">
+									<strong>Integrated Header Layout:</strong> Removed margins from the RibbonBar card and unified its style with the TitleBar to create a single, cohesive blurred header area.
+								</Text>
+								<Text size="2">
+									<strong>Improved Layout Stability:</strong> Fixed several invalid <code>0fr</code> CSS Grid column definitions in the preview and sync mode ribbon bars, ensuring more stable rendering across different window sizes.
+								</Text>
+							</Flex>
+						</Box>
+
+						<Box>
 							<Heading size="4" mb="2" color="amber">v0.3.0 Updates (Performance & Preview)</Heading>
 							<Flex direction="column" gap="3">
 								<Text size="2">
