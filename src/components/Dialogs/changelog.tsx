@@ -38,6 +38,30 @@ export function ChangelogDialog() {
 				<ScrollArea type="always" scrollbars="vertical" style={{ height: "calc(100% - 60px)" }}>
 					<Flex direction="column" gap="5" pr="4">
 						<Box>
+							<Heading size="4" mb="2" color="amber">v0.3.0 Updates (Performance & Preview)</Heading>
+							<Flex direction="column" gap="3">
+								<Text size="2">
+									<strong>AMLL Preview Mode:</strong> Added a dedicated high-fidelity <strong>AMLL</strong> preview mode powered by the local Apple Music-like lyrics rendering engine, featuring a fluid Mesh Gradient background running at 60 FPS. The mode now correctly fills the entire preview window with the background properly rendered.
+								</Text>
+								<Text size="2">
+									<strong>Background Vocal Grouping (Standard Mode):</strong> Main and background vocal lines are rendered as a single unified visual block. When a line becomes active, both the main vocal and its BG vocal(s) scale up together — matching official Apple Music behavior. BG vocals appear in italic beneath the main line with word-level highlighting.
+								</Text>
+								<Text size="2">
+									<strong>Promotion-based Rendering Architecture:</strong> Inactive lyric lines are now rendered as static, near-zero-cost elements with no real-time subscriptions. Only the active line promotes to full dynamic rendering, reducing React reconciliation work by ~95% and eliminating word-transition lag.
+								</Text>
+								<Text size="2">
+									<strong>GPU-First Acceleration:</strong> Applied <code>translate3d</code>, <code>backface-visibility: hidden</code>, <code>content-visibility: auto</code>, and <code>will-change</code> hints across all lyric lines to maximize GPU compositing, minimize CPU usage, and enable DOM culling for off-screen lines.
+								</Text>
+								<Text size="2">
+									<strong>Removed "Rendered" Mode:</strong> Consolidated the legacy Rendered AMLL preview into the new AMLL mode. The preview selector now cleanly presents: <strong>Standard</strong>, <strong>AMLL</strong>, and <strong>Timing</strong>.
+								</Text>
+								<Text size="2">
+									<strong>Bug Fixes:</strong> Fixed a Jotai "Atom is undefined" crash, fixed the AMLL background appearing solid black due to a z-index layering conflict, and fixed lyric auto-scroll snapping to the top on every line change.
+								</Text>
+							</Flex>
+						</Box>
+
+						<Box>
 							<Heading size="4" mb="2" color="gold">v0.2.0 Updates (Major)</Heading>
 							<Flex direction="column" gap="3">
 								<Text size="2">
