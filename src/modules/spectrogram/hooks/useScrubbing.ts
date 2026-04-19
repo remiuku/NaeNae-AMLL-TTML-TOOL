@@ -46,6 +46,7 @@ export function useScrubbing(
 
 	const handleScrubStart = useCallback(
 		(event: React.MouseEvent) => {
+			if (event.button !== 0) return;
 			event.preventDefault();
 			isScrubbingRef.current = true;
 			scrollLeftForScrubRef.current = scrollLeft;

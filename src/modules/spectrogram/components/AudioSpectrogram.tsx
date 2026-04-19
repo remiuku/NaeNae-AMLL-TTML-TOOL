@@ -144,6 +144,7 @@ export const AudioSpectrogram: FC = () => {
 	const { handleSelectionMouseDown, selectionStyle } = useSpectrogramSelection(scrollLeft, zoom);
 
 	const handleCompositeMouseDown = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+		if (e.button !== 0) return;
 		handleTimelineMouseDown(e);
 		handleSelectionMouseDown(e);
 	}, [handleTimelineMouseDown, handleSelectionMouseDown]);
