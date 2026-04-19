@@ -1,6 +1,6 @@
-import { Box, Flex, Heading, Text } from "@radix-ui/themes";
+import { Flex } from "@radix-ui/themes";
 import classNames from "classnames";
-import { useAtomValue, useSetAtom } from "jotai";
+import { atom, useAtomValue, useSetAtom } from "jotai";
 import { memo, useEffect, useMemo, useRef } from "react";
 import { audioEngine } from "$/modules/audio/audio-engine";
 import {
@@ -19,95 +19,80 @@ import {
 } from "$/states/main.ts";
 import styles from "./index.module.css";
 
-// Staticly rendered words for non-active lines
-const StaticLineWords = memo(({ words, isPast, onWordClick }: { 
-	words: any[], 
-	isPast: boolean,
-	onWordClick: (time: number) => void 
-}) => {
-	return (
-		<div className={styles.wordsContainer}>
-			{words.map((word, wIdx) => (
-				<span 
-					key={word.id || wIdx} 
-					className={classNames(styles.word, isPast && styles.wordPast)}
-					onClick={(e) => { e.stopPropagation(); onWordClick(word.startTime); }}
-				>
-					{word.word}
-				</span>
-			))}
-		</div>
-	);
-});
+const zeroAtom = atom(0);
 
-// Real-time synchronization for ACTIVE lines
-const ActiveLineWords = memo(({ words, onWordClick }: { 
-	words: any[],
-	onWordClick: (time: number) => void 
-}) => {
+// A single word span - static version (no time subscription)
+const StaticWord = memo(({ word }: { word: any }) => (
+	<span className={styles.wordStatic}>{word.word}</span>
+));
+
+// A single word span - active version (subscribes to time)
+const ActiveWord = memo(({ word, onWordClick }: { word: any; onWordClick: (t: number) => void }) => {
 	const currentTime = useAtomValue(currentTimeAtom);
+	const isWordActive = currentTime >= word.startTime && currentTime <= word.endTime;
+	const isWordPast = currentTime > word.endTime;
 	return (
-		<div className={styles.wordsContainer}>
-			{words.map((word, wIdx) => {
-				const isWordActive = currentTime >= word.startTime && currentTime <= word.endTime;
-				const isWordPast = currentTime > word.endTime;
-				return (
-					<span 
-						key={word.id || wIdx} 
-						className={classNames(
-							styles.word, 
-							isWordActive && styles.wordActive, 
-							isWordPast && styles.wordPast
-						)}
-						onClick={(e) => { e.stopPropagation(); onWordClick(word.startTime); }}
-					>
-						{word.word}
-					</span>
-				);
-			})}
-		</div>
+		<span
+			className={classNames(styles.word, isWordActive && styles.wordActive, isWordPast && styles.wordPast)}
+			onClick={(e) => { e.stopPropagation(); onWordClick(word.startTime); }}
+		>
+			{word.word}
+		</span>
 	);
 });
 
-// Highly optimized Line component
-const LyricLine = memo(({ line, isActive, isPast, onLineClick, onWordClick }: { 
-	line: any, 
-	isActive: boolean, 
-	isPast: boolean,
-	onLineClick: (line: any) => void,
-	onWordClick: (time: number) => void
-}) => {
+/**
+ * A "line group" = one main line + any co-timed BG lines beneath it.
+ */
+interface LineGroup {
+	main: any;
+	bg: any[];
+}
+
+const StaticLineGroup = memo(({ group, isPast }: { group: LineGroup; isPast: boolean }) => (
+	<div className={classNames(styles.lineGroup, isPast && styles.lineGroupPast)}>
+		{/* Main / duet line */}
+		<div className={classNames(styles.line, group.main.isDuet && styles.lineDuetR)}>
+			<div className={styles.wordsContainer}>
+				{group.main.words.map((w: any, i: number) => <StaticWord key={i} word={w} />)}
+			</div>
+		</div>
+		{/* BG lines */}
+		{group.bg.map((bgLine, i) => (
+			<div key={i} className={classNames(styles.line, styles.lineBG, bgLine.isDuet && styles.lineDuetR)}>
+				<div className={styles.wordsContainer}>
+					{bgLine.words.map((w: any, wi: number) => <StaticWord key={wi} word={w} />)}
+				</div>
+			</div>
+		))}
+	</div>
+));
+
+const ActiveLineGroup = memo(({ group, onWordClick }: { group: LineGroup; onWordClick: (t: number) => void }) => {
 	const showTranslation = useAtomValue(showTranslationLinesAtom);
 	const showRoman = useAtomValue(showRomanLinesAtom);
-
-	// Determine part-specific classes
-	const isDuetR = line.isDuet; 
-
 	return (
-		<div
-			className={classNames(
-				styles.line, 
-				isActive && styles.lineActive,
-				isPast && styles.linePast,
-				line.isBG && styles.lineBG,
-				isDuetR && styles.lineDuetR
-			)}
-			onClick={() => onLineClick(line)}
-		>
-			<Flex direction="column" className={styles.lineContent}>
-				{isActive ? (
-					<ActiveLineWords words={line.words} onWordClick={onWordClick} />
-				) : (
-					<StaticLineWords words={line.words} isPast={isPast} onWordClick={onWordClick} />
-				)}
-				
-				{showTranslation && line.translatedLyric && (
-					<Text className={styles.extraLine}>{line.translatedLyric}</Text>
-				)}
-				{showRoman && line.romanLyric && (
-					<Text className={styles.extraLine}>{line.romanLyric}</Text>
-				)}
-			</Flex>
+		<div className={classNames(styles.lineGroup, styles.lineGroupActive)}>
+			{/* Main / duet line */}
+			<div className={classNames(styles.line, styles.lineActive, group.main.isDuet && styles.lineDuetR)}>
+				<div className={styles.wordsContainer}>
+					{group.main.words.map((w: any, i: number) => (
+						<ActiveWord key={w.id || i} word={w} onWordClick={onWordClick} />
+					))}
+				</div>
+				{showTranslation && group.main.translatedLyric && <span className={styles.extraLine}>{group.main.translatedLyric}</span>}
+				{showRoman && group.main.romanLyric && <span className={styles.extraLine}>{group.main.romanLyric}</span>}
+			</div>
+			{/* BG lines - also highlight when group is active */}
+			{group.bg.map((bgLine, i) => (
+				<div key={i} className={classNames(styles.line, styles.lineBG, styles.lineBGActive, bgLine.isDuet && styles.lineDuetR)}>
+					<div className={styles.wordsContainer}>
+						{bgLine.words.map((w: any, wi: number) => (
+							<ActiveWord key={w.id || wi} word={w} onWordClick={onWordClick} />
+						))}
+					</div>
+				</div>
+			))}
 		</div>
 	);
 });
@@ -117,39 +102,62 @@ export const AMLLWrapper = memo(() => {
 	const activeLineIds = useAtomValue(activeLineIdsAtom); 
 	const darkMode = useAtomValue(isDarkThemeAtom);
 	const projectIdentity = useAtomValue(projectIdentityAtom);
-	const currentTime = useAtomValue(currentTimeAtom);
 	const setCurrentTime = useSetAtom(currentTimeAtom);
 	const setSelectedLines = useSetAtom(selectedLinesAtom);
 
 	const scrollContainerRef = useRef<HTMLDivElement>(null);
 	const lastScrolledId = useRef<string | null>(null);
 
-	const sortedLines = useMemo(() => {
-		return [...lyrics.lyricLines].sort((a, b) => a.startTime - b.startTime);
+	// Group lines: in the AMLL data format, a BG vocal line (isBG: true) is
+	// ALWAYS placed immediately after its parent main line in the sorted array.
+	// This is guaranteed by the TTML→AMLL converter (amll-converter.ts line 149-156).
+	// So we just scan in order and attach BG lines to the preceding main line.
+	const lineGroups = useMemo((): LineGroup[] => {
+		const sorted = [...lyrics.lyricLines].sort((a, b) => a.startTime - b.startTime);
+		const groups: LineGroup[] = [];
+
+		for (let i = 0; i < sorted.length; i++) {
+			const line = sorted[i];
+			if (line.isBG) {
+				// Attach to the last group if one exists
+				if (groups.length > 0) {
+					groups[groups.length - 1].bg.push(line);
+				} else {
+					groups.push({ main: line, bg: [] });
+				}
+			} else {
+				groups.push({ main: line, bg: [] });
+			}
+		}
+
+		return groups;
 	}, [lyrics.lyricLines]);
 
 	const activeLineIdsSet = useMemo(() => new Set(activeLineIds), [activeLineIds]);
 
-	// Auto-scroll logic: centered on the first active line that isn't a BG, or just the first active one
+	// Scroll to the active group
 	useEffect(() => {
-		const activeLines = sortedLines.filter(l => activeLineIdsSet.has(l.id));
-		const primaryLine = activeLines.find(l => !l.isBG) ?? activeLines[0];
-		
-		if (primaryLine && primaryLine.id !== lastScrolledId.current) {
-			lastScrolledId.current = primaryLine.id;
-			const container = scrollContainerRef.current;
-			if (container) {
-				const primaryIndex = sortedLines.findIndex(l => l.id === primaryLine.id);
-				const activeEl = container.children[primaryIndex + 1] as HTMLElement;
-				if (activeEl) {
-					container.scrollTo({ 
-						top: activeEl.offsetTop - container.clientHeight / 2 + activeEl.clientHeight / 2, 
-						behavior: "smooth" 
-					});
-				}
+		const activeGroupIndex = lineGroups.findIndex(
+			g => activeLineIdsSet.has(g.main.id) || g.bg.some(b => activeLineIdsSet.has(b.id))
+		);
+		if (activeGroupIndex === -1) { lastScrolledId.current = null; return; }
+
+		const groupId = lineGroups[activeGroupIndex].main.id;
+		if (groupId === lastScrolledId.current) return;
+		lastScrolledId.current = groupId;
+
+		const container = scrollContainerRef.current;
+		if (container) {
+			const wrapperEl = container.children[activeGroupIndex + 1] as HTMLElement;
+			if (wrapperEl) {
+				// The wrapper has display:contents so it has no layout box (offsetTop = 0).
+				// Use its firstElementChild (the actual lineGroup div) for the real position.
+				const lineEl = (wrapperEl.firstElementChild as HTMLElement) ?? wrapperEl;
+				const targetScroll = lineEl.offsetTop - (container.clientHeight * 0.40) + (lineEl.clientHeight / 2);
+				container.scrollTo({ top: targetScroll, behavior: "smooth" });
 			}
 		}
-	}, [activeLineIdsSet, sortedLines]);
+	}, [activeLineIdsSet, lineGroups]);
 
 	const handleLineClick = (line: any) => {
 		setCurrentTime(line.startTime);
@@ -166,22 +174,29 @@ export const AMLLWrapper = memo(() => {
 		<div className={classNames(styles.amllWrapper, darkMode && styles.isDark)}>
 			<div className={styles.contentOverlay}>
 				<div className={styles.header}>
-					<Heading size="3" trim="both">{projectIdentity.name || "Untitled"}</Heading>
-					<Text size="1" color="gray">{projectIdentity.artist || "Unknown"}</Text>
+					<h3>{projectIdentity.name || "Untitled"}</h3>
+					<span>{projectIdentity.artist || "Unknown Artist"}</span>
 				</div>
 
 				<div className={styles.lyricsViewport} ref={scrollContainerRef}>
 					<div className={styles.padding} />
-					{sortedLines.map((line, idx) => (
-						<LyricLine 
-							key={line.id}
-							line={line}
-							isActive={activeLineIdsSet.has(line.id)}
-							isPast={currentTime > line.endTime}
-							onLineClick={handleLineClick}
-							onWordClick={handleWordClick}
-						/>
-					))}
+					{lineGroups.map((group) => {
+						const isActive = activeLineIdsSet.has(group.main.id) || group.bg.some(b => activeLineIdsSet.has(b.id));
+						const isPast = group.main.endTime < /* currentTime */ 0; // static; controlled by group state
+
+						if (isActive) {
+							return (
+								<div key={group.main.id} onClick={() => handleLineClick(group.main)} style={{ display: 'contents' }}>
+									<ActiveLineGroup group={group} onWordClick={handleWordClick} />
+								</div>
+							);
+						}
+						return (
+							<div key={group.main.id} onClick={() => handleLineClick(group.main)} style={{ display: 'contents' }}>
+								<StaticLineGroup group={group} isPast={false} />
+							</div>
+						);
+					})}
 					<div className={styles.padding} />
 				</div>
 			</div>
@@ -190,3 +205,4 @@ export const AMLLWrapper = memo(() => {
 });
 
 export default AMLLWrapper;
+

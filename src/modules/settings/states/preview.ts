@@ -8,7 +8,7 @@ export enum PreviewModeType {
 
 export const previewModeTypeAtom = atomWithStorage<PreviewModeType>(
 	"previewModeType",
-	PreviewModeType.Standard,
+	PreviewModeType.AMLL,
 );
 
 export const showTranslationLinesAtom = atomWithStorage(

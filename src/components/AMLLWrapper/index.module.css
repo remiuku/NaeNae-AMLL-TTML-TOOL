@@ -3,43 +3,42 @@
 	flex-grow: 1;
 	height: 100%;
 	position: relative;
-	border: none !important;
-	box-shadow: none !important;
-	outline: none !important;
 	user-select: none;
-	background-color: #050505;
-	padding: 24px;
-	box-sizing: border-box;
+	background-color: #000;
 	color: #fff;
-	font-family: "Outfit", "Inter", system-ui, -apple-system, sans-serif;
+	font-family: var(--default-font-family, "Inter", -apple-system, sans-serif);
+	display: flex;
+	flex-direction: column;
 }
 
-/* Premium Dynamic Mesh Gradient */
+/* Apple Music Style Dynamic Mesh Background */
 .amllWrapper::before {
 	content: "";
 	position: absolute;
-	top: -50%;
-	left: -50%;
-	right: -50%;
-	bottom: -50%;
+	inset: -50%;
 	width: 200%;
 	height: 200%;
 	background: 
-		radial-gradient(circle at 15% 15%, var(--accent-9) 0%, transparent 35%),
-		radial-gradient(circle at 85% 30%, var(--accent-11) 0%, transparent 35%),
-		radial-gradient(circle at 50% 85%, var(--gray-3) 0%, transparent 40%),
-		radial-gradient(circle at 30% 70%, var(--accent-8) 0%, transparent 35%),
-		radial-gradient(circle at 70% 60%, var(--gray-2) 0%, transparent 30%);
-	filter: blur(100px);
+		radial-gradient(circle at 20% 30%, #ff1b6b 0%, transparent 45%),
+		radial-gradient(circle at 80% 20%, #45caff 0%, transparent 45%),
+		radial-gradient(circle at 40% 80%, #18a058 0%, transparent 45%);
+	filter: blur(80px);
 	z-index: 0;
-	animation: meshMove 40s ease-in-out infinite alternate;
-	opacity: 0.5; 
+	opacity: 0.4;
 }
 
-@keyframes meshMove {
-	0% { transform: translate(0, 0) rotate(0deg); }
-	50% { transform: translate(-5%, -5%) rotate(5deg); }
-	100% { transform: translate(5%, 5%) rotate(-5deg); }
+/* Static Aurora fallback (Removed keyframes) */
+
+/* Subtle gloss overlay (Removed heavy feTurbulence noise) */
+.amllWrapper::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, transparent 50%, rgba(0, 0, 0, 0.15) 100%);
+	opacity: 0.12;
+	z-index: 1;
+	pointer-events: none;
+	mix-blend-mode: overlay;
 }
 
 .contentOverlay {
@@ -47,24 +46,38 @@
 	display: flex;
 	flex-direction: column;
 	position: relative;
-	z-index: 1;
-	background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.3) 100%);
+	z-index: 2;
+	background: radial-gradient(circle at center, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 100%);
 }
 
 .header {
-	margin-bottom: 20px;
-	padding-bottom: 15px;
-	border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+	padding: 40px 60px 20px;
+	z-index: 10;
+	transition: all 0.4s ease;
+	background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, transparent 100%);
+}
+
+.header h3 {
+	font-weight: 800;
+	font-size: 1.5rem;
+	letter-spacing: -0.02em;
+	margin-bottom: 4px;
+	color: rgba(255, 255, 255, 0.95);
+}
+
+.header span {
+	font-weight: 600;
+	font-size: 1.1rem;
+	color: rgba(255, 255, 255, 0.5);
 }
 
 .lyricsViewport {
 	flex-grow: 1;
 	overflow-y: auto;
 	scrollbar-width: none;
-	padding: 0 5%;
+	padding: 0 10%;
 	scroll-behavior: smooth;
-	mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
-	-webkit-mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+	position: relative;
 }
 
 .lyricsViewport::-webkit-scrollbar {
@@ -72,108 +85,143 @@
 }
 
 .padding {
-	height: 40%;
+	height: 50%;
 }
 
-.line {
-	padding: 24px 10px;
+/* ── Line Groups ──────────────────────────────────────────── */
+.lineGroup {
+	padding: 14px 20px;
 	cursor: pointer;
-	text-align: left;
-	opacity: 0.2;
-	transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 	width: 100%;
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	transform: scale(0.92);
+	opacity: 0.45;
+	transform: scale(0.9);
 	transform-origin: left center;
+	transition: none !important;
+	content-visibility: auto;
+	contain: layout style;
+	will-change: transform, opacity;
+	backface-visibility: hidden;
 }
 
-.lineActive {
+.lineGroupActive {
 	opacity: 1;
-	transform: scale(1.08);
+	transform: scale(1.05);
 }
 
-.linePast {
+.lineGroupPast {
 	opacity: 0.3;
 	transform: scale(1);
 }
 
-/* Duet: On the Right */
+/* ── Individual lines inside a group ─────────────────────── */
+.line {
+	text-align: left;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+.lineActive {
+	/* Visual state handled by parent .lineGroupActive */
+}
+
+.linePast {
+	/* Visual state handled by parent .lineGroupPast */
+}
+
+/* Duet lines (right-aligned) */
 .lineDuetR {
 	text-align: right !important;
 	align-items: flex-end !important;
-	transform-origin: right center !important;
 }
 
-/* Background Vocals: Subtle style, follows vocalist's alignment */
+/* Background vocal lines - shown under the main line, smaller */
 .lineBG {
+	margin-top: 6px;
 	font-style: italic;
-	opacity: 0.1;
-	padding-top: 0; 
-	padding-bottom: 10px;
-	margin-top: -24px;
 }
 
-.lineBG.lineActive {
-	opacity: 0.7;
-}
-
+/* BG words are smaller and dimmer when inactive */
+.lineBG .wordStatic,
 .lineBG .word {
-	font-size: 1.6rem !important;
+	font-size: 2.6rem !important;
+	opacity: 0.6;
 }
+
+/* BG words full opacity when the group is active */
+.lineBGActive .word {
+	opacity: 1 !important;
+}
+
+
+
 
 .wordsContainer {
 	display: flex;
 	flex-wrap: wrap;
-	gap: 0;
+	gap: 0.22em; /* Added gap to fix word spacing/alignment */
 	width: 100%;
+	row-gap: 8px;
 }
 
 .line .wordsContainer { justify-content: flex-start; }
 .lineDuetR .wordsContainer { justify-content: flex-end; }
 
-.word {
-	font-size: 2.2rem;
-	font-weight: 800;
-	color: rgba(255, 255, 255, 0.25);
+.wordStatic, .word {
+	font-size: 3.8rem; /* Increased size for cinematic look */
+	font-weight: 850;
+	color: rgba(255, 255, 255, 0.15);
 	white-space: pre-wrap;
 	position: relative;
-	letter-spacing: -0.03em;
+	letter-spacing: -0.04em;
 	display: inline-block;
 	cursor: pointer;
-	transition: transform 0.2s ease;
+	line-height: 1.15;
+	transition: none !important;
+	will-change: color;
+}
+
+.wordStatic {
+	opacity: 0.35;
 }
 
 .word:hover {
-	color: var(--accent-11) !important;
-	transform: translateY(-2px);
+	color: #fff !important;
 	opacity: 1 !important;
 }
 
 .wordActive {
 	color: #fff;
-	text-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
+	opacity: 1 !important;
 }
 
 .wordPast {
-	color: rgba(255, 255, 255, 0.6);
-	background-image: none !important;
-	-webkit-text-fill-color: initial;
+	color: rgba(255, 255, 255, 0.75);
 }
 
 .extraLine {
 	display: block;
-	font-size: 1.1rem;
-	margin-top: 10px;
-	color: rgba(255, 255, 255, 0.3);
-	font-weight: 600;
+	font-size: 1.3rem;
+	margin-top: 15px;
+	color: rgba(255, 255, 255, 0.25);
+	font-weight: 700;
+	letter-spacing: -0.02em;
 }
 
 .lineActive .extraLine {
-	color: rgba(255, 255, 255, 0.7);
+	color: rgba(255, 255, 255, 0.8);
 }
 
 :global(.is-dark) .amllWrapper {
-	background-color: #050505;
+	background-color: #000;
+}
+
+@media (max-width: 768px) {
+	.word {
+		font-size: 2rem;
+	}
+	.line {
+		padding: 20px 10px;
+	}
 }

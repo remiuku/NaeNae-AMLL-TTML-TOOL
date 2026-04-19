@@ -4,7 +4,7 @@ import { PreviewModeType, previewModeTypeAtom } from "$/modules/settings/states/
 import SuspensePlaceHolder from "$/components/SuspensePlaceHolder";
 
 const AMLLWrapper = lazy(() => import("$/components/AMLLWrapper"));
-const OriginalAMLL = lazy(() => import("$/components/AMLLWrapper/OriginalAMLL"));
+const AMLL = lazy(() => import("$/components/AMLLWrapper/AMLL"));
 const TimingOverview = lazy(() => import("$/components/TimingOverview"));
 
 export const PreviewModeSwitcher = () => {
@@ -13,7 +13,7 @@ export const PreviewModeSwitcher = () => {
 	return (
 		<Suspense fallback={<SuspensePlaceHolder />}>
 			{previewModeType === PreviewModeType.Standard && <AMLLWrapper />}
-			{previewModeType === PreviewModeType.AMLL && <OriginalAMLL />}
+			{previewModeType === PreviewModeType.AMLL && <AMLL />}
 			{previewModeType === PreviewModeType.Timing && <TimingOverview />}
 		</Suspense>
 	);

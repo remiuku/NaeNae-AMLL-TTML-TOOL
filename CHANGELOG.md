@@ -1,0 +1,48 @@
+# Changelog
+
+All notable changes to the AMLL TTML Tool are documented here.
+
+---
+
+## [0.3.0] - 2026-04-19
+
+### ✨ New Features
+
+- **AMLL Preview Mode**: Added a new dedicated "AMLL" preview mode powered by the local Apple Music-like lyrics rendering engine, featuring a fluid Mesh Gradient background renderer (MeshGradientRenderer) running at 60 FPS.
+- **Background Vocal Grouping (Standard Mode)**: Main and background vocal lines that share the same start time are now rendered as a single unified visual block. When a group becomes active, both the main line and its BG vocal(s) scale up together, matching official Apple Music behavior.
+- **Highlight-as-you-go Word Tracking**: Each word in the active lyric line now highlights instantly based on its exact timestamp, with no animation lag.
+
+### ⚡ Performance
+
+- **GPU Hardware Acceleration**: Applied `translate3d`, `backface-visibility: hidden`, and `will-change` hints across all lyric lines to maximize GPU compositing and minimize CPU usage.
+- **Promotion-based Rendering Architecture**: Inactive lyric lines are now rendered as static lightweight elements with no time subscriptions. Only the currently active line "promotes" to a full dynamic render with per-word highlighting, reducing React reconciliation work by ~95%.
+- **Eliminated Expensive CSS Filters**: Removed `blur()`, `text-shadow`, and SVG `feTurbulence` noise filter from the Standard mode background — all of which caused per-frame repaints. Replaced with opacity-based alternatives.
+- **Content-Visibility Culling**: Applied `content-visibility: auto` and `contain: layout style` to all lyric lines, allowing the browser to skip rendering off-screen elements entirely.
+- **Conditional State Subscriptions**: Inactive words no longer subscribe to the playback time atom, eliminating hundreds of unnecessary hook evaluations per frame.
+- **Simplified Aurora Background**: Reduced the Standard mode background from 5 animated radial gradients to 2 static gradients, dramatically cutting GPU fill-rate cost.
+
+### 🎨 UI / UX
+
+- **Removed "Rendered" Mode**: Consolidated the legacy "Rendered" AMLL mode into the new dedicated AMLL mode. The preview selector now cleanly presents: **Standard**, **AMLL**, and **Timing**.
+- **Cinematic Typography**: Updated Standard mode font size to `3.8rem` with consistent letter-spacing, line-height, and `0.22em` inter-word gaps that prevent layout shifts when lines transition between active and inactive states.
+- **BG Vocal Visual Hierarchy**: Background vocals display in italic at `2.6rem` beneath their parent main line, with lower opacity when inactive and full brightness when their group is active.
+- **Instant Highlights**: Word and line highlights in Standard mode are now immediate (`transition: none`), providing precise visual synchronization with audio playback.
+- **Stable Scroll Centering**: Fixed lyric auto-scroll to correctly target the layout position of active lines, centering them at a comfortable 40% from the top of the viewport. Fixed a bug where `display: contents` wrapper divs were reporting `offsetTop = 0`, causing the scroll to snap to the top of the container.
+- **AMLL Background Fix**: Resolved a bug where the AMLL Mesh Gradient background canvas was hidden behind a solid black container background due to its internal `z-index: -1`. The container is now transparent, letting the hardware-accelerated background render through correctly.
+
+### 🐛 Bug Fixes
+
+- Fixed "Atom is undefined or null" crash in Jotai caused by conditionally passing `null` to `useAtomValue`. Replaced with a static `zeroAtom` fallback.
+- Fixed AMLL lyric player rendering empty/collapsed area due to the `LyricPlayer` wrapper `div` having no explicit size. Now uses `flex: 1` in a flex column container.
+- Fixed background vocal lines appearing in the wrong position (centered) instead of below their associated main lyric line.
+- Fixed lyric scroll snapping to the top of the page on every line change after the BG vocal grouping refactor.
+
+---
+
+## [0.2.0] - Previous Release
+
+- Initial multi-preview mode support (Standard, AMLL, Rendered, Timing).
+- Community-sourced translation integration via Crowdin.
+- Phonetic auto-fetch for Japanese (Kuromoji), Chinese (Pinyin Pro), and Korean (Hangul Romanize).
+- Spectrogram editor with left-mouse-button restricted drag interaction.
+- Upstream sync with `spicylyrics` repository changes.
