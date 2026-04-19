@@ -26,7 +26,14 @@ export const TileComponent = memo(
 				if (canvas.width !== bitmap.width) canvas.width = bitmap.width;
 				if (canvas.height !== bitmap.height) canvas.height = bitmap.height;
 				const ctx = canvas.getContext("2d");
-				ctx?.drawImage(bitmap, 0, 0);
+				try {
+					if (bitmap.width > 0 && bitmap.height > 0) {
+						ctx?.drawImage(bitmap, 0, 0);
+					}
+				} catch (e) {
+					// Handle detached/closed bitmap silently
+					console.warn("TileComponent: Failed to draw bitmap (likely detached)", e);
+				}
 			}
 		}, [bitmap]);
 

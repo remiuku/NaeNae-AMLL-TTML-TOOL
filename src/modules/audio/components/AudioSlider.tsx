@@ -105,22 +105,21 @@ export const AudioSlider = () => {
 			setAudioPlaying(false);
 		};
 
-		let frame = 0;
+		let frameId: number | null = null;
 		let lastAudioTime = -1;
 		let lastRealTime = performance.now();
 		let interpolatedTime = 0;
+		let isDestroyed = false;
 
 		const onFrame = () => {
-			if (!audioEngine.musicPlaying) {
-				cancelAnimationFrame(frame);
-				frame = 0;
+			if (isDestroyed || !audioEngine.musicPlaying) {
+				frameId = null;
 				return;
 			}
 
 			const currentRealTime = performance.now();
 			const currentAudioTime = audioEngine.musicCurrentTime;
 
-			// Interpolate playhead linearly between hardware audio time updates
 			if (currentAudioTime !== lastAudioTime) {
 				interpolatedTime = currentAudioTime;
 				lastAudioTime = currentAudioTime;
@@ -131,10 +130,11 @@ export const AudioSlider = () => {
 			lastRealTime = currentRealTime;
 
 			setCurrentTime((interpolatedTime * 1000) | 0);
-			frame = requestAnimationFrame(onFrame);
+			frameId = requestAnimationFrame(onFrame);
 		};
 
 		const handlePlay = () => {
+			if (frameId !== null) return; // Already running
 			lastAudioTime = audioEngine.musicCurrentTime;
 			interpolatedTime = lastAudioTime;
 			lastRealTime = performance.now();
@@ -150,7 +150,14 @@ export const AudioSlider = () => {
 		audioEngine.addEventListener("music-pause", handlePause);
 		audioEngine.addEventListener("music-seeked", handleSeek);
 
+		// Start loop if already playing
+		if (audioEngine.musicPlaying) {
+			handlePlay();
+		}
+
 		return () => {
+			isDestroyed = true;
+			if (frameId !== null) cancelAnimationFrame(frameId);
 			destroyWaveSurfer();
 			audioEngine.removeEventListener("music-unload", handleMusicUnload);
 			audioEngine.removeEventListener("music-resume", handlePlay);

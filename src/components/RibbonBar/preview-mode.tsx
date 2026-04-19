@@ -9,13 +9,15 @@
  * https://github.com/amll-dev/amll-ttml-tool/blob/main/LICENSE
  */
 
-import { Checkbox, Grid, Text, TextField } from "@radix-ui/themes";
+import { Checkbox, Grid, SegmentedControl, Text, TextField } from "@radix-ui/themes";
 import { useAtom } from "jotai";
 import { forwardRef } from "react";
 import { useTranslation } from "react-i18next";
 import {
+	PreviewModeType,
 	hideObsceneWordsAtom,
 	lyricWordFadeWidthAtom,
+	previewModeTypeAtom,
 	showRomanLinesAtom,
 	showTranslationLinesAtom,
 } from "$/modules/settings/states/preview";
@@ -23,6 +25,7 @@ import { RibbonFrame, RibbonSection } from "./common";
 
 export const PreviewModeRibbonBar = forwardRef<HTMLDivElement>(
 	(_props, ref) => {
+		const [previewModeType, setPreviewModeType] = useAtom(previewModeTypeAtom);
 		const [showTranslationLine, setShowTranslationLine] = useAtom(
 			showTranslationLinesAtom,
 		);
@@ -36,6 +39,22 @@ export const PreviewModeRibbonBar = forwardRef<HTMLDivElement>(
 
 		return (
 			<RibbonFrame ref={ref}>
+				<RibbonSection label={t("ribbonBar.previewMode.mode", "模式")}>
+					<SegmentedControl.Root
+						value={previewModeType}
+						onValueChange={(v) => setPreviewModeType(v as PreviewModeType)}
+					>
+						<SegmentedControl.Item value={PreviewModeType.Standard}>
+							{t("ribbonBar.previewMode.standard", "标准")}
+						</SegmentedControl.Item>
+						<SegmentedControl.Item value={PreviewModeType.AMLL}>
+							{"AMLL"}
+						</SegmentedControl.Item>
+						<SegmentedControl.Item value={PreviewModeType.Timing}>
+							{t("ribbonBar.previewMode.timing", "时轴")}
+						</SegmentedControl.Item>
+					</SegmentedControl.Root>
+				</RibbonSection>
 				<RibbonSection label={t("ribbonBar.previewMode.lyrics", "歌词")}>
 					<Grid columns="0fr 0fr" gap="2" gapY="1" flexGrow="1" align="center">
 						<Text wrap="nowrap" size="1" style={{ color: "var(--accent-11)" }}>

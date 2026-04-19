@@ -15,9 +15,8 @@ import { VitePWA } from "vite-plugin-pwa";
 import wasm from "vite-plugin-wasm";
 import svgLoader from "vite-svg-loader";
 
-const AMLL_LOCAL_EXISTS = existsSync(
-	resolve(__dirname, "../applemusic-like-lyrics"),
-);
+const AMLL_LOCAL_PATH = resolve(__dirname, "src/applemusic-like-lyrics-main");
+const AMLL_LOCAL_EXISTS = existsSync(AMLL_LOCAL_PATH);
 
 const ReactCompilerConfig = {
 	target: "19",
@@ -148,7 +147,21 @@ export default defineConfig({
 	base: process.env.TAURI_ENV_PLATFORM ? "/" : "./",
 	clearScreen: false,
 	optimizeDeps: {
-		exclude: ["@ffmpeg/ffmpeg", "@ffmpeg/util", "hangul-romanize"],
+		exclude: [
+			"@ffmpeg/ffmpeg", 
+			"@ffmpeg/util", 
+			"hangul-romanize",
+			"@applemusic-like-lyrics/core",
+			"@applemusic-like-lyrics/react",
+			"@pixi/app",
+			"@pixi/core",
+			"@pixi/display",
+			"@pixi/filter-blur",
+			"@pixi/filter-bulge-pinch",
+			"@pixi/filter-color-matrix",
+			"@pixi/sprite",
+			"gl-matrix"
+		],
 	},
 	server: {
 		headers: {
@@ -183,16 +196,17 @@ export default defineConfig({
 				? {
 						// for development, use the local copy of the AMLL library
 						"@applemusic-like-lyrics/core": resolve(
-							__dirname,
-							"../applemusic-like-lyrics/packages/core/src",
+							AMLL_LOCAL_PATH,
+							"packages/core/src",
 						),
 						"@applemusic-like-lyrics/react": resolve(
-							__dirname,
-							"../applemusic-like-lyrics/packages/react/src",
+							AMLL_LOCAL_PATH,
+							"packages/react/src",
 						),
 					}
 				: {},
 		) as Record<string, string>,
+		dedupe: ["react", "react-dom"],
 	},
 	worker: {
 		format: "es",

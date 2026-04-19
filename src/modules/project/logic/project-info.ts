@@ -16,6 +16,8 @@ export const ID_SOURCES = [
  * @description 描述项目在 UI 上显示的相关信息
  */
 export interface ProjectIdentity {
+	name: string;
+	artist: string;
 	/**
 	 * @description 显示名称 (`Title - Artist` 或 `Untitled (NCM: 123)` 等)
 	 */
@@ -36,20 +38,24 @@ export function identifyProject(lyrics: TTMLLyric): ProjectIdentity {
 		lyrics.metadata.find((m) => m.key.toLowerCase() === key.toLowerCase())
 			?.value[0];
 
-	const title = getMeta("musicName")?.trim();
-	const artist = getMeta("artists")?.trim();
+	const title = getMeta("musicName")?.trim() || "";
+	const artist = getMeta("artists")?.trim() || "";
 
 	for (const source of ID_SOURCES) {
 		const idValue = getMeta(source.key)?.trim();
 		if (idValue) {
 			if (title) {
 				return {
+					name: title,
+					artist: artist,
 					displayName: artist ? `${title} - ${artist}` : title,
 					isUntitled: false,
 				};
 			}
 
 			return {
+				name: "",
+				artist: "",
 				displayName: `Untitled (${source.label}: ${idValue})`,
 				isUntitled: true,
 			};
@@ -58,18 +64,24 @@ export function identifyProject(lyrics: TTMLLyric): ProjectIdentity {
 
 	if (title && artist) {
 		return {
+			name: title,
+			artist: artist,
 			displayName: `${title} - ${artist}`,
 			isUntitled: false,
 		};
 	}
 	if (title) {
 		return {
+			name: title,
+			artist: "",
 			displayName: title,
 			isUntitled: false,
 		};
 	}
 
 	return {
+		name: "",
+		artist: "",
 		displayName: "Untitled Project",
 		isUntitled: true,
 	};

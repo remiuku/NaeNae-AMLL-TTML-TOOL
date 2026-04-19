@@ -172,7 +172,8 @@ class AudioEngine extends EventTarget {
 	}
 
 	get musicPlaying() {
-		return !this._audioEl?.paused && !this._audioEl?.ended;
+		if (!this._audioEl) return false;
+		return !this._audioEl.paused && !this._audioEl.ended;
 	}
 
 	get musicCurrentTime() {

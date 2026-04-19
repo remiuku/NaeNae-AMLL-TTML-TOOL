@@ -1,5 +1,16 @@
 import { atomWithStorage } from "jotai/utils";
 
+export enum PreviewModeType {
+	Standard = "standard",
+	AMLL = "amll",
+	Timing = "timing",
+}
+
+export const previewModeTypeAtom = atomWithStorage<PreviewModeType>(
+	"previewModeType",
+	PreviewModeType.Standard,
+);
+
 export const showTranslationLinesAtom = atomWithStorage(
 	"showTranslationLines",
 	false,

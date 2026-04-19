@@ -1,120 +1,191 @@
-// #if AMLL_LOCAL_EXISTS
-// #warning Using local Apple Music Like Lyrics, skip importing css style
-// #else
-import "@applemusic-like-lyrics/core/style.css";
-
-// #endif
-
-// import { MaskObsceneWordsMode } from "@applemusic-like-lyrics/core";
-import {
-	LyricPlayer,
-	type LyricPlayerRef,
-} from "@applemusic-like-lyrics/react";
-import { Card } from "@radix-ui/themes";
-import structuredClone from "@ungap/structured-clone";
+import { Box, Flex, Heading, Text } from "@radix-ui/themes";
 import classNames from "classnames";
-import { getBetterGeniusCoverArt } from "$/modules/genius/utils/image";
 import { useAtomValue, useSetAtom } from "jotai";
 import { memo, useEffect, useMemo, useRef } from "react";
 import { audioEngine } from "$/modules/audio/audio-engine";
 import {
-	audioPlayingAtom,
+	activeLineIdsAtom,
 	currentTimeAtom,
-	playbackRateAtom,
 } from "$/modules/audio/states";
 import {
-	lyricWordFadeWidthAtom,
 	showRomanLinesAtom,
 	showTranslationLinesAtom,
 } from "$/modules/settings/states/preview";
 import {
 	isDarkThemeAtom,
 	lyricLinesAtom,
+	projectIdentityAtom,
 	selectedLinesAtom,
 } from "$/states/main.ts";
 import styles from "./index.module.css";
 
-export const AMLLWrapper = memo(() => {
-	const originalLyricLines = useAtomValue(lyricLinesAtom);
+// Staticly rendered words for non-active lines
+const StaticLineWords = memo(({ words, isPast, onWordClick }: { 
+	words: any[], 
+	isPast: boolean,
+	onWordClick: (time: number) => void 
+}) => {
+	return (
+		<div className={styles.wordsContainer}>
+			{words.map((word, wIdx) => (
+				<span 
+					key={word.id || wIdx} 
+					className={classNames(styles.word, isPast && styles.wordPast)}
+					onClick={(e) => { e.stopPropagation(); onWordClick(word.startTime); }}
+				>
+					{word.word}
+				</span>
+			))}
+		</div>
+	);
+});
+
+// Real-time synchronization for ACTIVE lines
+const ActiveLineWords = memo(({ words, onWordClick }: { 
+	words: any[],
+	onWordClick: (time: number) => void 
+}) => {
 	const currentTime = useAtomValue(currentTimeAtom);
-	const isPlaying = useAtomValue(audioPlayingAtom);
-	const isPlayingRef = useRef(isPlaying);
-	isPlayingRef.current = isPlaying;
-	useAtomValue(playbackRateAtom);
-	const darkMode = useAtomValue(isDarkThemeAtom);
-	const showTranslationLines = useAtomValue(showTranslationLinesAtom);
-	const showRomanLines = useAtomValue(showRomanLinesAtom);
-	const wordFadeWidth = useAtomValue(lyricWordFadeWidthAtom);
-	const setCurrentTime = useSetAtom(currentTimeAtom);
-	const setSelectedLines = useSetAtom(selectedLinesAtom);
-	const playerRef = useRef<LyricPlayerRef>(null);
+	return (
+		<div className={styles.wordsContainer}>
+			{words.map((word, wIdx) => {
+				const isWordActive = currentTime >= word.startTime && currentTime <= word.endTime;
+				const isWordPast = currentTime > word.endTime;
+				return (
+					<span 
+						key={word.id || wIdx} 
+						className={classNames(
+							styles.word, 
+							isWordActive && styles.wordActive, 
+							isWordPast && styles.wordPast
+						)}
+						onClick={(e) => { e.stopPropagation(); onWordClick(word.startTime); }}
+					>
+						{word.word}
+					</span>
+				);
+			})}
+		</div>
+	);
+});
 
-	const lyricLines = useMemo(() => {
-		return structuredClone(
-			originalLyricLines.lyricLines.map((line) => ({
-				...line,
-				translatedLyric: showTranslationLines ? line.translatedLyric : "",
-				romanLyric: showRomanLines ? line.romanLyric : "",
-			})),
-		);
-	}, [originalLyricLines, showTranslationLines, showRomanLines]);
+// Highly optimized Line component
+const LyricLine = memo(({ line, isActive, isPast, onLineClick, onWordClick }: { 
+	line: any, 
+	isActive: boolean, 
+	isPast: boolean,
+	onLineClick: (line: any) => void,
+	onWordClick: (time: number) => void
+}) => {
+	const showTranslation = useAtomValue(showTranslationLinesAtom);
+	const showRoman = useAtomValue(showRomanLinesAtom);
 
-	useEffect(() => {
-		setTimeout(() => {
-			playerRef.current?.lyricPlayer?.calcLayout(true);
-		}, 1500);
-	}, []);
-
-	const coverArt = useMemo(() => {
-		const art = originalLyricLines.metadata.find(
-			(m) => m.key === "cover_art" || m.key === "image",
-		);
-		if (!art?.value[0]) return "";
-		return getBetterGeniusCoverArt(art.value[0], 600);
-	}, [originalLyricLines.metadata]);
+	// Determine part-specific classes
+	const isDuetR = line.isDuet; 
 
 	return (
-		<Card className={classNames(styles.amllWrapper, darkMode && styles.isDark)}>
-			<div className={styles.backgroundContainer}>
-				{coverArt && (
-					<img
-						src={coverArt}
-						key={coverArt}
-						className={styles.backgroundImage}
-						alt=""
-					/>
+		<div
+			className={classNames(
+				styles.line, 
+				isActive && styles.lineActive,
+				isPast && styles.linePast,
+				line.isBG && styles.lineBG,
+				isDuetR && styles.lineDuetR
+			)}
+			onClick={() => onLineClick(line)}
+		>
+			<Flex direction="column" className={styles.lineContent}>
+				{isActive ? (
+					<ActiveLineWords words={line.words} onWordClick={onWordClick} />
+				) : (
+					<StaticLineWords words={line.words} isPast={isPast} onWordClick={onWordClick} />
 				)}
-				<div className={styles.gradientFallback} />
-				<div className={styles.backgroundOverlay} />
-			</div>
+				
+				{showTranslation && line.translatedLyric && (
+					<Text className={styles.extraLine}>{line.translatedLyric}</Text>
+				)}
+				{showRoman && line.romanLyric && (
+					<Text className={styles.extraLine}>{line.romanLyric}</Text>
+				)}
+			</Flex>
+		</div>
+	);
+});
+
+export const AMLLWrapper = memo(() => {
+	const lyrics = useAtomValue(lyricLinesAtom);
+	const activeLineIds = useAtomValue(activeLineIdsAtom); 
+	const darkMode = useAtomValue(isDarkThemeAtom);
+	const projectIdentity = useAtomValue(projectIdentityAtom);
+	const currentTime = useAtomValue(currentTimeAtom);
+	const setCurrentTime = useSetAtom(currentTimeAtom);
+	const setSelectedLines = useSetAtom(selectedLinesAtom);
+
+	const scrollContainerRef = useRef<HTMLDivElement>(null);
+	const lastScrolledId = useRef<string | null>(null);
+
+	const sortedLines = useMemo(() => {
+		return [...lyrics.lyricLines].sort((a, b) => a.startTime - b.startTime);
+	}, [lyrics.lyricLines]);
+
+	const activeLineIdsSet = useMemo(() => new Set(activeLineIds), [activeLineIds]);
+
+	// Auto-scroll logic: centered on the first active line that isn't a BG, or just the first active one
+	useEffect(() => {
+		const activeLines = sortedLines.filter(l => activeLineIdsSet.has(l.id));
+		const primaryLine = activeLines.find(l => !l.isBG) ?? activeLines[0];
+		
+		if (primaryLine && primaryLine.id !== lastScrolledId.current) {
+			lastScrolledId.current = primaryLine.id;
+			const container = scrollContainerRef.current;
+			if (container) {
+				const primaryIndex = sortedLines.findIndex(l => l.id === primaryLine.id);
+				const activeEl = container.children[primaryIndex + 1] as HTMLElement;
+				if (activeEl) {
+					container.scrollTo({ 
+						top: activeEl.offsetTop - container.clientHeight / 2 + activeEl.clientHeight / 2, 
+						behavior: "smooth" 
+					});
+				}
+			}
+		}
+	}, [activeLineIdsSet, sortedLines]);
+
+	const handleLineClick = (line: any) => {
+		setCurrentTime(line.startTime);
+		setSelectedLines(new Set([line.id]));
+		audioEngine.seekMusic(line.startTime / 1000);
+	};
+
+	const handleWordClick = (time: number) => {
+		setCurrentTime(time);
+		audioEngine.seekMusic(time / 1000);
+	};
+
+	return (
+		<div className={classNames(styles.amllWrapper, darkMode && styles.isDark)}>
 			<div className={styles.contentOverlay}>
-				<LyricPlayer
-					style={{
-						height: "100%",
-						boxSizing: "content-box",
-					}}
-					onLyricLineClick={(evt) => {
-						if (!isPlayingRef.current) return;
-						const lineStartTimeMs = evt.line.getLine().startTime;
-						setCurrentTime(lineStartTimeMs);
-						const lineId = (evt.line.getLine() as { id?: string }).id;
-						if (lineId) setSelectedLines(new Set([lineId]));
-						audioEngine.seekMusic(lineStartTimeMs / 1000);
-						playerRef.current?.lyricPlayer?.resetScroll();
-					}}
-					lyricLines={lyricLines}
-					currentTime={currentTime}
-					playing={isPlaying}
-					// maskObsceneWordsMode={
-					// 	hideObsceneWords
-					// 		? MaskObsceneWordsMode.FullMask
-					// 		: MaskObsceneWordsMode.Disabled
-					// }
-					wordFadeWidth={wordFadeWidth}
-					ref={playerRef}
-				/>
+				<div className={styles.header}>
+					<Heading size="3" trim="both">{projectIdentity.name || "Untitled"}</Heading>
+					<Text size="1" color="gray">{projectIdentity.artist || "Unknown"}</Text>
+				</div>
+
+				<div className={styles.lyricsViewport} ref={scrollContainerRef}>
+					<div className={styles.padding} />
+					{sortedLines.map((line, idx) => (
+						<LyricLine 
+							key={line.id}
+							line={line}
+							isActive={activeLineIdsSet.has(line.id)}
+							isPast={currentTime > line.endTime}
+							onLineClick={handleLineClick}
+							onWordClick={handleWordClick}
+						/>
+					))}
+					<div className={styles.padding} />
+				</div>
 			</div>
-		</Card>
+		</div>
 	);
 });
 

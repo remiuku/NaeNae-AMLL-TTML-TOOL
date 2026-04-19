@@ -1,131 +1,179 @@
 .amllWrapper {
 	overflow: hidden;
 	flex-grow: 1;
-	padding: 0;
 	height: 100%;
 	position: relative;
-	border: 1px solid var(--gray-5);
-
-	--amll-lp-color: #fff;
-	&.isDark {
-		--amll-lp-color: #fff;
-	}
+	border: none !important;
+	box-shadow: none !important;
+	outline: none !important;
+	user-select: none;
+	background-color: #050505;
+	padding: 24px;
+	box-sizing: border-box;
+	color: #fff;
+	font-family: "Outfit", "Inter", system-ui, -apple-system, sans-serif;
 }
 
-.backgroundContainer {
+/* Premium Dynamic Mesh Gradient */
+.amllWrapper::before {
+	content: "";
 	position: absolute;
-	inset: 0;
+	top: -50%;
+	left: -50%;
+	right: -50%;
+	bottom: -50%;
+	width: 200%;
+	height: 200%;
+	background: 
+		radial-gradient(circle at 15% 15%, var(--accent-9) 0%, transparent 35%),
+		radial-gradient(circle at 85% 30%, var(--accent-11) 0%, transparent 35%),
+		radial-gradient(circle at 50% 85%, var(--gray-3) 0%, transparent 40%),
+		radial-gradient(circle at 30% 70%, var(--accent-8) 0%, transparent 35%),
+		radial-gradient(circle at 70% 60%, var(--gray-2) 0%, transparent 30%);
+	filter: blur(100px);
 	z-index: 0;
-	overflow: hidden;
-	background-color: var(--gray-2);
+	animation: meshMove 40s ease-in-out infinite alternate;
+	opacity: 0.5; 
 }
 
-.gradientFallback {
-	position: absolute;
-	inset: 0;
-	z-index: -1;
-	background: linear-gradient(
-		135deg,
-		var(--accent-3) 0%,
-		var(--accent-7) 50%,
-		var(--accent-3) 100%
-	);
-	background-size: 200% 200%;
-	animation: movingGradient 8s ease infinite;
-}
-
-@keyframes movingGradient {
-	0% {
-		background-position: 0% 50%;
-	}
-	50% {
-		background-position: 100% 50%;
-	}
-	100% {
-		background-position: 0% 50%;
-	}
-}
-
-.backgroundImage {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-	filter: blur(60px) brightness(0.7) scale(1.2);
-	opacity: 0.8;
-	transition: opacity 0.5s ease;
-}
-
-.backgroundOverlay {
-	position: absolute;
-	inset: 0;
-	background: radial-gradient(
-		circle at center,
-		transparent 0%,
-		rgba(0, 0, 0, 0.4) 100%
-	);
-}
-
-.isDark .backgroundOverlay {
-	background: radial-gradient(
-		circle at center,
-		transparent 0%,
-		rgba(0, 0, 0, 0.7) 100%
-	);
+@keyframes meshMove {
+	0% { transform: translate(0, 0) rotate(0deg); }
+	50% { transform: translate(-5%, -5%) rotate(5deg); }
+	100% { transform: translate(5%, 5%) rotate(-5deg); }
 }
 
 .contentOverlay {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
 	position: relative;
 	z-index: 1;
-	height: 100%;
-	backdrop-filter: blur(20px);
+	background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.3) 100%);
+}
+
+.header {
+	margin-bottom: 20px;
+	padding-bottom: 15px;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.lyricsViewport {
+	flex-grow: 1;
+	overflow-y: auto;
+	scrollbar-width: none;
+	padding: 0 5%;
+	scroll-behavior: smooth;
+	mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+	-webkit-mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+}
+
+.lyricsViewport::-webkit-scrollbar {
+	display: none;
+}
+
+.padding {
+	height: 40%;
+}
+
+.line {
+	padding: 24px 10px;
+	cursor: pointer;
+	text-align: left;
+	opacity: 0.2;
+	transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 	width: 100%;
-	max-width: 100%;
-	overflow: visible;
-	padding-right: 12px;
-	box-sizing: border-box;
-}
-
-/* Make the internal lyrics text POP */
-:global(.amll-lyric-player) {
-	font-family: var(--default-font-family) !important;
-	padding: 20px !important;
-	width: 100% !important;
-	max-width: 100% !important;
-	overflow: visible !important;
-}
-
-:global(.amll-lyric-line) {
-	transition:
-		transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1),
-		opacity 0.5s ease !important;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	transform: scale(0.92);
 	transform-origin: left center;
-	margin-bottom: 24px !important;
-	filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
-	white-space: normal !important;
-	max-width: 100% !important;
 }
 
-:global(.amll-lyric-line-active) {
-	transform: scale(1.08) !important;
-	filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.3)) !important;
+.lineActive {
+	opacity: 1;
+	transform: scale(1.08);
 }
 
-:global(.amll-lyric-word-active) {
-	color: #fff !important;
-	text-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
+.linePast {
+	opacity: 0.3;
+	transform: scale(1);
 }
 
-:global(.amll-lyric-line-bg) {
+/* Duet: On the Right */
+.lineDuetR {
+	text-align: right !important;
+	align-items: flex-end !important;
+	transform-origin: right center !important;
+}
+
+/* Background Vocals: Subtle style, follows vocalist's alignment */
+.lineBG {
+	font-style: italic;
+	opacity: 0.1;
+	padding-top: 0; 
+	padding-bottom: 10px;
+	margin-top: -24px;
+}
+
+.lineBG.lineActive {
+	opacity: 0.7;
+}
+
+.lineBG .word {
+	font-size: 1.6rem !important;
+}
+
+.wordsContainer {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0;
+	width: 100%;
+}
+
+.line .wordsContainer { justify-content: flex-start; }
+.lineDuetR .wordsContainer { justify-content: flex-end; }
+
+.word {
+	font-size: 2.2rem;
+	font-weight: 800;
+	color: rgba(255, 255, 255, 0.25);
+	white-space: pre-wrap;
+	position: relative;
+	letter-spacing: -0.03em;
+	display: inline-block;
+	cursor: pointer;
+	transition: transform 0.2s ease;
+}
+
+.word:hover {
+	color: var(--accent-11) !important;
+	transform: translateY(-2px);
 	opacity: 1 !important;
-	font-style: italic !important;
 }
 
-:global(.amll-lyric-line-bg .amll-lyric-word-active) {
-	color: #fff !important;
-	text-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
+.wordActive {
+	color: #fff;
+	text-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
 }
 
-:global(.amll-lyric-line-bg .amll-lyric-word-progress) {
-	background-color: #fff !important;
-	box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+.wordPast {
+	color: rgba(255, 255, 255, 0.6);
+	background-image: none !important;
+	-webkit-text-fill-color: initial;
+}
+
+.extraLine {
+	display: block;
+	font-size: 1.1rem;
+	margin-top: 10px;
+	color: rgba(255, 255, 255, 0.3);
+	font-weight: 600;
+}
+
+.lineActive .extraLine {
+	color: rgba(255, 255, 255, 0.7);
+}
+
+:global(.is-dark) .amllWrapper {
+	background-color: #050505;
 }
