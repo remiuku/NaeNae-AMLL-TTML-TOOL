@@ -38,6 +38,24 @@ export function ChangelogDialog() {
 				<ScrollArea type="always" scrollbars="vertical" style={{ height: "calc(100% - 60px)" }}>
 					<Flex direction="column" gap="5" pr="4">
 						<Box>
+							<Heading size="4" mb="2" color="indigo">v0.4.0 Updates (Appearance & Presets)</Heading>
+							<Flex direction="column" gap="3">
+								<Text size="2">
+									<strong>Advanced Appearance Editor:</strong> Introduced a high-fidelity visual editor with support for 40+ granular visual parameters. Customize everything from background gradients and glassmorphism levels to global border radii and drop shadows.
+								</Text>
+								<Text size="2">
+									<strong>Visual Preset System:</strong> Added a robust preset management system. Save your favorite visual configurations, load them instantly, and share your unique themes with the community.
+								</Text>
+								<Text size="2">
+									<strong>Audio Pitch Preservation:</strong> Added a new "Preserve Pitch" toggle in the audio settings. You can now choose whether the audio pitch should change when adjusting the playback speed — perfect for high-speed transcription.
+								</Text>
+								<Text size="2">
+									<strong>Stability & Localization:</strong> Resolved multiple compilation conflicts and duplicate state declarations. Standardized English labels across new audio controls for better international consistency.
+								</Text>
+							</Flex>
+						</Box>
+
+						<Box>
 							<Heading size="4" mb="2" color="ruby">v0.3.2 Hotfix (Layout)</Heading>
 							<Flex direction="column" gap="3">
 								<Text size="2">
