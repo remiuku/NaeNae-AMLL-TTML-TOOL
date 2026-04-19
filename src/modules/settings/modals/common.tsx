@@ -131,7 +131,8 @@ export const SettingsCommonTab = () => {
 				if (t[key] !== undefined) {
 					if (typeof s[key] === "object") {
 						count += countTranslatedKeys(s[key], t[key]);
-					} else {
+					} else if (t[key] !== s[key] && t[key] !== "") {
+						// Only count as translated if it's different from English and not empty
 						count++;
 					}
 				}

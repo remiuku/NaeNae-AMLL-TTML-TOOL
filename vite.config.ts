@@ -1,5 +1,5 @@
 import { exec } from "node:child_process";
-import { existsSync } from "node:fs";
+import { existsSync, readdirSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import react from "@vitejs/plugin-react";
@@ -19,6 +19,28 @@ const AMLL_LOCAL_EXISTS = existsSync(AMLL_LOCAL_PATH);
 
 process.env.AMLL_LOCAL_EXISTS = AMLL_LOCAL_EXISTS ? "true" : "false";
 
+// Find all directories in root that contain a "locales" subdirectory
+// This supports the new Crowdin structure where each language gets its own root folder
+const localePaths: string[] = [];
+try {
+	const rootItems = readdirSync(__dirname, { withFileTypes: true });
+	for (const item of rootItems) {
+		if (item.isDirectory() && !["node_modules", "src", ".git", "dist", "public", ".vscode", ".github", "locales", "applemusic-like-lyrics-main"].includes(item.name)) {
+			const potentialPath = resolve(__dirname, item.name, "locales");
+			if (existsSync(potentialPath)) {
+				localePaths.push(potentialPath);
+			}
+		}
+	}
+} catch (e) {
+	console.error("Failed to scan for locale folders:", e);
+}
+
+// Always include the old locales folder at the end as a safe fallback/override
+// This ensures that if new folders (from Crowdin root sync) accidentally contain English strings,
+// the existing translations from the legacy folder are preserved.
+localePaths.push(resolve(__dirname, "./locales"));
+
 const plugins: Plugin[] = [
 	ConditionalCompile(),
 	react({
@@ -33,7 +55,7 @@ const plugins: Plugin[] = [
 	svgLoader(),
 	wasm(),
 	i18nextLoader({
-		paths: ["./locales"],
+		paths: localePaths,
 		namespaceResolution: "basename",
 	}),
 	{
