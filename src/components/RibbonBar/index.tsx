@@ -12,7 +12,8 @@
 import { Card, Inset } from "@radix-ui/themes";
 import { AnimatePresence } from "framer-motion";
 import { useAtomValue } from "jotai";
-import { forwardRef, lazy, memo } from "react";
+import { forwardRef, memo } from "react";
+import { lazy } from "$/utils/lazy.ts";
 import SuspensePlaceHolder from "$/components/SuspensePlaceHolder";
 import { ToolMode, toolModeAtom } from "$/states/main.ts";
 
