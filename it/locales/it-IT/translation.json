@@ -99,6 +99,9 @@
 			}
 		},
 		"previewMode": {
+			"mode": "Mode",
+			"standard": "Standard",
+			"timing": "Timing",
 			"lyrics": "Lyrics",
 			"showTranslation": "Show Translation",
 			"showRoman": "Show Romanization",
