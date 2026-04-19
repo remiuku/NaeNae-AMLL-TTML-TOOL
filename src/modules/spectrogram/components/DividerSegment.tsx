@@ -37,6 +37,7 @@ export const DividerSegment: FC<DividerSegmentProps> = ({
 
 	const startDrag = useCallback(
 		(e: React.MouseEvent) => {
+			if (e.button !== 0) return;
 			e.preventDefault();
 			e.stopPropagation();
 			setTimelineDrag({

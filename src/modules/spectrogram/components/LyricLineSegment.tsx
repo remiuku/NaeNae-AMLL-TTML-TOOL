@@ -38,6 +38,7 @@ export const LyricLineSegment: FC<LyricLineSegmentProps> = ({
 
 	const handleMouseDown = useCallback(
 		(e: React.MouseEvent) => {
+			if (e.button !== 0) return;
 			if (editingTimeField) return;
 
 			if (!displayLine) return;
