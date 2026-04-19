@@ -1,6 +1,6 @@
-import { Box, Dialog, Tabs } from "@radix-ui/themes";
+import { Box, Dialog, Tabs, ScrollArea } from "@radix-ui/themes";
 import { useAtom } from "jotai";
-import { memo } from "react";
+import { memo, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { settingsDialogAtom, settingsTabAtom } from "$/states/dialogs.ts";
 import { SettingsAboutTab } from "./about";
@@ -18,22 +18,30 @@ export const SettingsDialog = memo(() => {
 	const [activeTab, setActiveTab] = useAtom(settingsTabAtom);
 	const { t } = useTranslation();
 
+	const handleWheel = useCallback((e: React.WheelEvent) => {
+		if (e.deltaY !== 0) {
+			e.currentTarget.scrollLeft += e.deltaY;
+		}
+	}, []);
+
 	return (
 		<Dialog.Root open={settingsDialogOpen} onOpenChange={setSettingsDialogOpen}>
 			<Dialog.Content maxWidth="800px">
 				<Dialog.Title>{t("settingsDialog.title", "Preferences")}</Dialog.Title>
 				<Tabs.Root value={activeTab} onValueChange={setActiveTab}>
 					<Tabs.List 
+						onWheel={handleWheel}
+						className="hide-scrollbar"
 						style={{ 
-							overflowX: "auto", 
+							overflowX: "auto",
 							whiteSpace: "nowrap", 
 							flexShrink: 0, 
-							WebkitOverflowScrolling: "touch",
 							display: "flex",
 							flexWrap: "nowrap",
 							width: "100%",
-							maskImage: "linear-gradient(to right, black calc(100% - 40px), transparent 100%)",
-							WebkitMaskImage: "linear-gradient(to right, black calc(100% - 40px), transparent 100%)"
+							WebkitOverflowScrolling: "touch",
+							msOverflowStyle: "none",
+							scrollbarWidth: "none"
 						}}
 					>
 						<Tabs.Trigger value="common" style={{ flexShrink: 0 }}>
