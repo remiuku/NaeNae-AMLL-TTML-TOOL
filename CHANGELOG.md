@@ -4,6 +4,14 @@ All notable changes to the AMLL TTML Tool are documented here.
 
 ---
 
+## [0.3.2] - 2026-04-19
+
+### 🐛 Bug Fixes
+
+- **Preferences Tab Overflow**: Enabled horizontal scrolling and fixed-width triggers for the Preferences dialog tabs. This prevents labels from being cut off or compressed in languages with long strings (e.g., Russian).
+
+---
+
 ## [0.3.1] - 2026-04-19
 
 ### ✨ New Features
