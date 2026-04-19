@@ -80,14 +80,14 @@
 			"romanWord": "Romanizarea Cuvântului",
 			"obscene": "Obscen",
 			"secondaryContent": "Conținut secundar",
-			"translatedLyric": "Translatie",
+			"translatedLyric": "Translație",
 			"romanLyric": "Romanizare",
 			"layoutMode": "Aranjare",
 			"auxiliaryLineDisplay": "Afișare Auxiliara a Liniei",
 			"previewPanel": "Panou de Previzualizare",
 			"grammarCheck": "Verificare gramaticală",
 			"aiTools": "Instrumente AI",
-			"aiAutoSync": "AI Auto-Sync",
+			"aiAutoSync": "AI Auto-Sincronizare",
 			"tools": "Verificare",
 			"phonetic": {
 				"section": "Fonetic",
@@ -99,20 +99,20 @@
 			}
 		},
 		"previewMode": {
-			"lyrics": "Lyrics",
+			"lyrics": "Lyric-uri",
 			"showTranslation": "Afișare traducere",
 			"showRoman": "Arată Romanizarea",
-			"maskObsceneWords": "Mascheaza Cuvintele Obscene",
+			"maskObsceneWords": "Maschează Cuvintele Obscene",
 			"word": "Cuvânt",
 			"fadeWidth": "Lățime estompare",
-			"mode": "Mode",
+			"mode": "Mod",
 			"standard": "Standard",
-			"timing": "Timing"
+			"timing": "Sincronizare"
 		},
 		"syncMode": {
 			"currentEmptyBeat": "Beat gol",
 			"syncAdjustment": "Ajustarea timpului",
-			"timeOffset": "Diferenta timp",
+			"timeOffset": "Diferența timp",
 			"syncLevel": "Nivel de Sincronizare",
 			"syncLevelWord": "Sincronizare Cuvânt",
 			"syncLevelLine": "Sincronizare Linie",
@@ -264,7 +264,7 @@
 			"autosave": "Salvare automată"
 		},
 		"assistant": {
-			"quickFixes": "Fixe Rapide (Grammar)",
+			"quickFixes": "Fixe Rapide (Gramaticale)",
 			"quickFixesDesc": "Permite sugestii pentru cuvinte repetate și erori comune de transcriere.",
 			"manualTimestampEdit": "Modificare Manual Timestamp",
 			"manualTimestampEditDesc": "Permite click pe marcajele de timp din modul Sincronizare pentru a tasta manual valorile.",
@@ -313,7 +313,7 @@
 			"sync": "Timp",
 			"preview": "Previzualizare"
 		},
-		"boykisser": "Ciudator",
+		"boykisser": "Poponar",
 		"appName": "Unealta TTML cu versuri asemănătoare cu Apple",
 		"menu": {
 			"undo": "Anulează",
@@ -328,7 +328,7 @@
 			"newLyric": "Versuri noi",
 			"openLyric": "Versuri deschise",
 			"openFromClipboard": "Deschide TTML din clipboard",
-			"saveLyric": "Salvează versurile",
+			"saveLyric": "Salvează lyric-urile",
 			"restoreFromHistory": "Restaurează istoricul…",
 			"saveLyricToClipboard": "Salvează TTML în clipboard",
 			"uploadToAMLLDB": "Încărcare în baza de date (doar CN)",
@@ -342,7 +342,7 @@
 			"syncLineTimestamps": "Sincronizare marcaje de timp",
 			"tool": "Unelte",
 			"importLyric": {
-				"import": "Importă versuri",
+				"import": "Importă lyric-uri",
 				"fromPlainText": "Importă din textul simplu…",
 				"fromLRCLIB": "Importă din LRCLIB...",
 				"fromLyrically": "Importă din Lyrically...",
@@ -444,7 +444,7 @@
 			"keybindings": "Legături cheie",
 			"spectrogram": "Spectrograma",
 			"about": "Despre",
-			"dev": "Mitralieră"
+			"dev": "Dev"
 		}
 	},
 	"error": {

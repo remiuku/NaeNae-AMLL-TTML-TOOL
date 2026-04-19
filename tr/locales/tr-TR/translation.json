@@ -105,9 +105,9 @@
 			"maskObsceneWords": "Müstehcen Kelimeleri Gizle",
 			"word": "Kelime",
 			"fadeWidth": "Geçiş Genişliği",
-			"mode": "Mode",
-			"standard": "Standard",
-			"timing": "Timing"
+			"mode": "Mod",
+			"standard": "Standart",
+			"timing": "Zamanlama"
 		},
 		"syncMode": {
 			"currentEmptyBeat": "Boş Ritim",
@@ -378,7 +378,7 @@
 		"copyLine": "{count} tane satırı çoğalt",
 		"duplicateTo": "Şuraya çoğalt...",
 		"combineLine": "Satırları birleştir",
-		"deleteLine": "{count} taner satırı sil",
+		"deleteLine": "{count} tane satırı sil",
 		"splitWord": "Kelimeyi böl…",
 		"replaceWord": "Kelimeyi değiştir…",
 		"combineWords": "Kelimeleri birleştir",
