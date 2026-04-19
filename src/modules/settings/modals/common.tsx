@@ -180,10 +180,16 @@ export const SettingsCommonTab = () => {
 													<Select.Item key={code} value={code}>
 														<Flex justify="between" gap="4" align="center" style={{ width: "100%" }}>
 															<Text>{getLanguageName(code, currentLanguage)}</Text>
-															{progress !== null && (
-																<Text size="1" color={progress === 100 ? "green" : "gray"}>
-																	{progress}%
+															{code === "en-US" ? (
+																<Text size="1" color="gray">
+																	(Source)
 																</Text>
+															) : (
+																progress !== null && (
+																	<Text size="1" color={progress === 100 ? "green" : "gray"}>
+																		{progress}%
+																	</Text>
+																)
 															)}
 														</Flex>
 													</Select.Item>
