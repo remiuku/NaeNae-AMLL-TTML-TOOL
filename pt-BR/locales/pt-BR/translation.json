@@ -416,6 +416,8 @@
 			"toggleWordHighlight": "Timing - Toggle active word highlight",
 			"moveFirstWordAndPlay": "Timing - Move to first word and play",
 			"moveLastWordAndPlay": "Timing - Move to last word and play",
+			"urbanDictionary": "Edit - Look up in Urban Dictionary",
+			"urbanDictionarySync": "Timing - Look up in Urban Dictionary",
 			"playPause": "Reprodução - Reproduzir/Pausar",
 			"seekForward": "Reprodução - Avançar 5s",
 			"seekBackward": "Reprodução - Retroceder 5s",
@@ -699,6 +701,13 @@
 		"placeholder": "Nova palavra",
 		"applyToAll": "Aplicar esta substituição a todas as palavras idênticas",
 		"caseSensitive": "Match case (Exact match)"
+	},
+	"urbanDictionary": {
+		"title": "Urban Dictionary",
+		"slang": "slang dictionary",
+		"noDefinitions": "No definitions found for \"{word}\"",
+		"viewOnline": "View online",
+		"by": "By"
 	},
 	"timeShiftDialog": {
 		"title": "Deslocamento de tempo",

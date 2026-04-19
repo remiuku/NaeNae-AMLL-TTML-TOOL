@@ -220,8 +220,10 @@ const SubLineEdit = memo(
 		);
 
 		return (
-			<Flex align="baseline">
-				<Text size="2">{label}</Text>
+			<Flex align="baseline" style={{ 
+				color: type === "translatedLyric" ? "var(--translation-color, inherit)" : "var(--romanization-color, inherit)" 
+			}}>
+				<Text size="2" style={{ color: "inherit" }}>{label}</Text>
 				{editing ? (
 					<TextField.Root
 						autoFocus
@@ -237,8 +239,8 @@ const SubLineEdit = memo(
 				) : (
 					<Button
 						size="2"
-						color="gray"
 						variant="ghost"
+						style={{ color: "inherit" }}
 						onClick={(evt) => {
 							evt.stopPropagation();
 							setEditing(true);

@@ -4,6 +4,20 @@ import {
 	Sparkle24Regular,
 	Target24Regular,
 	TextFont24Regular,
+	Settings24Regular,
+	Edit24Regular,
+	Wrench24Regular,
+	Checkmark24Regular,
+	Navigation24Regular,
+	PanelBottom24Regular,
+	Grid24Regular,
+	PaddingLeft24Regular,
+	Shapes24Regular,
+	VideoBackgroundEffect24Regular,
+	Ruler24Regular,
+	Save24Regular,
+	Delete24Regular,
+	Folder24Regular,
 } from "@fluentui/react-icons";
 import {
 	Box,
@@ -18,6 +32,7 @@ import {
 	Slider,
 	Switch,
 	Text,
+	TextField,
 	Tooltip,
 } from "@radix-ui/themes";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
@@ -38,6 +53,38 @@ import {
 	selectedGradientAtom,
 	useCustomAccentAtom,
 	useCustomGradientAtom,
+	glassmorphismBlurAtom,
+	AppearanceEditorMode,
+	appearanceEditorModeAtom,
+	advancedWaveformColorAtom,
+	advancedWaveformProgressColorAtom,
+	advancedPrimaryTextColorAtom,
+	advancedSecondaryTextColorAtom,
+	advTitlebarBgAtom,
+	advSidebarBgAtom,
+	advSidebarActiveAtom,
+	advMenuHoverBgAtom,
+	advEditorBgAtom,
+	advActiveLineBgAtom,
+	advLineHoverBgAtom,
+	advChipBorderRadiusAtom,
+	advChipGapAtom,
+	advChipPaddingVerticalAtom,
+	advChipPaddingHorizontalAtom,
+	advRomanizationColorAtom,
+	advTranslationColorAtom,
+	advAudioBarBgAtom,
+	advAudioBarTextAtom,
+	advScrollbarColorAtom,
+	advDialogBgAtom,
+	advDialogBorderAtom,
+	advGlobalBorderRadiusAtom,
+	advGlobalBorderWidthAtom,
+	advShadowIntensityAtom,
+	advSelectionColorAtom,
+	advBackdropBlurAtom,
+	appearancePresetsAtom,
+	type AppearancePreset,
 } from "$/modules/settings/states/index.ts";
 import { fontSelectionDialogAtom } from "$/states/dialogs.ts";
 import { isDarkThemeAtom } from "$/states/main.ts";
@@ -118,7 +165,122 @@ export const SettingsAppearanceTab = () => {
 	const [customGradientSize, setCustomGradientSize] = useAtom(
 		customGradientSizeAtom,
 	);
-	const [appFont] = useAtom(appFontAtom);
+	const [editorMode, setEditorMode] = useAtom(appearanceEditorModeAtom);
+	const [advWaveformColor, setAdvWaveformColor] = useAtom(advancedWaveformColorAtom);
+	const [advWaveformProgress, setAdvWaveformProgress] = useAtom(advancedWaveformProgressColorAtom);
+	const [advPrimaryText, setAdvPrimaryText] = useAtom(advancedPrimaryTextColorAtom);
+	const [advSecondaryText, setAdvSecondaryText] = useAtom(advancedSecondaryTextColorAtom);
+	
+	const [vTitlebarBg, setVTitlebarBg] = useAtom(advTitlebarBgAtom);
+	const [vSidebarBg, setVSidebarBg] = useAtom(advSidebarBgAtom);
+	const [vSidebarActive, setVSidebarActive] = useAtom(advSidebarActiveAtom);
+	const [vMenuHover, setVMenuHover] = useAtom(advMenuHoverBgAtom);
+	const [vEditorBg, setVEditorBg] = useAtom(advEditorBgAtom);
+	const [vActiveLine, setVActiveLine] = useAtom(advActiveLineBgAtom);
+	const [vLineHover, setVLineHover] = useAtom(advLineHoverBgAtom);
+	const [vChipRadius, setVChipRadius] = useAtom(advChipBorderRadiusAtom);
+	const [vChipGap, setVChipGap] = useAtom(advChipGapAtom);
+	const [vChipPaddingV, setVChipPaddingV] = useAtom(advChipPaddingVerticalAtom);
+	const [vChipPaddingH, setVChipPaddingH] = useAtom(advChipPaddingHorizontalAtom);
+	const [vRomanColor, setVRomanColor] = useAtom(advRomanizationColorAtom);
+	const [vTransColor, setVTransColor] = useAtom(advTranslationColorAtom);
+	const [vAudioBarBg, setVAudioBarBg] = useAtom(advAudioBarBgAtom);
+	const [vAudioBarText, setVAudioBarText] = useAtom(advAudioBarTextAtom);
+	const [vScrollbar, setVScrollbar] = useAtom(advScrollbarColorAtom);
+	const [vDialogBg, setVDialogBg] = useAtom(advDialogBgAtom);
+	const [vDialogBorder, setVDialogBorder] = useAtom(advDialogBorderAtom);
+	const [vGlobalRadius, setVGlobalRadius] = useAtom(advGlobalBorderRadiusAtom);
+	const [vGlobalBorderWidth, setVGlobalBorderWidth] = useAtom(advGlobalBorderWidthAtom);
+	const [vShadow, setVShadow] = useAtom(advShadowIntensityAtom);
+	const [vSelection, setVSelection] = useAtom(advSelectionColorAtom);
+	const [vBackdrop, setVBackdrop] = useAtom(advBackdropBlurAtom);
+	const [presets, setPresets] = useAtom(appearancePresetsAtom);
+	const [newPresetName, setNewPresetName] = useState("");
+
+	const appFont = useAtomValue(appFontAtom);
+	const [glassBlur, setGlassBlur] = useAtom(glassmorphismBlurAtom);
+
+	const [lastLoaded, setLastLoaded] = useState<string | null>(null);
+
+	const handleSavePreset = () => {
+		if (!newPresetName.trim()) return;
+		const newPreset: AppearancePreset = {
+			id: Date.now().toString(),
+			name: newPresetName,
+			settings: {
+				// Basic & General
+				accentColor, useCustomAccent, customAccentColor, glassBlur,
+				// Backgrounds
+				backgroundMode, selectedGradient, useCustomGradient, customGradientColors,
+				customGradientType, customGradientOpacity, customGradientCenter,
+				customGradientAngle, customGradientSize,
+				// Advanced
+				advWaveformColor, advWaveformProgress, advPrimaryText, advSecondaryText,
+				vTitlebarBg, vSidebarBg, vSidebarActive, vMenuHover, vEditorBg, vActiveLine, vLineHover, vSelection,
+				vChipRadius, vChipGap, vChipPaddingV, vChipPaddingH, vRomanColor, vTransColor,
+				vAudioBarBg, vAudioBarText, vScrollbar, vDialogBg, vDialogBorder,
+				vGlobalRadius, vGlobalBorderWidth, vShadow, vBackdrop
+			}
+		};
+		setPresets([...presets, newPreset]);
+		setNewPresetName("");
+	};
+
+	const handleLoadPreset = (p: AppearancePreset) => {
+		const s = p.settings;
+		
+		// Set a small loading indicator state
+		setLastLoaded(p.name);
+
+		// Basic & General
+		if (s.accentColor !== undefined) setAccentColor(s.accentColor);
+		if (s.useCustomAccent !== undefined) setUseCustomAccent(!!s.useCustomAccent);
+		if (s.customAccentColor !== undefined) setCustomAccentColor(s.customAccentColor);
+		if (s.glassBlur !== undefined) setGlassBlur(Number(s.glassBlur));
+
+		// Backgrounds
+		if (s.backgroundMode !== undefined) setBackgroundMode(s.backgroundMode);
+		if (s.selectedGradient !== undefined) setSelectedGradient(s.selectedGradient);
+		if (s.useCustomGradient !== undefined) setUseCustomGradient(!!s.useCustomGradient);
+		if (s.customGradientColors !== undefined) setCustomGradientColors(s.customGradientColors);
+		if (s.customGradientType !== undefined) setCustomGradientType(s.customGradientType);
+		if (s.customGradientOpacity !== undefined) setCustomGradientOpacity(Number(s.customGradientOpacity));
+		if (s.customGradientCenter !== undefined) setCustomGradientCenter(s.customGradientCenter);
+		if (s.customGradientAngle !== undefined) setCustomGradientAngle(Number(s.customGradientAngle));
+		if (s.customGradientSize !== undefined) setCustomGradientSize(Number(s.customGradientSize));
+
+		// Advanced
+		if (s.advWaveformColor !== undefined) setAdvWaveformColor(s.advWaveformColor);
+		if (s.advWaveformProgress !== undefined) setAdvWaveformProgress(s.advWaveformProgress);
+		if (s.advPrimaryText !== undefined) setAdvPrimaryText(s.advPrimaryText);
+		if (s.advSecondaryText !== undefined) setAdvSecondaryText(s.advSecondaryText);
+		if (s.vTitlebarBg !== undefined) setVTitlebarBg(s.vTitlebarBg);
+		if (s.vSidebarBg !== undefined) setVSidebarBg(s.vSidebarBg);
+		if (s.vSidebarActive !== undefined) setVSidebarActive(s.vSidebarActive);
+		if (s.vMenuHover !== undefined) setVMenuHover(s.vMenuHover);
+		if (s.vEditorBg !== undefined) setVEditorBg(s.vEditorBg);
+		if (s.vActiveLine !== undefined) setVActiveLine(s.vActiveLine);
+		if (s.vLineHover !== undefined) setVLineHover(s.vLineHover);
+		if (s.vSelection !== undefined) setVSelection(s.vSelection);
+		if (s.vChipRadius !== undefined) setVChipRadius(Number(s.vChipRadius));
+		if (s.vChipGap !== undefined) setVChipGap(Number(s.vChipGap));
+		if (s.vChipPaddingV !== undefined) setVChipPaddingV(Number(s.vChipPaddingV));
+		if (s.vChipPaddingH !== undefined) setVChipPaddingH(Number(s.vChipPaddingH));
+		if (s.vRomanColor !== undefined) setVRomanColor(s.vRomanColor);
+		if (s.vTransColor !== undefined) setVTransColor(s.vTransColor);
+		if (s.vAudioBarBg !== undefined) setVAudioBarBg(s.vAudioBarBg);
+		if (s.vAudioBarText !== undefined) setVAudioBarText(s.vAudioBarText);
+		if (s.vScrollbar !== undefined) setVScrollbar(s.vScrollbar);
+		if (s.vDialogBg !== undefined) setVDialogBg(s.vDialogBg);
+		if (s.vDialogBorder !== undefined) setVDialogBorder(s.vDialogBorder);
+		if (s.vGlobalRadius !== undefined) setVGlobalRadius(Number(s.vGlobalRadius));
+		if (s.vGlobalBorderWidth !== undefined) setVGlobalBorderWidth(Number(s.vGlobalBorderWidth));
+		if (s.vShadow !== undefined) setVShadow(Number(s.vShadow));
+		if (s.vBackdrop !== undefined) setVBackdrop(Number(s.vBackdrop));
+
+		// Small timeout to clear the flash of "active" state if desired, 
+		// but keeping it visible helps user know it worked.
+	};
 	const setIsFontSelectionOpen = useSetAtom(fontSelectionDialogAtom);
 
 	const [showBackgroundSettings, setShowBackgroundSettings] = useState(false);
@@ -135,6 +297,71 @@ export const SettingsAppearanceTab = () => {
 	return (
 		<Flex direction="column" gap="4">
 			<Flex direction="column" gap="2">
+				<SegmentedControl.Root
+					value={editorMode}
+					onValueChange={(v) => setEditorMode(v as AppearanceEditorMode)}
+				>
+					<SegmentedControl.Item value={AppearanceEditorMode.Basic}>
+						{t("settings.appearance.mode.basic", "Basic Editor")}
+					</SegmentedControl.Item>
+					<SegmentedControl.Item value={AppearanceEditorMode.Advanced}>
+						{t("settings.appearance.mode.advanced", "Advanced Editor")}
+					</SegmentedControl.Item>
+				</SegmentedControl.Root>
+			</Flex>
+
+			<Flex direction="column" gap="3">
+				<Heading size="4"><Folder24Regular /> {t("settings.appearance.presets.title", "Appearance Presets")}</Heading>
+				<Card>
+					<Flex direction="column" gap="3">
+						<Flex gap="3" align="center">
+							<TextField.Root 
+								placeholder={t("settings.appearance.presets.namePlaceholder", "Theme Name...")}
+								value={newPresetName}
+								onChange={(e) => setNewPresetName(e.target.value)}
+								style={{ flexGrow: 1 }}
+							>
+								<TextField.Slot><Save24Regular /></TextField.Slot>
+							</TextField.Root>
+							<Button onClick={handleSavePreset} disabled={!newPresetName.trim()}>
+								{t("settings.appearance.presets.save", "Save Current")}
+							</Button>
+						</Flex>
+
+						{presets.length > 0 ? (
+							<Grid columns="2" gap="2">
+								{presets.map((p) => (
+									<Card key={p.id} size="1" style={{ 
+										border: lastLoaded === p.name ? "1px solid var(--accent-9)" : undefined,
+										backgroundColor: lastLoaded === p.name ? "var(--accent-2)" : undefined
+									}}>
+										<Flex align="center" justify="between">
+											<Box flexGrow="1" overflow="hidden">
+												<Text size="2" weight="bold" style={{ display: "block", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{p.name}</Text>
+												{lastLoaded === p.name && <Text size="1" color="accent" style={{ display: "block" }}>Active</Text>}
+											</Box>
+											<Flex gap="1">
+												<IconButton size="1" variant="soft" onClick={() => handleLoadPreset(p)} title="Load Preset">
+													<Target24Regular />
+												</IconButton>
+												<IconButton size="1" variant="ghost" color="red" onClick={() => setPresets(presets.filter(pr => pr.id !== p.id))} title="Delete Preset">
+													<Delete24Regular />
+												</IconButton>
+											</Flex>
+										</Flex>
+									</Card>
+								))}
+							</Grid>
+						) : (
+							<Text size="2" color="gray" align="center">{t("settings.appearance.presets.empty", "No saved presets yet.")}</Text>
+						)}
+					</Flex>
+				</Card>
+			</Flex>
+
+			{editorMode === AppearanceEditorMode.Basic ? (
+				<>
+					<Flex direction="column" gap="2">
 				<Heading size="4">{t("settings.appearance.theme", "Theme")}</Heading>
 
 				<Card>
@@ -234,6 +461,36 @@ export const SettingsAppearanceTab = () => {
 					</Flex>
 				</Card>
 
+				<Heading size="4" mt="4">{t("settings.appearance.glass", "Glassmorphism")}</Heading>
+				<Card>
+					<Flex direction="column" gap="4">
+						<Flex gap="3" align="start">
+							<Sparkle24Regular />
+							<Box flexGrow="1">
+								<Flex direction="column" gap="3">
+									<Flex align="center" justify="between">
+										<Flex direction="column" gap="1">
+											<Text>
+												{t("settings.appearance.glassBlur", "Glass Intensity")}
+											</Text>
+											<Text size="1" color="gray">
+												{t("settings.appearance.glassBlurDesc", "Adjust the background blur effect for glassmorphic elements.")}
+											</Text>
+										</Flex>
+										<Text size="1" weight="bold" color="accent">{glassBlur}px</Text>
+									</Flex>
+									<Slider 
+										min={0} 
+										max={64} 
+										step={1} 
+										value={[glassBlur]} 
+										onValueChange={(v) => setGlassBlur(v[0])} 
+									/>
+								</Flex>
+							</Box>
+						</Flex>
+					</Flex>
+				</Card>
 			</Flex>
 
 			<Flex direction="column" gap="3">
@@ -608,6 +865,161 @@ export const SettingsAppearanceTab = () => {
 					</Flex>
 				</Card>
 			</Flex>
+				</>
+			) : (
+				<Flex direction="column" gap="4">
+
+					<Flex direction="column" gap="3">
+						<Heading size="4">{t("settings.appearance.advanced.projectColors", "Project Colors")}</Heading>
+						<Card>
+							<Flex direction="column" gap="4">
+								<Flex gap="3" align="start">
+									<Edit24Regular />
+									<Box flexGrow="1">
+										<Flex direction="column" gap="3">
+											<Flex align="center" justify="between">
+												<Flex direction="column" gap="1">
+													<Text>{t("settings.appearance.advanced.primaryText", "Primary Text Color")}</Text>
+													<Text size="1" color="gray">{t("settings.appearance.advanced.primaryTextDesc", "Global primary text override.")}</Text>
+												</Flex>
+												<input type="color" value={advPrimaryText || "#ffffff"} onChange={(e) => setAdvPrimaryText(e.target.value)} style={{ width: "32px", height: "32px" }} />
+											</Flex>
+
+											<Flex align="center" justify="between">
+												<Flex direction="column" gap="1">
+													<Text>{t("settings.appearance.advanced.secondaryText", "Secondary Text Color")}</Text>
+													<Text size="1" color="gray">{t("settings.appearance.secondaryDesc", "Translations & Metadata.")}</Text>
+												</Flex>
+												<input type="color" value={advSecondaryText || "#888888"} onChange={(e) => setAdvSecondaryText(e.target.value)} style={{ width: "32px", height: "32px" }} />
+											</Flex>
+										</Flex>
+									</Box>
+								</Flex>
+							</Flex>
+						</Card>
+					</Flex>
+
+					<Flex direction="column" gap="3">
+						<Heading size="4"><Navigation24Regular /> {t("settings.appearance.advanced.workspace", "Workspace Theme")}</Heading>
+						<Card>
+							<Grid columns="2" gap="3">
+								<AdvancedColorItem label="Titlebar Background" value={vTitlebarBg} onChange={setVTitlebarBg} />
+								<AdvancedColorItem label="Sidebar Background" value={vSidebarBg} onChange={setVSidebarBg} />
+								<AdvancedColorItem label="Active Item Highlight" value={vSidebarActive} onChange={setVSidebarActive} />
+								<AdvancedColorItem label="Menu Hover Color" value={vMenuHover} onChange={setVMenuHover} />
+							</Grid>
+						</Card>
+					</Flex>
+
+					<Flex direction="column" gap="3">
+						<Heading size="4"><Grid24Regular /> {t("settings.appearance.advanced.editor", "Editor Layout")}</Heading>
+						<Card>
+							<Flex direction="column" gap="4">
+								<Grid columns="2" gap="3">
+									<AdvancedColorItem label="Editor Canvas" value={vEditorBg} onChange={setVEditorBg} />
+									<AdvancedColorItem label="Active Line Highlight" value={vActiveLine} onChange={setVActiveLine} />
+									<AdvancedColorItem label="Line Hover Effect" value={vLineHover} onChange={setVLineHover} />
+									<AdvancedColorItem label="Selection Highlight" value={vSelection} onChange={setVSelection} />
+								</Grid>
+								<AdvancedSliderItem label="Chip Border Radius" icon={<Shapes24Regular />} value={vChipRadius} min={0} max={32} onChange={setVChipRadius} unit="px" />
+								<AdvancedSliderItem label="Chip Spacing (Gap)" icon={<Grid24Regular />} value={vChipGap} min={0} max={32} onChange={setVChipGap} unit="px" />
+								<AdvancedSliderItem label="Chip Padding (V)" icon={<PaddingLeft24Regular />} value={vChipPaddingV} min={0} max={32} onChange={setVChipPaddingV} unit="px" />
+								<AdvancedSliderItem label="Chip Padding (H)" icon={<PaddingLeft24Regular />} value={vChipPaddingH} min={0} max={32} onChange={setVChipPaddingH} unit="px" />
+							</Flex>
+						</Card>
+					</Flex>
+
+					<Flex direction="column" gap="3">
+						<Heading size="4"><Wrench24Regular /> {t("settings.appearance.advanced.audioVisuals", "Playback & Visuals")}</Heading>
+						<Card>
+							<Flex direction="column" gap="4">
+								<Grid columns="2" gap="3">
+									<AdvancedColorItem label="Audio Bar Color" value={vAudioBarBg} onChange={setVAudioBarBg} />
+									<AdvancedColorItem label="Audio Bar Text" value={vAudioBarText} onChange={setVAudioBarText} />
+									<AdvancedColorItem label="Waveform Inactive" value={advWaveformColor} onChange={setAdvWaveformColor} />
+									<AdvancedColorItem label="Waveform Progress" value={advWaveformProgress} onChange={setAdvWaveformProgress} />
+								</Grid>
+								<AdvancedColorItem label="Romanization Text" value={vRomanColor} onChange={setVRomanColor} />
+								<AdvancedColorItem label="Translation Text" value={vTransColor} onChange={setVTransColor} />
+							</Flex>
+						</Card>
+					</Flex>
+
+					<Flex direction="column" gap="3">
+						<Heading size="4"><Settings24Regular /> {t("settings.appearance.advanced.global", "Global Design System")}</Heading>
+						<Card>
+							<Flex direction="column" gap="4">
+								<Grid columns="2" gap="3">
+									<AdvancedColorItem label="Scrollbar Thumb" value={vScrollbar} onChange={setVScrollbar} />
+									<AdvancedColorItem label="Dialog Background" value={vDialogBg} onChange={setVDialogBg} />
+									<AdvancedColorItem label="Dialog Border" value={vDialogBorder} onChange={setVDialogBorder} />
+								</Grid>
+								<AdvancedSliderItem label="Global Border Radius" icon={<Shapes24Regular />} value={vGlobalRadius} min={0} max={40} onChange={setVGlobalRadius} unit="px" />
+								<AdvancedSliderItem label="Global Border Width" icon={<Ruler24Regular />} value={vGlobalBorderWidth} min={0} max={8} onChange={setVGlobalBorderWidth} unit="px" />
+								<AdvancedSliderItem label="Shadow Intensity" icon={<VideoBackgroundEffect24Regular />} value={vShadow} min={0} max={10} step={0.1} onChange={setVShadow} unit="" />
+								<AdvancedSliderItem label="Backdrop Blur" icon={<Sparkle24Regular />} value={vBackdrop} min={0} max={100} onChange={setVBackdrop} unit="px" />
+							</Flex>
+						</Card>
+					</Flex>
+
+					<Card size="2">
+						<Flex direction="column" gap="2">
+							<Flex align="center" gap="2" color="gray">
+								<Settings24Regular />
+								<Text size="2">{t("settings.appearance.advanced.masterResetNote", "This will reset all 20+ granular overrides.")}</Text>
+							</Flex>
+							<Button variant="soft" color="red" onClick={() => {
+								setAdvWaveformColor(""); setAdvWaveformProgress("");
+								setAdvPrimaryText(""); setAdvSecondaryText("");
+								setVTitlebarBg(""); setVSidebarBg(""); setVSidebarActive(""); setVMenuHover("");
+								setVEditorBg(""); setVActiveLine(""); setVLineHover(""); setVSelection("");
+								setVChipRadius(8); setVChipGap(8); setVChipPaddingV(4); setVChipPaddingH(12);
+								setVRomanColor(""); setVTransColor("");
+								setVAudioBarBg(""); setVAudioBarText("");
+								setVScrollbar(""); setVDialogBg(""); setVDialogBorder("");
+								setVGlobalRadius(12); setVGlobalBorderWidth(1); setVShadow(1); setVBackdrop(16);
+							}}>
+								<ArrowReset24Regular />
+								{t("settings.appearance.advanced.resetMaster", "Master Reset Advanced Config")}
+							</Button>
+						</Flex>
+					</Card>
+				</Flex>
+			)}
 		</Flex>
 	);
 };
+
+// --- Helper Components for Advanced Editor ---
+
+const AdvancedColorItem = ({ label, value, onChange }: { label: string, value: string, onChange: (v: string) => void }) => (
+	<Flex direction="column" gap="1">
+		<Flex align="center" justify="between">
+			<Text size="1" color="gray" weight="bold">{label}</Text>
+			{value && (
+				<IconButton size="1" variant="ghost" onClick={() => onChange("")}>
+					<ArrowReset24Regular />
+				</IconButton>
+			)}
+		</Flex>
+		<input 
+			type="color" 
+			value={value || "#000000"} 
+			onChange={(e) => onChange(e.target.value)} 
+			style={{ width: "100%", height: "24px", border: "1px solid var(--gray-5)", borderRadius: "4px", cursor: "pointer", padding: 0 }}
+		/>
+	</Flex>
+);
+
+const AdvancedSliderItem = ({ label, icon, value, min, max, step = 1, onChange, unit }: { label: string, icon: React.ReactNode, value: number, min: number, max: number, step?: number, onChange: (v: number) => void, unit: string }) => (
+	<Box>
+		<Flex align="center" justify="between" mb="1">
+			<Flex align="center" gap="2">
+				<Box color="accent">{icon}</Box>
+				<Text size="1" weight="bold">{label}</Text>
+			</Flex>
+			<Text size="1" color="gray">{value}{unit}</Text>
+		</Flex>
+		<Slider min={min} max={max} step={step} value={[value]} onValueChange={(v) => onChange(v[0])} />
+	</Box>
+);

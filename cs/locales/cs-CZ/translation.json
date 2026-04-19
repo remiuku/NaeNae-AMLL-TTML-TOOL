@@ -416,6 +416,8 @@
 			"toggleWordHighlight": "Timing - Toggle active word highlight",
 			"moveFirstWordAndPlay": "Timing - Move to first word and play",
 			"moveLastWordAndPlay": "Timing - Move to last word and play",
+			"urbanDictionary": "Edit - Look up in Urban Dictionary",
+			"urbanDictionarySync": "Timing - Look up in Urban Dictionary",
 			"playPause": "Přehrávání - Přehrát/Pozastavit",
 			"seekForward": "Přehrávání - Přetočit vpřed o 5 s",
 			"seekBackward": "Přehrávání - Přetočit zpět o 5 s",
@@ -699,6 +701,13 @@
 		"placeholder": "Nové slovo",
 		"applyToAll": "Použít tuto náhradu na všechna identická slova",
 		"caseSensitive": "Match case (Exact match)"
+	},
+	"urbanDictionary": {
+		"title": "Urban Dictionary",
+		"slang": "slang dictionary",
+		"noDefinitions": "No definitions found for \"{word}\"",
+		"viewOnline": "View online",
+		"by": "By"
 	},
 	"timeShiftDialog": {
 		"title": "Časový posun",

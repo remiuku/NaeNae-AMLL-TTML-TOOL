@@ -416,6 +416,8 @@
 			"toggleWordHighlight": "Zamanlama - Aktif kelime işaretşemesini aç/kapat",
 			"moveFirstWordAndPlay": "Zamanlama - İlk kelimeye geç ve oynat",
 			"moveLastWordAndPlay": "Zamanlama - Son kelimeye geç ve oynat",
+			"urbanDictionary": "Edit - Look up in Urban Dictionary",
+			"urbanDictionarySync": "Timing - Look up in Urban Dictionary",
 			"playPause": "Oynatma - Oynat/Duraklat",
 			"seekForward": "Oynatma - 5sn ileri git",
 			"seekBackward": "Oynatma - 5sn geri git",
@@ -699,6 +701,13 @@
 		"placeholder": "Yeni kelime",
 		"applyToAll": "Bu değişikliği tüm aynı kelimelere uygula",
 		"caseSensitive": "Eşleşme durumu (Tam eşleşme)"
+	},
+	"urbanDictionary": {
+		"title": "Urban Dictionary",
+		"slang": "slang dictionary",
+		"noDefinitions": "No definitions found for \"{word}\"",
+		"viewOnline": "View online",
+		"by": "By"
 	},
 	"timeShiftDialog": {
 		"title": "Zaman Kayması",

@@ -31,6 +31,12 @@ async function startApp() {
 		if ("wasm_start" in AMLLLyric && typeof AMLLLyric.wasm_start === "function") {
 			(AMLLLyric.wasm_start as () => void)();
 		}
+		
+		// Register integrated plugins
+		const { boykisserificationPlugin } = await import("$/modules/plugins/integrated/boykisserification");
+		
+		pluginManager.registerIntegratedPlugin(boykisserificationPlugin);
+
 		await pluginManager.loadEnabledPlugins();
 	} catch (e) {
 		console.error("Error during App initialization:", e);
