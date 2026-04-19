@@ -38,6 +38,15 @@ export function ChangelogDialog() {
 				<ScrollArea type="always" scrollbars="vertical" style={{ height: "calc(100% - 60px)" }}>
 					<Flex direction="column" gap="5" pr="4">
 						<Box>
+							<Heading size="4" mb="2" color="ruby">v0.3.2 Hotfix (Layout)</Heading>
+							<Flex direction="column" gap="3">
+								<Text size="2">
+									<strong>Preferences Tab Overflow:</strong> Enabled horizontal scrolling and fixed-width triggers for the Preferences dialog tabs. This prevents labels from being cut off or compressed in languages with long strings like Russian.
+								</Text>
+							</Flex>
+						</Box>
+
+						<Box>
 							<Heading size="4" mb="2" color="cyan">v0.3.1 Updates (Syllables & UI)</Heading>
 							<Flex direction="column" gap="3">
 								<Text size="2">
