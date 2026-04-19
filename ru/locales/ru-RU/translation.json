@@ -1,0 +1,862 @@
+{
+	"app": {
+		"error": {
+			"title": "Упс, произошла ошибка!",
+			"description": "Произошла ошибка при работе AMLL TTML Tools",
+			"checkDevTools": "Подробности можно найти в Инструментах разработчика",
+			"saveLyrics": "Попробуйте сохранить текущий текст",
+			"tryRestart": "Попробуйте перезагрузить приложение",
+			"details": "Примерная информация об ошибке:"
+		},
+		"update": {
+			"updateAvailable": "Доступно обновление: {version}",
+			"installError": "Ошибка при установке обновления"
+		},
+		"empty": {
+			"title": "Нет строк текста",
+			"description": "Добавьте новые строки текста на верхней панели или откройте/импортируйте существующий текст из меню"
+		}
+	},
+	"confirmDialog": {
+		"cancel": "Отмена",
+		"confirm": "Подтвердить",
+		"newFile": {
+			"title": "Подтвердить создание нового файла",
+			"description": "У вас есть несохранённые изменения. Если продолжить, они будут потеряны. Вы уверены, что хотите создать новый файл?"
+		},
+		"syncLineTimestamps": {
+			"title": "Подтвердить синхронизацию временных меток строк",
+			"description": "Это действие автоматически синхронизирует время начала и окончания всех строк на основе временных меток каждого слова в строке, совмещая время начала и окончания первого и последнего слогов. Вы уверены, что хотите продолжить?"
+		},
+		"openFile": {
+			"title": "Подтвердить открытие файла",
+			"description": "У вас есть несохранённые изменения. Если продолжить, они будут потеряны. Вы уверены, что хотите открыть новый файл?"
+		},
+		"importFile": {
+			"title": "Подтвердить импорт текста",
+			"description": "У вас есть несохранённые изменения. Если продолжить, они будут потеряны. Вы уверены, что хотите импортировать новый текст?"
+		},
+		"useMetadataName": {
+			"title": "Use metadata name?",
+			"description": "Use \"{name}\" as the file name?"
+		},
+		"noSongwriter": {
+			"title": "Confirm Export",
+			"description": "The song has no songwriters. Do you want to continue saving?"
+		}
+	},
+	"dialog": {
+		"mp3Conversion": {
+			"title": "Конвертировать MP3 в FLAC?",
+			"description": "Вы импортируете файл MP3: {fileName}",
+			"warning": "Файлы MP3 могут вызвать рассинхронизацию звука в этом приложении. Рекомендуется конвертировать в FLAC для лучшей совместимости.",
+			"dontShowAgain": "Больше не показывать это предупреждение",
+			"skip": "Использовать MP3",
+			"convert": "Конвертировать в FLAC",
+			"converting": "Конвертация MP3 в FLAC...",
+			"success": "Конвертация успешна",
+			"failed": "Ошибка конвертации: {error}"
+		}
+	},
+	"ribbonBar": {
+		"editMode": {
+			"multipleValues": "Несколько значений…",
+			"showTranslation": "Показать строку перевода",
+			"showRomanization": "Показать строку романизации",
+			"showWordRomanizationInput": "Показать романизацию по словам",
+			"new": "Новый",
+			"lyricLine": "Строка текста",
+			"lineTiming": "Тайминг строки",
+			"startTime": "Время начала",
+			"endTime": "Время окончания",
+			"lineProperties": "Свойства строки",
+			"bgLyric": "Бэк-вокал",
+			"duetLyric": "Дуэтный вокал",
+			"ignoreSync": "Игнорировать синхронизацию",
+			"wordTiming": "Тайминг слова",
+			"emptyBeatCount": "Количество пустых долей",
+			"wordProperties": "Свойства слова",
+			"wordContent": "Содержимое слова",
+			"romanWord": "Романизация слова",
+			"obscene": "Нецензурное",
+			"secondaryContent": "Вторичное содержимое",
+			"translatedLyric": "Перевод",
+			"romanLyric": "Романизация",
+			"layoutMode": "Макет",
+			"auxiliaryLineDisplay": "Отображение вспомогательной строки",
+			"previewPanel": "Панель предпросмотра",
+			"grammarCheck": "Проверка грамматики",
+			"aiTools": "AI Tools",
+			"aiAutoSync": "AI Auto-Sync",
+			"tools": "Проверить",
+			"phonetic": {
+				"section": "Phonetic",
+				"autoFetch": "Auto Fetch",
+				"noSelection": "Please select lines or words first",
+				"success": "Phonetics fetched successfully",
+				"error": "Failed to fetch phonetics",
+				"romanize": "Romanize"
+			}
+		},
+		"previewMode": {
+			"lyrics": "Текст",
+			"showTranslation": "Показать перевод",
+			"showRoman": "Показать романизацию",
+			"maskObsceneWords": "Скрыть нецензурные слова",
+			"word": "Слово",
+			"fadeWidth": "Ширина затухания"
+		},
+		"syncMode": {
+			"currentEmptyBeat": "Пустая доля",
+			"syncAdjustment": "Настройка тайминга",
+			"timeOffset": "Смещение времени",
+			"syncLevel": "Sync Level",
+			"syncLevelWord": "Word Sync",
+			"syncLevelLine": "Line Sync",
+			"assistSettings": "Настройки помощника",
+			"showTimestampUpdate": "Показывать обновления временных меток",
+			"touchSyncPanel": "Панель сенсорной синхронизации",
+			"bgLyricIgnoreSync": "Ignore Background Vocals",
+			"quickFixes": "Quick Fixes",
+			"manualTimestampEdit": "Manual Timestamp Editing",
+			"displayOptions": "Параметры отображения",
+			"showTimestamps": "Показывать временные метки",
+			"highlightActiveWord": "Выделять активное слово",
+			"enableGlowAnimation": "Enable Glow Animation",
+			"highlightErrors": "Выделять ошибки",
+			"showPerWordRomanization": "Показать романизацию по словам",
+			"keyBindingReference": "Справка по горячим клавишам",
+			"startSync": "Отметить начало",
+			"continuousSync": "Подтвердить",
+			"endSync": "Отметить конец",
+			"loading": "Panel loading…"
+		}
+	},
+	"settings": {
+		"common": {
+			"layoutModeOptions": {
+				"simple": "Простой режим",
+				"advance": "Расширенный режим"
+			},
+			"enabled": "Enabled",
+			"disabled": "Disabled",
+			"language": "Язык интерфейса",
+			"languageDesc": "Выберите язык интерфейса",
+			"layoutMode": "Режим макета редактора",
+			"layoutModeDesc": {
+				"line1": "Простой макет удовлетворяет большинство базовых потребностей",
+				"line2": "Переключитесь на расширенный режим для более эффективной синхронизации"
+			},
+			"helpTranslate": "Help translate this app",
+			"compactBGInSync": "Compact Background Vocals (Sync Mode)",
+			"compactBGInSyncDesc": "Automatically compress vertical space for background vocal lines during synchronization.",
+			"syncJudgeMode": "Режим оценки синхронизации временных меток",
+			"syncJudgeModeDesc": "Установите способ оценки временных меток при синхронизации. По умолчанию — «Первое нажатие клавиши».",
+			"syncJudgeModeOptions": {
+				"firstKeyDown": "Время первого нажатия клавиши",
+				"lastKeyUp": "Время последнего отпускания клавиши",
+				"middleKey": "Середина между нажатием и отпусканием",
+				"firstKeyDownLegacy": "Время первого нажатия клавиши (устаревшее)"
+			},
+			"keyBindingTrigger": "Триггер горячих клавиш",
+			"keyBindingTriggerDesc": "Определяет, срабатывают ли горячие клавиши при нажатии или отпускании клавиши.",
+			"keyBindingTriggerOptions": {
+				"keyDown": "Срабатывание при нажатии",
+				"keyUp": "Срабатывание при отпускании"
+			},
+			"smartFirstWord": "Умное первое слово",
+			"smartFirstWordDesc": "При синхронизации первого слова строки первое нажатие устанавливает только время начала, не устанавливая сразу время окончания.",
+			"smartLastWord": "Умное последнее слово",
+			"smartLastWordDesc": "При синхронизации последнего слова строки нажатие устанавливает время окончания без автоматической установки времени начала первого слова следующей строки.",
+			"enableUpcomingWordHighlight": "Enable Upcoming Word Pre-Highlight",
+			"enableUpcomingWordHighlightDesc": "Fades in a highlight color shortly before a word plays during Sync mode to improve precision.",
+			"upcomingWordHighlightThreshold": "Pre-Highlight Time Threshold (ms)",
+			"upcomingWordHighlightColor": "Highlight Color (CSS Value)",
+			"volume": "Громкость музыки",
+			"playbackRate": "Скорость воспроизведения",
+			"autosave": {
+				"enable": "Включить автосохранение",
+				"interval": "Интервал сохранения (минуты)",
+				"limit": "Количество сохраняемых снимков"
+			},
+			"customBackground": "Custom Background",
+			"customBackgroundDesc": "Choose an image to use as the background.",
+			"customBackgroundPick": "Choose Image",
+			"customBackgroundClear": "Clear",
+			"customBackgroundOpacity": "Opacity",
+			"customBackgroundOpacityWarning": "If this value is too high, the page content may be hard to read.",
+			"customBackgroundMask": "Mask",
+			"customBackgroundBlur": "Blur Radius",
+			"customBackgroundBrightness": "Brightness",
+			"customBackgroundEnabled": "Background set",
+			"customBackgroundManage": "Settings"
+		},
+		"about": {
+			"update": "Обновление",
+			"newVersion": "Новая версия",
+			"updateNow": "Обновить сейчас",
+			"downloading": "Загрузка обновления...",
+			"ready": "Обновление готово. Перезапустите приложение для применения.",
+			"restart": "Перезапустить"
+		},
+		"aboutModal": {
+			"community": "Community & Contributions",
+			"communityDesc": "Help us make the tool better by contributing code, reporting issues, or providing translations.",
+			"github": "GitHub Repository",
+			"crowdin": "Help Translate in Crowdin"
+		},
+		"appearance": {
+			"theme": "Theme",
+			"useCustomAccent": "Custom Accent Color",
+			"useCustomAccentDesc": "Set Accent color",
+			"background": "Background",
+			"mode": {
+				"none": "None",
+				"image": "Image",
+				"gradient": "Gradient"
+			},
+			"useCustomGradient": "Custom Gradient Color",
+			"useCustomGradientDesc": "Generate a gradient from a single color.",
+			"syncGradientToAccent": "Sync first color with Accent",
+			"addGradientColor": "Add Color",
+			"gradientType": "Gradient Type",
+			"type": {
+				"linear": "Linear",
+				"radial": "Radial",
+				"conic": "Conic"
+			},
+			"gradientOpacity": "Gradient Opacity",
+			"gradientSize": "Gradient Scale",
+			"gradientPositionSettings": "Center & Angle",
+			"gradientCenterX": "Center X (Horizontal)",
+			"gradientCenterY": "Center Y (Vertical)",
+			"gradientAngle": "Angle",
+			"font": "Application Font",
+			"currentFont": "Current Font",
+			"changeFont": "Change Font...",
+			"fontImportSuccess": "Font imported successfully!",
+			"fontLibrary": "Font Library",
+			"fontWeight": "Font Weight",
+			"weight": {
+				"regular": "Regular",
+				"bold": "Bold"
+			},
+			"fontStyle": "Font Style",
+			"style": {
+				"normal": "Normal",
+				"italic": "Italic"
+			},
+			"importFont": "Import Font File",
+			"customFontActive": "LOCAL CUSTOM FONT",
+			"defaultFonts": "Standard Stacks",
+			"systemFonts": "System Fonts",
+			"googleFonts": "Google Fonts Library"
+		},
+		"group": {
+			"assistant": "Assistant",
+			"display": "Отображение",
+			"timing": "Тайминг",
+			"timingHighlight": "Visual Timing Cue (Sync)",
+			"playback": "Воспроизведение",
+			"autosave": "Автосохранение"
+		},
+		"assistant": {
+			"quickFixes": "Quick Fixes (Grammar)",
+			"quickFixesDesc": "Enable suggestions for repeated words and common transcription errors.",
+			"manualTimestampEdit": "Manual Timestamp Editing",
+			"manualTimestampEditDesc": "Allow clicking on timestamps in Sync mode to manually type values.",
+			"visualizeTimestampUpdate": "Visualize Timestamp Updates",
+			"visualizeTimestampUpdateDesc": "Show a brief flash on timestamps when they are updated via shortcuts.",
+			"highlightErrors": "Highlight Timing Errors",
+			"highlightErrorsDesc": "Visually mark words where start time is greater than end time."
+		},
+		"audio": {
+			"equalizer": "Audio Equalizer",
+			"eqDescription": "Adjust gains for different frequencies to optimize your audio experience.",
+			"preset": "Presets",
+			"standardPresets": "Standard",
+			"presets": {
+				"custom": "Manual"
+			},
+			"customPresets": "Custom",
+			"reset": "Reset",
+			"newPresetName": "New Preset Name",
+			"save": "Save Preset",
+			"mp3Conversion": "MP3 в FLAC",
+			"mp3ConversionDesc": "Конвертировать MP3 в FLAC при импорте для лучшей синхронизации",
+			"mp3ConversionAsk": "Спрашивать",
+			"mp3ConversionAlways": "Авто",
+			"mp3ConversionNever": "Выкл"
+		},
+		"dev": {
+			"wasmPlugins": {
+				"title": "Community Plugin System (WASM)",
+				"description": "Manage and upload custom WebAssembly plugins to extend the tool's importing and exporting capabilities."
+			},
+			"debugInfo": {
+				"title": "Debug Information"
+			}
+		},
+		"spectrogram": {
+			"palette": "Цветовая палитра",
+			"paletteCustom": "Пользовательская",
+			"gradientEditorDesc": "Значение Pos 0.0 соответствует самой тихой части, а 1.0 — самой громкой. Рекомендуется использовать более яркие цвета для больших значений Pos.",
+			"addStop": "Добавить цветовую точку"
+		}
+	},
+	"topBar": {
+		"modeBtns": {
+			"edit": "Редакт.",
+			"sync": "Время",
+			"preview": "Просмотр"
+		},
+		"boykisser": "boykisser",
+		"appName": "Инструмент TTML для текстов в стиле Apple Music",
+		"menu": {
+			"undo": "Отменить",
+			"redo": "Повторить",
+			"selectAllLines": "Выделить все строки",
+			"unselectAllLines": "Снять выделение со всех строк",
+			"invertSelectAllLines": "Инвертировать выделение строк",
+			"selectWordsOfMatchedSelection": "Выделить совпадающие слова",
+			"timeShift": "Сдвиг времени...",
+			"editMetadata": "Редактировать метаданные текста…",
+			"edit": "Редакт.",
+			"newLyric": "Новый текст",
+			"openLyric": "Открыть текст",
+			"openFromClipboard": "Открыть TTML из буфера обмена",
+			"saveLyric": "Сохранить текст",
+			"restoreFromHistory": "Восстановить из истории…",
+			"saveLyricToClipboard": "Сохранить TTML в буфер обмена",
+			"uploadToAMLLDB": "Загрузить в базу данных (только КНР)",
+			"file": "Файл",
+			"helpDoc": "Документация (КНР)",
+			"help": "Справка",
+			"segmentationTools": "Инструменты сегментации",
+			"autoSegment": "Автосегментация",
+			"rubySegment": "Ruby Segmentation",
+			"advancedSegment": "Расширенная сегментация...",
+			"syncLineTimestamps": "Синхронизировать временные метки строк",
+			"tool": "Инструменты",
+			"importLyric": {
+				"import": "Импорт текста",
+				"fromPlainText": "Импорт из простого текста…",
+				"fromLRCLIB": "Импорт из LRCLIB...",
+				"fromLyrically": "Import from Lyrically...",
+				"fromGenius": "Import from Genius…",
+				"fromLyRiC": "Импорт из файла LyRiC…",
+				"fromESLyRiC": "Импорт из файла ESLyRiC…",
+				"fromQRC": "Импорт из файла QRC…",
+				"fromYRC": "Импорт из файла YRC…",
+				"fromLrcfySylb": "Импорт из файла Lyricify Syllable…"
+			},
+			"exportLyric": {
+				"export": "Экспорт текста",
+				"toLyRiC": "Экспорт в LyRiC",
+				"toESLyRiC": "Экспорт в ESLyRiC",
+				"toQRC": "Экспорт в QRC",
+				"toYRC": "Экспорт в YRC",
+				"toLrcfySylb": "Экспорт в Lyricify Syllable",
+				"toASS": "Экспорт в субтитры ASS"
+			}
+		}
+	},
+	"header": {
+		"status": {
+			"autoSavedAt": "Autosaved at {time}"
+		}
+	},
+	"contextMenu": {
+		"deleteWords": "Удалить {count, plural, one {слово} few {слова} many {слов} other {слов}",
+		"bgLyric": "Фоновая строка",
+		"duetLyric": "Дуэтная строка",
+		"insertLineBefore": "Вставить новую строку перед",
+		"insertLineAfter": "Вставить новую строку после",
+		"copyLine": "Дублировать {count, plural, one {строку} few {строки} many {строк} other {строк}",
+		"duplicateTo": "Duplicate to...",
+		"combineLine": "Объединить строки",
+		"deleteLine": "Удалить {count, plural, one {строку} few {строки} many {строк} other {строк}",
+		"splitWord": "Разделить слово…",
+		"replaceWord": "Заменить слово…",
+		"combineWords": "Объединить слова",
+		"moveFollowingWordToNewLine": "Переместить следующие в новую строку",
+		"moveWordToNewLine": "Переместить {count, plural, one {слово} few {слова} many {слов} other {слов} в новую строку"
+	},
+	"settingsDialog": {
+		"title": "Настройки",
+		"common": {
+			"latencyTest": "Тест задержки аудио/ввода"
+		},
+		"keybindings": {
+			"newFile": "Новый файл",
+			"openFile": "Открыть файл",
+			"saveFile": "Сохранить файл",
+			"undo": "Отменить",
+			"redo": "Повторить",
+			"selectAll": "Выделить всё",
+			"unselectAll": "Deselect All",
+			"selectInverted": "Инвертировать выделение",
+			"selectWordsOfMatchedSelection": "Выделить похожие слова",
+			"deleteSelection": "Удалить выделенное",
+			"switchEditMode": "Переключение режима — Режим редактирования",
+			"switchSyncMode": "Переключение режима — Режим тайминга",
+			"switchPreviewMode": "Переключение режима — Режим просмотра",
+			"moveNextWord": "Тайминг — Перейти к следующему слову",
+			"movePrevWord": "Тайминг — Перейти к предыдущему слову",
+			"moveNextLine": "Тайминг — Перейти к началу следующей строки",
+			"movePrevLine": "Тайминг — Перейти к началу предыдущей строки",
+			"movePrevWordAndPlay": "Тайминг — Перейти к предыдущему слову и воспроизвести",
+			"moveNextWordAndPlay": "Тайминг — Перейти к следующему слову и воспроизвести",
+			"syncStart": "Тайминг — Отметить начало",
+			"syncNext": "Тайминг — Подтвердить",
+			"syncEnd": "Тайминг — Отметить конец",
+			"toggleWordHighlight": "Timing - Toggle active word highlight",
+			"moveFirstWordAndPlay": "Timing - Move to first word and play",
+			"moveLastWordAndPlay": "Timing - Move to last word and play",
+			"playPause": "Воспроизведение — Воспроизвести/Пауза",
+			"seekForward": "Воспроизведение — Перемотка вперёд 5 сек",
+			"seekBackward": "Воспроизведение — Перемотка назад 5 сек",
+			"volumeUp": "Воспроизведение — Увеличить громкость",
+			"volumeDown": "Воспроизведение — Уменьшить громкость",
+			"playbackRateUp": "Воспроизведение — Увеличить скорость",
+			"playbackRateDown": "Воспроизведение — Уменьшить скорость",
+			"playbackRateReset": "Воспроизведение — Сбросить скорость",
+			"auditionSelectionBefore": "Спектрограмма — Прослушать выделение (500 мс до)",
+			"auditionSelection": "Спектрограмма — Прослушать выделение",
+			"auditionSelectionAfter": "Спектрограмма — Прослушать выделение (500 мс после)",
+			"category": {
+				"File": "Файл",
+				"Edit": "Редакт.",
+				"View": "Вид",
+				"Sync": "Синхр.",
+				"Audio": "Аудио",
+				"Spectrogram": "Спектрограмма"
+			}
+		},
+		"tab": {
+			"common": "Общие",
+			"assistant": "Assistant",
+			"appearance": "Appearance",
+			"audio": "Audio",
+			"keybindings": "Горячие клавиши",
+			"spectrogram": "Спектрограмма",
+			"about": "About",
+			"dev": "Dev"
+		}
+	},
+	"error": {
+		"unsupportedFileFormat": "Неподдерживаемый формат файла: {ext}",
+		"openFileFailed": "Не удалось открыть файл",
+		"audioNotLoaded": "Audio not loaded. Please ensure an audio file is playing."
+	},
+	"audioPanel": {
+		"volume": "Громкость",
+		"playbackRate": "Скорость воспроизведения",
+		"clickToLoadMusic": "Нажмите на значок, чтобы загрузить музыку",
+		"playPause": "Воспроизвести / приостановить музыку",
+		"expandSpectrogram": "Развернуть / свернуть спектрограмму"
+	},
+	"audio": {
+		"status": {
+			"transcoding": "Ошибка декодирования, попытка перекодирования аудио...",
+			"loading": "Загрузка аудио...",
+			"processing": "Обработка..."
+		},
+		"error": {
+			"workerError": "Ошибка обработки аудио"
+		}
+	},
+	"latencyTestDialog": {
+		"title": "Timing Offset Latency Test",
+		"latencyDisplay": {
+			"fastest": "Fastest",
+			"current": {
+				"none": "Not Measured",
+				"fast": "Early",
+				"slow": "Late",
+				"perfect": "Perfect"
+			},
+			"slowest": "Slowest"
+		},
+		"bpmInputLabel": "Tempo (BPM)",
+		"button": {
+			"stop": "Stop",
+			"start": "Start"
+		}
+	},
+	"metadataDialog": {
+		"fetchSongwriters": {
+			"searchError": "Search failed: {error}",
+			"fetchError": "Could not fetch lyrics: {error}",
+			"noLyricsError": "No lyrics to import.",
+			"importSuccess": "Imported {count} lines from Genius.",
+			"error": "Failed to fetch songwriters",
+			"noSongwriters": "No songwriting credits recorded for this song",
+			"findingRealName": "Finding real name for {name} ({current}/{total})...",
+			"success": "Songwriters successfully fetched from Genius",
+			"setupTitle": "Genius API Key Setup",
+			"setupDesc": "To use this feature, please configure your Genius API Key (specifically, you need the \"CLIENT ACCESS TOKEN\"). You can generate one from the ",
+			"setupDescEnd": " developer portal.",
+			"keyPlaceholder": "Enter CLIENT ACCESS TOKEN",
+			"button": "Fetch Songwriters from Genius",
+			"tryFindRealNames": "Try to find real names (Legal Names)"
+		},
+		"openLink": "Открыть ссылку",
+		"duplicateMsg": "Найдены дублирующиеся значения метаданных",
+		"addValue": "Добавить",
+		"builtinOptions": {
+			"musicName": "Название трека",
+			"artists": "Исполнители трека",
+			"artistsInvalidMsg": "Если несколько исполнителей, добавьте этот ключ несколько раз вместо использования разделителей; если имя исполнителя содержит разделители, проигнорируйте это сообщение",
+			"songwriter": "Автор песни",
+			"songwriterInvalidMsg": "Если несколько авторов, добавьте этот ключ несколько раз вместо использования разделителей",
+			"album": "Название альбома",
+			"coverArt": "Cover URL",
+			"ncmMusicId": "ID NetEase Music",
+			"ncmMusicIdInvalidMsg": "ID NetEase Music должен быть числовым",
+			"qqMusicId": "ID QQ Music",
+			"qqMusicIdInvalidMsg": "ID QQ Music должен быть буквенно-цифровым",
+			"spotifyId": "ID трека Spotify",
+			"spotifyIdInvalidMsg": "ID трека Spotify должен быть буквенно-цифровым",
+			"appleMusicId": "ID трека Apple Music",
+			"appleMusicIdInvalidMsg": "ID трека Apple Music должен быть числовым",
+			"isrc": "Код ISRC трека",
+			"isrcInvalidMsg": "Формат кода ISRC должен быть CC-XXX-YY-NNNNN",
+			"ttmlAuthorGithub": "GitHub ID автора текста",
+			"ttmlAuthorGithubInvalidMsg": "GitHub ID должен быть числовым",
+			"ttmlAuthorGithubLogin": "GitHub имя пользователя автора текста",
+			"ttmlAuthorGithubLoginInvalidMsg": "GitHub имя пользователя должно быть буквенно-цифровым или содержать дефисы, до 39 символов"
+		},
+		"title": "Редактор метаданных",
+		"key": "Ключ",
+		"value": "Значение",
+		"empty": "Нет метаданных",
+		"addKeyValue": "Добавить новую пару ключ-значение",
+		"customKey": "Пользовательский ключ",
+		"addPresets": "Добавить все предустановленные ключи",
+		"clear": "Очистить"
+	},
+	"genius": {
+		"setupTitle": "Genius API Key Setup",
+		"setupDesc": "To import lyrics from Genius you need a CLIENT ACCESS TOKEN. You can generate one from the Genius developer portal.",
+		"keyPlaceholder": "Paste CLIENT ACCESS TOKEN here…",
+		"previewTitle": "Genius — Lyrics Preview",
+		"back": "Back",
+		"previewSubtitle": "You can edit the lyrics below before importing.",
+		"linesCount": "{count} lines",
+		"importButton": "Import Lyrics",
+		"importTitle": "Import Lyrics from Genius",
+		"searchPlaceholder": "Artist – Song title…",
+		"notFound": "No results found. Try different keywords.",
+		"noResult": "Enter a song name or artist to start.",
+		"changeKey": "Change API Key"
+	},
+	"common": {
+		"cancel": "Отмена",
+		"save": "Save",
+		"search": "Поиск",
+		"close": "Закрыть",
+		"resultsFound": "Found {count} results",
+		"apply": "Применить",
+		"confirm": "Подтвердить",
+		"success": "Восстановление успешно",
+		"error": "Данные повреждены или утеряны",
+		"deleteSuccess": "Удаление успешно",
+		"time": "Время",
+		"restore": "Восстановить",
+		"sync": "Sync",
+		"remove": "Удалить",
+		"about": "О программе",
+		"clickToSet": "Нажмите, чтобы установить "
+	},
+	"textImportDialog": {
+		"addSpaces": "Add Spaces",
+		"splitHyphens": "Split Hyphenated Words",
+		"processedSuccess": "Lyrics automated for syllable sync.",
+		"title": "Импорт текста из простого текста",
+		"tab": {
+			"import": "Import"
+		},
+		"guides": "Guides",
+		"processLyrics": "Process Lyrics",
+		"actionButton": "Импортировать",
+		"contentMode": {
+			"caption": "Содержимое текста",
+			"lyric": "Только текст",
+			"withTranslation": "Текст с переводом",
+			"withRoman": "Текст с романизацией",
+			"withBoth": "Текст с обоими"
+		},
+		"separationMode": {
+			"caption": "Формат перевода/романизации",
+			"multipleLine": "Чередующиеся строки",
+			"sameLine": "Разделение в одной строке"
+		},
+		"separator": "Разделитель строк",
+		"swapTransAndRoman": "Поменять местами строки перевода и романизации",
+		"wordSeparator": "Разделитель слов",
+		"enableSpecialPrefix": "Включить специальный префикс",
+		"bgLyricPrefix": "Префикс фонового текста",
+		"duetLyricPrefix": "Префикс дуэтного текста",
+		"enableEmptyBeat": "Включить пустую долю",
+		"emptyBeatSymbol": "Символ пустой доли",
+		"guide": {
+			"prepare": {
+				"title": "1. Prepare Lyrics",
+				"desc": "It is recommended to use the Lyrprep tool to prepare your lyrics. You can search for songs, select a version, and copy the output text."
+			},
+			"import": {
+				"title": "2. Import to TTML Tool",
+				"desc": "Paste the prepared text into the editor on the left. Make sure to select the correct \"Import Mode\" based on your text format. If your text contains special prefixes (like background vocal markers), ensure \"Special Prefix\" is enabled."
+			},
+			"sync": {
+				"title": "3. Start Syncing",
+				"desc": "After clicking \"Import\", switch to the \"Time\" (Sync) mode. Use hotkeys for precise alignment:",
+				"f": "Set word start time",
+				"g": "Set word end & start next",
+				"h": "Set word end only",
+				"ad": "Switch between words"
+			},
+			"community": {
+				"title": "Community Guides & Cheat Sheets",
+				"desc": "Helpful resources from the community for specific languages and genres."
+			}
+		},
+		"guidesMenu": {
+			"full": "Full TTML Guide"
+		}
+	},
+	"lrclib": {
+		"placeholder": "Название Исполнитель...",
+		"notFound": "Результаты не найдены, попробуйте другие ключевые слова",
+		"noResult": "Введите ключевые слова для начала поиска",
+		"searchError": "Поиск не удался, проверьте сеть или попробуйте позже",
+		"importError": "Произошла ошибка при импорте текста",
+		"title": "Импорт текста из LRCLIB",
+		"synced": "Синхронизировано",
+		"unsynced": "Не синхронизировано",
+		"noLyrics": "Для этого трека нет доступного текста",
+		"extractBg": "Извлечь скобки как бэк-вокал",
+		"autoSegment": "Автосегментация",
+		"import": "Импортировать текст"
+	},
+	"lyricEditor": {
+		"locate": "Locate",
+		"lineSpectrogram": {
+			"title": "Line Spectrogram Alignment",
+			"desc": "Adjust the start and end points of this line using the spectrogram. The line duration will be split proportionally into its words based on character count.",
+			"startTime": "Start:",
+			"endTime": "End:",
+			"duration": "Duration:",
+			"playPause": "Play/Pause"
+		}
+	},
+	"lyricLineView": {
+		"translatedLabel": "Перевод:",
+		"romanLabel": "Романизация:",
+		"empty": "Нет",
+		"duplicateLinesHere": "Duplicate {count} selected line(s) here",
+		"insertLine": "Вставить новую строку здесь",
+		"insertWord": "Вставить слово здесь…"
+	},
+	"lyricWordView": {
+		"empty": "Пусто",
+		"spaceCount": "Пробел x{count}",
+		"removeWord": "Remove Duplicate Word",
+		"editingWordTitle": "Editing Word",
+		"editingWordDesc": "Edit the word or apply suggested quick fixes.",
+		"noSuggestions": "No suggestions"
+	},
+	"touchSyncPanel": {
+		"prevWord": "Перейти к предыдущему слову",
+		"nextWord": "Перейти к следующему слову"
+	},
+	"grammarCheck": {
+		"capitalization": "Слово должно быть с заглавной буквы",
+		"capitalInMiddle": "Word has capital letters in middle",
+		"title": "Проверка грамматики и орфографии",
+		"issues": "Issues",
+		"history": "История",
+		"ignoredWords": "Игнорируемые слова",
+		"noIssues": "Проблем не обнаружено!",
+		"issuesFound": "проблем найдено",
+		"undoLast": "Отменить последнее",
+		"clearHistory": "Очистить историю",
+		"noHistory": "Пока нет изменений",
+		"fixed": "исправлено",
+		"ignored": "пропущено",
+		"line": "Строка",
+		"clearIgnoredWords": "Очистить все",
+		"noIgnoredWords": "Нет игнорируемых слов",
+		"noIssuesMessage": "Проблем не обнаружено! Ваши тексты выглядят хорошо."
+	},
+	"replaceWordDialog": {
+		"title": "Заменить слово",
+		"description": "Новое слово:",
+		"placeholder": "Новое слово",
+		"applyToAll": "Применить эту замену ко всем одинаковым словам",
+		"caseSensitive": "Match case (Exact match)"
+	},
+	"timeShiftDialog": {
+		"title": "Сдвиг времени",
+		"amount": "Смещение (мс)",
+		"direction": "Направление",
+		"advance": "Раньше (-)",
+		"delay": "Позже (+)",
+		"scopeLabel": "Область",
+		"scope": {
+			"all": "Все строки текста",
+			"selected": "Выбранные строки текста",
+			"selectedFollowing": "Выбранные и следующие",
+			"custom": "Пользовательский диапазон"
+		},
+		"fromLine": "Со строки",
+		"toLine": "до строки",
+		"line": ""
+	},
+	"lyrically": {
+		"noLyricsLabel": "No lyrics available for this track.",
+		"previewTitle": "Lyrically — Lyrics Preview",
+		"importTitle": "Import Lyrics safely via Lyrically (No CORS via API endpoint)"
+	},
+	"globalDragOverlay": {
+		"title": "Отпустите для загрузки"
+	},
+	"historyRestoreDialog": {
+		"loadError": "Не удалось загрузить историю",
+		"confirm": {
+			"title": "Подтвердить восстановление",
+			"description": "Это перезапишет всё содержимое в текущем редакторе. Вы уверены, что хотите восстановить этот снимок?"
+		},
+		"deleteProject": {
+			"title": "Удалить историю проекта",
+			"description": "Вы уверены, что хотите удалить все автосохранённые записи для этого проекта? Это действие нельзя отменить."
+		},
+		"projects": "Недавние проекты",
+		"noProjects": "Записи не были автоматически сохранены.",
+		"latestState": "Последняя версия",
+		"restoreLatest": "Восстановить эту версию",
+		"historyVersions": "Другие версии",
+		"noHistory": "История недоступна",
+		"selectProject": "Пожалуйста, выберите элемент на левой панели"
+	},
+	"autosave": {
+		"legacyProjectName": "Старые снимки",
+		"untitledProjectName": "Безымянный проект"
+	},
+	"time": {
+		"daysAgo": "{count} дней назад",
+		"hoursAgo": "{count} часов назад",
+		"minutesAgo": "{count} минут назад",
+		"justNow": "Только что"
+	},
+	"metadata": {
+		"title": "Метаданные"
+	},
+	"submitToAMLLDB": {
+		"validation": {
+			"missingMusicName": "В метаданных отсутствует название трека",
+			"missingArtists": "В метаданных отсутствуют исполнители трека",
+			"missingAlbum": "В метаданных отсутствует название альбома",
+			"missingMusicId": "В метаданных отсутствует ID трека платформы"
+		},
+		"defaultReason": "Новая отправка текста",
+		"errors": {
+			"validation": "Ошибка проверки отправки:\n{errors}",
+			"noLyrics": "Ещё нет содержимого текста?",
+			"uploadFailed": "Не удалось запросить загрузку файла текста: {status} {statusText}",
+			"submitFailed": "Отправка не удалась, проверьте консоль для выяснения причины!"
+		},
+		"labels": {
+			"submit": "Отправить/Исправить текст"
+		},
+		"issueTitle": "[Отправка/Исправление текста] {name}",
+		"unknownTitle": "Неизвестное название",
+		"unknownArtist": "Неизвестный исполнитель",
+		"description": "Отправить текст в базу данных AMLL",
+		"title": "Отправить текст в базу данных AMLL (только для пользователей упрощённого китайского)",
+		"chineseOnlyWarning": "Эта функция доступна только для пользователей упрощённого китайского базы данных AMLL. Если вы редактируете текст для использования в другом ПО, следуйте способу отправки текстов этого ПО!",
+		"thankYou": "Прежде всего, спасибо за ваш щедрый вклад текстов!",
+		"cc0Agreement": "Отправляя, вы соглашаетесь",
+		"cc0Rights": "использовать лицензию CC0 и полностью отказаться от права собственности на текст",
+		"andSubmit": "и отправить в базу данных текстов!",
+		"futureUse": "И текст будет использоваться как источник TTML по умолчанию системами AMLL в будущем!",
+		"rightsWarning": "Если вы цените сохранение права собственности, НЕ отправляйте!",
+		"submitInstructions": "Введите следующую информацию и перейдите на страницу отправки issue на GitHub!",
+		"closeWarning": "Закрыть предупреждение"
+	},
+	"splitWordDialog": {
+		"spaceCount": "Пробел x{count}",
+		"empty": "Пусто",
+		"title": "Разделить слово",
+		"tip": "После разделения новые слова равномерно поделят время начала/окончания исходного слова. Пустые доли будут удалены.",
+		"syllableSplit": "Syllable Split",
+		"applyToAll": "Применить это разделение ко всем одинаковым словам",
+		"ignoreCase": "Игнорировать регистр",
+		"actionButton": "Подтвердить"
+	},
+	"advancedSegmentDialog": {
+		"test": {
+			"outputError": "Ошибка предпросмотра разделения",
+			"title": "Тест разделения",
+			"input": "Введите строку текста или слово для теста...",
+			"output": "Предпросмотр результата:"
+		},
+		"title": "Расширенная сегментация",
+		"scope": {
+			"title": "Область применения",
+			"all": "Все строки текста",
+			"range": {
+				"from": "Со строки",
+				"to": "до строки",
+				"end": ""
+			}
+		},
+		"rules": {
+			"title": "Правила автосегментации",
+			"cjk": "Разделять CJK-символы",
+			"syllable": "Разделять западные слова по слогам"
+		},
+		"language": {
+			"select": "Выберите языковую модель для переноса:"
+		},
+		"tip": "После разделения общая длительность исходного слова будет перераспределена на основе количества символов и их весов.",
+		"postProcess": {
+			"title": "Постобработка",
+			"punct": {
+				"caption": "Обработка пунктуации:",
+				"merge": "Объединить с соседним слогом",
+				"standalone": "Установить как отдельный сегмент",
+				"weight": "Вес времени пунктуации:"
+			},
+			"empty": "Удалить пустые сегменты"
+		},
+		"custom": {
+			"title": "Пользовательские правила сегментации",
+			"input": "Введите слово для ручного разделения...",
+			"add": "Добавить в пользовательские правила",
+			"list": "Список пользовательских правил:"
+		},
+		"ignore": {
+			"title": "Список игнорирования",
+			"placeholder": "По одному слову в строке, слова в этом списке не будут автоматически сегментироваться"
+		}
+	},
+	"aboutModal": {
+		"appName": "Инструмент TTML для текстов в стиле Apple Music",
+		"description": "Инструмент редактирования и тайминга TTML по словам для текстов в стиле Apple Music",
+		"buildDate": "Дата сборки: {date}",
+		"gitCommit": "Git-коммит: {commit}"
+	},
+	"spectrogram": {
+		"invalidEndTime": "Невозможно выбрать это время окончания",
+		"noAudioLoaded": "Пожалуйста, загрузите аудиофайл для отображения спектрограммы",
+		"loadAudio": "Загрузить аудиофайл",
+		"showUnselectedLines": "Показать невыбранные строки"
+	},
+	"pwa": {
+		"offlineReady": "Сайт успешно кэширован для автономного использования",
+		"updateRefresh": "Сайт обновлён, обновите страницу для использования последней версии!",
+		"refresh": "Обновить"
+	}
+}
