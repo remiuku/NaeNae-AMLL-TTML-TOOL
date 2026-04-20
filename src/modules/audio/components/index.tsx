@@ -156,8 +156,6 @@ export const AudioControls: FC = memo(() => {
 		};
 		setAudioLoaded(audioEngine.musicLoaded);
 		setAudioPlaying(audioEngine.musicPlaying);
-		setVolume(audioEngine.volume);
-		setPlaybackRate(audioEngine.musicPlayBackRate);
 		audioEngine.addEventListener("music-load", onMusicLoad);
 		audioEngine.addEventListener("music-unload", onMusicUnload);
 		audioEngine.addEventListener("music-pause", onMusicPause);
@@ -170,7 +168,7 @@ export const AudioControls: FC = memo(() => {
 			audioEngine.removeEventListener("music-resume", onMusicResume);
 			audioEngine.removeEventListener("volume-change", onVolumeChange);
 		};
-	}, [setAudioPlaying, setVolume, setPlaybackRate]);
+	}, [setAudioPlaying, setVolume]);
 
 	useEffect(() => {
 		audioEngine.volume = volume;
@@ -203,7 +201,7 @@ export const AudioControls: FC = memo(() => {
 										<Slider
 											min={0}
 											max={1}
-											defaultValue={[volume]}
+											value={[volume]}
 											step={0.01}
 											onValueChange={(v) => setVolume(v[0])}
 										/>
@@ -216,7 +214,7 @@ export const AudioControls: FC = memo(() => {
 										<Slider
 											min={0.1}
 											max={2}
-											defaultValue={[playbackRate]}
+											value={[playbackRate]}
 											step={0.05}
 											onValueChange={(v) => setPlaybackRate(v[0])}
 										/>
