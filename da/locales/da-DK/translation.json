@@ -416,6 +416,8 @@
 			"toggleWordHighlight": "Timing - Toggle active word highlight",
 			"moveFirstWordAndPlay": "Timing - Move to first word and play",
 			"moveLastWordAndPlay": "Timing - Move to last word and play",
+			"urbanDictionary": "Edit - Look up in Urban Dictionary",
+			"urbanDictionarySync": "Timing - Look up in Urban Dictionary",
 			"playPause": "Afspilning - Afspil/Pause",
 			"seekForward": "Afspilning - Spol frem 5s",
 			"seekBackward": "Afspilning - Spol tilbage 5s",
@@ -699,6 +701,13 @@
 		"placeholder": "Nyt ord",
 		"applyToAll": "Anvend denne erstatning på alle identiske ord",
 		"caseSensitive": "Match case (Exact match)"
+	},
+	"urbanDictionary": {
+		"title": "Urban Dictionary",
+		"slang": "slang dictionary",
+		"noDefinitions": "No definitions found for \"{word}\"",
+		"viewOnline": "View online",
+		"by": "By"
 	},
 	"timeShiftDialog": {
 		"title": "Tidsforskydning",

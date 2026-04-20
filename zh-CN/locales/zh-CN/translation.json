@@ -416,6 +416,8 @@
 			"toggleWordHighlight": "对齐 - 切换活动单词高亮",
 			"moveFirstWordAndPlay": "对齐 - 移动到第一个单词并播放",
 			"moveLastWordAndPlay": "对齐 - 移动到最后一个单词并播放",
+			"urbanDictionary": "Edit - Look up in Urban Dictionary",
+			"urbanDictionarySync": "Timing - Look up in Urban Dictionary",
 			"playPause": "回放 - 播放/暂停",
 			"seekForward": "回放 - 快进 5s",
 			"seekBackward": "回放 - 快退 5s",
@@ -699,6 +701,13 @@
 		"placeholder": "新单词",
 		"applyToAll": "将此替换应用到所有相同的单词",
 		"caseSensitive": "匹配大小写 (精确匹配)"
+	},
+	"urbanDictionary": {
+		"title": "Urban Dictionary",
+		"slang": "slang dictionary",
+		"noDefinitions": "No definitions found for \"{word}\"",
+		"viewOnline": "View online",
+		"by": "By"
 	},
 	"timeShiftDialog": {
 		"title": "时间平移",

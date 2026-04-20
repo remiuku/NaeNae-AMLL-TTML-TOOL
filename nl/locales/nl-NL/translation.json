@@ -416,6 +416,8 @@
 			"toggleWordHighlight": "Timing - Schakelen actieve woordmarkering",
 			"moveFirstWordAndPlay": "Timing - Verplaats naar eerste woord en speel",
 			"moveLastWordAndPlay": "Timing - Verplaats naar laatste woord en speel",
+			"urbanDictionary": "Edit - Look up in Urban Dictionary",
+			"urbanDictionarySync": "Timing - Look up in Urban Dictionary",
 			"playPause": "Afspelen - Afspelen/Pauzeren",
 			"seekForward": "Afspelen - Seek vooruit 5 s",
 			"seekBackward": "Afspelen - Seek naar achteren 5 s",
@@ -699,6 +701,13 @@
 		"placeholder": "Nieuw woord",
 		"applyToAll": "Deze vervanging toepassen op alle identieke woorden",
 		"caseSensitive": "Wedstrijd zaak (Exact wedstrijd)"
+	},
+	"urbanDictionary": {
+		"title": "Urban Dictionary",
+		"slang": "slang dictionary",
+		"noDefinitions": "No definitions found for \"{word}\"",
+		"viewOnline": "View online",
+		"by": "By"
 	},
 	"timeShiftDialog": {
 		"title": "Tijd Shift",

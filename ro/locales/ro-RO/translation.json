@@ -416,6 +416,8 @@
 			"toggleWordHighlight": "Sincronizare - Evidențiere cuvinte active",
 			"moveFirstWordAndPlay": "Sincronizare - Mutare în primul cuvânt și redare",
 			"moveLastWordAndPlay": "Sincronizare - Mutare la ultimul cuvânt și redare",
+			"urbanDictionary": "Edit - Look up in Urban Dictionary",
+			"urbanDictionarySync": "Timing - Look up in Urban Dictionary",
 			"playPause": "Redare - Redare/pauză",
 			"seekForward": "Redare - Caută înainte 5s",
 			"seekBackward": "Redare - Caută înapoi 5 secunde",
@@ -699,6 +701,13 @@
 		"placeholder": "Cuvânt nou",
 		"applyToAll": "Aplică această înlocuire tuturor cuvintelor identice",
 		"caseSensitive": "Potrivire majusculă (potrivire exactă)"
+	},
+	"urbanDictionary": {
+		"title": "Urban Dictionary",
+		"slang": "slang dictionary",
+		"noDefinitions": "No definitions found for \"{word}\"",
+		"viewOnline": "View online",
+		"by": "By"
 	},
 	"timeShiftDialog": {
 		"title": "Schimbare timp",

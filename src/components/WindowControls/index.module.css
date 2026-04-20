@@ -4,8 +4,8 @@
 	width: 100%;
 	font-size: 12px;
 	user-select: none;
-	background-color: var(--color-panel-translucent);
-	backdrop-filter: blur(16px) saturate(160%);
+	background-color: var(--titlebar-bg, var(--color-panel-translucent));
+	backdrop-filter: blur(var(--custom-backdrop-blur, 16px)) saturate(160%);
 	border-bottom: 1px solid var(--gray-5);
 }
 

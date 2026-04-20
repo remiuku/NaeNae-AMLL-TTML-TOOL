@@ -50,6 +50,34 @@ import {
 	useCustomAccentAtom,
 	useCustomGradientAtom,
 	appFontAtom,
+	glassmorphismBlurAtom,
+	advancedPrimaryTextColorAtom,
+	advancedSecondaryTextColorAtom,
+	advancedWaveformColorAtom,
+	advancedWaveformProgressColorAtom,
+	advTitlebarBgAtom,
+	advSidebarBgAtom,
+	advSidebarActiveAtom,
+	advMenuHoverBgAtom,
+	advEditorBgAtom,
+	advActiveLineBgAtom,
+	advLineHoverBgAtom,
+	advChipBorderRadiusAtom,
+	advChipGapAtom,
+	advChipPaddingVerticalAtom,
+	advChipPaddingHorizontalAtom,
+	advRomanizationColorAtom,
+	advTranslationColorAtom,
+	advAudioBarBgAtom,
+	advAudioBarTextAtom,
+	advScrollbarColorAtom,
+	advDialogBgAtom,
+	advDialogBorderAtom,
+	advGlobalBorderRadiusAtom,
+	advGlobalBorderWidthAtom,
+	advShadowIntensityAtom,
+	advSelectionColorAtom,
+	advBackdropBlurAtom,
 	appFontWeightAtom,
 	appFontStyleAtom,
 	customFontDataAtom,
@@ -178,6 +206,36 @@ function App() {
 	const appFontStyle = useAtomValue(appFontStyleAtom);
 	const customFontData = useAtomValue(customFontDataAtom);
 	const customFontName = useAtomValue(customFontNameAtom);
+	const glassmorphismBlur = useAtomValue(glassmorphismBlurAtom);
+	const advPrimaryText = useAtomValue(advancedPrimaryTextColorAtom);
+	const advSecondaryText = useAtomValue(advancedSecondaryTextColorAtom);
+	const advWaveformColor = useAtomValue(advancedWaveformColorAtom);
+	const advWaveformProgress = useAtomValue(advancedWaveformProgressColorAtom);
+	
+	const vTitlebarBg = useAtomValue(advTitlebarBgAtom);
+	const vSidebarBg = useAtomValue(advSidebarBgAtom);
+	const vSidebarActive = useAtomValue(advSidebarActiveAtom);
+	const vMenuHover = useAtomValue(advMenuHoverBgAtom);
+	const vEditorBg = useAtomValue(advEditorBgAtom);
+	const vActiveLine = useAtomValue(advActiveLineBgAtom);
+	const vLineHover = useAtomValue(advLineHoverBgAtom);
+	const vChipRadius = useAtomValue(advChipBorderRadiusAtom);
+	const vChipGap = useAtomValue(advChipGapAtom);
+	const vChipPaddingV = useAtomValue(advChipPaddingVerticalAtom);
+	const vChipPaddingH = useAtomValue(advChipPaddingHorizontalAtom);
+	const vRomanColor = useAtomValue(advRomanizationColorAtom);
+	const vTransColor = useAtomValue(advTranslationColorAtom);
+	const vAudioBarBg = useAtomValue(advAudioBarBgAtom);
+	const vAudioBarText = useAtomValue(advAudioBarTextAtom);
+	const vScrollbar = useAtomValue(advScrollbarColorAtom);
+	const vDialogBg = useAtomValue(advDialogBgAtom);
+	const vDialogBorder = useAtomValue(advDialogBorderAtom);
+	const vGlobalRadius = useAtomValue(advGlobalBorderRadiusAtom);
+	const vGlobalBorderWidth = useAtomValue(advGlobalBorderWidthAtom);
+	const vShadow = useAtomValue(advShadowIntensityAtom);
+	const vSelection = useAtomValue(advSelectionColorAtom);
+	const vBackdropBlur = useAtomValue(advBackdropBlurAtom);
+
 	const boykisserMode = useAtomValue(boykisserModeAtom);
 
 	useEffect(() => {
@@ -234,6 +292,66 @@ function App() {
 		}
 		.radix-themes {
 			--default-font-family: ${appFont} !important;
+			--glass-blur: ${glassmorphismBlur}px !important;
+			--backdrop-blur: ${glassmorphismBlur}px !important;
+			${advPrimaryText ? `--gray-12: ${advPrimaryText} !important;` : ""}
+			${advSecondaryText ? `--gray-11: ${advSecondaryText} !important;` : ""}
+			${advWaveformColor ? `--adv-waveform-color: ${advWaveformColor} !important;` : ""}
+			${advWaveformProgress ? `--adv-waveform-progress: ${advWaveformProgress} !important;` : ""}
+			
+			${vTitlebarBg ? `--titlebar-bg: ${vTitlebarBg} !important;` : ""}
+			${vSidebarBg ? `--sidebar-bg: ${vSidebarBg} !important;` : ""}
+			${vSidebarActive ? `--sidebar-active: ${vSidebarActive} !important;` : ""}
+			${vMenuHover ? `--menu-hover: ${vMenuHover} !important;` : ""}
+			${vEditorBg ? `--editor-bg: ${vEditorBg} !important;` : ""}
+			${vActiveLine ? `--active-line-bg: ${vActiveLine} !important;` : ""}
+			${vLineHover ? `--line-hover-bg: ${vLineHover} !important;` : ""}
+			${vSelection ? `--selection-color: ${vSelection} !important;` : ""}
+			
+			--chip-radius: ${vChipRadius}px !important;
+			--chip-gap: ${vChipGap}px !important;
+			--chip-padding-v: ${vChipPaddingV}px !important;
+			--chip-padding-h: ${vChipPaddingH}px !important;
+			
+			${vRomanColor ? `--romanization-color: ${vRomanColor} !important;` : ""}
+			${vTransColor ? `--translation-color: ${vTransColor} !important;` : ""}
+			
+			${vAudioBarBg ? `--audio-bar-bg: ${vAudioBarBg} !important;` : ""}
+			${vAudioBarText ? `--audio-bar-text: ${vAudioBarText} !important;` : ""}
+			
+			${vScrollbar ? `--scrollbar-thumb-color: ${vScrollbar} !important;` : ""}
+			${vDialogBg ? `--dialog-bg: ${vDialogBg} !important;` : ""}
+			${vDialogBorder ? `--dialog-border: ${vDialogBorder} !important;` : ""}
+			
+			--global-radius: ${vGlobalRadius}px !important;
+			--global-border-width: ${vGlobalBorderWidth}px !important;
+			--shadow-intensity: ${vShadow} !important;
+			--custom-backdrop-blur: ${vBackdropBlur}px !important;
+
+			--radius-factor: ${vGlobalRadius / 12} !important;
+
+			/* Comprehensive Overrides */
+			${vTitlebarBg ? `--color-panel-translucent: ${vTitlebarBg} !important;` : ""}
+			${vEditorBg ? `--color-background: ${vEditorBg} !important;` : ""}
+			${vSelection ? `--accent-a5: ${vSelection} !important;` : ""}
+			${vDialogBg ? `--rt-color-panel-solid: ${vDialogBg} !important;` : ""}
+			
+			/* Shadow Scaling */
+			--shadow-intensity: ${vShadow};
+			--rt-shadow-color: rgba(0, 0, 0, calc(0.1 * var(--shadow-intensity)));
+			--shadow-1: 0 1px 2px var(--rt-shadow-color);
+			--shadow-2: 0 3px 6px var(--rt-shadow-color);
+			--shadow-3: 0 10px 20px var(--rt-shadow-color);
+			--shadow-4: 0 15px 30px var(--rt-shadow-color);
+			--shadow-5: 0 20px 40px var(--rt-shadow-color);
+			--shadow-6: 0 25px 50px var(--rt-shadow-color);
+
+			/* Sidebar & Global Navigation */
+			${vSidebarBg ? `--sidebar-bg: ${vSidebarBg} !important;` : ""}
+			${vSidebarActive ? `--sidebar-active: ${vSidebarActive} !important;` : ""}
+			${vMenuHover ? `--rt-menu-item-hover-bg: ${vMenuHover} !important;` : ""}
+			${vMenuHover ? `--menu-hover: ${vMenuHover} !important;` : ""}
+
 			font-family: var(--default-font-family);
 			font-weight: ${appFontWeight} !important;
 			font-style: ${appFontStyle} !important;
@@ -243,6 +361,34 @@ function App() {
 	}, [
 		customThemeStyles,
 		appFont,
+		glassmorphismBlur,
+		advPrimaryText,
+		advSecondaryText,
+		advWaveformColor,
+		advWaveformProgress,
+		vTitlebarBg,
+		vSidebarBg,
+		vSidebarActive,
+		vMenuHover,
+		vEditorBg,
+		vActiveLine,
+		vLineHover,
+		vChipRadius,
+		vChipGap,
+		vChipPaddingV,
+		vChipPaddingH,
+		vRomanColor,
+		vTransColor,
+		vAudioBarBg,
+		vAudioBarText,
+		vScrollbar,
+		vDialogBg,
+		vDialogBorder,
+		vGlobalRadius,
+		vGlobalBorderWidth,
+		vShadow,
+		vSelection,
+		vBackdropBlur,
 		appFontWeight,
 		appFontStyle,
 		customFontData,

@@ -35,8 +35,8 @@ export const RibbonBar = memo(
 					borderRight: "none",
 					borderTop: "none",
 					borderBottom: "1px solid var(--gray-5)",
-					backgroundColor: "var(--color-panel-translucent)",
-					backdropFilter: "blur(16px) saturate(160%)",
+					backgroundColor: "var(--titlebar-bg, var(--color-panel-translucent))",
+					backdropFilter: "blur(var(--custom-backdrop-blur, 16px)) saturate(160%)",
 				}}
 				ref={ref}
 			>

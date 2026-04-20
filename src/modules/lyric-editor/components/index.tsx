@@ -147,6 +147,7 @@ export const LyricLinesView: FC = forwardRef<HTMLDivElement>((_props, ref) => {
 					padding: toolMode === ToolMode.Sync ? "20vh 0" : undefined,
 					maxHeight: "100%",
 					overflowY: "auto",
+					backgroundColor: "var(--editor-bg, transparent)",
 				}}
 				ref={viewElRef}
 			>
