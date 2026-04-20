@@ -122,12 +122,15 @@ class AudioEngine extends EventTarget {
 		return this._audioEl;
 	}
 
+	private _mediaSourceNode: MediaElementAudioSourceNode | null = null;
+	
 	/** Connect AudioElement to AudioContext, called after load finished */
 	private connectAudioToContext() {
 		if (!this._audioEl || !this.ctx || this._audioEl.src === "") return;
+		if (this._mediaSourceNode) return; // already connected!
 		try {
-			const source = this.ctx.createMediaElementSource(this._audioEl);
-			source?.connect(this.eqEntryPoint);
+			this._mediaSourceNode = this.ctx.createMediaElementSource(this._audioEl);
+			this._mediaSourceNode.connect(this.eqEntryPoint);
 			log("AudioElement connected to AudioContext (via EQ)");
 		} catch (e) {
 			log("Failed to connect AudioElement:", e);
@@ -142,10 +145,16 @@ class AudioEngine extends EventTarget {
 		}
 	}
 
+	private _listenersSetup = false;
+	
 	/** Link audio element events into engine events */
 	private setupAudioListeners() {
+		if (this._listenersSetup) return;
 		const audioEl = this._audioEl;
 		if (!audioEl) return;
+		
+		this._listenersSetup = true;
+		
 		const events = {
 			play: "music-resume",
 			pause: "music-pause",
@@ -377,6 +386,8 @@ class AudioEngine extends EventTarget {
 
 					audioEl.onloadedmetadata = null;
 					audioEl.onerror = null;
+
+					audioEl.playbackRate = this._musicPlayBackRate;
 
 					this.dispatchEvent(new Event("music-load"));
 					resolve(audioEl);
