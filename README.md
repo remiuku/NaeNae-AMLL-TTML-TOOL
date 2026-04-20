@@ -10,6 +10,8 @@
 <img width="1312" alt="image" src="https://github.com/user-attachments/assets/929eefee-ebda-43db-ad04-c0f099077053">
 <img width="1312" alt="image" src="https://github.com/user-attachments/assets/7c80902e-45a9-42ae-b980-f5500069acb8">
 
+[![Crowdin](https://badges.crowdin.net/very-cool-ttml-tool/localized.svg)](https://crowdin.com/project/very-cool-ttml-tool)
+
 </div>
 
 ## 使用
