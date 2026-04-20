@@ -457,6 +457,7 @@
 	"audioPanel": {
 		"volume": "音量",
 		"playbackRate": "回放速度",
+		"preservesPitch": "Preserve Pitch",
 		"clickToLoadMusic": "点击图标按钮以加载音乐",
 		"playPause": "播放 / 暂停音乐",
 		"expandSpectrogram": "展开 / 折叠加频谱图"

@@ -457,6 +457,7 @@
 	"audioPanel": {
 		"volume": "Volume",
 		"playbackRate": "Afspeel tarief",
+		"preservesPitch": "Preserve Pitch",
 		"clickToLoadMusic": "Klik op de icoon knop om muziek te laden",
 		"playPause": "Muziek afspelen / onderbreken",
 		"expandSpectrogram": "Uitvouwen / samenvouwen spectrogram"

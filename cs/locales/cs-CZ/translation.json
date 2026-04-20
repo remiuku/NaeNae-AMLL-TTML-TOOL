@@ -457,6 +457,7 @@
 	"audioPanel": {
 		"volume": "Hlasitost",
 		"playbackRate": "Rychlost přehrávání",
+		"preservesPitch": "Preserve Pitch",
 		"clickToLoadMusic": "Klikněte na ikonu pro načtení hudby",
 		"playPause": "Přehrát / pozastavit hudbu",
 		"expandSpectrogram": "Rozbalit / sbalit spektrogram"

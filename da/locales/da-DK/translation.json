@@ -457,6 +457,7 @@
 	"audioPanel": {
 		"volume": "Lydstyrke",
 		"playbackRate": "Afspilningshastighed",
+		"preservesPitch": "Preserve Pitch",
 		"clickToLoadMusic": "Klik på ikonet for at indlæse musik",
 		"playPause": "Afspil / pause musik",
 		"expandSpectrogram": "Udvid / skjul spektrogram"

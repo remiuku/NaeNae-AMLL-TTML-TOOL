@@ -457,6 +457,7 @@
 	"audioPanel": {
 		"volume": "Volum",
 		"playbackRate": "Rata de redare",
+		"preservesPitch": "Preserve Pitch",
 		"clickToLoadMusic": "Faceți clic pe butonul pictogramă pentru a încărca muzica",
 		"playPause": "Redare / pauză muzică",
 		"expandSpectrogram": "Extindere / colaps spectrogram"

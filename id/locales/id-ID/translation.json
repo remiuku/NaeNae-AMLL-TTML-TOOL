@@ -457,6 +457,7 @@
 	"audioPanel": {
 		"volume": "Volume",
 		"playbackRate": "Kecepatan Putar",
+		"preservesPitch": "Preserve Pitch",
 		"clickToLoadMusic": "Klik ikon untuk memuat musik",
 		"playPause": "Putar / Jeda Musik",
 		"expandSpectrogram": "Buka / Tutup Spektrogram"
