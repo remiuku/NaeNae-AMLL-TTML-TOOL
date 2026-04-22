@@ -274,7 +274,7 @@ export const cmdPlaybackRateReset = registerCommand(
 
 export const cmdDuplicatePaste = registerCommand(
 	"duplicatePaste",
-	[CONTROL_KEY, "KeyM"],
+	[CONTROL_KEY, "KeyL"],
 	t("settingsDialog.keybindings.duplicatePaste"),
 	"Edit",
 );
