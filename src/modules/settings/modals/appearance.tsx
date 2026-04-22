@@ -1,23 +1,20 @@
 import {
-	ArrowReset24Regular,
-	Color24Regular,
-	Sparkle24Regular,
-	Target24Regular,
-	TextFont24Regular,
-	Settings24Regular,
-	Edit24Regular,
-	Wrench24Regular,
-	Checkmark24Regular,
-	Navigation24Regular,
-	PanelBottom24Regular,
-	Grid24Regular,
+	ContentView24Regular,
+	History24Regular,
+	Keyboard12324Regular,
+	LocalLanguage24Regular,
 	PaddingLeft24Regular,
-	Shapes24Regular,
-	VideoBackgroundEffect24Regular,
-	Ruler24Regular,
+	PaddingRight24Regular,
 	Save24Regular,
-	Delete24Regular,
-	Folder24Regular,
+	Speaker224Regular,
+	Stack24Regular,
+	Timer24Regular,
+	TopSpeed24Regular,
+	VideoBackgroundEffect24Regular,
+	Sparkle24Regular,
+	TimeAndWeather24Regular,
+	ErrorCircle24Regular,
+	TextT24Regular,
 } from "@fluentui/react-icons";
 import {
 	Box,
@@ -28,6 +25,7 @@ import {
 	Heading,
 	IconButton,
 	Popover,
+	RadioGroup,
 	SegmentedControl,
 	Slider,
 	Switch,
@@ -38,6 +36,7 @@ import {
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Reorder, AnimatePresence, motion } from "framer-motion";
 import { backgroundGradients } from "$/modules/settings/states/gradients";
 import {
 	accentColorAtom,
@@ -85,6 +84,8 @@ import {
 	advBackdropBlurAtom,
 	appearancePresetsAtom,
 	type AppearancePreset,
+	appLayoutOrderAtom,
+	vRibbonPositionAtom,
 } from "$/modules/settings/states/index.ts";
 import { fontSelectionDialogAtom } from "$/states/dialogs.ts";
 import { isDarkThemeAtom } from "$/states/main.ts";
@@ -195,6 +196,8 @@ export const SettingsAppearanceTab = () => {
 	const [vSelection, setVSelection] = useAtom(advSelectionColorAtom);
 	const [vBackdrop, setVBackdrop] = useAtom(advBackdropBlurAtom);
 	const [presets, setPresets] = useAtom(appearancePresetsAtom);
+	const [layoutOrder, setLayoutOrder] = useAtom(appLayoutOrderAtom);
+	const [vRibbonPos, setVRibbonPos] = useAtom(vRibbonPositionAtom);
 	const [newPresetName, setNewPresetName] = useState("");
 
 	const appFont = useAtomValue(appFontAtom);
@@ -219,7 +222,8 @@ export const SettingsAppearanceTab = () => {
 				vTitlebarBg, vSidebarBg, vSidebarActive, vMenuHover, vEditorBg, vActiveLine, vLineHover, vSelection,
 				vChipRadius, vChipGap, vChipPaddingV, vChipPaddingH, vRomanColor, vTransColor,
 				vAudioBarBg, vAudioBarText, vScrollbar, vDialogBg, vDialogBorder,
-				vGlobalRadius, vGlobalBorderWidth, vShadow, vBackdrop
+				vGlobalRadius, vGlobalBorderWidth, vShadow, vBackdrop,
+				layoutOrder, vRibbonPos
 			}
 		};
 		setPresets([...presets, newPreset]);
@@ -277,6 +281,8 @@ export const SettingsAppearanceTab = () => {
 		if (s.vGlobalBorderWidth !== undefined) setVGlobalBorderWidth(Number(s.vGlobalBorderWidth));
 		if (s.vShadow !== undefined) setVShadow(Number(s.vShadow));
 		if (s.vBackdrop !== undefined) setVBackdrop(Number(s.vBackdrop));
+		if (s.layoutOrder !== undefined) setLayoutOrder(s.layoutOrder);
+		if (s.vRibbonPos !== undefined) setVRibbonPos(s.vRibbonPos);
 
 		// Small timeout to clear the flash of "active" state if desired, 
 		// but keeping it visible helps user know it worked.
@@ -311,7 +317,7 @@ export const SettingsAppearanceTab = () => {
 			</Flex>
 
 			<Flex direction="column" gap="3">
-				<Heading size="4"><Folder24Regular /> {t("settings.appearance.presets.title", "Appearance Presets")}</Heading>
+				<Heading size="4"><Save24Regular /> {t("settings.appearance.presets.title", "Appearance Presets")}</Heading>
 				<Card>
 					<Flex direction="column" gap="3">
 						<Flex gap="3" align="center">
@@ -342,10 +348,10 @@ export const SettingsAppearanceTab = () => {
 											</Box>
 											<Flex gap="1">
 												<IconButton size="1" variant="soft" onClick={() => handleLoadPreset(p)} title="Load Preset">
-													<Target24Regular />
+													<Timer24Regular />
 												</IconButton>
 												<IconButton size="1" variant="ghost" color="red" onClick={() => setPresets(presets.filter(pr => pr.id !== p.id))} title="Delete Preset">
-													<Delete24Regular />
+													<History24Regular />
 												</IconButton>
 											</Flex>
 										</Flex>
@@ -367,7 +373,7 @@ export const SettingsAppearanceTab = () => {
 				<Card>
 					<Flex direction="column" gap="4">
 						<Flex gap="3" align="start">
-							<Color24Regular />
+							<Sparkle24Regular />
 							<Box flexGrow="1">
 								<Flex direction="column" gap="3">
 									<Flex align="center" justify="between">
@@ -701,7 +707,7 @@ export const SettingsAppearanceTab = () => {
 													<Popover.Root>
 														<Popover.Trigger>
 															<Button variant="soft" style={{ flexGrow: 1 }}>
-																<Target24Regular />
+																<Timer24Regular />
 																{t(
 																	"settings.appearance.gradientPositionSettings",
 																	"Adjust Center & Angle",
@@ -791,7 +797,7 @@ export const SettingsAppearanceTab = () => {
 															setCustomGradientAngle(45);
 														}}
 													>
-														<ArrowReset24Regular />
+														<History24Regular />
 													</IconButton>
 												</Flex>
 												<Box
@@ -859,7 +865,7 @@ export const SettingsAppearanceTab = () => {
 							style={{ cursor: "pointer" }}
 							onClick={() => setIsFontSelectionOpen(true)}
 						>
-							<TextFont24Regular />
+							<TextT24Regular />
 							{t("settings.appearance.changeFont", "Change Font...")}
 						</Button>
 					</Flex>
@@ -874,7 +880,7 @@ export const SettingsAppearanceTab = () => {
 						<Card>
 							<Flex direction="column" gap="4">
 								<Flex gap="3" align="start">
-									<Edit24Regular />
+									<TextT24Regular />
 									<Box flexGrow="1">
 										<Flex direction="column" gap="3">
 											<Flex align="center" justify="between">
@@ -900,7 +906,7 @@ export const SettingsAppearanceTab = () => {
 					</Flex>
 
 					<Flex direction="column" gap="3">
-						<Heading size="4"><Navigation24Regular /> {t("settings.appearance.advanced.workspace", "Workspace Theme")}</Heading>
+						<Heading size="4"><ContentView24Regular /> {t("settings.appearance.advanced.workspace", "Workspace Theme")}</Heading>
 						<Card>
 							<Grid columns="2" gap="3">
 								<AdvancedColorItem label="Titlebar Background" value={vTitlebarBg} onChange={setVTitlebarBg} />
@@ -912,7 +918,7 @@ export const SettingsAppearanceTab = () => {
 					</Flex>
 
 					<Flex direction="column" gap="3">
-						<Heading size="4"><Grid24Regular /> {t("settings.appearance.advanced.editor", "Editor Layout")}</Heading>
+						<Heading size="4"><Stack24Regular /> {t("settings.appearance.advanced.editor", "Editor Layout")}</Heading>
 						<Card>
 							<Flex direction="column" gap="4">
 								<Grid columns="2" gap="3">
@@ -921,8 +927,8 @@ export const SettingsAppearanceTab = () => {
 									<AdvancedColorItem label="Line Hover Effect" value={vLineHover} onChange={setVLineHover} />
 									<AdvancedColorItem label="Selection Highlight" value={vSelection} onChange={setVSelection} />
 								</Grid>
-								<AdvancedSliderItem label="Chip Border Radius" icon={<Shapes24Regular />} value={vChipRadius} min={0} max={32} onChange={setVChipRadius} unit="px" />
-								<AdvancedSliderItem label="Chip Spacing (Gap)" icon={<Grid24Regular />} value={vChipGap} min={0} max={32} onChange={setVChipGap} unit="px" />
+								<AdvancedSliderItem label="Chip Border Radius" icon={<Stack24Regular />} value={vChipRadius} min={0} max={32} onChange={setVChipRadius} unit="px" />
+								<AdvancedSliderItem label="Chip Spacing (Gap)" icon={<Stack24Regular />} value={vChipGap} min={0} max={32} onChange={setVChipGap} unit="px" />
 								<AdvancedSliderItem label="Chip Padding (V)" icon={<PaddingLeft24Regular />} value={vChipPaddingV} min={0} max={32} onChange={setVChipPaddingV} unit="px" />
 								<AdvancedSliderItem label="Chip Padding (H)" icon={<PaddingLeft24Regular />} value={vChipPaddingH} min={0} max={32} onChange={setVChipPaddingH} unit="px" />
 							</Flex>
@@ -930,7 +936,7 @@ export const SettingsAppearanceTab = () => {
 					</Flex>
 
 					<Flex direction="column" gap="3">
-						<Heading size="4"><Wrench24Regular /> {t("settings.appearance.advanced.audioVisuals", "Playback & Visuals")}</Heading>
+						<Heading size="4"><VideoBackgroundEffect24Regular /> {t("settings.appearance.advanced.audioVisuals", "Playback & Visuals")}</Heading>
 						<Card>
 							<Flex direction="column" gap="4">
 								<Grid columns="2" gap="3">
@@ -946,7 +952,7 @@ export const SettingsAppearanceTab = () => {
 					</Flex>
 
 					<Flex direction="column" gap="3">
-						<Heading size="4"><Settings24Regular /> {t("settings.appearance.advanced.global", "Global Design System")}</Heading>
+						<Heading size="4"><Sparkle24Regular /> {t("settings.appearance.advanced.global", "Global Design System")}</Heading>
 						<Card>
 							<Flex direction="column" gap="4">
 								<Grid columns="2" gap="3">
@@ -954,10 +960,57 @@ export const SettingsAppearanceTab = () => {
 									<AdvancedColorItem label="Dialog Background" value={vDialogBg} onChange={setVDialogBg} />
 									<AdvancedColorItem label="Dialog Border" value={vDialogBorder} onChange={setVDialogBorder} />
 								</Grid>
-								<AdvancedSliderItem label="Global Border Radius" icon={<Shapes24Regular />} value={vGlobalRadius} min={0} max={40} onChange={setVGlobalRadius} unit="px" />
-								<AdvancedSliderItem label="Global Border Width" icon={<Ruler24Regular />} value={vGlobalBorderWidth} min={0} max={8} onChange={setVGlobalBorderWidth} unit="px" />
+								<AdvancedSliderItem label="Global Border Radius" icon={<Stack24Regular />} value={vGlobalRadius} min={0} max={40} onChange={setVGlobalRadius} unit="px" />
+								<AdvancedSliderItem label="Global Border Width" icon={<Timer24Regular />} value={vGlobalBorderWidth} min={0} max={8} onChange={setVGlobalBorderWidth} unit="px" />
 								<AdvancedSliderItem label="Shadow Intensity" icon={<VideoBackgroundEffect24Regular />} value={vShadow} min={0} max={10} step={0.1} onChange={setVShadow} unit="" />
 								<AdvancedSliderItem label="Backdrop Blur" icon={<Sparkle24Regular />} value={vBackdrop} min={0} max={100} onChange={setVBackdrop} unit="px" />
+							</Flex>
+						</Card>
+					</Flex>
+
+					<Flex direction="column" gap="3">
+						<Heading size="4"><Stack24Regular /> {t("settings.appearance.layout.title", "Application Layout")}</Heading>
+						<Card>
+							<Flex direction="column" gap="4">
+								<Flex direction="column" gap="1">
+									<Text weight="bold">{t("settings.appearance.layout.order", "Element Order")}</Text>
+									<Text size="1" color="gray">{t("settings.appearance.layout.orderDesc", "Drag to reorder elements. Some positions may be limited by constraints.")}</Text>
+								</Flex>
+
+								<Reorder.Group axis="y" values={layoutOrder} onReorder={setLayoutOrder} style={{ display: "flex", flexDirection: "column", gap: "8px", listStyle: "none", padding: 0 }}>
+									{layoutOrder.map((item) => (
+										<Reorder.Item key={item} value={item} style={{ cursor: "grab" }}>
+											<Card size="1">
+												<Flex align="center" gap="3">
+													<Stack24Regular style={{ color: "var(--gray-8)" }} />
+													<Box flexGrow="1">
+														<Text size="2" weight="bold">
+														{item === "titlebar" && <><ContentView24Regular /> {t("settings.appearance.layout.titlebar", "Title Bar")}</>}
+														{item === "ribbonbar" && <><Stack24Regular style={{ transform: "rotate(180deg)" }} /> {t("settings.appearance.layout.ribbonbar", "Toolbar (Ribbon)")}</>}
+														{item === "editor" && <><TextT24Regular /> {t("settings.appearance.layout.editor", "Main Editor Area")}</>}
+														{item === "audio-controls" && <><Speaker224Regular /> {t("settings.appearance.layout.audio", "Audio Controls")}</>}
+														</Text>
+													</Box>
+												</Flex>
+											</Card>
+										</Reorder.Item>
+									))}
+								</Reorder.Group>
+
+								<Flex direction="column" gap="2" mt="2">
+									<Text size="2" weight="bold">{t("settings.appearance.layout.ribbonPos", "Toolbar Orientation")}</Text>
+									<SegmentedControl.Root value={vRibbonPos} onValueChange={(v) => setVRibbonPos(v as any)}>
+										<SegmentedControl.Item value="top">{t("settings.appearance.layout.pos.top", "Top")}</SegmentedControl.Item>
+										<SegmentedControl.Item value="bottom">{t("settings.appearance.layout.pos.bottom", "Bottom")}</SegmentedControl.Item>
+										<SegmentedControl.Item value="left">{t("settings.appearance.layout.pos.left", "Left")}</SegmentedControl.Item>
+										<SegmentedControl.Item value="right">{t("settings.appearance.layout.pos.right", "Right")}</SegmentedControl.Item>
+									</SegmentedControl.Root>
+									{(vRibbonPos === "left" || vRibbonPos === "right") && (
+										<Text size="1" color="amber">
+											{t("settings.appearance.layout.sidebarWarning", "Note: Sidebar mode is experimental and may look different.")}
+										</Text>
+									)}
+								</Flex>
 							</Flex>
 						</Card>
 					</Flex>
@@ -965,7 +1018,7 @@ export const SettingsAppearanceTab = () => {
 					<Card size="2">
 						<Flex direction="column" gap="2">
 							<Flex align="center" gap="2" color="gray">
-								<Settings24Regular />
+								<Sparkle24Regular />
 								<Text size="2">{t("settings.appearance.advanced.masterResetNote", "This will reset all 20+ granular overrides.")}</Text>
 							</Flex>
 							<Button variant="soft" color="red" onClick={() => {
@@ -978,8 +1031,9 @@ export const SettingsAppearanceTab = () => {
 								setVAudioBarBg(""); setVAudioBarText("");
 								setVScrollbar(""); setVDialogBg(""); setVDialogBorder("");
 								setVGlobalRadius(12); setVGlobalBorderWidth(1); setVShadow(1); setVBackdrop(16);
+								setLayoutOrder(["titlebar", "ribbonbar", "editor", "audio-controls"]); setVRibbonPos("top");
 							}}>
-								<ArrowReset24Regular />
+								<History24Regular />
 								{t("settings.appearance.advanced.resetMaster", "Master Reset Advanced Config")}
 							</Button>
 						</Flex>
@@ -998,7 +1052,7 @@ const AdvancedColorItem = ({ label, value, onChange }: { label: string, value: s
 			<Text size="1" color="gray" weight="bold">{label}</Text>
 			{value && (
 				<IconButton size="1" variant="ghost" onClick={() => onChange("")}>
-					<ArrowReset24Regular />
+					<History24Regular />
 				</IconButton>
 			)}
 		</Flex>

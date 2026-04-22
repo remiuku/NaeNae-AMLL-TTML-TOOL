@@ -294,6 +294,16 @@ export const advShadowIntensityAtom = atomWithStorage("advShadowIntensity", 1);
 export const advSelectionColorAtom = atomWithStorage("advSelectionColor", "");
 export const advBackdropBlurAtom = atomWithStorage("advBackdropBlur", 16);
 
+export const appLayoutOrderAtom = atomWithStorage<string[]>(
+	"appLayoutOrder",
+	["titlebar", "ribbonbar", "editor", "audio-controls"],
+);
+
+export const vRibbonPositionAtom = atomWithStorage<"top" | "bottom" | "left" | "right">(
+	"vRibbonPosition",
+	"top",
+);
+
 export interface AppearancePreset {
 	id: string;
 	name: string;

@@ -11,7 +11,7 @@
 
 import { Checkbox, Grid, SegmentedControl, Text, TextField } from "@radix-ui/themes";
 import { useAtom } from "jotai";
-import { forwardRef } from "react";
+import { type FC, forwardRef } from "react";
 import { useTranslation } from "react-i18next";
 import {
 	PreviewModeType,
@@ -25,8 +25,8 @@ import {
 } from "$/modules/settings/states/preview";
 import { RibbonFrame, RibbonSection } from "./common";
 
-export const PreviewModeRibbonBar = forwardRef<HTMLDivElement>(
-	(_props, ref) => {
+export const PreviewModeRibbonBar: FC<{ isSidebar?: boolean }> = forwardRef<HTMLDivElement, { isSidebar?: boolean }>(
+	({ isSidebar }, ref) => {
 		const [previewModeType, setPreviewModeType] = useAtom(previewModeTypeAtom);
 		const [showTranslationLine, setShowTranslationLine] = useAtom(
 			showTranslationLinesAtom,
@@ -42,8 +42,8 @@ export const PreviewModeRibbonBar = forwardRef<HTMLDivElement>(
 		const { t } = useTranslation();
 
 		return (
-			<RibbonFrame ref={ref}>
-				<RibbonSection label={t("ribbonBar.previewMode.mode", "模式")}>
+			<RibbonFrame ref={ref} isSidebar={isSidebar}>
+				<RibbonSection isSidebar={isSidebar} label={t("ribbonBar.previewMode.mode", "模式")}>
 					<SegmentedControl.Root
 						value={previewModeType}
 						onValueChange={(v) => setPreviewModeType(v as PreviewModeType)}
@@ -62,7 +62,7 @@ export const PreviewModeRibbonBar = forwardRef<HTMLDivElement>(
 						</SegmentedControl.Item>
 					</SegmentedControl.Root>
 				</RibbonSection>
-				<RibbonSection label={t("ribbonBar.previewMode.lyrics", "歌词")}>
+				<RibbonSection isSidebar={isSidebar} label={t("ribbonBar.previewMode.lyrics", "歌词")}>
 					<Grid columns="max-content auto" gap="2" gapY="1" flexGrow="1" align="center">
 						<Text wrap="nowrap" size="1" style={{ color: "var(--accent-11)" }}>
 							{t("ribbonBar.previewMode.showTranslation", "显示翻译")}
@@ -87,7 +87,7 @@ export const PreviewModeRibbonBar = forwardRef<HTMLDivElement>(
 						/>
 					</Grid>
 				</RibbonSection>
-				<RibbonSection label={t("ribbonBar.previewMode.word", "单词")}>
+				<RibbonSection isSidebar={isSidebar} label={t("ribbonBar.previewMode.word", "单词")}>
 					<Grid columns="max-content auto" gap="2" gapY="1" flexGrow="1" align="center">
 						<Text wrap="nowrap" size="1" style={{ color: "var(--accent-11)" }}>
 							{t("ribbonBar.previewMode.fadeWidth", "过渡宽度")}
@@ -109,7 +109,7 @@ export const PreviewModeRibbonBar = forwardRef<HTMLDivElement>(
 						/>
 					</Grid>
 				</RibbonSection>
-				<RibbonSection label={t("ribbonBar.previewMode.render", "渲染")}>
+				<RibbonSection isSidebar={isSidebar} label={t("ribbonBar.previewMode.render", "渲染")}>
 					<Grid columns="max-content auto" gap="2" gapY="1" flexGrow="1" align="center">
 						<Text wrap="nowrap" size="1" style={{ color: "var(--accent-11)" }}>
 							{"V-Sync"}
@@ -120,7 +120,7 @@ export const PreviewModeRibbonBar = forwardRef<HTMLDivElement>(
 						/>
 					</Grid>
 				</RibbonSection>
-				<RibbonSection label={"Dev"}>
+				<RibbonSection isSidebar={isSidebar} label={"Dev"}>
 					<Grid columns="max-content auto" gap="2" gapY="1" flexGrow="1" align="center">
 						<Text wrap="nowrap" size="1" style={{ color: "var(--accent-11)" }}>
 							{"Show FPS"}

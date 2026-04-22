@@ -880,14 +880,14 @@ const PhoneticSection = () => {
 	);
 };
 
-export const EditModeRibbonBar: FC = forwardRef<HTMLDivElement>(
-	(_props, ref) => {
+export const EditModeRibbonBar: FC<{ isSidebar?: boolean }> = forwardRef<HTMLDivElement, { isSidebar?: boolean }>(
+	({ isSidebar }, ref) => {
 		const editLyricLines = useSetImmerAtom(lyricLinesAtom);
 		const { t } = useTranslation();
 
 		return (
-			<RibbonFrame ref={ref}>
-				<RibbonSection label={t("ribbonBar.editMode.new", "新建")}>
+			<RibbonFrame ref={ref} isSidebar={isSidebar}>
+				<RibbonSection label={t("ribbonBar.editMode.new", "新建")} isSidebar={isSidebar}>
 					<Grid columns="1" gap="1" gapY="1" flexGrow="1" align="center">
 						<Button
 							size="1"
@@ -902,7 +902,7 @@ export const EditModeRibbonBar: FC = forwardRef<HTMLDivElement>(
 						</Button>
 					</Grid>
 				</RibbonSection>
-				<RibbonSection label={t("ribbonBar.editMode.lineTiming", "行时间戳")}>
+				<RibbonSection isSidebar={isSidebar} label={t("ribbonBar.editMode.lineTiming", "行时间戳")}>
 					<Grid columns="max-content 1fr" gap="2" gapY="1" flexGrow="1" align="center">
 						<EditField
 							label={t("ribbonBar.editMode.startTime", "起始时间")}
@@ -918,7 +918,7 @@ export const EditModeRibbonBar: FC = forwardRef<HTMLDivElement>(
 						/>
 					</Grid>
 				</RibbonSection>
-				<RibbonSection label={t("ribbonBar.editMode.lineProperties", "行属性")}>
+				<RibbonSection isSidebar={isSidebar} label={t("ribbonBar.editMode.lineProperties", "行属性")}>
 					<Grid columns="max-content max-content" gap="4" gapY="1" flexGrow="1" align="center">
 						<CheckboxField
 							label={t("ribbonBar.editMode.bgLyric", "背景歌词")}
@@ -940,8 +940,8 @@ export const EditModeRibbonBar: FC = forwardRef<HTMLDivElement>(
 						/>
 					</Grid>
 				</RibbonSection>
-				<PhoneticSection />
-				<RibbonSection label={t("ribbonBar.editMode.wordTiming", "词时间戳")}>
+				<PhoneticSection isSidebar={isSidebar} />
+				<RibbonSection isSidebar={isSidebar} label={t("ribbonBar.editMode.wordTiming", "词时间戳")}>
 					<Grid columns="max-content 1fr" gap="2" gapY="1" flexGrow="1" align="center">
 						<EditField
 							label={t("ribbonBar.editMode.startTime", "起始时间")}
@@ -970,6 +970,7 @@ export const EditModeRibbonBar: FC = forwardRef<HTMLDivElement>(
 					</Grid>
 				</RibbonSection>
 				<RibbonSection
+					isSidebar={isSidebar}
 					label={t("ribbonBar.editMode.wordProperties", "单词属性")}
 				>
 					<Grid columns="max-content 1fr" gap="2" gapY="1" flexGrow="1" align="center">
@@ -996,6 +997,7 @@ export const EditModeRibbonBar: FC = forwardRef<HTMLDivElement>(
 					</Grid>
 				</RibbonSection>
 				<RibbonSection
+					isSidebar={isSidebar}
 					label={t("ribbonBar.editMode.secondaryContent", "次要内容")}
 				>
 					<Grid columns="max-content 1fr" gap="2" gapY="1" flexGrow="1" align="center">
@@ -1015,7 +1017,7 @@ export const EditModeRibbonBar: FC = forwardRef<HTMLDivElement>(
 						/>
 					</Grid>
 				</RibbonSection>
-				<RibbonSection label={t("ribbonBar.editMode.layoutMode", "布局模式")}>
+				<RibbonSection label={t("ribbonBar.editMode.layoutMode", "布局模式")} isSidebar={isSidebar}>
 					<EditModeField
 						simpleModeLabel={t(
 							"settings.common.layoutModeOptions.simple",
@@ -1029,10 +1031,11 @@ export const EditModeRibbonBar: FC = forwardRef<HTMLDivElement>(
 				</RibbonSection>
 				<RibbonSection
 					label={t("ribbonBar.editMode.auxiliaryLineDisplay", "辅助行显示")}
+					isSidebar={isSidebar}
 				>
 					<AuxiliaryDisplayField />
 				</RibbonSection>
-				<RibbonSection label={t("ribbonBar.editMode.tools", "工具")}>
+				<RibbonSection label={t("ribbonBar.editMode.tools", "工具")} isSidebar={isSidebar}>
 					<GrammarCheckButton />
 				</RibbonSection>
 			</RibbonFrame>

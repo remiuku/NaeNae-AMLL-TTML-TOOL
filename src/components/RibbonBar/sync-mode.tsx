@@ -88,8 +88,8 @@ const EmptyBeatField = () => {
 	);
 };
 
-export const SyncModeRibbonBar: FC = forwardRef<HTMLDivElement>(
-	(_props, ref) => {
+export const SyncModeRibbonBar: FC<{ isSidebar?: boolean }> = forwardRef<HTMLDivElement, { isSidebar?: boolean }>(
+	({ isSidebar }, ref) => {
 		const [visualizeTimestampUpdate, setVisualizeTimestampUpdate] = useAtom(
 			visualizeTimestampUpdateAtom,
 		);
@@ -133,8 +133,9 @@ export const SyncModeRibbonBar: FC = forwardRef<HTMLDivElement>(
 
 		return (
 			<>
-				<RibbonFrame ref={ref}>
+				<RibbonFrame ref={ref} isSidebar={isSidebar}>
 					<RibbonSection
+						isSidebar={isSidebar}
 						label={t("ribbonBar.syncMode.currentEmptyBeat", "当前空拍")}
 					>
 						<Grid
@@ -148,6 +149,7 @@ export const SyncModeRibbonBar: FC = forwardRef<HTMLDivElement>(
 						</Grid>
 					</RibbonSection>
 					<RibbonSection
+						isSidebar={isSidebar}
 						label={t("ribbonBar.syncMode.syncAdjustment", "打轴调整")}
 					>
 						<Grid
@@ -183,6 +185,7 @@ export const SyncModeRibbonBar: FC = forwardRef<HTMLDivElement>(
 						</Grid>
 					</RibbonSection>
 					<RibbonSection
+						isSidebar={isSidebar}
 						label={t("ribbonBar.syncMode.syncLevel", "Sync Level")}
 					>
 						<Flex
@@ -208,6 +211,7 @@ export const SyncModeRibbonBar: FC = forwardRef<HTMLDivElement>(
 						</Flex>
 					</RibbonSection>
 					<RibbonSection
+						isSidebar={isSidebar}
 						label={t("ribbonBar.syncMode.assistSettings", "辅助设置")}
 					>
 						<Grid
@@ -295,6 +299,7 @@ export const SyncModeRibbonBar: FC = forwardRef<HTMLDivElement>(
 						</Grid>
 					</RibbonSection>
 					<RibbonSection
+						isSidebar={isSidebar}
 						label={t("ribbonBar.syncMode.displayOptions", "显示选项")}
 					>
 						<Grid
@@ -371,6 +376,7 @@ export const SyncModeRibbonBar: FC = forwardRef<HTMLDivElement>(
 						</Grid>
 					</RibbonSection>
 					<RibbonSection
+						isSidebar={isSidebar}
 						label={t("ribbonBar.syncMode.keyBindingReference", "打轴键位速查")}
 					>
 						<Flex gap="4">
@@ -410,6 +416,7 @@ export const SyncModeRibbonBar: FC = forwardRef<HTMLDivElement>(
 						</Flex>
 					</RibbonSection>
 					<RibbonSection
+						isSidebar={isSidebar}
 						label={t("ribbonBar.editMode.previewPanel", "预览面板")}
 					>
 						<Flex direction="column" align="center" gap="1">

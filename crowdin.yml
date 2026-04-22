@@ -3,17 +3,19 @@ api_token_env: CROWDIN_PERSONAL_TOKEN
 base_path: .
 preserve_hierarchy: true
 files:
-  - source: en/locales/en-US/translation.json
+  - source: src/i18n/locales/en-US/translation.json
     dest: /translation.json
-    translation: "%two_letters_code%/locales/%locale%/translation.json"
+    translation: "src/i18n/locales/%locale%/translation.json"
     languages_mapping:
       two_letters_code:
         cs: cs
         da: da
         es-ES: es-ES
+        fi: fi
         fr: fr
         id: id
         it: it
+        nl: nl
         pl: pl
         pt-BR: pt-BR
         ro: ro
@@ -27,9 +29,11 @@ files:
         cs: cs-CZ
         da: da-DK
         es-ES: es-ES
+        fi: fi-FI
         fr: fr-FR
         id: id-ID
         it: it-IT
+        nl: nl-NL
         pl: pl-PL
         pt-BR: pt-BR
         ro: ro-RO

@@ -1,12 +1,17 @@
 import { Flex } from "@radix-ui/themes";
 import classNames from "classnames";
+import { 
+	BackgroundRender, 
+	MeshGradientRenderer 
+} from "@applemusic-like-lyrics/react";
 import { atom, useAtomValue, useSetAtom } from "jotai";
 import { memo, useEffect, useMemo, useRef, useState } from "react";
 import { audioEngine } from "$/modules/audio/audio-engine";
 import {
 	activeLineIdsAtom,
 	currentTimeAtom,
-} from "$/modules/audio/states";
+	audioPlayingAtom,
+} from "$/modules/audio/states/index.ts";
 import {
 	showRomanLinesAtom,
 	showTranslationLinesAtom,
@@ -20,6 +25,12 @@ import {
 	projectIdentityAtom,
 	selectedLinesAtom,
 } from "$/states/main.ts";
+import { 
+	accentColorAtom,
+	useCustomAccentAtom,
+	customAccentColorAtom,
+} from "$/modules/settings/states/index.ts";
+import { customBackgroundImageAtom } from "$/modules/settings/modals/customBackground";
 import styles from "./index.module.css";
 
 const zeroAtom = atom(0);
@@ -249,8 +260,36 @@ export const AMLLWrapper = memo(({ variant }: { variant?: "standard" | "toxi" })
 		audioEngine.seekMusic(time / 1000);
 	};
 
+	const isPlaying = useAtomValue(audioPlayingAtom);
+	const albumImg = useAtomValue(customBackgroundImageAtom);
+	const accentColor = useAtomValue(accentColorAtom);
+	const useCustomAccent = useAtomValue(useCustomAccentAtom);
+	const customAccentColor = useAtomValue(customAccentColorAtom);
+
+	// Fallback colors for the mesh warp when no image is available
+	const fallbackColors = useMemo(() => {
+		// If we have a custom hex accent, use that. 
+		// Otherwise, we'll just use a generic set of colors based on the theme.
+		// (The library usually handles color extraction from images, but we can provide hints)
+		if (useCustomAccent && customAccentColor) {
+			return [customAccentColor, "#121212", "#000000"];
+		}
+		return undefined; // Let library default for named accent colors if possible
+	}, [useCustomAccent, customAccentColor]);
+
 	return (
 		<div className={classNames(styles.amllWrapper, darkMode && styles.isDark, isToxi && styles.isToxi)}>
+			{/* Dynamic Mesh Warp Background (Kawarp) */}
+			<div className={styles.bgLayer}>
+				<BackgroundRender 
+					key={albumImg || "default"}
+					album={albumImg || undefined}
+					colors={fallbackColors}
+					playing={true}
+					renderScale={1.0}
+					renderer={MeshGradientRenderer}
+				/>
+			</div>
 			<div className={styles.contentOverlay}>
 				<div className={styles.header}>
 					<h3>{projectIdentity.name || "Untitled"}</h3>
