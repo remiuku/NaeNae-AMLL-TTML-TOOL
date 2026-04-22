@@ -21,9 +21,16 @@ export interface TTMLMetadata {
 	error?: boolean;
 }
 
+export interface Mark {
+	timeMs: number;
+	label?: string;
+	description?: string;
+}
+
 export interface TTMLLyric {
 	metadata: TTMLMetadata[];
 	lyricLines: LyricLine[];
+	marks?: Mark[];
 }
 
 export interface LyricWordBase {

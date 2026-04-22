@@ -620,7 +620,7 @@ function App() {
 									<Box flexGrow="1" overflow="hidden">
 										<AnimatePresence mode="wait">
 											{toolMode !== ToolMode.Preview && (
-												<SuspensePlaceHolder key="edit">
+												<SuspensePlaceHolder key={toolMode}>
 													<motion.div
 														layout="position"
 														style={{
@@ -632,7 +632,7 @@ function App() {
 														animate={{ opacity: 1 }}
 														exit={{ opacity: 0 }}
 													>
-														<LyricLinesView key="edit" />
+														<LyricLinesView key={toolMode} />
 													</motion.div>
 												</SuspensePlaceHolder>
 											)}
@@ -667,7 +667,7 @@ function App() {
 							) : (
 								<AnimatePresence mode="wait">
 									{toolMode !== ToolMode.Preview && (
-										<SuspensePlaceHolder key="edit">
+										<SuspensePlaceHolder key={toolMode}>
 											<motion.div
 												layout="position"
 												style={{
@@ -679,7 +679,7 @@ function App() {
 												animate={{ opacity: 1 }}
 												exit={{ opacity: 0 }}
 											>
-												<LyricLinesView key="edit" />
+												<LyricLinesView key={toolMode} />
 											</motion.div>
 										</SuspensePlaceHolder>
 									)}

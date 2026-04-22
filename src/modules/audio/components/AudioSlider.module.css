@@ -114,3 +114,50 @@
 	right: 4px;
 	left: auto;
 }
+
+.markingLine {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	width: 2px;
+	background-color: var(--pink-9);
+	z-index: 999;
+	pointer-events: auto;
+	cursor: pointer;
+	box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+}
+
+.markingLine:hover {
+	background-color: var(--pink-11);
+	width: 4px;
+	margin-left: -1px;
+}
+
+.markingLineTip {
+	position: absolute;
+	top: 2px;
+	left: 4px;
+	background-color: var(--pink-9);
+	color: white;
+	padding: 1px 4px;
+	border-radius: 2px;
+	font-size: 9px;
+	white-space: nowrap;
+	pointer-events: none;
+	opacity: 0;
+	transition: opacity 0.1s;
+}
+
+.markingLine:hover .markingLineTip {
+	opacity: 1;
+}
+
+.interactionOverlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 1;
+	pointer-events: auto;
+}

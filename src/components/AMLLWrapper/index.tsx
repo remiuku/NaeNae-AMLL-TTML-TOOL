@@ -1,7 +1,7 @@
 import { Flex } from "@radix-ui/themes";
 import classNames from "classnames";
 import { atom, useAtomValue, useSetAtom } from "jotai";
-import { memo, useEffect, useMemo, useRef } from "react";
+import { memo, useEffect, useMemo, useRef, useState } from "react";
 import { audioEngine } from "$/modules/audio/audio-engine";
 import {
 	activeLineIdsAtom,
@@ -10,6 +10,9 @@ import {
 import {
 	showRomanLinesAtom,
 	showTranslationLinesAtom,
+	vsyncAtom,
+	showFpsCounterAtom,
+	lyricWordFadeWidthAtom,
 } from "$/modules/settings/states/preview";
 import {
 	isDarkThemeAtom,
@@ -20,6 +23,7 @@ import {
 import styles from "./index.module.css";
 
 const zeroAtom = atom(0);
+const displayTimeAtom = atom(0);
 
 // A single word span - static version (no time subscription)
 const StaticWord = memo(({ word }: { word: any }) => (
@@ -28,12 +32,25 @@ const StaticWord = memo(({ word }: { word: any }) => (
 
 // A single word span - active version (subscribes to time)
 const ActiveWord = memo(({ word, onWordClick }: { word: any; onWordClick: (t: number) => void }) => {
-	const currentTime = useAtomValue(currentTimeAtom);
+	const currentTime = useAtomValue(displayTimeAtom);
 	const isWordActive = currentTime >= word.startTime && currentTime <= word.endTime;
 	const isWordPast = currentTime > word.endTime;
+	
+	const fadeWidth = useAtomValue(lyricWordFadeWidthAtom);
+	
+	const progress = isWordActive 
+		? Math.min(Math.max((currentTime - word.startTime) / (word.endTime - word.startTime), 0), 1)
+		: (isWordPast ? 1 : 0);
+	const progressPercent = (progress * 100).toFixed(2);
+
 	return (
 		<span
 			className={classNames(styles.word, isWordActive && styles.wordActive, isWordPast && styles.wordPast)}
+			data-active={isWordActive}
+			style={{ 
+				"--progress": `${progressPercent}%`,
+				"--fade-width": `${(fadeWidth * 20).toFixed(2)}px` // Scale for visibility
+			} as any}
 			onClick={(e) => { e.stopPropagation(); onWordClick(word.startTime); }}
 		>
 			{word.word}
@@ -97,7 +114,69 @@ const ActiveLineGroup = memo(({ group, onWordClick }: { group: LineGroup; onWord
 	);
 });
 
-export const AMLLWrapper = memo(() => {
+export const AMLLWrapper = memo(({ variant }: { variant?: "standard" | "toxi" }) => {
+	const isToxi = variant === "toxi";
+	const currentTime = useAtomValue(currentTimeAtom);
+	const vsync = useAtomValue(vsyncAtom);
+	const showFps = useAtomValue(showFpsCounterAtom);
+	const setDisplayTime = useSetAtom(displayTimeAtom);
+	const lastUpdateRef = useRef(0);
+	const [fps, setFps] = useState(0);
+	const fpsRef = useRef({ frames: 0, lastTime: performance.now() });
+
+	useEffect(() => {
+		let rafId: number;
+		let lastAudioTime = audioEngine.musicCurrentTime;
+		let interpolatedTime = lastAudioTime;
+		let lastRealTime = performance.now();
+
+		const loop = () => {
+			const now = performance.now();
+			const audioTime = audioEngine.musicCurrentTime;
+			const isPlaying = audioEngine.musicPlaying;
+
+			if (!isPlaying) {
+				setDisplayTime(audioTime * 1000);
+				lastAudioTime = audioTime;
+				interpolatedTime = audioTime;
+				lastRealTime = now;
+			} else {
+				if (audioTime !== lastAudioTime) {
+					interpolatedTime = audioTime;
+					lastAudioTime = audioTime;
+				} else {
+					const dt = (now - lastRealTime) / 1000;
+					interpolatedTime += dt * audioEngine.musicPlayBackRate;
+				}
+				lastRealTime = now;
+
+				const displayMs = interpolatedTime * 1000;
+				
+				if (vsync) {
+					setDisplayTime(displayMs);
+				} else {
+					if (now - lastUpdateRef.current >= 15.6) { // ~60 FPS
+						setDisplayTime(displayMs);
+						lastUpdateRef.current = now;
+					}
+				}
+			}
+
+			// Calculate FPS
+			fpsRef.current.frames++;
+			if (now - fpsRef.current.lastTime >= 1000) {
+				setFps(Math.round((fpsRef.current.frames * 1000) / (now - fpsRef.current.lastTime)));
+				fpsRef.current.frames = 0;
+				fpsRef.current.lastTime = now;
+			}
+
+			rafId = requestAnimationFrame(loop);
+		};
+
+		rafId = requestAnimationFrame(loop);
+		return () => cancelAnimationFrame(rafId);
+	}, [vsync, setDisplayTime]);
+
 	const lyrics = useAtomValue(lyricLinesAtom);
 	const activeLineIds = useAtomValue(activeLineIdsAtom); 
 	const darkMode = useAtomValue(isDarkThemeAtom);
@@ -171,7 +250,7 @@ export const AMLLWrapper = memo(() => {
 	};
 
 	return (
-		<div className={classNames(styles.amllWrapper, darkMode && styles.isDark)}>
+		<div className={classNames(styles.amllWrapper, darkMode && styles.isDark, isToxi && styles.isToxi)}>
 			<div className={styles.contentOverlay}>
 				<div className={styles.header}>
 					<h3>{projectIdentity.name || "Untitled"}</h3>
@@ -200,6 +279,23 @@ export const AMLLWrapper = memo(() => {
 					<div className={styles.padding} />
 				</div>
 			</div>
+			{showFps && (
+				<div style={{
+					position: "absolute",
+					bottom: 10,
+					right: 10,
+					background: "rgba(0,0,0,0.5)",
+					color: "#0f0",
+					fontFamily: "monospace",
+					fontSize: "12px",
+					padding: "2px 6px",
+					borderRadius: "4px",
+					pointerEvents: "none",
+					zIndex: 1000,
+				}}>
+					FPS: {fps}
+				</div>
+			)}
 		</div>
 	);
 });

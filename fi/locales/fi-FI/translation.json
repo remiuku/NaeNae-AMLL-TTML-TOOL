@@ -1,98 +1,98 @@
 {
 	"app": {
 		"error": {
-			"title": "Oops, an error occurred!",
-			"description": "An error occurred while running AMLL TTML Tools",
-			"checkDevTools": "Details can be found in Developer Tools",
-			"saveLyrics": "Try saving current lyrics",
-			"tryRestart": "Try reloading the app",
-			"details": "Approximate error info:"
+			"title": "Hups, tapahtui virhe!",
+			"description": "Suorituksen aikana tapahtui virhe: AMLL TTML Tools.",
+			"checkDevTools": "Lisätietoja löytyy Kehittäjän työkaluista",
+			"saveLyrics": "Koita tallentaa nykyiset sanoitukset",
+			"tryRestart": "Koita uudelleenkäynnistystä",
+			"details": "Arvioidut virhetiedot:"
 		},
 		"update": {
-			"updateAvailable": "Update available: {version}",
-			"installError": "Error when installing update"
+			"updateAvailable": "Päivitys saatavilla {version}",
+			"installError": "Virhe tapahtui päivittäessä"
 		},
 		"empty": {
-			"title": "No lyric lines",
-			"description": "Add new lyric lines in the top panel or open/import existing lyrics from the menu"
+			"title": "Ei sanoituksia",
+			"description": "Lisää uusia sanoitusrivejä yläpaneeliin tai avaa/tuo olemassa olevat sanoitukset valikosta."
 		}
 	},
 	"confirmDialog": {
-		"cancel": "Cancel",
-		"confirm": "Confirm",
+		"cancel": "Peruuta",
+		"confirm": "Vahvista",
 		"newFile": {
-			"title": "Confirm New File",
-			"description": "You have unsaved changes. If you proceed, these changes will be lost. Are you sure you want to create a new file?"
+			"title": "Vahvista Uusi Tiedosto",
+			"description": "Sinulla on tallentamattomia muutoksia, jos jatkat menetät muutokset. Oletko varma että haluat tehdä uuden tiedoston?"
 		},
 		"syncLineTimestamps": {
-			"title": "Confirm Sync Line Timestamps",
-			"description": "This action will automatically synchronize the start and end times of all lines based on the timestamps of each word in the line, matching the start and end times of the first and last syllables. Are you sure you want to proceed?"
+			"title": "Vahvista Rivien Aikaleimojen Synkronointi",
+			"description": "Tämä toiminto synkronoi automaattisesti kaikkien rivien alku- ja loppuajat rivin jokaisen sanan aikaleimojen perusteella siten, että alku- ja loppuajat vastaavat ensimmäisen ja viimeisen tavun aikoja. Haluatko varmasti jatkaa?"
 		},
 		"openFile": {
-			"title": "Confirm Open File",
-			"description": "You have unsaved changes. If you proceed, these changes will be lost. Are you sure you want to open a new file?"
+			"title": "Vahvista Avaa Tiedosto",
+			"description": "Sinulla on tallentamattomia muutoksia, jos jatkat menetät muutokset. Oletko varma että haluat avata uuden tiedoston?"
 		},
 		"importFile": {
-			"title": "Confirm Import Lyrics",
-			"description": "You have unsaved changes. If you proceed, these changes will be lost. Are you sure you want to import new lyrics?"
+			"title": "Vahvista Sanojen Tuonti",
+			"description": "Sinulla on tallentamattomia muutoksia. Jos jatkat, menetät muutokset. Oletko varma että haluat tuoda uudet sanoitukset?"
 		},
 		"useMetadataName": {
-			"title": "Use metadata name?",
-			"description": "Use \"{name}\" as the file name?"
+			"title": "Käytä metatiedoston nimeä?",
+			"description": "Käytä \"{name}\"  tiedoston nimenä?"
 		},
 		"noSongwriter": {
-			"title": "Confirm Export",
-			"description": "The song has no songwriters. Do you want to continue saving?"
+			"title": "Vahvista Vienti",
+			"description": "Kappaleella ei ole lauluntekijää. Haluatko varmasti jatkaa tallentamista?"
 		}
 	},
 	"dialog": {
 		"mp3Conversion": {
-			"title": "Convert MP3 to FLAC?",
-			"description": "You are importing an MP3 file: {fileName}",
-			"warning": "MP3 files may cause audio desyncing in this app. Converting to FLAC is recommended for better compatibility.",
-			"dontShowAgain": "Don't show this warning again",
-			"skip": "Use MP3",
-			"convert": "Convert to FLAC",
-			"converting": "Converting MP3 to FLAC...",
-			"success": "Conversion successful",
-			"failed": "Conversion failed: {error}"
+			"title": "Muunna MP3-tiedosto FLAC-muotoon",
+			"description": "Tuodaan MP3-tiedosto: {filename}",
+			"warning": "MP3-tiedostot voivat aiheuttaa äänen synkronointiongelmia. FLAC-muotoon muuntamista suositellaan yhteensopivuuden parantamiseksi.",
+			"dontShowAgain": "Älä näytä varoitusta uudelleen",
+			"skip": "Käytä MP3",
+			"convert": "Muunna FLAC-tiedostoksi",
+			"converting": "Muunnetaan MP3-tiedostoa FLAC-muotoon…",
+			"success": "Muunnos onnistui",
+			"failed": "Muunnos epäonnistui: {error}"
 		}
 	},
 	"ribbonBar": {
 		"editMode": {
-			"multipleValues": "Multiple values…",
-			"showTranslation": "Show Translation Line",
-			"showRomanization": "Show Romanization Line",
-			"showWordRomanizationInput": "Show Per-Word Romanization",
-			"new": "New",
-			"lyricLine": "Lyric Line",
-			"lineTiming": "Line Timing",
-			"startTime": "Start Time",
-			"endTime": "End Time",
-			"lineProperties": "Line Properties",
-			"bgLyric": "Background Vocal",
-			"duetLyric": "Duet Vocal",
-			"ignoreSync": "Ignore Sync",
-			"wordTiming": "Word Timing",
-			"emptyBeatCount": "Empty Beat Count",
-			"wordProperties": "Word Properties",
-			"wordContent": "Word Content",
+			"multipleValues": "Useita arvoja...",
+			"showTranslation": "Näytä Käännösrivi",
+			"showRomanization": "Näytä Romanisointi",
+			"showWordRomanizationInput": "Näytä Sanakohtainen Romanisointi",
+			"new": "Uusi",
+			"lyricLine": "Sanoitusrivi",
+			"lineTiming": "Rivin Aikaleima",
+			"startTime": "Aloitusaika",
+			"endTime": "Päättymisaika",
+			"lineProperties": "Rivin Ominaisuudet",
+			"bgLyric": "Taustalaulaja",
+			"duetLyric": "Duetto",
+			"ignoreSync": "Ohita Synkronointi",
+			"wordTiming": "Sanojen Ajoitus",
+			"emptyBeatCount": "Tyhjennä Biitit",
+			"wordProperties": "Sanan Ominaisuudet",
+			"wordContent": "Sanan Sisältö",
 			"romanWord": "Word Romanization",
-			"obscene": "Obscene",
-			"secondaryContent": "Secondary Content",
-			"translatedLyric": "Translation",
-			"romanLyric": "Romanization",
-			"layoutMode": "Layout",
-			"auxiliaryLineDisplay": "Auxiliary Line Display",
-			"previewPanel": "Preview Panel",
-			"grammarCheck": "Grammar Check",
-			"aiTools": "AI Tools",
-			"aiAutoSync": "AI Auto-Sync",
-			"tools": "Check",
+			"obscene": "Sopimaton",
+			"secondaryContent": "Toissijainen Sisältö",
+			"translatedLyric": "Käännös",
+			"romanLyric": "Romanisointi",
+			"layoutMode": "Asettelu",
+			"auxiliaryLineDisplay": "Apuviivojen Näyttö",
+			"previewPanel": "Esikatselupaneeli",
+			"grammarCheck": "Kielitarkistus",
+			"aiTools": "Tekoälyn työkalut",
+			"aiAutoSync": "Tekoälyn automaattinen synkronointi",
+			"tools": "Tarkista",
 			"phonetic": {
-				"section": "Phonetic",
-				"autoFetch": "Auto Fetch",
-				"noSelection": "Please select lines or words first",
+				"section": "Foneettinen",
+				"autoFetch": "Automaattinen haku",
+				"noSelection": "Valitse ensin rivit tai sanat",
 				"success": "Phonetics fetched successfully",
 				"error": "Failed to fetch phonetics",
 				"romanize": "Romanize"

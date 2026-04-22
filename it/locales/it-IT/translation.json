@@ -416,8 +416,8 @@
 			"toggleWordHighlight": "Tempo - Attiva/Disattiva l'evidenziazione della parola attiva",
 			"moveFirstWordAndPlay": "Tempo - Sposta alla prima parola e riproduci",
 			"moveLastWordAndPlay": "Tempo - Sposta all'ultima parola e riproduci",
-			"urbanDictionary": "Edit - Look up in Urban Dictionary",
-			"urbanDictionarySync": "Timing - Look up in Urban Dictionary",
+			"urbanDictionary": "Modifica - Cerca nel Dizionario Urbano",
+			"urbanDictionarySync": "Tempo - Cerca nel Dizionario Urbano",
 			"playPause": "Riproduzione - Riproduci/Pausa",
 			"seekForward": "Riproduzione - Vai avanti 5s",
 			"seekBackward": "Riproduzione - Vai indietro 5s",
@@ -457,6 +457,7 @@
 	"audioPanel": {
 		"volume": "Volume",
 		"playbackRate": "Velocità di riproduzione",
+		"preservesPitch": "Preserva Tono",
 		"clickToLoadMusic": "Fai clic sul pulsante icona per caricare musica",
 		"playPause": "Riproduci/Metti in pausa la musica",
 		"expandSpectrogram": "Espandi / collassa lo spettrogramma"
@@ -703,11 +704,11 @@
 		"caseSensitive": "Maiuscole e minuscole (Corrispondenza esatta)"
 	},
 	"urbanDictionary": {
-		"title": "Urban Dictionary",
-		"slang": "slang dictionary",
-		"noDefinitions": "No definitions found for \"{word}\"",
-		"viewOnline": "View online",
-		"by": "By"
+		"title": "Dizionario Urbano",
+		"slang": "dizionario di slang",
+		"noDefinitions": "Nessuna definizione trovata per \"{word}\"",
+		"viewOnline": "Visualizza online",
+		"by": "Di"
 	},
 	"timeShiftDialog": {
 		"title": "Sposta Tempo",

@@ -1,7 +1,8 @@
-import { Card } from "@radix-ui/themes";
-import { useAtomValue, useSetAtom } from "jotai";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Card, Flex, Popover, Text, TextField, TextArea, Box, IconButton } from "@radix-ui/themes";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import WaveSurfer from "wavesurfer.js";
+import { msToTimestamp } from "$/utils/timestamp";
 import { audioEngine } from "$/modules/audio/audio-engine";
 import {
 	audioBufferAtom,
@@ -14,14 +15,164 @@ import { useHoverGuide } from "../hooks";
 import { AudioRegion } from "./AudioRegion";
 import styles from "./AudioSlider.module.css";
 import { HoverGuide } from "./HoverGuide";
+import { Add16Regular, Delete16Regular } from "@fluentui/react-icons";
+import type { Mark } from "$/types/ttml";
 
-export const AudioSlider = () => {
+const WaveformMarkers = memo(
+	({
+		markers,
+		updateMark,
+		toggleMark,
+	}: {
+		markers: (Mark & { left: number; timestamp: string })[];
+		updateMark: (timeMs: number, data: Partial<Mark>) => void;
+		toggleMark: (timeMs: number) => void;
+	}) => {
+		return (
+			<>
+				{markers.map((marker) => (
+					<MarkerItem
+						key={marker.timeMs}
+						marker={marker}
+						updateMark={updateMark}
+						toggleMark={toggleMark}
+					/>
+				))}
+			</>
+		);
+	},
+);
+
+const InteractiveHoverOverlay = memo(
+	({
+		sliderWidthPx,
+		isDraggingRef,
+	}: {
+		sliderWidthPx: number;
+		isDraggingRef: React.RefObject<boolean>;
+	}) => {
+		const {
+			hoverState,
+			handleContainerMouseMove,
+			handleContainerMouseLeave,
+		} = useHoverGuide(sliderWidthPx, isDraggingRef);
+
+		return (
+			<div
+				className={styles.interactionOverlay}
+				onMouseMove={handleContainerMouseMove}
+				onMouseLeave={handleContainerMouseLeave}
+			>
+				<HoverGuide hoverState={hoverState} />
+			</div>
+		);
+	},
+);
+
+const MarkerItem = memo(
+	({
+		marker,
+		updateMark,
+		toggleMark,
+	}: {
+		marker: Mark & { left: number; timestamp: string };
+		updateMark: (timeMs: number, data: Partial<Mark>) => void;
+		toggleMark: (timeMs: number) => void;
+	}) => {
+		const [localLabel, setLocalLabel] = useState(marker.label || "");
+		const [localDescription, setLocalDescription] = useState(
+			marker.description || "",
+		);
+
+		// Sync with external state changes
+		useEffect(() => {
+			setLocalLabel(marker.label || "");
+		}, [marker.label]);
+
+		useEffect(() => {
+			setLocalDescription(marker.description || "");
+		}, [marker.description]);
+
+		const commitChanges = useCallback(() => {
+			if (
+				localLabel !== (marker.label || "") ||
+				localDescription !== (marker.description || "")
+			) {
+				updateMark(marker.timeMs, {
+					label: localLabel,
+					description: localDescription,
+				});
+			}
+		}, [localLabel, localDescription, marker, updateMark]);
+
+		return (
+			<Popover.Root onOpenChange={(open) => !open && commitChanges()}>
+				<Popover.Trigger asChild>
+					<div
+						className={styles.markingLine}
+						style={{ left: `${marker.left}px` }}
+						onContextMenu={(e) => {
+							e.preventDefault();
+							if (e.shiftKey) toggleMark(marker.timeMs);
+						}}
+					>
+						<div className={styles.markingLineTip}>
+							{marker.label ? `${marker.label} ` : ""}
+							{marker.timestamp}
+						</div>
+					</div>
+				</Popover.Trigger>
+				<Popover.Content
+					size="1"
+					style={{ width: 240, zIndex: 100 }}
+					onOpenAutoFocus={(e) => e.preventDefault()}
+				>
+					<Flex direction="column" gap="2">
+						<Box>
+							<Text size="1" weight="bold" color="gray">
+								Marker @ {marker.timestamp}
+							</Text>
+						</Box>
+						<TextField.Root
+							size="1"
+							placeholder="Label (e.g. Verse 1 Start)"
+							value={localLabel}
+							onChange={(e) => setLocalLabel(e.target.value)}
+							onBlur={commitChanges}
+						/>
+						<TextArea
+							size="1"
+							placeholder="Description..."
+							value={localDescription}
+							onChange={(e) => setLocalDescription(e.target.value)}
+							onBlur={commitChanges}
+							style={{ height: 60 }}
+						/>
+						<Flex justify="end" gap="2">
+							<IconButton
+								size="1"
+								variant="ghost"
+								color="red"
+								onClick={() => toggleMark(marker.timeMs)}
+								title="Delete Marker"
+							>
+								<Delete16Regular />
+							</IconButton>
+						</Flex>
+					</Flex>
+				</Popover.Content>
+			</Popover.Root>
+		);
+	},
+);
+
+export const AudioSlider = memo(() => {
 	const setCurrentTime = useSetAtom(currentTimeAtom);
 	const setCurrentDuration = useSetAtom(currentDurationAtom);
 	const setAudioPlaying = useSetAtom(audioPlayingAtom);
 
 	const currentDuration = useAtomValue(currentDurationAtom);
-	const lyricLines = useAtomValue(lyricLinesAtom);
+	const [lyricLines, setLyricLines] = useAtom(lyricLinesAtom);
 	const selectedLines = useAtomValue(selectedLinesAtom);
 	const audioBuffer = useAtomValue(audioBufferAtom);
 
@@ -29,13 +180,56 @@ export const AudioSlider = () => {
 	const waveSurferRef = useRef<WaveSurfer | null>(null);
 
 	const [sliderWidthPx, setSliderWidthPx] = useState(0);
+	const isDraggingRef = useRef(false);
 
-	const {
-		hoverState,
-		handleContainerMouseMove,
-		handleContainerMouseLeave,
-		isDraggingRef,
-	} = useHoverGuide(sliderWidthPx);
+	const toggleMark = useCallback(
+		(timeMs: number) => {
+			setLyricLines((prev) => {
+				const marks = prev.marks || [];
+				const existingIndex = marks.findIndex(
+					(m) => Math.abs(m.timeMs - timeMs) < 150,
+				);
+				if (existingIndex !== -1) {
+					return {
+						...prev,
+						marks: marks.filter((_, i) => i !== existingIndex),
+					};
+				}
+				return {
+					...prev,
+					marks: [...marks, { timeMs }].sort((a, b) => a.timeMs - b.timeMs),
+				};
+			});
+		},
+		[setLyricLines],
+	);
+
+	const updateMark = useCallback(
+		(timeMs: number, data: Partial<Mark>) => {
+			setLyricLines((prev) => {
+				const marks = (prev.marks || []).map((m) =>
+					m.timeMs === timeMs ? { ...m, ...data } : m,
+				);
+				return { ...prev, marks };
+			});
+		},
+		[setLyricLines],
+	);
+
+	const handleContainerMouseDown = useCallback(
+		(e: React.MouseEvent) => {
+			if (e.shiftKey) {
+				const rect = wsContainerRef.current?.getBoundingClientRect();
+				if (!rect || sliderWidthPx <= 0 || currentDuration <= 0) return;
+				const x = e.clientX - rect.left;
+				const timeMs = (x / sliderWidthPx) * currentDuration;
+				toggleMark(timeMs);
+				e.preventDefault();
+				e.stopPropagation();
+			}
+		},
+		[currentDuration, sliderWidthPx, toggleMark],
+	);
 
 	const destroyWaveSurfer = useCallback(() => {
 		if (waveSurferRef.current) {
@@ -50,8 +244,12 @@ export const AudioSlider = () => {
 		}
 		const height = wsContainerRef.current.clientHeight;
 		const canvasStyles = getComputedStyle(wsContainerRef.current);
-		const fontColor = canvasStyles.getPropertyValue("--adv-waveform-progress").trim() || canvasStyles.getPropertyValue("--accent-a11").trim();
-		const primaryFillColor = canvasStyles.getPropertyValue("--adv-waveform-color").trim() || canvasStyles.getPropertyValue("--accent-a4").trim();
+		const fontColor =
+			canvasStyles.getPropertyValue("--adv-waveform-progress").trim() ||
+			canvasStyles.getPropertyValue("--accent-a11").trim();
+		const primaryFillColor =
+			canvasStyles.getPropertyValue("--adv-waveform-color").trim() ||
+			canvasStyles.getPropertyValue("--accent-a4").trim();
 
 		const peaks = [audioBuffer.getChannelData(0)];
 		const duration = audioBuffer.duration;
@@ -69,6 +267,7 @@ export const AudioSlider = () => {
 			media: audioEngine.audioEl,
 			peaks: peaks,
 			duration: duration,
+			interact: true,
 		});
 		waveSurferRef.current = ws;
 		return ws;
@@ -182,6 +381,16 @@ export const AudioSlider = () => {
 		return regions;
 	}, [lyricLines.lyricLines, selectedLines, currentDuration, sliderWidthPx]);
 
+	const markers = useMemo(() => {
+		if (currentDuration <= 0 || sliderWidthPx <= 0 || !lyricLines.marks)
+			return [];
+		return lyricLines.marks.map((mark) => ({
+			...mark,
+			left: (mark.timeMs / currentDuration) * sliderWidthPx,
+			timestamp: msToTimestamp(mark.timeMs),
+		}));
+	}, [lyricLines.marks, currentDuration, sliderWidthPx]);
+
 	return (
 		<Card
 			style={{
@@ -197,10 +406,12 @@ export const AudioSlider = () => {
 				aria-label="Audio Waveform"
 				ref={wsContainerRef}
 				style={{ width: "100%", height: "100%", overflow: "hidden" }}
-				onMouseMove={handleContainerMouseMove}
-				onMouseLeave={handleContainerMouseLeave}
+				onMouseDown={handleContainerMouseDown}
 			>
-				<HoverGuide hoverState={hoverState} />
+				<InteractiveHoverOverlay
+					sliderWidthPx={sliderWidthPx}
+					isDraggingRef={isDraggingRef}
+				/>
 
 				{selectedRegions.map((region) => (
 					<div
@@ -213,6 +424,12 @@ export const AudioSlider = () => {
 					/>
 				))}
 
+				<WaveformMarkers
+					markers={markers}
+					updateMark={updateMark}
+					toggleMark={toggleMark}
+				/>
+
 				<AudioRegion
 					sliderWidthPx={sliderWidthPx}
 					containerRef={wsContainerRef}
@@ -221,4 +438,4 @@ export const AudioSlider = () => {
 			</section>
 		</Card>
 	);
-};
+});

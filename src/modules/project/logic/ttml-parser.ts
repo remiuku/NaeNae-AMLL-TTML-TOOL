@@ -592,10 +592,27 @@ export function parseLyric(ttmlText: string): TTMLLyric {
 		parseLineElement(lineEl, false, false, null);
 	}
 
-	log("finished ttml load", lyricLines, metadata);
+	const marks: Mark[] = [];
+	const marksMeta = metadata.find((m) => m.key === "amll:marks");
+	if (marksMeta) {
+		for (const v of marksMeta.value) {
+			try {
+				const m = JSON.parse(v);
+				if (typeof m === "number") {
+					marks.push({ timeMs: m });
+				} else if (m && typeof m.timeMs === "number") {
+					marks.push(m);
+				}
+			} catch {
+				const t = Number.parseFloat(v);
+				if (!Number.isNaN(t)) marks.push({ timeMs: t });
+			}
+		}
+	}
 
 	return {
-		metadata,
+		metadata: metadata.filter((m) => m.key !== "amll:marks"),
 		lyricLines: lyricLines,
+		marks: marks.length > 0 ? marks : undefined,
 	};
 }

@@ -457,6 +457,7 @@
 	"audioPanel": {
 		"volume": "Ses Düzeyi",
 		"playbackRate": "Oynatma hızı",
+		"preservesPitch": "Preserve Pitch",
 		"clickToLoadMusic": "İkon tuşuna basarak müzik yükleyin",
 		"playPause": "Müziği oynat/duraklat",
 		"expandSpectrogram": "Spektrogramı genişlet/daralt"

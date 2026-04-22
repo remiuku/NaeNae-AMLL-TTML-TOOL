@@ -457,6 +457,7 @@
 	"audioPanel": {
 		"volume": "Głośność",
 		"playbackRate": "Prędkość odtwarzania",
+		"preservesPitch": "Preserve Pitch",
 		"clickToLoadMusic": "Kliknij ikonę, aby załadować muzykę",
 		"playPause": "Odtwórz / wstrzymaj muzykę",
 		"expandSpectrogram": "Rozwiń / zwiń spektrogram"

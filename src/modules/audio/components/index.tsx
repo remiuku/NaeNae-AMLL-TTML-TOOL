@@ -98,12 +98,27 @@ const AudioPlaybackKeyBinding = memo(() => {
 	return null;
 });
 
+const CurrentTimeLabel: FC = () => {
+	const currentTime = useAtomValue(currentTimeAtom);
+	return (
+		<Text
+			size="2"
+			style={{
+				minWidth: "5.5em",
+				textAlign: "left",
+				color: "var(--audio-bar-text, inherit)",
+			}}
+		>
+			{msToTimestamp(currentTime)}
+		</Text>
+	);
+};
+
 export const AudioControls: FC = memo(() => {
 	const [audioLoaded, setAudioLoaded] = useState(false);
 	const [playbackRate, setPlaybackRate] = useAtom(playbackRateAtom);
 	const [preservesPitch, setPreservesPitch] = useAtom(preservesPitchAtom);
 	const [spectrogramVisible, setSpectrogramVisible] = useState(false);
-	const currentTime = useAtomValue(currentTimeAtom);
 	const currentDuration = useAtomValue(currentDurationAtom);
 	const [audioPlaying, setAudioPlaying] = useAtom(audioPlayingAtom);
 	const [volume, setVolume] = useAtom(volumeAtom);
@@ -255,16 +270,7 @@ export const AudioControls: FC = memo(() => {
 								onClick={onTogglePlay}
 							>{audioPlaying ? <PauseFilled /> : <PlayFilled />}</IconButton>
 						</Tooltip>
-						<Text
-							size="2"
-							style={{
-								minWidth: "5.5em",
-								textAlign: "left",
-								color: "var(--audio-bar-text, inherit)",
-							}}
-						>
-							{msToTimestamp(currentTime)}
-						</Text>
+						<CurrentTimeLabel />
 						<AudioSlider />
 						<Text
 							size="2"

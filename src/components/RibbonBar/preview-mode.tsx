@@ -18,8 +18,10 @@ import {
 	hideObsceneWordsAtom,
 	lyricWordFadeWidthAtom,
 	previewModeTypeAtom,
+	showFpsCounterAtom,
 	showRomanLinesAtom,
 	showTranslationLinesAtom,
+	vsyncAtom,
 } from "$/modules/settings/states/preview";
 import { RibbonFrame, RibbonSection } from "./common";
 
@@ -35,6 +37,8 @@ export const PreviewModeRibbonBar = forwardRef<HTMLDivElement>(
 		const [lyricWordFadeWidth, setLyricWordFadeWidth] = useAtom(
 			lyricWordFadeWidthAtom,
 		);
+		const [vsync, setVsync] = useAtom(vsyncAtom);
+		const [showFps, setShowFps] = useAtom(showFpsCounterAtom);
 		const { t } = useTranslation();
 
 		return (
@@ -49,6 +53,9 @@ export const PreviewModeRibbonBar = forwardRef<HTMLDivElement>(
 						</SegmentedControl.Item>
 						<SegmentedControl.Item value={PreviewModeType.AMLL}>
 							{"AMLL"}
+						</SegmentedControl.Item>
+						<SegmentedControl.Item value={PreviewModeType.Toxi}>
+							{"Toxi"}
 						</SegmentedControl.Item>
 						<SegmentedControl.Item value={PreviewModeType.Timing}>
 							{t("ribbonBar.previewMode.timing", "时轴")}
@@ -99,6 +106,28 @@ export const PreviewModeRibbonBar = forwardRef<HTMLDivElement>(
 									setLyricWordFadeWidth(value);
 								}
 							}}
+						/>
+					</Grid>
+				</RibbonSection>
+				<RibbonSection label={t("ribbonBar.previewMode.render", "渲染")}>
+					<Grid columns="max-content auto" gap="2" gapY="1" flexGrow="1" align="center">
+						<Text wrap="nowrap" size="1" style={{ color: "var(--accent-11)" }}>
+							{"V-Sync"}
+						</Text>
+						<Checkbox
+							checked={vsync}
+							onCheckedChange={(v) => setVsync(!!v)}
+						/>
+					</Grid>
+				</RibbonSection>
+				<RibbonSection label={"Dev"}>
+					<Grid columns="max-content auto" gap="2" gapY="1" flexGrow="1" align="center">
+						<Text wrap="nowrap" size="1" style={{ color: "var(--accent-11)" }}>
+							{"Show FPS"}
+						</Text>
+						<Checkbox
+							checked={showFps}
+							onCheckedChange={(v) => setShowFps(!!v)}
 						/>
 					</Grid>
 				</RibbonSection>
