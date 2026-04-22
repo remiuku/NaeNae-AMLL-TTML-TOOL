@@ -4,49 +4,23 @@
 	height: 100%;
 	position: relative;
 	user-select: none;
-	background-color: #000;
+	background-color: transparent;
 	color: #fff;
 	font-family: var(--default-font-family, "Inter", -apple-system, sans-serif);
 	display: flex;
 	flex-direction: column;
 }
 
-/* Apple Music Style Dynamic Mesh Background */
-.amllWrapper::before {
-	content: "";
-	position: absolute;
-	inset: -50%;
-	width: 200%;
-	height: 200%;
-	background: 
-		radial-gradient(circle at 20% 30%, #ff1b6b 0%, transparent 45%),
-		radial-gradient(circle at 80% 20%, #45caff 0%, transparent 45%),
-		radial-gradient(circle at 40% 80%, #18a058 0%, transparent 45%);
-	filter: blur(80px);
-	z-index: 0;
-	opacity: 0.4;
-	animation: aurora 20s ease infinite alternate;
-}
-
-@keyframes aurora {
-	0% { transform: rotate(0deg) scale(1); }
-	50% { transform: rotate(10deg) scale(1.1); }
-	100% { transform: rotate(-5deg) scale(1); }
-}
-
-/* Static Aurora fallback (Removed keyframes) */
-
-/* Subtle gloss overlay (Removed heavy feTurbulence noise) */
-.amllWrapper::after {
-	content: "";
+.bgLayer {
 	position: absolute;
 	inset: 0;
-	background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, transparent 50%, rgba(0, 0, 0, 0.15) 100%);
-	opacity: 0.12;
-	z-index: 1;
+	width: 100%;
+	height: 100%;
+	z-index: 0;
 	pointer-events: none;
-	mix-blend-mode: overlay;
 }
+
+/* Dynamic Background is now handled by BackgroundRender component */
 
 .contentOverlay {
 	height: 100%;
@@ -220,7 +194,7 @@
 }
 
 :global(.is-dark) .amllWrapper {
-	background-color: #000;
+	background-color: transparent;
 }
 
 @media (max-width: 768px) {

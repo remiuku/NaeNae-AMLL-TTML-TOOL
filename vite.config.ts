@@ -19,24 +19,7 @@ const AMLL_LOCAL_EXISTS = existsSync(AMLL_LOCAL_PATH);
 
 process.env.AMLL_LOCAL_EXISTS = AMLL_LOCAL_EXISTS ? "true" : "false";
 
-// Find all directories in root that contain a "locales" subdirectory
-// This supports the new Crowdin structure where each language gets its own root folder
-// Find all directories in root that contain a "locales" subdirectory
-// This supports the new Crowdin structure where each language gets its own root folder
-const localePaths: string[] = [resolve(__dirname, "./locales")]; 
-try {
-	const rootItems = readdirSync(__dirname, { withFileTypes: true });
-	for (const item of rootItems) {
-		if (item.isDirectory() && !["node_modules", "src", ".git", "dist", "public", ".vscode", ".github", "locales", "applemusic-like-lyrics-main"].includes(item.name)) {
-			const potentialPath = resolve(__dirname, item.name, "locales");
-			if (existsSync(potentialPath)) {
-				localePaths.push(potentialPath);
-			}
-		}
-	}
-} catch (e) {
-	console.error("Failed to scan for locale folders:", e);
-}
+const localePaths: string[] = [resolve(__dirname, "./src/i18n/locales")]; 
 
 const plugins: Plugin[] = [
 	ConditionalCompile(),

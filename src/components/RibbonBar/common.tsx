@@ -13,9 +13,10 @@ import { Flex, Separator, Text } from "@radix-ui/themes";
 import { motion } from "framer-motion";
 import { type FC, forwardRef, type PropsWithChildren, type ReactNode, useImperativeHandle, useRef } from "react";
 
-export const RibbonSection: FC<PropsWithChildren<{ label: ReactNode }>> = ({
+export const RibbonSection: FC<PropsWithChildren<{ label: ReactNode; isSidebar?: boolean }>> = ({
 	children,
 	label,
+	isSidebar,
 }) => (
 	<>
 		<Flex
@@ -24,38 +25,50 @@ export const RibbonSection: FC<PropsWithChildren<{ label: ReactNode }>> = ({
 			flexShrink="0"
 			style={{
 				alignSelf: "stretch",
+				width: isSidebar ? "100%" : "unset",
 			}}
 		>
-			<Flex flexGrow="1" align="center" justify="center">
+			<Flex flexGrow="1" align="center" justify={isSidebar ? "start" : "center"} direction={isSidebar ? "column" : "row"} gap="2" p={isSidebar ? "2" : "0"}>
 				{children}
 			</Flex>
-			<Flex align="center" justify="center" px="2" style={{ color: "var(--accent-11)", fontSize: "var(--font-size-1)", whiteSpace: "nowrap" }}>
-				{label}
-			</Flex>
+			{!isSidebar && (
+				<Flex align="center" justify="center" px="2" style={{ color: "var(--accent-11)", fontSize: "var(--font-size-1)", whiteSpace: "nowrap" }}>
+					{label}
+				</Flex>
+			)}
+			{isSidebar && label && (
+				<Flex px="3" py="1" style={{ backgroundColor: "var(--accent-3)", color: "var(--accent-11)", fontSize: "10px", fontWeight: "bold", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+					{label}
+				</Flex>
+			)}
 		</Flex>
 		<Separator
-			orientation="vertical"
+			orientation={isSidebar ? "horizontal" : "vertical"}
 			size="4"
-			style={{ height: "unset", alignSelf: "stretch", minWidth: "1px" }}
+			style={{ 
+				height: isSidebar ? "1px" : "unset", 
+				width: isSidebar ? "100%" : "1px",
+				alignSelf: "stretch" 
+			}}
 		/>
 	</>
 );
 
-export const RibbonFrame = forwardRef<HTMLDivElement, PropsWithChildren>(
-	({ children }, ref) => {
+export const RibbonFrame = forwardRef<HTMLDivElement, PropsWithChildren<{ isSidebar?: boolean }>>(
+	({ children, isSidebar }, ref) => {
 		const frameRef = useRef<HTMLDivElement>(null);
 
 		useImperativeHandle(ref, () => frameRef.current as HTMLDivElement, []);
 
 		return (
 			<Flex
-				p="3"
-				direction="row"
-				gap="3"
-				align="center"
+				p={isSidebar ? "0" : "3"}
+				direction={isSidebar ? "column" : "row"}
+				gap={isSidebar ? "0" : "3"}
+				align={isSidebar ? "stretch" : "center"}
 				style={{
-					overflowX: "auto",
-					overflowY: "clip",
+					overflowX: isSidebar ? "hidden" : "auto",
+					overflowY: isSidebar ? "auto" : "clip",
 					height: "100%",
 					scrollbarWidth: "none",
 					msOverflowStyle: "none",
@@ -63,9 +76,9 @@ export const RibbonFrame = forwardRef<HTMLDivElement, PropsWithChildren>(
 				className="hide-scrollbar"
 				asChild
 			><motion.div
-					initial={{ x: 10, opacity: 0 }}
-					animate={{ x: 0, opacity: 1 }}
-					exit={{ x: -10, opacity: 0 }}
+					initial={isSidebar ? { y: 10, opacity: 0 } : { x: 10, opacity: 0 }}
+					animate={isSidebar ? { y: 0, opacity: 1 } : { x: 0, opacity: 1 }}
+					exit={isSidebar ? { y: -10, opacity: 0 } : { x: -10, opacity: 0 }}
 					layout
 					ref={frameRef}
 				>

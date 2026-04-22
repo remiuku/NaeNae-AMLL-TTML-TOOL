@@ -5,7 +5,12 @@ import {
 } from "@applemusic-like-lyrics/react";
 import { useAtomValue } from "jotai";
 import { memo, useMemo } from "react";
-import { currentTimeAtom } from "$/modules/audio/states";
+import { 
+	accentColorAtom, 
+	useCustomAccentAtom, 
+	customAccentColorAtom 
+} from "$/modules/settings/states/index.ts";
+import { audioPlayingAtom, currentTimeAtom } from "$/modules/audio/states/index.ts";
 import { isDarkThemeAtom, lyricLinesAtom } from "$/states/main.ts";
 import { customBackgroundImageAtom } from "$/modules/settings/modals/customBackground";
 import styles from "./AMLL.module.css";
@@ -25,15 +30,28 @@ export const AMLL = memo(() => {
         return (lyrics?.lyricLines as any) || [];
     }, [lyrics]);
 
+	const isPlaying = useAtomValue(audioPlayingAtom);
+	const useCustomAccent = useAtomValue(useCustomAccentAtom);
+	const customAccentColor = useAtomValue(customAccentColorAtom);
+
+	const fallbackColors = useMemo(() => {
+		if (useCustomAccent && customAccentColor) {
+			return [customAccentColor, "#121212", "#000000"];
+		}
+		return undefined;
+	}, [useCustomAccent, customAccentColor]);
+
 	return (
 		<div className={classNames(styles.amllContainer, darkMode && styles.isDark)}>
             {/* Fluid Background Layer */}
             <div className={styles.bgLayer}>
                 <BackgroundRender 
-                    album={albumImg || undefined} // Use undefined for better library compatibility
+					key={albumImg || "default"}
+                    album={albumImg || undefined}
+					colors={fallbackColors}
                     playing={true}
                     fps={60}
-                    renderScale={0.7} // Balanced high quality
+                    renderScale={0.7}
                     renderer={MeshGradientRenderer}
                 />
             </div>

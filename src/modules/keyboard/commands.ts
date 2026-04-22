@@ -272,6 +272,13 @@ export const cmdPlaybackRateReset = registerCommand(
 	"Audio",
 );
 
+export const cmdDuplicatePaste = registerCommand(
+	"duplicatePaste",
+	[CONTROL_KEY, "KeyL"],
+	t("settingsDialog.keybindings.duplicatePaste"),
+	"Edit",
+);
+
 // =========================================================================================
 //  频谱图/试听
 // =========================================================================================

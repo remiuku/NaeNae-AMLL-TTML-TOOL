@@ -82,6 +82,8 @@ import {
 	appFontStyleAtom,
 	customFontDataAtom,
 	customFontNameAtom,
+	appLayoutOrderAtom,
+	vRibbonPositionAtom,
 } from "$/modules/settings/states/index.ts";
 import styles from "./App.module.css";
 import DarkThemeDetector from "./components/DarkThemeDetector";
@@ -235,6 +237,8 @@ function App() {
 	const vShadow = useAtomValue(advShadowIntensityAtom);
 	const vSelection = useAtomValue(advSelectionColorAtom);
 	const vBackdropBlur = useAtomValue(advBackdropBlurAtom);
+	const appLayoutOrder = useAtomValue(appLayoutOrderAtom);
+	const vRibbonPosition = useAtomValue(vRibbonPositionAtom);
 
 	const boykisserMode = useAtomValue(boykisserModeAtom);
 
@@ -612,100 +616,124 @@ function App() {
 					<UrbanDictionaryKeybinding />
 					<DarkThemeDetector />
 					<Flex direction="column" height="100vh">
-						<TitleBar />
-						<RibbonBar />
-						<Box flexGrow="1" overflow="hidden">
-							{showPreviewPanel ? (
-								<Flex height="100%" gap="2" p="2">
-									<Box flexGrow="1" overflow="hidden">
-										<AnimatePresence mode="wait">
-											{toolMode !== ToolMode.Preview && (
-												<SuspensePlaceHolder key={toolMode}>
-													<motion.div
-														layout="position"
-														style={{
-															height: "100%",
-															maxHeight: "100%",
-															overflowY: "hidden",
-														}}
-														initial={{ opacity: 0 }}
-														animate={{ opacity: 1 }}
-														exit={{ opacity: 0 }}
-													>
-														<LyricLinesView key={toolMode} />
-													</motion.div>
-												</SuspensePlaceHolder>
-											)}
-											{toolMode === ToolMode.Preview && (
-												<SuspensePlaceHolder key="preview-switcher">
-													<motion.div
-														layout="position"
-														initial={{ opacity: 0 }}
-														animate={{ opacity: 1 }}
-														exit={{ opacity: 0 }}
-													>
-														<PreviewModeSwitcher />
-													</motion.div>
-												</SuspensePlaceHolder>
-											)}
-										</AnimatePresence>
+						{appLayoutOrder.map((id) => {
+							if (id === "titlebar") return <TitleBar key="titlebar" />;
+							if (id === "ribbonbar" && (vRibbonPosition === "top" || vRibbonPosition === "bottom")) {
+								return <RibbonBar key="ribbonbar" position={vRibbonPosition} />;
+							}
+							if (id === "editor") {
+								const editorContent = (
+									<Box flexGrow="1" overflow="hidden" key="editor-content">
+										{showPreviewPanel ? (
+											<Flex height="100%" gap="2" p="2">
+												<Box flexGrow="1" overflow="hidden">
+													<AnimatePresence mode="wait">
+														{toolMode !== ToolMode.Preview && (
+															<SuspensePlaceHolder key={toolMode}>
+																<motion.div
+																	layout="position"
+																	style={{
+																		height: "100%",
+																		maxHeight: "100%",
+																		overflowY: "hidden",
+																	}}
+																	initial={{ opacity: 0 }}
+																	animate={{ opacity: 1 }}
+																	exit={{ opacity: 0 }}
+																>
+																	<LyricLinesView key={toolMode} />
+																</motion.div>
+															</SuspensePlaceHolder>
+														)}
+														{toolMode === ToolMode.Preview && (
+															<SuspensePlaceHolder key="preview-switcher">
+																<motion.div
+																	layout="position"
+																	initial={{ opacity: 0 }}
+																	animate={{ opacity: 1 }}
+																	exit={{ opacity: 0 }}
+																>
+																	<PreviewModeSwitcher />
+																</motion.div>
+															</SuspensePlaceHolder>
+														)}
+													</AnimatePresence>
+												</Box>
+												<ResizablePanel>
+													<SuspensePlaceHolder key="preview-panel">
+														<motion.div
+															layout="position"
+															initial={{ opacity: 0 }}
+															animate={{ opacity: 1 }}
+															exit={{ opacity: 0 }}
+															style={{ height: "100%" }}
+														>
+															<PreviewModeSwitcher />
+														</motion.div>
+													</SuspensePlaceHolder>
+												</ResizablePanel>
+											</Flex>
+										) : (
+											<AnimatePresence mode="wait">
+												{toolMode !== ToolMode.Preview && (
+													<SuspensePlaceHolder key={toolMode}>
+														<motion.div
+															layout="position"
+															style={{
+																height: "100%",
+																maxHeight: "100%",
+																overflowY: "hidden",
+															}}
+															initial={{ opacity: 0 }}
+															animate={{ opacity: 1 }}
+															exit={{ opacity: 0 }}
+														>
+															<LyricLinesView key={toolMode} />
+														</motion.div>
+													</SuspensePlaceHolder>
+												)}
+												{toolMode === ToolMode.Preview && (
+													<SuspensePlaceHolder key="preview-switcher">
+														<Box height="100%" key="preview-switcher" p="2" asChild>
+															<motion.div
+																layout="position"
+																initial={{ opacity: 0 }}
+																animate={{ opacity: 1 }}
+																exit={{ opacity: 0 }}
+															>
+																<PreviewModeSwitcher />
+															</motion.div>
+														</Box>
+													</SuspensePlaceHolder>
+												)}
+											</AnimatePresence>
+										)}
 									</Box>
-									<ResizablePanel>
-										<SuspensePlaceHolder key="preview-panel">
-											<motion.div
-												layout="position"
-												initial={{ opacity: 0 }}
-												animate={{ opacity: 1 }}
-												exit={{ opacity: 0 }}
-												style={{ height: "100%" }}
-											>
-												<PreviewModeSwitcher />
-											</motion.div>
-										</SuspensePlaceHolder>
-									</ResizablePanel>
-								</Flex>
-							) : (
-								<AnimatePresence mode="wait">
-									{toolMode !== ToolMode.Preview && (
-										<SuspensePlaceHolder key={toolMode}>
-											<motion.div
-												layout="position"
-												style={{
-													height: "100%",
-													maxHeight: "100%",
-													overflowY: "hidden",
-												}}
-												initial={{ opacity: 0 }}
-												animate={{ opacity: 1 }}
-												exit={{ opacity: 0 }}
-											>
-												<LyricLinesView key={toolMode} />
-											</motion.div>
-										</SuspensePlaceHolder>
-									)}
-									{toolMode === ToolMode.Preview && (
-										<SuspensePlaceHolder key="preview-switcher">
-											<Box height="100%" key="preview-switcher" p="2" asChild>
-												<motion.div
-													layout="position"
-													initial={{ opacity: 0 }}
-													animate={{ opacity: 1 }}
-													exit={{ opacity: 0 }}
-												>
-													<PreviewModeSwitcher />
-												</motion.div>
-											</Box>
-										</SuspensePlaceHolder>
-									)}
-								</AnimatePresence>
-							)}
-						</Box>
+								);
+
+								if (vRibbonPosition === "left" || vRibbonPosition === "right") {
+									return (
+										<Flex direction="row" flexGrow="1" overflow="hidden" key="editor-row">
+											{vRibbonPosition === "left" && <RibbonBar isSidebar position="left" />}
+											{editorContent}
+											{vRibbonPosition === "right" && <RibbonBar isSidebar position="right" />}
+										</Flex>
+									);
+								}
+								return editorContent;
+							}
+							if (id === "audio-controls") {
+								return (
+									<Box flexShrink="0" key="audio-controls">
+										<AudioControls />
+									</Box>
+								);
+							}
+							return null;
+						})}
 						{showTouchSyncPanel && toolMode === ToolMode.Sync && (
 							<TouchSyncPanel />
 						)}
-						<Box flexShrink="0">
-							<AudioControls />
-						</Box>
 					</Flex>
 					<Suspense fallback={null}>
 						<Dialogs />

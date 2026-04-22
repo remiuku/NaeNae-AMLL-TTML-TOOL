@@ -53,14 +53,17 @@ import {
 	spectrogramHoverTimeMsAtom,
 	spectrogramSelectionAtom,
 } from "$/modules/spectrogram/states";
-import { isDraggingAtom } from "$/modules/spectrogram/states/dnd.ts";
-import { draggingIdAtom } from "$/modules/lyric-editor/components/lyric-line-view-states.ts";
 import {
 	lyricLinesAtom,
 	selectedLinesAtom,
 	showUnselectedLinesAtom,
 } from "$/states/main.ts";
 import { msToTimestamp } from "$/utils/timestamp.ts";
+import { useCommand } from "$/modules/keyboard/hooks.ts";
+import { cmdDuplicatePaste } from "$/modules/keyboard/commands.ts";
+import { isDraggingAtom } from "$/modules/spectrogram/states/dnd.ts";
+import { draggingIdAtom, globalEnableInsertAtom } from "$/modules/lyric-editor/components/lyric-line-view-states.ts";
+import { newLyricLine, newLyricWord } from "$/types/ttml.ts";
 import styles from "./AudioSpectrogram.module.css";
 import { LyricTimelineOverlay } from "./LyricTimelineOverlay.tsx";
 import { FrequencyRuler } from "./FrequencyRuler.tsx";
@@ -115,6 +118,43 @@ export const AudioSpectrogram: FC = memo(() => {
 	const [showUnselectedLines, setShowUnselectedLines] = useAtom(
 		showUnselectedLinesAtom,
 	);
+	const globalEnableInsert = useAtomValue(globalEnableInsertAtom);
+
+	useCommand(cmdDuplicatePaste, () => {
+		if (!globalEnableInsert) return;
+		
+		const currentSelectedLines = store.get(selectedLinesAtom);
+		if (currentSelectedLines.size === 0) return;
+
+		const state = store.get(lyricLinesAtom);
+		const linesToCopy = state.lyricLines.filter(l => currentSelectedLines.has(l.id));
+		if (linesToCopy.length === 0) return;
+
+		// Find minimum start time among selected lines to calculate offset
+		const minStart = Math.min(...linesToCopy.map(l => l.startTime));
+		const offset = currentTimeInMs - minStart;
+
+		const newLines = linesToCopy.map(l => ({
+			...l,
+			id: newLyricLine().id,
+			startTime: l.startTime + offset,
+			endTime: l.endTime + offset,
+			words: l.words.map(w => ({
+				...w,
+				id: newLyricWord().id,
+				startTime: w.startTime + offset,
+				endTime: w.endTime + offset,
+			}))
+		}));
+
+		store.set(lyricLinesAtom, produce((draft) => {
+			// Find insertion point to keep sorted
+			let insertIndex = draft.lyricLines.findIndex((l: any) => l.startTime > currentTimeInMs);
+			if (insertIndex === -1) insertIndex = draft.lyricLines.length;
+			
+			draft.lyricLines.splice(insertIndex, 0, ...newLines);
+		}));
+	}, [globalEnableInsert, currentTimeInMs]);
 
 	const { height: uiHeight, resizeHandleProps } = useSpectrogramResize({
 		initialHeight: dataHeight,
