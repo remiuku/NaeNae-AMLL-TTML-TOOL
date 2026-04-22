@@ -416,8 +416,8 @@
 			"toggleWordHighlight": "Sincronizare - Evidențiere cuvinte active",
 			"moveFirstWordAndPlay": "Sincronizare - Mutare în primul cuvânt și redare",
 			"moveLastWordAndPlay": "Sincronizare - Mutare la ultimul cuvânt și redare",
-			"urbanDictionary": "Edit - Look up in Urban Dictionary",
-			"urbanDictionarySync": "Timing - Look up in Urban Dictionary",
+			"urbanDictionary": "Editare - Caută în Urban Dictionary",
+			"urbanDictionarySync": "Sincronizare - Căutare în Urban Dictionary",
 			"playPause": "Redare - Redare/pauză",
 			"seekForward": "Redare - Caută înainte 5s",
 			"seekBackward": "Redare - Caută înapoi 5 secunde",
@@ -450,23 +450,23 @@
 		}
 	},
 	"error": {
-		"unsupportedFileFormat": "Format de fișier neacceptat: {ext}",
-		"openFileFailed": "Deschiderea fișierului a eșuat",
-		"audioNotLoaded": "Fișierul audio nu a fost încărcat. Asigurați-vă că se redă un fișier audio."
+		"unsupportedFileFormat": "Format de fișier nesuportat: {ext}",
+		"openFileFailed": "Nu s-a putut deschide fișierul",
+		"audioNotLoaded": "Fișierul nu a fost încărcat. Asigurați-vă că se redă un fișier audio."
 	},
 	"audioPanel": {
 		"volume": "Volum",
-		"playbackRate": "Rata de redare",
-		"preservesPitch": "Preserve Pitch",
-		"clickToLoadMusic": "Faceți clic pe butonul pictogramă pentru a încărca muzica",
+		"playbackRate": "Viteza de redare",
+		"preservesPitch": "Păstrează Pitch",
+		"clickToLoadMusic": "Faceți clic pe iconiță pentru a încărca muzica",
 		"playPause": "Redare / pauză muzică",
-		"expandSpectrogram": "Extindere / colaps spectrogram"
+		"expandSpectrogram": "Extindere / colaps spectrogramă"
 	},
 	"audio": {
 		"status": {
-			"transcoding": "Decodare esuata, incercare transcodare audio...",
+			"transcoding": "Decodare eșuata, încercând sa transcod audio-ul...",
 			"loading": "Se încarcă audio...",
-			"processing": "Procesare..."
+			"processing": "Procesând..."
 		},
 		"error": {
 			"workerError": "Eroare la procesarea audio"
@@ -475,29 +475,29 @@
 	"latencyTestDialog": {
 		"title": "Test de latență Offset",
 		"latencyDisplay": {
-			"fastest": "Rapidă",
+			"fastest": "Cea Mai Rapidă",
 			"current": {
-				"none": "Nu este măsurat",
-				"fast": "Început",
+				"none": "Nu e măsurat",
+				"fast": "Devreme",
 				"slow": "Târzie",
 				"perfect": "Perfect"
 			},
-			"slowest": "Mai încet"
+			"slowest": "Cel Mai Încet"
 		},
 		"bpmInputLabel": "Tempo (BPM)",
 		"button": {
-			"stop": "Oprește",
-			"start": "Pornire"
+			"stop": "Stop",
+			"start": "Start"
 		}
 	},
 	"metadataDialog": {
 		"fetchSongwriters": {
 			"searchError": "Căutare eșuată: {error}",
 			"fetchError": "Nu s-au putut prelua versurile: {error}",
-			"noLyricsError": "Nu sunt versuri de importat.",
-			"importSuccess": "Importat {count} linii din Geniu.",
-			"error": "Nu s-a reușit preluarea compozitorilor melodiilor",
-			"noSongwriters": "Nu s-au înregistrat credite de scriere a melodiilor pentru această melodie",
+			"noLyricsError": "Nu sunt lyric-uri de importat.",
+			"importSuccess": "Importat {count} de linii din Geniu.",
+			"error": "Nu s-a reușit preluarea compozitorilor ale melodiilor",
+			"noSongwriters": "Nu s-au înregistrat creditele de scriere a melodiilor pentru această melodie",
 			"findingRealName": "Se găsește numele real pentru {name} ({current}/{total})...",
 			"success": "Comercianți luați cu succes din Genius",
 			"setupTitle": "Configurare cheie API Genius",
@@ -705,10 +705,10 @@
 	},
 	"urbanDictionary": {
 		"title": "Urban Dictionary",
-		"slang": "slang dictionary",
-		"noDefinitions": "No definitions found for \"{word}\"",
-		"viewOnline": "View online",
-		"by": "By"
+		"slang": "dicționar slang",
+		"noDefinitions": "Nu au fost găsite definiții pentru „{word}”",
+		"viewOnline": "Vezi pe web",
+		"by": "De către"
 	},
 	"timeShiftDialog": {
 		"title": "Schimbare timp",

@@ -8,6 +8,7 @@ import {
 	getGreenColor,
 	getIcyBlueColor,
 } from "$/modules/spectrogram/utils/colors";
+import { audioBufferAtom } from "$/modules/audio/states/index.ts";
 
 export const spectrogramGainAtom = atomWithStorage(
 	"settings_spectrogramGain",
@@ -23,6 +24,10 @@ export const spectrogramHeightAtom = atomWithStorage(
 );
 export const spectrogramScrollLeftAtom = atom(0);
 export const spectrogramContainerWidthAtom = atom(0);
+export const spectrogramFftSizeAtom = atomWithStorage<number>(
+	"settings_spectrogramFftSize",
+	1024,
+);
 
 const icyBluePalette = {
 	id: "icy_blue",
@@ -86,6 +91,7 @@ export const currentPaletteAtom = atom((get) => {
 });
 
 export const spectrogramHoverPxAtom = atom(0);
+export const spectrogramHoverPyAtom = atom(0);
 
 export const spectrogramHoverTimeMsAtom = atom((get) => {
 	const hoverPx = get(spectrogramHoverPxAtom);
@@ -100,6 +106,18 @@ export const spectrogramHoverTimeMsAtom = atom((get) => {
 	const hoverTimeS = hoverX / zoom;
 
 	return hoverTimeS * 1000;
+});
+
+export const spectrogramHoverFrequencyAtom = atom((get) => {
+	const hoverPy = get(spectrogramHoverPyAtom);
+	const height = get(spectrogramHeightAtom);
+	const audioBuffer = get(audioBufferAtom);
+
+	if (!audioBuffer || height <= 0) return 0;
+
+	const nyquist = audioBuffer.sampleRate / 2;
+	const ratio = 1 - Math.max(0, Math.min(hoverPy, height)) / height;
+	return ratio * nyquist;
 });
 
 export const spectrogramSelectionAtom = atom<{ start: number; end: number } | null>(null);

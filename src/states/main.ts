@@ -44,6 +44,7 @@ export const autoDarkModeAtom = atom(true);
 export const lyricLinesAtom = atom({
 	lyricLines: [],
 	metadata: [],
+	marks: [],
 } as TTMLLyric);
 
 export const allLyricsWordsAtom = atom((get) => {
@@ -129,8 +130,10 @@ export const newLyricLinesAtom = atom(
 		newState: TTMLLyric = {
 			lyricLines: [],
 			metadata: [],
+			marks: [],
 		},
 	) => {
+		if (!newState.marks) newState.marks = [];
 		set(lyricLinesAtom, newState);
 		set(selectedLinesAtom, new Set());
 		set(selectedWordsAtom, new Set());

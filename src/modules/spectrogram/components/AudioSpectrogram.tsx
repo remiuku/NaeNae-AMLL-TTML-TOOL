@@ -2,11 +2,14 @@ import {
 	EyeFilled,
 	EyeOffFilled,
 	MusicNote2Filled,
+	SettingsFilled,
 } from "@fluentui/react-icons";
 import {
 	Button,
 	Flex,
 	IconButton,
+	Popover,
+	Select,
 	Slider,
 	Text,
 	Theme,
@@ -16,6 +19,7 @@ import { useAtom, useAtomValue, useSetAtom, useStore } from "jotai";
 import { produce } from "immer";
 import {
 	type FC,
+	memo,
 	useCallback,
 	useEffect,
 	useLayoutEffect,
@@ -40,9 +44,12 @@ import { useSpectrogramSelection } from "$/modules/spectrogram/hooks/useSpectrog
 import {
 	currentPaletteAtom,
 	spectrogramContainerWidthAtom,
+	spectrogramFftSizeAtom,
 	spectrogramGainAtom,
 	spectrogramHeightAtom,
+	spectrogramHoverFrequencyAtom,
 	spectrogramHoverPxAtom,
+	spectrogramHoverPyAtom,
 	spectrogramHoverTimeMsAtom,
 	spectrogramSelectionAtom,
 } from "$/modules/spectrogram/states";
@@ -56,6 +63,7 @@ import {
 import { msToTimestamp } from "$/utils/timestamp.ts";
 import styles from "./AudioSpectrogram.module.css";
 import { LyricTimelineOverlay } from "./LyricTimelineOverlay.tsx";
+import { FrequencyRuler } from "./FrequencyRuler.tsx";
 import {
 	type ISpectrogramContext,
 	SpectrogramContext,
@@ -70,7 +78,29 @@ import {
 const TILE_DURATION_S = 5;
 const LOD_WIDTHS = [512, 1024, 2048, 4096, 8192];
 
-export const AudioSpectrogram: FC = () => {
+const NOTES = [
+	"C",
+	"C#",
+	"D",
+	"D#",
+	"E",
+	"F",
+	"F#",
+	"G",
+	"G#",
+	"A",
+	"A#",
+	"B",
+];
+const getNoteFromFreq = (freq: number) => {
+	if (freq <= 20) return ""; // Human hearing floor
+	const n = Math.round(69 + 12 * Math.log2(freq / 440));
+	const octave = Math.floor(n / 12) - 1;
+	const noteName = NOTES[((n % 12) + 12) % 12];
+	return `${noteName}${octave}`;
+};
+
+export const AudioSpectrogram: FC = memo(() => {
 	const audioBuffer = useAtomValue(audioBufferAtom);
 	const currentTimeInMs = useAtomValue(currentTimeAtom);
 	const setCurrentTime = useSetAtom(currentTimeAtom);
@@ -81,6 +111,7 @@ export const AudioSpectrogram: FC = () => {
 
 	const [gain, setGain] = useAtom(spectrogramGainAtom);
 	const [dataHeight, setDataHeight] = useAtom(spectrogramHeightAtom);
+	const [fftSize, setFftSize] = useAtom(spectrogramFftSizeAtom);
 	const [showUnselectedLines, setShowUnselectedLines] = useAtom(
 		showUnselectedLinesAtom,
 	);
@@ -105,7 +136,9 @@ export const AudioSpectrogram: FC = () => {
 	const [isHovering, setIsHovering] = useState(false);
 	const hoverPx = useAtomValue(spectrogramHoverPxAtom);
 	const setHoverPx = useSetAtom(spectrogramHoverPxAtom);
+	const setHoverPy = useSetAtom(spectrogramHoverPyAtom);
 	const hoverTimeMs = useAtomValue(spectrogramHoverTimeMsAtom);
+	const hoverFrequency = useAtomValue(spectrogramHoverFrequencyAtom);
 	const isDragging = useAtomValue(isDraggingAtom);
 
 	const rulerRef = useRef<TimelineRulerHandle>(null);
@@ -197,6 +230,7 @@ export const AudioSpectrogram: FC = () => {
 				height: dataHeight,
 				tileWidthPx: targetLodWidth,
 				paletteId: currentPaletteId,
+				fftSize: fftSize,
 			});
 
 			const cacheEntry = tileCache.current.get(cacheId);
@@ -222,6 +256,7 @@ export const AudioSpectrogram: FC = () => {
 		palette.id,
 		zoom,
 		scrollLeft,
+		fftSize,
 	]);
 
 	const updateVisibleTilesRef = useRef(updateVisibleTiles);
@@ -276,7 +311,9 @@ export const AudioSpectrogram: FC = () => {
 	const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
 		const rect = event.currentTarget.getBoundingClientRect();
 		const x = event.clientX - rect.left;
+		const y = event.clientY - rect.top;
 		setHoverPx(x);
+		setHoverPy(y);
 	};
 
 	const totalWidth = audioBuffer ? audioBuffer.duration * zoom : 0;
@@ -285,6 +322,14 @@ export const AudioSpectrogram: FC = () => {
 	const handleLeftPosition = cursorPosition - scrollLeft;
 
 	let hoverTimeFormatted = msToTimestamp(hoverTimeMs);
+	if (hoverFrequency > 0) {
+		const freqFormatted =
+			hoverFrequency >= 1000
+				? `${(hoverFrequency / 1000).toFixed(2)} kHz`
+				: `${Math.round(hoverFrequency)} Hz`;
+		const noteFormatted = getNoteFromFreq(hoverFrequency);
+		hoverTimeFormatted = `${hoverTimeFormatted} (${freqFormatted}${noteFormatted ? ` / ${noteFormatted}` : ""})`;
+	}
 	let tooltipBgColor: string | undefined;
 	let hoverLineColor: string | undefined;
 
@@ -330,11 +375,17 @@ export const AudioSpectrogram: FC = () => {
 							direction="column"
 							align="center"
 							justify="end"
-							style={{ flex: 1, width: "100%", padding: "4px 0" }}
+							style={{
+								flex: 1,
+								width: "100%",
+								padding: "4px 0",
+								position: "relative",
+							}}
 						>
+							<FrequencyRuler />
 							<div
 								className={styles.gainSliderContainer}
-								style={{ height: "95%" }}
+								style={{ height: "95%", zIndex: 10 }}
 							>
 								<Slider
 									orientation="vertical"
@@ -580,10 +631,60 @@ export const AudioSpectrogram: FC = () => {
 							{showUnselectedLines ? <EyeFilled /> : <EyeOffFilled />}
 						</IconButton>
 					</Tooltip>
+
+					<Popover.Root>
+						<Tooltip content={t("spectrogram.settings", "频谱图设置")} side="left">
+							<Popover.Trigger>
+								<IconButton variant="ghost" color="gray">
+									<SettingsFilled />
+								</IconButton>
+							</Popover.Trigger>
+						</Tooltip>
+						<Popover.Content side="left" align="end" style={{ width: 220 }}>
+							<Flex direction="column" gap="3">
+								<Text size="2" weight="bold">
+									{t("spectrogram.settings", "频谱图设置")}
+								</Text>
+
+								<Flex direction="column" gap="2">
+									<Text size="1" color="gray">
+										FFT Size ({t("spectrogram.resolution", "解析度")})
+									</Text>
+									<Select.Root
+										value={fftSize.toString()}
+										onValueChange={(v) => setFftSize(Number.parseInt(v))}
+									>
+										<Select.Trigger />
+										<Select.Content>
+											<Select.Item value="512">512 (Fast)</Select.Item>
+											<Select.Item value="1024">1024 (Normal)</Select.Item>
+											<Select.Item value="2048">2048 (Better Freq)</Select.Item>
+											<Select.Item value="4096">4096 (High Res)</Select.Item>
+										</Select.Content>
+									</Select.Root>
+								</Flex>
+
+								<Flex align="center" gap="2">
+									<Text size="1" color="gray">
+										{t("spectrogram.height", "高度")}
+									</Text>
+									<Slider
+										size="1"
+										min={100}
+										max={800}
+										step={10}
+										value={[dataHeight]}
+										onValueChange={(v) => setDataHeight(v[0])}
+									/>
+									<Text size="1">{dataHeight}px</Text>
+								</Flex>
+							</Flex>
+						</Popover.Content>
+					</Popover.Root>
 				</div>
 			</div>
 		</div>
 	);
-};
+});
 
 export default AudioSpectrogram;

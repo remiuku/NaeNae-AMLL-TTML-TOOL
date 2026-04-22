@@ -138,7 +138,7 @@ export const useSpectrogramWorker = (
 			if (!clientRef.current) return;
 
 			const cacheKey = `tile-${params.tileIndex}`;
-			const requestFingerprint = `${params.tileIndex}-w${params.tileWidthPx}-h${params.height}-g${params.gain}-p${params.paletteId}`;
+			const requestFingerprint = `${params.tileIndex}-w${params.tileWidthPx}-h${params.height}-g${params.gain}-p${params.paletteId}-f${params.fftSize || 1024}`;
 
 			const cacheEntry = tileCache.current.get(cacheKey);
 
@@ -147,7 +147,8 @@ export const useSpectrogramWorker = (
 				cacheEntry.width < params.tileWidthPx ||
 				cacheEntry.height !== params.height ||
 				cacheEntry.gain !== params.gain ||
-				cacheEntry.paletteId !== params.paletteId;
+				cacheEntry.paletteId !== params.paletteId ||
+				(cacheEntry as any).fftSize !== params.fftSize;
 
 			if (isStale && !activeRequests.current.has(requestFingerprint)) {
 				activeRequests.current.add(requestFingerprint);
@@ -161,7 +162,8 @@ export const useSpectrogramWorker = (
 						height: params.height,
 						gain: params.gain,
 						paletteId: params.paletteId,
-					});
+						fftSize: params.fftSize,
+					} as any);
 
 					setLastTileTimestamp(Date.now());
 				} catch (err) {

@@ -38,6 +38,24 @@ export function ChangelogDialog() {
 				<ScrollArea type="always" scrollbars="vertical" style={{ height: "calc(100% - 60px)" }}>
 					<Flex direction="column" gap="5" pr="4">
 						<Box>
+							<Heading size="4" mb="2" color="teal">v0.4.2 Updates (High Performance & Toxi Engine)</Heading>
+							<Flex direction="column" gap="3">
+								<Text size="2">
+									<strong>Toxi Lyrics Engine:</strong> Re-engineered the Toxi lyric style with high-fidelity "jump-down" animations, instant-hit blooming with smooth fade-out, and adjustable wipe softness.
+								</Text>
+								<Text size="2">
+									<strong>144Hz+ Rendering Loop:</strong> Implemented a dedicated interpolation engine that bypasses React bottlenecks, enabling true high-refresh-rate rendering on ProMotion and gaming monitors.
+								</Text>
+								<Text size="2">
+									<strong>V-Sync & FPS Counter:</strong> Introduced performance monitoring tools. Uncap your frame rate with the new V-Sync toggle and track real-time delivery with the FPS counter overlay.
+								</Text>
+								<Text size="2">
+									<strong>Rendering Consistency:</strong> Unified the rendering path across all word states to eliminate font "thickening" artifacts and sub-pixel shifts, ensuring perfectly sharp lyrics from start to finish.
+								</Text>
+							</Flex>
+						</Box>
+
+						<Box>
 							<Heading size="4" mb="2" color="indigo">v0.4.0 Updates (Appearance & Presets)</Heading>
 							<Flex direction="column" gap="3">
 								<Text size="2">

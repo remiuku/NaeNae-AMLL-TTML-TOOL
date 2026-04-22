@@ -4,6 +4,22 @@ All notable changes to the AMLL TTML Tool are documented here.
 
 ---
 
+## [0.4.2] - 2026-04-22
+
+### ✨ New Features
+
+- **Toxi Lyrics Engine**: A high-fidelity implementation of the "Toxi" lyric style, featuring "jump-down" word animations, instant-on bloom with smooth fade-out, and adjustable wipe softness.
+- **High-Frequency Rendering Loop**: Developed a dedicated `requestAnimationFrame` interpolation engine for the previewer, bypassing React state bottlenecks to support true high-refresh-rate rendering (144Hz, 240Hz, etc.).
+- **V-Sync & FPS Tools**: Added a global V-Sync toggle and a real-time FPS counter to monitor and unlock preview performance. Options are available in the Ribbon Bar and the Preferences Dev Tab.
+
+### 🎨 UI / UX
+
+- **Adjustable Wipe Softness**: The lyric fill "wipe" is now linked to the "Fade Width" setting, allowing users to customize the leading edge softness.
+- **Improved Lyric Consistency**: Standardized the rendering path for all lyric states using consistent `background-clip: text` and `will-change` hints, eliminating font "thickening" and sub-pixel shifts when words finish.
+- **Syllable Split Fix**: Removed artificial word gaps to ensure multi-syllable word fragments (e.g., "in sane") appear as solid words without visible splits.
+
+---
+
 ## [0.3.2] - 2026-04-19
 
 ### 🐛 Bug Fixes

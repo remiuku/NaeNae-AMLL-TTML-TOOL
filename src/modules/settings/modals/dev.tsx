@@ -1,13 +1,33 @@
-import { Box, Card, Flex, Text } from "@radix-ui/themes";
+import { Box, Card, Flex, Text, Checkbox } from "@radix-ui/themes";
 import { memo } from "react";
 import { useTranslation } from "react-i18next";
+import { useAtom } from "jotai";
 import { PluginManagerDialog } from "$/modules/plugins/components/PluginManagerDialog";
+import { showFpsCounterAtom } from "$/modules/settings/states/preview";
 
 export const SettingsDevTab = memo(() => {
 	const { t } = useTranslation();
+	const [showFps, setShowFps] = useAtom(showFpsCounterAtom);
 
 	return (
 		<Flex direction="column" gap="4">
+			<Box>
+				<Text size="3" weight="bold" mb="2" as="div">
+					{"Preview Performance"}
+				</Text>
+				<Card variant="surface">
+					<Flex direction="column" gap="3">
+						<Flex align="center" gap="3">
+							<Checkbox 
+								checked={showFps} 
+								onCheckedChange={(v) => setShowFps(!!v)} 
+							/>
+							<Text size="2">Show FPS Counter in Preview</Text>
+						</Flex>
+					</Flex>
+				</Card>
+			</Box>
+
 			<Box>
 				<Text size="3" weight="bold" mb="2" as="div">
 					{t("settings.dev.wasmPlugins.title", "Community Plugin System (WASM)")}

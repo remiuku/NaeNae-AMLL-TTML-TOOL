@@ -49,7 +49,7 @@ ctx.onmessage = async (event) => {
 				return;
 			}
 
-			const { startTime, endTime, gain, tileWidthPx, height } = params;
+			const { startTime, endTime, gain, tileWidthPx, height, fftSize } = params;
 
 			const startSample = Math.floor(startTime * audioSampleRate);
 			const endSample = Math.ceil(endTime * audioSampleRate);
@@ -67,7 +67,7 @@ ctx.onmessage = async (event) => {
 				Math.min(endSample, fullAudioData.length),
 			);
 
-			const FFT_SIZE = 1024;
+			const FFT_SIZE = fftSize || 1024;
 			const HOP_LENGTH = 64;
 
 			try {

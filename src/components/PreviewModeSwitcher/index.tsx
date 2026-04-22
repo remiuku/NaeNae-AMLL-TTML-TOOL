@@ -13,8 +13,9 @@ export const PreviewModeSwitcher = () => {
 
 	return (
 		<Suspense fallback={<SuspensePlaceHolder />}>
-			{previewModeType === PreviewModeType.Standard && <AMLLWrapper />}
+			{previewModeType === PreviewModeType.Standard && <AMLLWrapper variant="standard" />}
 			{previewModeType === PreviewModeType.AMLL && <AMLL />}
+			{previewModeType === PreviewModeType.Toxi && <AMLLWrapper variant="toxi" />}
 			{previewModeType === PreviewModeType.Timing && <TimingOverview />}
 		</Suspense>
 	);

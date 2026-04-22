@@ -6,6 +6,7 @@ export interface TileGenerationParams {
 	height: number;
 	tileWidthPx: number;
 	paletteId: string;
+	fftSize?: number;
 }
 
 export type WorkerRequest =

@@ -208,10 +208,20 @@ export default function exportTTMLText(ttmlLyric: TTMLLyric): string {
 	// Append remaining metadata entries (skip songwriter since it's in iTunes format)
 	for (const metadata of ttmlLyric.metadata) {
 		if (metadata.key === "songwriter") continue;
+		if (metadata.key === "amll:marks") continue; // We'll handle this separately
 		for (const value of metadata.value) {
 			const metaEl = doc.createElement("amll:meta");
 			metaEl.setAttribute("key", metadata.key);
 			metaEl.setAttribute("value", value);
+			metadataEl.appendChild(metaEl);
+		}
+	}
+
+	if (ttmlLyric.marks && ttmlLyric.marks.length > 0) {
+		for (const mark of ttmlLyric.marks) {
+			const metaEl = doc.createElement("amll:meta");
+			metaEl.setAttribute("key", "amll:marks");
+			metaEl.setAttribute("value", JSON.stringify(mark));
 			metadataEl.appendChild(metaEl);
 		}
 	}

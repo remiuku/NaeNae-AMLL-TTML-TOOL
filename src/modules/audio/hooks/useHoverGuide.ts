@@ -3,7 +3,10 @@ import { useCallback, useRef, useState } from "react";
 import { msToTimestamp } from "$/utils/timestamp";
 import { currentDurationAtom } from "../states";
 
-export const useHoverGuide = (sliderWidthPx: number) => {
+export const useHoverGuide = (
+	sliderWidthPx: number,
+	externalIsDraggingRef?: React.RefObject<boolean>,
+) => {
 	const currentDuration = useAtomValue(currentDurationAtom);
 	const [hoverState, setHoverState] = useState({
 		x: 0,
@@ -12,7 +15,8 @@ export const useHoverGuide = (sliderWidthPx: number) => {
 		isVisible: false,
 	});
 
-	const isDraggingRef = useRef(false);
+	const internalIsDraggingRef = useRef(false);
+	const isDraggingRef = externalIsDraggingRef ?? internalIsDraggingRef;
 
 	const handleContainerMouseMove = useCallback(
 		(e: React.MouseEvent<HTMLDivElement>) => {
