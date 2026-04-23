@@ -5,6 +5,7 @@ export interface IPluginInstance {
 	metadata: PluginMetadata;
 	runImporter: (input: string) => Promise<string>;
 	runExporter: (data: string) => Promise<string>;
+	runTool?: (lines: any[]) => Promise<any[]>;
 }
 
 class WASMPluginInstance implements IPluginInstance {
@@ -19,6 +20,7 @@ class WASMPluginInstance implements IPluginInstance {
 			deallocate?: (ptr: number, size: number) => void;
 			run_importer: (ptr: number, len: number) => number;
 			run_exporter: (ptr: number, len: number) => number;
+			run_tool?: (ptr: number, len: number) => number;
 			memory: WebAssembly.Memory;
 		};
 	}
@@ -58,6 +60,19 @@ class WASMPluginInstance implements IPluginInstance {
 		if (this.exports.deallocate) this.exports.deallocate(ptr, len);
 		return result;
 	}
+
+	async runTool(lines: any[]): Promise<any[]> {
+		if (this.metadata.type === "importer" || this.metadata.type === "exporter") {
+			throw new Error("Plugin does not support tool operations");
+		}
+		if (!this.exports.run_tool) throw new Error("WASM plugin does not export run_tool");
+
+		const { ptr, len } = this.copyStringToWasm(JSON.stringify(lines));
+		const resPtr = this.exports.run_tool(ptr, len);
+		const result = this.readStringFromWasm(resPtr);
+		if (this.exports.deallocate) this.exports.deallocate(ptr, len);
+		return JSON.parse(result);
+	}
 }
 
 class IntegratedPluginInstance implements IPluginInstance {
@@ -71,6 +86,11 @@ class IntegratedPluginInstance implements IPluginInstance {
 	async runExporter(data: string): Promise<string> {
 		if (!this.metadata.runExporter) throw new Error("Plugin does not support export");
 		return this.metadata.runExporter(data);
+	}
+
+	async runTool(lines: any[]): Promise<any[]> {
+		if (!this.metadata.runTool) throw new Error("Plugin does not support tool");
+		return this.metadata.runTool(lines);
 	}
 }
 
@@ -113,11 +133,11 @@ class PluginManager {
 	}
 
 	getImporters() {
-		return Array.from(this.instances.values()).filter(i => i.metadata.type !== "exporter");
+		return Array.from(this.instances.values()).filter(i => i.metadata.type !== "exporter" && i.metadata.runImporter);
 	}
 
 	getExporters() {
-		return Array.from(this.instances.values()).filter(i => i.metadata.type !== "importer");
+		return Array.from(this.instances.values()).filter(i => i.metadata.type !== "importer" && i.metadata.runExporter);
 	}
 
 	async runImporter(pluginId: string, input: string) {
@@ -133,7 +153,7 @@ class PluginManager {
 	}
 
 	getTools() {
-		return Array.from(this.instances.values()).filter(i => i.metadata.type === "tool" || i.metadata.type === "both");
+		return Array.from(this.instances.values()).filter(i => (i.metadata.type === "tool" || i.metadata.type === "both") && i.runTool);
 	}
 
 	async runTool(pluginId: string, lines: any[]) {

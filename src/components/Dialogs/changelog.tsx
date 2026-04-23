@@ -38,6 +38,24 @@ export function ChangelogDialog() {
 				<ScrollArea type="always" scrollbars="vertical" style={{ height: "calc(100% - 60px)" }}>
 					<Flex direction="column" gap="5" pr="4">
 						<Box>
+							<Heading size="4" mb="2" color="gold">v0.5.0 Updates (Community Plugin Store)</Heading>
+							<Flex direction="column" gap="3">
+								<Text size="2">
+									<strong>Community Plugin Store:</strong> Introduced a new, cloud-synced plugin architecture. Browse and install community-made WASM plugins directly from the integrated store.
+								</Text>
+								<Text size="2">
+									<strong>Security Verification Engine:</strong> Implemented SHA-256 integrity checks for all community plugins. The tool now automatically verifies every download to protect your environment from tampering.
+								</Text>
+								<Text size="2">
+									<strong>Flexible Plugin Registry:</strong> Switched to a GitHub-backed remote registry system, allowing for instant, zero-cost updates and community contributions via Pull Requests.
+								</Text>
+								<Text size="2">
+									<strong>Improved Hash Handling:</strong> Standardized plugin verification to be case-insensitive, ensuring reliable installation across different platforms and hash tools (like PowerShell vs Browser).
+								</Text>
+							</Flex>
+						</Box>
+
+						<Box>
 							<Heading size="4" mb="2" color="teal">v0.4.2 Updates (High Performance & Toxi Engine)</Heading>
 							<Flex direction="column" gap="3">
 								<Text size="2">
@@ -244,6 +262,7 @@ export function ChangelogDialog() {
 						<Box>
 							<Heading size="4" mb="2" color="cyan">v0.1.4 Updates</Heading>
 							<Flex direction="column" gap="3">
+								
 								<Text size="2">
 									<strong>Lyrically Engine Integration:</strong> Added a high-reliability alternative lyrics source via the <strong>Lyrically API</strong> (powered by lyrics.ovh). This fallback completely bypasses CORS restrictions and Genius anti-bot measures using server-side aggregation.
 								</Text>
