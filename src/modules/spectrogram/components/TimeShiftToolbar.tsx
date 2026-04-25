@@ -46,7 +46,6 @@ export const TimeShiftToolbar: FC = () => {
 	const editLyricLines = useSetImmerAtom(lyricLinesAtom);
 
 	const [isCopyMode, setIsCopyMode] = useState(false);
-	const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
 	const adjustOffset = useCallback((delta: number) => {
 		setPreviewOffset((prev) => prev + delta);
@@ -155,22 +154,29 @@ export const TimeShiftToolbar: FC = () => {
 		setPreviewOffset(0);
 	};
 
+	const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
 	const startAdjusting = (delta: number) => {
 		adjustOffset(delta);
-		intervalRef.current = setInterval(() => {
-			adjustOffset(delta);
-		}, 100);
+		// Initial delay before starting "blasting" mode
+		timerRef.current = setTimeout(() => {
+			timerRef.current = setInterval(() => {
+				adjustOffset(delta);
+			}, 80);
+		}, 500);
 	};
 
 	const stopAdjusting = () => {
-		if (intervalRef.current) {
-			clearInterval(intervalRef.current);
-			intervalRef.current = null;
+		if (timerRef.current) {
+			clearTimeout(timerRef.current);
+			clearInterval(timerRef.current as unknown as number);
+			timerRef.current = null;
 		}
 	};
 
 	const handleWheel = (e: React.WheelEvent) => {
-		const delta = e.deltaY > 0 ? -10 : 10;
+		const step = e.shiftKey ? 10 : 100;
+		const delta = e.deltaY > 0 ? -step : step;
 		adjustOffset(delta);
 	};
 
@@ -215,7 +221,6 @@ export const TimeShiftToolbar: FC = () => {
 							onMouseDown={() => startAdjusting(-100)}
 							onMouseUp={stopAdjusting}
 							onMouseLeave={stopAdjusting}
-							onClick={() => adjustOffset(-100)}
 						>
 							<SubtractRegular />
 						</IconButton>
@@ -225,7 +230,6 @@ export const TimeShiftToolbar: FC = () => {
 							onMouseDown={() => startAdjusting(-10)}
 							onMouseUp={stopAdjusting}
 							onMouseLeave={stopAdjusting}
-							onClick={() => adjustOffset(-10)}
 						>
 							<SubtractRegular />
 						</IconButton>
@@ -247,7 +251,6 @@ export const TimeShiftToolbar: FC = () => {
 							onMouseDown={() => startAdjusting(10)}
 							onMouseUp={stopAdjusting}
 							onMouseLeave={stopAdjusting}
-							onClick={() => adjustOffset(10)}
 						>
 							<AddRegular />
 						</IconButton>
@@ -257,7 +260,6 @@ export const TimeShiftToolbar: FC = () => {
 							onMouseDown={() => startAdjusting(100)}
 							onMouseUp={stopAdjusting}
 							onMouseLeave={stopAdjusting}
-							onClick={() => adjustOffset(100)}
 						>
 							<AddRegular />
 						</IconButton>
