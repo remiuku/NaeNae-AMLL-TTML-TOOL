@@ -46,6 +46,7 @@ export const TimeShiftToolbar: FC = () => {
 	const editLyricLines = useSetImmerAtom(lyricLinesAtom);
 
 	const [isCopyMode, setIsCopyMode] = useState(false);
+	const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
 	const adjustOffset = useCallback((delta: number) => {
 		setPreviewOffset((prev) => prev + delta);
@@ -153,8 +154,6 @@ export const TimeShiftToolbar: FC = () => {
 		setDialogVisible(false);
 		setPreviewOffset(0);
 	};
-
-	const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
 	const startAdjusting = (delta: number) => {
 		adjustOffset(delta);
