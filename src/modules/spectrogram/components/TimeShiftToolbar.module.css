@@ -1,9 +1,9 @@
 .toolbarContainer {
 	position: absolute;
-	top: 40px;
+	bottom: 20px;
 	left: 50%;
 	transform: translateX(-50%);
-	z-index: 1000;
+	z-index: 100;
 	background: var(--gray-a2);
 	backdrop-filter: blur(12px);
 	border: 1px solid var(--gray-a5);

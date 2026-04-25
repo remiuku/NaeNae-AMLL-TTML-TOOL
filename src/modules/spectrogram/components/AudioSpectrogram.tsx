@@ -108,9 +108,7 @@ const getNoteFromFreq = (freq: number) => {
 
 export const AudioSpectrogram: FC = memo(() => {
 	const audioBuffer = useAtomValue(audioBufferAtom);
-	const currentTimeInMs = useAtomValue(currentTimeAtom);
 	const setCurrentTime = useSetAtom(currentTimeAtom);
-	const currentTime = currentTimeInMs / 1000;
 	const auditionTime = useAtomValue(auditionTimeAtom);
 	const selectedLines = useAtomValue(selectedLinesAtom);
 	const store = useStore();
@@ -136,8 +134,9 @@ export const AudioSpectrogram: FC = memo(() => {
 		if (linesToCopy.length === 0) return;
 
 		// Find minimum start time among selected lines to calculate offset
+		const currentTimeMs = store.get(currentTimeAtom);
 		const minStart = Math.min(...linesToCopy.map(l => l.startTime));
-		const offset = currentTimeInMs - minStart;
+		const offset = currentTimeMs - minStart;
 
 		const newLines = linesToCopy.map(l => ({
 			...l,
@@ -154,12 +153,12 @@ export const AudioSpectrogram: FC = memo(() => {
 
 		store.set(lyricLinesAtom, produce((draft) => {
 			// Find insertion point to keep sorted
-			let insertIndex = draft.lyricLines.findIndex((l: any) => l.startTime > currentTimeInMs);
+			let insertIndex = draft.lyricLines.findIndex((l: any) => l.startTime > currentTimeMs);
 			if (insertIndex === -1) insertIndex = draft.lyricLines.length;
 			
 			draft.lyricLines.splice(insertIndex, 0, ...newLines);
 		}));
-	}, [globalEnableInsert, currentTimeInMs]);
+	}, [globalEnableInsert, store]);
 
 	const { height: uiHeight, resizeHandleProps } = useSpectrogramResize({
 		initialHeight: dataHeight,
@@ -362,9 +361,7 @@ export const AudioSpectrogram: FC = memo(() => {
 	};
 
 	const totalWidth = audioBuffer ? audioBuffer.duration * zoom : 0;
-	const cursorPosition = currentTime * zoom;
 	const auditionCursorPosition = auditionTime ? auditionTime * zoom : null;
-	const handleLeftPosition = cursorPosition - scrollLeft;
 
 	let hoverTimeFormatted = msToTimestamp(hoverTimeMs);
 	if (hoverFrequency > 0) {
@@ -518,17 +515,11 @@ export const AudioSpectrogram: FC = memo(() => {
 								</>
 							)}
 
-							<div
-								className={styles.playheadScrubHandle}
-								style={{
-									left: `${handleLeftPosition}px`,
-									display:
-										handleLeftPosition < 0 ||
-										handleLeftPosition > containerWidth
-											? "none"
-											: "block",
-								}}
-								onMouseDown={handleScrubStart}
+							<ScrubHandle
+								scrollContainerRef={scrollContainerRef}
+								scrollLeft={scrollLeft}
+								zoom={zoom}
+								containerWidth={containerWidth}
 							/>
 
 							<div
@@ -604,12 +595,7 @@ export const AudioSpectrogram: FC = memo(() => {
 									{visibleTiles.map((tile) => (
 										<TileComponent key={tile.tileId} {...tile} />
 									))}
-									<div
-										className={styles.playheadCursor}
-										style={{
-											left: `${cursorPosition}px`,
-										}}
-									/>
+									<PlayheadCursor zoom={zoom} />
 
 									{pendingCursorPosition !== null && (
 										<div
@@ -742,6 +728,49 @@ export const AudioSpectrogram: FC = memo(() => {
 				</div>
 			</div>
 		</div>
+	);
+});
+
+const PlayheadCursor: FC<{ zoom: number }> = memo(({ zoom }) => {
+	const currentTimeInMs = useAtomValue(currentTimeAtom);
+	const cursorPosition = (currentTimeInMs / 1000) * zoom;
+
+	return (
+		<div
+			className={styles.playheadCursor}
+			style={{
+				left: `${cursorPosition}px`,
+			}}
+		/>
+	);
+});
+
+const ScrubHandle: FC<{
+	scrollContainerRef: React.RefObject<HTMLDivElement | null>;
+	scrollLeft: number;
+	zoom: number;
+	containerWidth: number;
+}> = memo(({ scrollContainerRef, scrollLeft, zoom, containerWidth }) => {
+	const currentTimeInMs = useAtomValue(currentTimeAtom);
+	const { handleScrubStart } = useScrubbing(
+		scrollContainerRef,
+		scrollLeft,
+		zoom,
+	);
+	const handleLeftPosition = (currentTimeInMs / 1000) * zoom - scrollLeft;
+
+	return (
+		<div
+			className={styles.playheadScrubHandle}
+			style={{
+				left: `${handleLeftPosition}px`,
+				display:
+					handleLeftPosition < 0 || handleLeftPosition > containerWidth
+						? "none"
+						: "block",
+			}}
+			onMouseDown={handleScrubStart}
+		/>
 	);
 });
 

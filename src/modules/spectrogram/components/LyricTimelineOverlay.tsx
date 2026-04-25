@@ -43,7 +43,6 @@ export const LyricTimelineOverlay: FC<LyricTimelineOverlayProps> = ({
 	const processedLines = useAtomValue(processedLyricLinesAtom);
 	const [timelineDrag, setTimelineDrag] = useAtom(timelineDragAtom);
 	const setPreviewLine = useSetAtom(previewLineAtom);
-	const currentTime = useAtomValue(currentTimeAtom);
 	const snapTargetsMs = useRef<number[]>([]);
 	const { scrollContainerRef, zoom, scrollLeft } =
 		useContext(SpectrogramContext);
@@ -181,7 +180,7 @@ export const LyricTimelineOverlay: FC<LyricTimelineOverlayProps> = ({
 
 		if (needsBoundarySnapping) {
 			const lineId = (timelineDrag as TimelineDragOperation).lineId;
-			const targets: number[] = [currentTime];
+			const targets: number[] = [globalStore.get(currentTimeAtom)];
 			const otherLineBoundaries = processedLines
 				.filter((line) => line.id !== lineId)
 				.flatMap((line) => [line.startTime, line.endTime]);
@@ -208,7 +207,6 @@ export const LyricTimelineOverlay: FC<LyricTimelineOverlayProps> = ({
 		scrollLeft,
 		scrollContainerRef,
 		processedLines,
-		currentTime,
 	]);
 
 	const bufferPx = 500;
