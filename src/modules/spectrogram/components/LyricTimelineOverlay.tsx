@@ -263,7 +263,18 @@ export const LyricTimelineOverlay: FC<LyricTimelineOverlayProps> = ({
 			))}
 			{previewActive &&
 				previewOffset !== 0 &&
-				linesToRender.map((line) => {
+				processedLines.map((line) => {
+					if (line.startTime == null || line.endTime == null) return null;
+
+					// Calculate visibility based on SHIFTED position
+					const shiftedStartMs = line.startTime + previewOffset;
+					const shiftedEndMs = line.endTime + previewOffset;
+
+					const inBufferedView =
+						shiftedEndMs > viewStartMs && shiftedStartMs < viewEndMs;
+
+					if (!inBufferedView) return null;
+
 					let shouldShowGhost = false;
 					if (previewScope === "all") {
 						shouldShowGhost = true;
