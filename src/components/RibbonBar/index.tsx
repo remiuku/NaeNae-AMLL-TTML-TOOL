@@ -48,6 +48,7 @@ export const RibbonBar = memo(
 						style={{
 							height: isSidebar ? "100%" : "130px",
 							overflowY: isSidebar ? "auto" : "clip",
+							overflowX: "clip",
 						}}
 					>
 						<AnimatePresence mode="wait">

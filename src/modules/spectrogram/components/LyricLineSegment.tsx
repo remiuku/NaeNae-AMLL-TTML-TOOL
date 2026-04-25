@@ -1,5 +1,6 @@
 import { useAtomValue, useSetAtom } from "jotai";
 import React, { type FC, useCallback, useContext } from "react";
+import classNames from "classnames";
 import type { ProcessedLyricLine } from "$/modules/segmentation/utils/segment-processing.ts";
 import {
 	previewLineAtom,
@@ -16,11 +17,15 @@ import { SpectrogramContext } from "./SpectrogramContext.ts";
 interface LyricLineSegmentProps {
 	line: ProcessedLyricLine;
 	allLines: ProcessedLyricLine[];
+	isGhost?: boolean;
+	offset?: number;
 }
 
 export const LyricLineSegment: FC<LyricLineSegmentProps> = ({
 	line,
 	allLines,
+	isGhost = false,
+	offset = 0,
 }) => {
 	const previewLine = useAtomValue(previewLineAtom);
 	const setSelectedLines = useSetAtom(selectedLinesAtom);
@@ -30,7 +35,7 @@ export const LyricLineSegment: FC<LyricLineSegmentProps> = ({
 	const setTimelineDrag = useSetAtom(timelineDragAtom);
 
 	let displayLine: ProcessedLyricLine;
-	if (previewLine && previewLine.id === line.id) {
+	if (!isGhost && previewLine && previewLine.id === line.id) {
 		displayLine = previewLine;
 	} else {
 		displayLine = line;
@@ -38,6 +43,7 @@ export const LyricLineSegment: FC<LyricLineSegmentProps> = ({
 
 	const handleMouseDown = useCallback(
 		(e: React.MouseEvent) => {
+			if (isGhost) return;
 			if (e.button !== 0) return;
 			if (editingTimeField) return;
 
@@ -64,6 +70,7 @@ export const LyricLineSegment: FC<LyricLineSegmentProps> = ({
 			setSelectedWordId(null);
 		},
 		[
+			isGhost,
 			editingTimeField,
 			displayLine,
 			setSelectedLines,
@@ -79,7 +86,9 @@ export const LyricLineSegment: FC<LyricLineSegmentProps> = ({
 		return null;
 	}
 
-	const { startTime, endTime, segments } = displayLine;
+	const startTime = Math.max(0, (displayLine.startTime ?? 0) + offset);
+	const endTime = Math.max(0, (displayLine.endTime ?? 0) + offset);
+	const segments = displayLine.segments;
 	const segmentsLength = segments.length;
 
 	if (startTime == null || endTime == null || endTime <= startTime) {
@@ -103,28 +112,30 @@ export const LyricLineSegment: FC<LyricLineSegmentProps> = ({
 	const dynamicStyles = {
 		left: `${left}px`,
 		width: `${width}px`,
-		cursor: "auto",
+		cursor: isGhost ? "default" : "auto",
 	};
 
 	return (
 		// biome-ignore lint/a11y/useSemanticElements: <button> 不适用
 		<div
-			className={styles.lineSegment}
+			className={classNames(styles.lineSegment, isGhost && styles.ghost)}
 			style={dynamicStyles}
 			onMouseDown={handleMouseDown}
-			tabIndex={0}
-			role="button"
-			aria-label="Lyric Line"
+			tabIndex={isGhost ? -1 : 0}
+			role={isGhost ? "presentation" : "button"}
+			aria-label={isGhost ? "Ghost Lyric Line" : "Lyric Line"}
 		>
-			<DividerSegment
-				key="divider-start"
-				lineId={displayLine.id}
-				segmentIndex={-1}
-				timeMs={startTime}
-				lineStartTime={startTime}
-				segmentsLength={segmentsLength}
-				isTouching={isTouchingStart}
-			/>
+			{!isGhost && (
+				<DividerSegment
+					key="divider-start"
+					lineId={displayLine.id}
+					segmentIndex={-1}
+					timeMs={startTime}
+					lineStartTime={startTime}
+					segmentsLength={segmentsLength}
+					isTouching={isTouchingStart}
+				/>
+			)}
 
 			{segments.map((segment, index) => (
 				<React.Fragment key={segment.id}>
@@ -133,19 +144,23 @@ export const LyricLineSegment: FC<LyricLineSegmentProps> = ({
 							lineId={displayLine.id}
 							segment={segment}
 							lineStartTime={startTime}
+							offset={offset}
+							isGhost={isGhost}
 						/>
 					) : (
-						<GapSegment segment={segment} lineStartTime={startTime} />
+						<GapSegment segment={segment} lineStartTime={startTime} offset={offset} isGhost={isGhost} />
 					)}
-					<DividerSegment
-						key={`divider-${segment.id}`}
-						lineId={displayLine.id}
-						segmentIndex={index}
-						timeMs={segment.endTime}
-						lineStartTime={startTime}
-						segmentsLength={segmentsLength}
-						isTouching={index === segmentsLength - 1 ? isTouchingEnd : false}
-					/>
+					{!isGhost && (
+						<DividerSegment
+							key={`divider-${segment.id}`}
+							lineId={displayLine.id}
+							segmentIndex={index}
+							timeMs={segment.endTime}
+							lineStartTime={startTime}
+							segmentsLength={segmentsLength}
+							isTouching={index === segmentsLength - 1 ? isTouchingEnd : false}
+						/>
+					)}
 				</React.Fragment>
 			))}
 		</div>

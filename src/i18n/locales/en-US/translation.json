@@ -96,6 +96,22 @@
 				"success": "Phonetics fetched successfully",
 				"error": "Failed to fetch phonetics",
 				"romanize": "Romanize"
+			},
+			"romanization": {
+				"section": "Romanization",
+				"autoFetch": "Romanize",
+				"success": "Romanization successful",
+				"error": "Failed to fetch romanization",
+				"noSelection": "Please select lines or words first",
+				"info": {
+					"title": "About Romanization",
+					"canDo": "✓ Can do: Auto-generate Romaji (JA), Pinyin (ZH), and Romaji (KO). Supports Kanji!",
+					"cannotDo": "✗ Cannot do: 100% accuracy for rare Kanji or proper names. CJK only. Minor errors may occur."
+				},
+				"ja": "Japanese (Romaji)",
+				"zh": "Chinese (Pinyin)",
+				"yue": "Cantonese (Jyutping)",
+				"ko": "Korean (Romaji)"
 			}
 		},
 		"previewMode": {
@@ -107,6 +123,7 @@
 			"fadeWidth": "Fade Width",
 			"mode": "Mode",
 			"standard": "Standard",
+			"amllDeprecated": "AMLL mode is deprecated, please use Standard mode",
 			"timing": "Timing",
 			"render": "Render",
 			"vsync": "V-Sync",
@@ -117,6 +134,7 @@
 			"currentEmptyBeat": "Empty Beat",
 			"syncAdjustment": "Timing Adjustment",
 			"timeOffset": "Time Offset",
+			"commitOffset": "Commit Offset",
 			"syncLevel": "Sync Level",
 			"syncLevelWord": "Word Sync",
 			"syncLevelLine": "Line Sync",
@@ -136,7 +154,12 @@
 			"startSync": "Mark Begin",
 			"continuousSync": "Commit",
 			"endSync": "Mark End",
-			"loading": "Panel loading…"
+			"loading": "Panel loading…",
+			"manageQuickFixExclusions": {
+				"title": "Manage Quick Fix Exclusions",
+				"description": "Add words to ignore in quick fixes.",
+				"placeholder": "Enter word to ignore"
+			}
 		}
 	},
 	"settings": {
@@ -159,6 +182,10 @@
 			"compactBGInSyncDesc": "Automatically compress vertical space for background vocal lines during synchronization.",
 			"syncJudgeMode": "Sync Timestamp Judgment Mode",
 			"syncJudgeModeDesc": "Set how timestamps are judged when syncing. Default is 'First key down'.",
+			"syncTimeOffset": "Global Sync Time Offset (ms)",
+			"syncTimeOffsetDesc": "Adjust all sync timestamps by this amount to compensate for audio latency.",
+			"syncCommitOffset": "Commit Input Offset (ms)",
+			"syncCommitOffsetDesc": "Specific offset for the 'Commit' action to fix delayed audio issues.",
 			"syncJudgeModeOptions": {
 				"firstKeyDown": "First key down time",
 				"lastKeyUp": "Last key up time",
@@ -214,8 +241,21 @@
 		},
 		"appearance": {
 			"theme": "Theme",
+			"mode": {
+				"basic": "Basic Editor",
+				"advanced": "Advanced Editor"
+			},
+			"presets": {
+				"title": "Appearance Presets",
+				"namePlaceholder": "Theme Name...",
+				"save": "Save Current",
+				"empty": "No saved presets yet."
+			},
 			"useCustomAccent": "Custom Accent Color",
 			"useCustomAccentDesc": "Set Accent color",
+			"glass": "Glassmorphism",
+			"glassBlur": "Glass Intensity",
+			"glassBlurDesc": "Adjust the background blur effect for glassmorphic elements.",
 			"background": "Background",
 			"mode": {
 				"none": "None",
@@ -582,7 +622,8 @@
 		"sync": "Sync",
 		"remove": "Remove",
 		"about": "About",
-		"clickToSet": "Click to set "
+		"clickToSet": "Click to set ",
+		"autoDetect": "Auto Detect"
 	},
 	"textImportDialog": {
 		"addSpaces": "Add Spaces",
@@ -805,7 +846,24 @@
 		"futureUse": "And the lyrics will be used as default TTML source by AMLL systems in the future!",
 		"rightsWarning": "If you value retaining ownership, please do NOT submit!",
 		"submitInstructions": "Enter the following info then jump to the GitHub issue submission page!",
-		"closeWarning": "Close warning message"
+		"closeWarning": "Close warning message",
+		"uploadDbType": "Lyrics Database Type",
+		"uploadDbTypeOfficial": "Official Database",
+		"uploadDbTypeUser": "User Database",
+		"uploadDbTypeBoth": "Both Databases",
+		"officialDesc": "Submitting to the official database requires manual review to ensure lyrics quality and synchronization. This is recommended for high-quality contributions.",
+		"userDesc": "Submitting to the user database only requires bot verification. It is faster but doesn't guarantee the same level of performance quality.",
+		"bothDesc": "This will open submission pages for both repositories. Please create an issue in each manually.",
+		"genFromName": "Generate from metadata",
+		"musicName": "Track Title",
+		"musicNameDesc": "Recommended format: Artist - Song Title",
+		"submitReason": "Reason",
+		"submitReasonNew": "New lyrics submission",
+		"submitReasonFix": "Fix existing lyrics",
+		"comment": "Comment",
+		"commentPlaceholder": "Anything else you want to add?",
+		"issueFoundTitle": "Please fix the following issues before submitting:",
+		"submitBtn": "Upload and Create Issue"
 	},
 	"splitWordDialog": {
 		"spaceCount": "Space x{count}",

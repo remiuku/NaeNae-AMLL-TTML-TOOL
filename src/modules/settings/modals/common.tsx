@@ -42,6 +42,8 @@ import {
 } from "$/modules/settings/states";
 import {
 	enableUpcomingWordHighlightAtom,
+	syncTimeOffsetAtom,
+	syncCommitOffsetAtom,
 	upcomingWordHighlightColorAtom,
 	upcomingWordHighlightThresholdAtom,
 } from "$/modules/settings/states/sync";
@@ -73,6 +75,8 @@ export const SettingsCommonTab = () => {
 	const [upcomingWordHighlightColor, setUpcomingWordHighlightColor] = useAtom(
 		upcomingWordHighlightColorAtom,
 	);
+	const [syncTimeOffset, setSyncTimeOffset] = useAtom(syncTimeOffsetAtom);
+	const [syncCommitOffset, setSyncCommitOffset] = useAtom(syncCommitOffsetAtom);
 
 	const [compactBGInSync, setCompactBGInSync] = useAtom(compactBGInSyncAtom);
 
@@ -374,6 +378,62 @@ export const SettingsCommonTab = () => {
 										</Select.Item>
 									</Select.Content>
 								</Select.Root>
+							</Flex>
+						</Box>
+					</Flex>
+				</Card>
+
+				<Card>
+					<Flex gap="3" align="center">
+						<Timer24Regular />
+						<Box flexGrow="1">
+							<Flex align="center" justify="between" gap="4">
+								<Flex direction="column" gap="1">
+									<Text>
+										{t("settings.common.syncTimeOffset", "Global Sync Time Offset (ms)")}
+									</Text>
+									<Text size="1" color="gray">
+										{t(
+											"settings.common.syncTimeOffsetDesc",
+											"Adjust all sync timestamps by this amount to compensate for audio latency.",
+										)}
+									</Text>
+								</Flex>
+								<TextField.Root
+									type="number"
+									value={syncTimeOffset}
+									onChange={(e) =>
+										setSyncTimeOffset(Number.parseInt(e.target.value, 10) || 0)
+									}
+								/>
+							</Flex>
+						</Box>
+					</Flex>
+				</Card>
+
+				<Card>
+					<Flex gap="3" align="center">
+						<Timer24Regular />
+						<Box flexGrow="1">
+							<Flex align="center" justify="between" gap="4">
+								<Flex direction="column" gap="1">
+									<Text>
+										{t("settings.common.syncCommitOffset", "Commit Input Offset (ms)")}
+									</Text>
+									<Text size="1" color="gray">
+										{t(
+											"settings.common.syncCommitOffsetDesc",
+											"Specific offset for the 'Commit' action to fix delayed audio issues.",
+										)}
+									</Text>
+								</Flex>
+								<TextField.Root
+									type="number"
+									value={syncCommitOffset}
+									onChange={(e) =>
+										setSyncCommitOffset(Number.parseInt(e.target.value, 10) || 0)
+									}
+								/>
 							</Flex>
 						</Box>
 					</Flex>

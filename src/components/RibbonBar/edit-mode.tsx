@@ -775,7 +775,7 @@ const PhoneticSection = () => {
 					if (capsuleTexts.join("").trim().length === 0) continue;
 					
 					// Get line-level phonetic data
-					const lineSyllables = await getPhoneticSyllables(capsuleTexts, projectLangPriority as "auto" | "ja" | "zh" | "ko");
+					const lineSyllables = await getPhoneticSyllables(capsuleTexts, projectLangPriority as "auto" | "ja" | "zh" | "ko" | "yue");
 
 					for (let i = 0; i < line.words.length; i++) {
 						const word = line.words[i];
@@ -790,12 +790,12 @@ const PhoneticSection = () => {
 					// Join for the line summary, but process capsules for word updates
 					const capsuleTexts = line.words.map(w => w.word);
 					const joinedText = capsuleTexts.join("");
-					const linePhonetic = await getPhonetic(joinedText, projectLangPriority as "auto" | "ja" | "zh" | "ko");
+					const linePhonetic = await getPhonetic(joinedText, projectLangPriority as "auto" | "ja" | "zh" | "ko" | "yue");
 					lineUpdates[line.id] = linePhonetic;
 
 					if (line.words.length > 0) {
 						// Distribute using capsule-aware mapping
-						const syllables = await getPhoneticSyllables(capsuleTexts, projectLangPriority as "auto" | "ja" | "zh" | "ko");
+						const syllables = await getPhoneticSyllables(capsuleTexts, projectLangPriority as "auto" | "ja" | "zh" | "ko" | "yue");
 						for (let i = 0; i < line.words.length; i++) {
 							if (syllables[i]) {
 								wordUpdates[line.words[i].id] = syllables[i];
@@ -855,20 +855,21 @@ const PhoneticSection = () => {
 			}
 		>
 			<Grid columns="2" gap="2" align="center">
-				<Select.Root value={lang} onValueChange={(v) => setLang(v as "auto" | "ja" | "zh" | "ko")} size="1">
+				<Select.Root value={lang} onValueChange={(v) => setLang(v as "auto" | "ja" | "zh" | "ko" | "yue")} size="1">
 					<Select.Trigger />
 					<Select.Content>
-						<Select.Item value="auto">{t("common.autoDetect", "Auto")}</Select.Item>
-						<Select.Item value="ja">Japanese (Romaji)</Select.Item>
-						<Select.Item value="zh">Chinese (Pinyin)</Select.Item>
-						<Select.Item value="ko">Korean (Romaji)</Select.Item>
+						<Select.Item value="auto">{t("common.autoDetect", "Auto Detect")}</Select.Item>
+						<Select.Item value="ja">{t("ribbonBar.editMode.romanization.ja", "Japanese (Romaji)")}</Select.Item>
+						<Select.Item value="zh">{t("ribbonBar.editMode.romanization.zh", "Chinese (Pinyin)")}</Select.Item>
+						<Select.Item value="yue">{t("ribbonBar.editMode.romanization.yue", "Cantonese (Jyutping)")}</Select.Item>
+						<Select.Item value="ko">{t("ribbonBar.editMode.romanization.ko", "Korean (Romaji)")}</Select.Item>
 					</Select.Content>
 				</Select.Root>
 				<Button size="1" variant="soft" onClick={handleAutoFetch} disabled={loading}>
 					{loading ? <Spinner size="1" /> : t("ribbonBar.editMode.romanization.autoFetch", "Romanize")}
 				</Button>
 				<Flex gap="2" align="center" style={{ gridColumn: "span 2", justifyContent: "center" }}>
-					<Text size="1" color="gray">{t("settings.appearance.displayRomanization", "Show")}</Text>
+					<Text size="1" color="gray">{t("settings.common.enabled", "Enabled")}</Text>
 					<Switch 
 						size="1" 
 						checked={displayRomanization} 
@@ -1006,14 +1007,14 @@ export const EditModeRibbonBar: FC<{ isSidebar?: boolean }> = forwardRef<HTMLDiv
 							fieldName="translatedLyric"
 							parser={(v) => v}
 							formatter={(v) => v}
-							textFieldStyle={{ width: "20em" }}
+							textFieldStyle={{ width: "15em" }}
 						/>
 						<EditField
 							label={t("ribbonBar.editMode.romanLyric", "音译歌词")}
 							fieldName="romanLyric"
 							parser={(v) => v}
 							formatter={(v) => v}
-							textFieldStyle={{ width: "20em" }}
+							textFieldStyle={{ width: "15em" }}
 						/>
 					</Grid>
 				</RibbonSection>

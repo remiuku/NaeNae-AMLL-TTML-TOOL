@@ -31,7 +31,9 @@ import {
 	selectedLinesAtom,
 	ToolMode,
 	toolModeAtom,
+	allLyricsWordsAtom,
 } from "$/states/main.ts";
+import { useStore } from "jotai";
 import type { LyricLine } from "$/types/ttml.ts";
 import styles from "./index.module.css";
 import { LyricLineView } from "./lyric-line-view";
@@ -65,8 +67,7 @@ const findCurrentLineIndex = (lines: LyricLine[], currentTime: number) => {
 
 export const LyricLinesView: FC = forwardRef<HTMLDivElement>((_props, ref) => {
 	const editLyric = useAtomValue(lyricLinesOnlyAtom);
-	const lyricLines = useAtomValue(lyricLinesAtom).lyricLines;
-	const currentTime = useAtomValue(currentTimeAtom);
+	const store = useStore();
 	const viewRef = useRef<ViewportListRef>(null);
 	const viewElRef = useRef<HTMLDivElement>(null);
 	const toolMode = useAtomValue(toolModeAtom);
@@ -77,21 +78,12 @@ export const LyricLinesView: FC = forwardRef<HTMLDivElement>((_props, ref) => {
 			atom((get) => {
 				if (toolMode !== ToolMode.Sync && toolMode !== ToolMode.Edit) return;
 				const selectedLines = get(selectedLinesAtom);
-				let scrollToIndex = Number.NaN;
-				let i = 0;
-				for (const lineAtom of editLyric) {
-					const line = get(lineAtom);
-					if (selectedLines.has(line.id)) {
-						scrollToIndex = i;
-						break;
-					}
-
-					i++;
-				}
-				if (Number.isNaN(scrollToIndex)) return;
-				return scrollToIndex;
+				if (selectedLines.size === 0) return Number.NaN;
+				const lyrics = get(lyricLinesAtom).lyricLines;
+				const index = lyrics.findIndex((l) => selectedLines.has(l.id));
+				return index === -1 ? Number.NaN : index;
 			}),
-		[editLyric, toolMode],
+		[toolMode],
 	);
 	const scrollToIndex = useAtomValue(scrollToIndexAtom);
 
@@ -112,10 +104,12 @@ export const LyricLinesView: FC = forwardRef<HTMLDivElement>((_props, ref) => {
 	}, [scrollToIndex, scrollToLineIndex]);
 
 	const handleLocate = useCallback(() => {
+		const currentTime = store.get(currentTimeAtom);
+		const lyricLines = store.get(lyricLinesAtom).lyricLines;
 		const index = findCurrentLineIndex(lyricLines, currentTime);
 		if (index === -1) return;
 		scrollToLineIndex(index);
-	}, [currentTime, lyricLines, scrollToLineIndex]);
+	}, [store, scrollToLineIndex]);
 
 	useImperativeHandle(ref, () => viewElRef.current as HTMLDivElement, []);
 

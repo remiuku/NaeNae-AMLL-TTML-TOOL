@@ -22,6 +22,7 @@ import {
 	smartFirstWordActiveIdAtom,
 	syncLevelModeAtom,
 	syncTimeOffsetAtom,
+	syncCommitOffsetAtom,
 } from "$/modules/settings/states/sync";
 import {
 	keyMoveFirstWordAndPlayAtom,
@@ -332,9 +333,11 @@ export const SyncKeyBinding: FC = () => {
 	useKeyBindingAtom(
 		keySyncNextAtom,
 		(evt) => {
+			const _t0 = performance.now();
 			const location = getCurrentLocation(store);
 			if (!location) return;
-			const currentTime = calcJudgeTime(evt);
+			const currentTime = calcJudgeTime(evt) + store.get(syncCommitOffsetAtom);
+			const _t1 = performance.now();
 
 			const syncLevelMode = store.get(syncLevelModeAtom);
 			if (syncLevelMode === "line") {
@@ -467,17 +470,22 @@ export const SyncKeyBinding: FC = () => {
 				return;
 			}
 
+			// ── Main word-mode commit path ──
+			// Collect selection result from updater, then set it after — avoids
+			// nested store.set calls inside an atom updater (causes double propagation).
+			let targetSelection: { id: string; lineId: string } | null = null;
+
+			const _t2 = performance.now();
 			store.set(lyricLinesAtom, (prev) => {
 				const state: LyricsState = prev;
 				const nextLines = state.lyricLines.slice();
-				
+
 				let curLineIndex = location.lineIndex;
 				let curWordIndex = location.wordIndex;
 				let curRubyIndex = location.rubyIndex;
 				let curSyncIndex = location.syncIndex;
 
 				const getLineToEdit = (idx: number) => {
-					// Ensure the line is cloned and stored in nextLines
 					nextLines[idx] = cloneLineWithWords(nextLines[idx]);
 					return nextLines[idx];
 				};
@@ -486,8 +494,8 @@ export const SyncKeyBinding: FC = () => {
 				setUnitEndTimeCloned(getLineToEdit(curLineIndex), curWordIndex, curRubyIndex, currentTime);
 
 				// 2. Scan forward for next selection
-				let targetSelection: { id: string; lineId: string } | null = null;
-				
+				targetSelection = null;
+
 				let iterLineIndex = curLineIndex;
 				let iterSyncIndex = curSyncIndex;
 
@@ -497,7 +505,7 @@ export const SyncKeyBinding: FC = () => {
 
 					const text = (next.unit.rubyWord?.word ?? next.unit.word.word).trim();
 					if (text.length === 0) {
-						// It's whitespace. Auto-commit both start and end to the current time.
+						// Whitespace — auto-commit both start and end
 						const targetLine = getLineToEdit(next.lineIndex);
 						if (next.lineIndex !== iterLineIndex) {
 							nextLines[iterLineIndex].endTime = currentTime;
@@ -508,7 +516,7 @@ export const SyncKeyBinding: FC = () => {
 						iterLineIndex = next.lineIndex;
 						iterSyncIndex = next.syncIndex;
 					} else {
-						// Found the next real word!
+						// Found the next real word
 						const targetLine = getLineToEdit(next.lineIndex);
 						if (next.lineIndex !== iterLineIndex) {
 							nextLines[iterLineIndex].endTime = currentTime;
@@ -520,17 +528,17 @@ export const SyncKeyBinding: FC = () => {
 					}
 				}
 
-				if (targetSelection) {
-					store.set(selectedWordsAtom, new Set([targetSelection.id]));
-					store.set(selectedLinesAtom, new Set([targetSelection.lineId]));
-				}
-
 				return { ...state, lyricLines: nextLines };
 			});
-			
+			const _t3 = performance.now();
+
+			// Apply selection AFTER lyricLinesAtom is set (avoids nested propagation)
+			if (targetSelection) {
+				store.set(selectedWordsAtom, new Set([(targetSelection as { id: string; lineId: string }).id]));
+				store.set(selectedLinesAtom, new Set([(targetSelection as { id: string; lineId: string }).lineId]));
+			}
+
 			store.set(currentEmptyBeatAtom, 0);
-
-
 
 			// 开了智能首字后，连轴打到下一行时跳过智能首字
 			if (smartFirstWord) {
@@ -539,6 +547,11 @@ export const SyncKeyBinding: FC = () => {
 					store.set(smartFirstWordActiveIdAtom, newLocation.word.id);
 				}
 			}
+
+			const _t4 = performance.now();
+			console.debug(
+				`[commit] setup=${(_t1 - _t0).toFixed(2)}ms | lyricLinesAtom.set=${(_t3 - _t2).toFixed(2)}ms | post-set=${(_t4 - _t3).toFixed(2)}ms | TOTAL=${(_t4 - _t0).toFixed(2)}ms`
+			);
 		},
 		[store, moveToNextWord],
 	);

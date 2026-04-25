@@ -3,6 +3,7 @@ import {
 	EyeOffFilled,
 	MusicNote2Filled,
 	SettingsFilled,
+	ClockRegular,
 } from "@fluentui/react-icons";
 import {
 	Button,
@@ -62,10 +63,12 @@ import { msToTimestamp } from "$/utils/timestamp.ts";
 import { useCommand } from "$/modules/keyboard/hooks.ts";
 import { cmdDuplicatePaste } from "$/modules/keyboard/commands.ts";
 import { isDraggingAtom } from "$/modules/spectrogram/states/dnd.ts";
+import { timeShiftDialogAtom, timeShiftPreviewActiveAtom } from "$/states/dialogs.ts";
 import { draggingIdAtom, globalEnableInsertAtom } from "$/modules/lyric-editor/components/lyric-line-view-states.ts";
 import { newLyricLine, newLyricWord } from "$/types/ttml.ts";
 import styles from "./AudioSpectrogram.module.css";
 import { LyricTimelineOverlay } from "./LyricTimelineOverlay.tsx";
+import { TimeShiftToolbar } from "./TimeShiftToolbar.tsx";
 import { FrequencyRuler } from "./FrequencyRuler.tsx";
 import {
 	type ISpectrogramContext,
@@ -119,6 +122,8 @@ export const AudioSpectrogram: FC = memo(() => {
 		showUnselectedLinesAtom,
 	);
 	const globalEnableInsert = useAtomValue(globalEnableInsertAtom);
+	const setDialogVisible = useSetAtom(timeShiftDialogAtom);
+	const setPreviewActive = useSetAtom(timeShiftPreviewActiveAtom);
 
 	useCommand(cmdDuplicatePaste, () => {
 		if (!globalEnableInsert) return;
@@ -655,6 +660,7 @@ export const AudioSpectrogram: FC = memo(() => {
 									</SpectrogramContext.Provider>
 								</div>
 							</div>
+							<TimeShiftToolbar />
 						</>
 					)}
 				</div>
@@ -669,6 +675,18 @@ export const AudioSpectrogram: FC = memo(() => {
 							onClick={() => setShowUnselectedLines((prev) => !prev)}
 						>
 							{showUnselectedLines ? <EyeFilled /> : <EyeOffFilled />}
+						</IconButton>
+					</Tooltip>
+
+					<Tooltip content={t("timeShiftDialog.title", "Time Shift")} side="left">
+						<IconButton
+							variant="ghost"
+							color="gray"
+							onClick={() => {
+								setPreviewActive((prev) => !prev);
+							}}
+						>
+							<ClockRegular />
 						</IconButton>
 					</Tooltip>
 

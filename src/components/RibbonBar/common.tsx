@@ -11,7 +11,7 @@
 
 import { Flex, Separator, Text } from "@radix-ui/themes";
 import { motion } from "framer-motion";
-import { type FC, forwardRef, type PropsWithChildren, type ReactNode, useImperativeHandle, useRef } from "react";
+import { type FC, forwardRef, type PropsWithChildren, type ReactNode, useImperativeHandle, useRef, useCallback, useEffect } from "react";
 
 export const RibbonSection: FC<PropsWithChildren<{ label: ReactNode; isSidebar?: boolean }>> = ({
 	children,
@@ -57,8 +57,57 @@ export const RibbonSection: FC<PropsWithChildren<{ label: ReactNode; isSidebar?:
 export const RibbonFrame = forwardRef<HTMLDivElement, PropsWithChildren<{ isSidebar?: boolean }>>(
 	({ children, isSidebar }, ref) => {
 		const frameRef = useRef<HTMLDivElement>(null);
-
 		useImperativeHandle(ref, () => frameRef.current as HTMLDivElement, []);
+
+		useEffect(() => {
+			const frame = frameRef.current;
+			if (!frame || isSidebar) return;
+
+			let scrollTarget = frame.scrollLeft;
+			let isAnimating = false;
+
+			const handleWheel = (e: WheelEvent) => {
+				if (e.deltaY !== 0) {
+					const isScrollable = frame.scrollWidth > frame.clientWidth;
+					if (isScrollable) {
+						e.preventDefault();
+						scrollTarget += e.deltaY;
+						scrollTarget = Math.max(
+							0,
+							Math.min(scrollTarget, frame.scrollWidth - frame.clientWidth),
+						);
+
+						if (!isAnimating) {
+							isAnimating = true;
+							const animate = () => {
+								const diff = scrollTarget - frame.scrollLeft;
+								if (Math.abs(diff) > 0.5) {
+									frame.scrollLeft += diff * 0.15;
+									requestAnimationFrame(animate);
+								} else {
+									frame.scrollLeft = scrollTarget;
+									isAnimating = false;
+								}
+							};
+							requestAnimationFrame(animate);
+						}
+					}
+				}
+			};
+
+			const handleScroll = () => {
+				if (!isAnimating) {
+					scrollTarget = frame.scrollLeft;
+				}
+			};
+
+			frame.addEventListener("wheel", handleWheel, { passive: false });
+			frame.addEventListener("scroll", handleScroll);
+			return () => {
+				frame.removeEventListener("wheel", handleWheel);
+				frame.removeEventListener("scroll", handleScroll);
+			};
+		}, [isSidebar]);
 
 		return (
 			<Flex
@@ -70,10 +119,11 @@ export const RibbonFrame = forwardRef<HTMLDivElement, PropsWithChildren<{ isSide
 					overflowX: isSidebar ? "hidden" : "auto",
 					overflowY: isSidebar ? "auto" : "clip",
 					height: "100%",
-					scrollbarWidth: "none",
-					msOverflowStyle: "none",
+					width: isSidebar ? undefined : "100%",
+					scrollbarWidth: "thin",
+					scrollbarColor: "var(--gray-a8) transparent",
 				}}
-				className="hide-scrollbar"
+				className="ribbon-scrollbar"
 				asChild
 			><motion.div
 					initial={isSidebar ? { y: 10, opacity: 0 } : { x: 10, opacity: 0 }}

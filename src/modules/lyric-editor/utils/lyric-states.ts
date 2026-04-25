@@ -216,17 +216,20 @@ export function findNextWord(
 			syncIndex: syncIndex + 1,
 		};
 	}
-	const nextLineIndex = lyricLines
-		.slice(lineIndex + 1)
-		.findIndex(
-			(nextLine) =>
-				isSynchronizableLine(nextLine) &&
-				getSynchronizableUnits(nextLine).length > 0,
-		);
-	if (nextLineIndex === -1) return;
-	const absoluteIndex = lineIndex + 1 + nextLineIndex;
+	let absoluteIndex = -1;
+	for (let i = lineIndex + 1; i < lyricLines.length; i++) {
+		const nextLine = lyricLines[i];
+		if (
+			isSynchronizableLine(nextLine) &&
+			getSynchronizableUnits(nextLine).length > 0
+		) {
+			absoluteIndex = i;
+			break;
+		}
+	}
+
+	if (absoluteIndex === -1) return;
 	const nextLine = lyricLines[absoluteIndex];
-	if (!nextLine) return;
 	const nextLineUnits = getSynchronizableUnits(nextLine);
 	const firstUnit = nextLineUnits[0];
 	if (!firstUnit) return;

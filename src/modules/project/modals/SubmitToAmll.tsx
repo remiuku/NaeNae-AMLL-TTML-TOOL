@@ -322,19 +322,19 @@ ${comment}
 						<Box flexShrink="0">
 							<Text as="label" size="2">
 								<Flex direction="column" gap="2">
-									歌词库类型
+									{t("submitToAMLLDB.uploadDbType", "歌词库类型")}
 									<RadioGroup.Root
 										value={uploadDbType}
 										onValueChange={(v) => setUploadDbType(v as UploadDBType)}
 									>
 										<RadioGroup.Item value={UploadDBType.Official}>
-											官方歌词库
+											{t("submitToAMLLDB.uploadDbTypeOfficial", "官方歌词库")}
 										</RadioGroup.Item>
 										<RadioGroup.Item value={UploadDBType.User}>
-											用户歌词库
+											{t("submitToAMLLDB.uploadDbTypeUser", "用户歌词库")}
 										</RadioGroup.Item>
 										<RadioGroup.Item value={UploadDBType.Both}>
-											全部歌词库
+											{t("submitToAMLLDB.uploadDbTypeBoth", "全部歌词库")}
 										</RadioGroup.Item>
 									</RadioGroup.Root>
 								</Flex>
@@ -345,27 +345,21 @@ ${comment}
 							{uploadDbType === UploadDBType.Official && (
 								<Callout.Root color="grass">
 									<Callout.Text size="1">
-										提交到官方歌词库，需要进行人工审核，确保歌词满足基本要求以及时间轴和效果后方可加入词库。
-										<br />
-										此举可以把关你的歌词质量，让你的歌词能以足够好的演出效果呈现，推荐提交到此处。
+										{t("submitToAMLLDB.officialDesc", "提交到官方歌词库，需要进行人工审核，确保歌词满足基本要求以及时间轴和效果后方可加入词库。\n此举可以把关你的歌词质量，让你的歌词能以足够好的演出效果呈现，推荐提交到此处。")}
 									</Callout.Text>
 								</Callout.Root>
 							)}
 							{uploadDbType === UploadDBType.User && (
 								<Callout.Root color="orange">
 									<Callout.Text size="1">
-										提交到用户歌词库，仅需通过机器人审核没有严重问题后即可加入词库，无需人工审核。
-										<br />
-										但是如果出现歌词内容以及呈现效果的问题则只能通过重新提交覆盖，无法进行人工核对保证质量。
+										{t("submitToAMLLDB.userDesc", "提交到用户歌词库，仅需通过机器人审核没有严重问题后即可加入词库，无需人工审核。\n但是如果出现歌词内容以及呈现效果的问题则只能通过重新提交覆盖，无法进行人工核对保证质量。")}
 									</Callout.Text>
 								</Callout.Root>
 							)}
 							{uploadDbType === UploadDBType.Both && (
 								<Callout.Root color="orange">
 									<Callout.Text size="1">
-										两个都要也不坏，知晓情况即可
-										<br />
-										上传后将会分别打开每个仓库对应的提交页面，请手动分别按下创建议题即可提交。
+										{t("submitToAMLLDB.bothDesc", "两个都要也不坏，知晓情况即可\n上传后将会分别打开每个仓库对应的提交页面，请手动分别按下创建议题即可提交。")}
 									</Callout.Text>
 								</Callout.Root>
 							)}
@@ -378,40 +372,40 @@ ${comment}
 								checked={genNameFromMetadata}
 								onCheckedChange={(v) => setGenNameFromMetadata(!!v)}
 							/>
-							从元数据中生成
+							{t("submitToAMLLDB.genFromName", "从元数据中生成")}
 						</Flex>
 					</Text>
 					<Text as="label" size="2">
 						<Flex direction="column" gap="2">
-							音乐名称
+							{t("submitToAMLLDB.musicName", "音乐名称")}
 							<TextField.Root
 								value={name}
 								disabled={genNameFromMetadata}
 								onChange={(e) => setName(e.currentTarget.value)}
 							/>
-							推荐使用 歌手 - 歌曲 格式，方便仓库管理员确认你的歌曲是否存在
+							{t("submitToAMLLDB.musicNameDesc", "推荐使用 歌手 - 歌曲 格式，方便仓库管理员确认你的歌曲是否存在")}
 						</Flex>
 					</Text>
 					<Text as="label" size="2">
 						<Flex direction="column" gap="2">
-							提交缘由
+							{t("submitToAMLLDB.submitReason", "提交缘由")}
 							<RadioGroup.Root
 								value={submitReason}
 								onValueChange={setSubmitReason}
 							>
-								<RadioGroup.Item value="新歌词提交">新歌词提交</RadioGroup.Item>
+								<RadioGroup.Item value="新歌词提交">{t("submitToAMLLDB.submitReasonNew", "新歌词提交")}</RadioGroup.Item>
 								<RadioGroup.Item value="修正已有歌词">
-									修正已有歌词
+									{t("submitToAMLLDB.submitReasonFix", "修正已有歌词")}
 								</RadioGroup.Item>
 							</RadioGroup.Root>
 						</Flex>
 					</Text>
 					<Text as="label" size="2">
 						<Flex direction="column" gap="2">
-							备注
+							{t("submitToAMLLDB.comment", "备注")}
 							<TextArea
 								resize="vertical"
-								placeholder="有什么需要补充说明的呢？"
+								placeholder={t("submitToAMLLDB.commentPlaceholder", "有什么需要补充说明的呢？")}
 								value={comment}
 								onChange={(e) => setComment(e.currentTarget.value)}
 							/>
@@ -423,7 +417,7 @@ ${comment}
 								<ErrorCircle16Regular />
 							</Callout.Icon>
 							<Callout.Text>
-								发现以下问题，请修正后再提交：
+								{t("submitToAMLLDB.issueFoundTitle", "发现以下问题，请修正后再提交：")}
 								<ul>
 									{issues.map((issue) => (
 										<li key={issue}>{issue}</li>
@@ -437,7 +431,7 @@ ${comment}
 						disabled={issues.length > 0}
 						onClick={onSubmit}
 					>
-						上传歌词并创建议题
+						{t("submitToAMLLDB.submitBtn", "上传歌词并创建议题")}
 					</Button>
 				</Flex>
 			</Dialog.Content>

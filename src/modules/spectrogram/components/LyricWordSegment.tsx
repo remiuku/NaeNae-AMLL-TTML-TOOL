@@ -20,12 +20,16 @@ interface LyricWordSegmentProps {
 	lineId: string;
 	segment: WordSegment;
 	lineStartTime: number;
+	isGhost?: boolean;
+	offset?: number;
 }
 
 export const LyricWordSegment: FC<LyricWordSegmentProps> = ({
 	lineId,
 	segment,
 	lineStartTime,
+	isGhost = false,
+	offset = 0,
 }) => {
 	const [selectedWordId, setSelectedWordId] = useAtom(selectedWordIdAtom);
 	const setTimelineDrag = useSetAtom(timelineDragAtom);
@@ -40,18 +44,20 @@ export const LyricWordSegment: FC<LyricWordSegmentProps> = ({
 		return null;
 	}
 
-	const left = ((startTime - lineStartTime) / 1000) * zoom;
+	const left = (((startTime + (isGhost ? offset : 0)) - lineStartTime) / 1000) * zoom;
 	const width = ((endTime - startTime) / 1000) * zoom;
 
-	const isSelected = selectedWordId === segment.id;
+	const isSelected = !isGhost && selectedWordId === segment.id;
 
 	const handleClick = (e: MouseEvent<HTMLDivElement>) => {
+		if (isGhost) return;
 		if (editingTimeField) return;
 		e.stopPropagation();
 		setSelectedWordId(segment.id);
 	};
 
 	const handlePanStart = (e: MouseEvent<HTMLDivElement>) => {
+		if (isGhost) return;
 		if (editingTimeField) return;
 		if (e.button !== 0) return;
 
@@ -77,6 +83,7 @@ export const LyricWordSegment: FC<LyricWordSegmentProps> = ({
 	};
 
 	const handleContextMenu = (e: MouseEvent<HTMLDivElement>) => {
+		if (isGhost) return;
 		if (editingTimeField) return;
 		e.preventDefault();
 		e.stopPropagation();
@@ -87,6 +94,7 @@ export const LyricWordSegment: FC<LyricWordSegmentProps> = ({
 	};
 
 	const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
+		if (isGhost) return;
 		if (e.key === "Enter") {
 			e.preventDefault();
 			e.stopPropagation();
@@ -114,8 +122,8 @@ export const LyricWordSegment: FC<LyricWordSegmentProps> = ({
 			onClick={handleClick}
 			onMouseDown={handlePanStart}
 			onContextMenu={handleContextMenu}
-			role="button"
-			tabIndex={0}
+			role={isGhost ? "presentation" : "button"}
+			tabIndex={isGhost ? -1 : 0}
 			onKeyDown={handleKeyDown}
 		>
 			{hasRoman ? (

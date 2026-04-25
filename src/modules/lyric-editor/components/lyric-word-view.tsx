@@ -790,15 +790,7 @@ const LyricSyncWordView: FC<{
 	isWordBlank: boolean;
 	wordIndex: number;
 	rubyIndex?: number;
-	setCorrectionDialog: (
-		dialog: {
-			open: boolean;
-			wordIndex: number;
-			currentWord: string;
-			suggestions: string[];
-		} | null,
-	) => void;
-	allWordsInLyrics: Set<string>;
+	allWordsInLyrics?: Set<string>;
 }> = ({
 	syncId,
 	line,
@@ -809,21 +801,11 @@ const LyricSyncWordView: FC<{
 	wordIndex,
 	rubyIndex = -1,
 	setCorrectionDialog,
-	allWordsInLyrics,
 }) => {
 	const isWordSelectedAtom = useMemo(
 		() => atom((get) => get(selectedWordsAtom).has(syncId)),
 		[syncId],
 	);
-	const isWordActiveAtom = useMemo(
-		() =>
-			atom((get) => {
-				const currentTime = get(currentTimeAtom);
-				return currentTime >= startTime && currentTime < endTime;
-			}),
-		[startTime, endTime],
-	);
-	const isWordActive = useAtomValue(isWordActiveAtom);
 	const isWordSelected = useAtomValue(isWordSelectedAtom);
 	const setSelectedWords = useSetImmerAtom(selectedWordsAtom);
 	const setSelectedLines = useSetImmerAtom(selectedLinesAtom);
@@ -836,6 +818,8 @@ const LyricSyncWordView: FC<{
 	const quickFixes = useAtomValue(quickFixesAtom);
 	const syncLevelMode = useAtomValue(syncLevelModeAtom);
 	const editLyricLines = useSetImmerAtom(lyricLinesAtom);
+	const enableSyncGlowAnimation = useAtomValue(enableSyncGlowAnimationAtom);
+	const enableManualTimestampEdit = useAtomValue(enableManualTimestampEditAtom);
 
 	const store = useStore();
 	const enableUpcomingWordHighlight = useAtomValue(
@@ -851,7 +835,41 @@ const LyricSyncWordView: FC<{
 	const startTimeRef = useRef<HTMLDivElement>(null);
 	const endTimeRef = useRef<HTMLDivElement>(null);
 	const ambientHighlightRef = useRef<HTMLDivElement>(null);
+	const wordContainerRef = useRef<HTMLDivElement>(null);
 	const lastClickTimeRef = useRef(0);
+
+	// Keep mutable refs for active-highlight settings to avoid re-subscribing on every settings change
+	const highlightActiveWordRef = useRef(highlightActiveWord);
+	const enableSyncGlowAnimationRef = useRef(enableSyncGlowAnimation);
+	useEffect(() => { highlightActiveWordRef.current = highlightActiveWord; }, [highlightActiveWord]);
+	useEffect(() => { enableSyncGlowAnimationRef.current = enableSyncGlowAnimation; }, [enableSyncGlowAnimation]);
+
+	// ── PERF FIX: Drive the active/animated classes imperatively via store.sub
+	// instead of subscribing to currentTimeAtom inside React (which causes ~60fps
+	// re-renders of every visible word).
+	useEffect(() => {
+		const updateActive = () => {
+			const el = wordContainerRef.current;
+			if (!el) return;
+			const currentTime = store.get(currentTimeAtom);
+			const isActive = currentTime >= startTime && currentTime < endTime;
+			if (isActive) {
+				if (highlightActiveWordRef.current) {
+					el.classList.add(styles.active);
+					if (enableSyncGlowAnimationRef.current) {
+						el.classList.add(styles.animated);
+					} else {
+						el.classList.remove(styles.animated);
+					}
+				}
+			} else {
+				el.classList.remove(styles.active);
+				el.classList.remove(styles.animated);
+			}
+		};
+		updateActive();
+		return store.sub(currentTimeAtom, updateActive);
+	}, [store, startTime, endTime]);
 
 	// Inline timestamp editing state: null = not editing, "start" | "end" = editing that field
 	const [editingTime, setEditingTime] = useState<"start" | "end" | null>(null);
@@ -980,11 +998,9 @@ const LyricSyncWordView: FC<{
 		};
 	}, [endTime, visualizeTimestampUpdate]);
 
-	const enableSyncGlowAnimation = useAtomValue(enableSyncGlowAnimationAtom);
-	const enableManualTimestampEdit = useAtomValue(enableManualTimestampEditAtom);
 	const hasError = useMemo(() => startTime > endTime, [startTime, endTime]);
 
-
+	// active/animated classes are applied imperatively by the store.sub effect above
 	const className = useMemo(
 		() =>
 			classNames(
@@ -992,11 +1008,6 @@ const LyricSyncWordView: FC<{
 				styles.sync,
 				isWordSelected && styles.selected,
 				isWordBlank && styles.blank,
-				isWordActive && highlightActiveWord && styles.active,
-				isWordActive &&
-					highlightActiveWord &&
-					enableSyncGlowAnimation &&
-					styles.animated,
 				hasError &&
 					(toolMode === ToolMode.Edit ||
 						(toolMode === ToolMode.Sync &&
@@ -1008,19 +1019,17 @@ const LyricSyncWordView: FC<{
 		[
 			isWordBlank,
 			isWordSelected,
-			isWordActive,
 			hasError,
 			toolMode,
-			highlightActiveWord,
 			showTimestamps,
 			highlightErrors,
-			enableSyncGlowAnimation,
 		],
 	);
 
 
 	return (
 		<div
+			ref={wordContainerRef}
 			className={className}
 			style={{ position: "relative", zIndex: 1 }}
 			onPointerDown={(evt) => {
@@ -1060,7 +1069,7 @@ const LyricSyncWordView: FC<{
 				const suggestions = getGrammarSuggestions(
 					line,
 					wordIndex,
-					allWordsInLyrics,
+					store.get(allLyricsWordsAtom),
 				);
 
 				// Always open the correction dialog on double-click in Sync mode (Time tab)
@@ -1192,8 +1201,7 @@ const LyricWorldViewSync: FC<{
 			suggestions: string[];
 		} | null,
 	) => void;
-	allWordsInLyrics: Set<string>;
-}> = ({ wordAtom, line, wordIndex, setCorrectionDialog, allWordsInLyrics }) => {
+}> = ({ wordAtom, line, wordIndex, setCorrectionDialog }) => {
 	const { t } = useTranslation();
 	const word = useAtomValue(wordAtom);
 	const displayRomanizationInSync = useAtomValue(displayRomanizationInSyncAtom);
@@ -1228,7 +1236,6 @@ const LyricWorldViewSync: FC<{
 							wordIndex={wordIndex}
 							rubyIndex={rubyIndex}
 							setCorrectionDialog={setCorrectionDialog}
-							allWordsInLyrics={allWordsInLyrics}
 						/>
 					);
 				})}
@@ -1248,19 +1255,21 @@ const LyricWorldViewSync: FC<{
 				isWordBlank={isWordBlank}
 				wordIndex={wordIndex}
 				setCorrectionDialog={setCorrectionDialog}
-				allWordsInLyrics={allWordsInLyrics}
 			/>
 		);
 
 	return content;
 };
 
-export const LyricWordView: FC<{
+type LyricWordViewProps = {
 	wordAtom: Atom<LyricWord>;
 	wordIndex: number;
 	line: LyricLine;
 	lineIndex: number;
-}> = memo(({ wordAtom, wordIndex, line, lineIndex }) => {
+};
+
+export const LyricWordView: FC<LyricWordViewProps> = memo(
+	({ wordAtom, wordIndex, line, lineIndex }) => {
 	const { t } = useTranslation();
 	const word = useAtomValue(wordAtom);
 	const toolMode = useAtomValue(toolModeAtom);
@@ -1268,7 +1277,6 @@ export const LyricWordView: FC<{
 
 	const isWordBlank = useWordBlank(word.word);
 	const hasRuby = word.ruby && word.ruby.length > 0;
-	const allWordsInLyrics = useAtomValue(allLyricsWordsAtom);
 	const [correctionDialog, setCorrectionDialog] = useState<{
 		open: boolean;
 		wordIndex: number;
@@ -1331,7 +1339,6 @@ export const LyricWordView: FC<{
 					lineIndex={lineIndex}
 					wordIndex={wordIndex}
 					setCorrectionDialog={setCorrectionDialog}
-					allWordsInLyrics={allWordsInLyrics}
 				/>
 			)}
 			<Dialog.Root
@@ -1410,6 +1417,17 @@ export const LyricWordView: FC<{
 			</Dialog.Root>
 		</div>
 	);
-});
+	},
+	// Custom comparator: line.id is stable (never changes after creation).
+	// Checking it instead of the full line object prevents all word views in a
+	// line from re-rendering when a single word's timestamp is committed.
+	// The wordAtom reference changes (via splitAtom) only for the modified word,
+	// so only that word re-renders.
+	(prev, next) =>
+		prev.wordAtom === next.wordAtom &&
+		prev.wordIndex === next.wordIndex &&
+		prev.lineIndex === next.lineIndex &&
+		prev.line.id === next.line.id,
+);
 
 export default LyricWordView;
