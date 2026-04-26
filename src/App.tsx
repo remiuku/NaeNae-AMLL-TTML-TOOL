@@ -27,7 +27,7 @@ import { getCurrentWindow } from "@tauri-apps/api/window";
 import { platform, version } from "@tauri-apps/plugin-os";
 import { AnimatePresence, motion } from "framer-motion";
 import { useAtomValue, useSetAtom, useStore } from "jotai";
-import { Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { Suspense, memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { lazy } from "$/utils/lazy.ts";
 import { ErrorBoundary } from "react-error-boundary";
 import { useTranslation } from "react-i18next";
@@ -180,6 +180,50 @@ const AppErrorPage = ({
 	);
 };
 
+const RainEffect: FC<{ isRaining: boolean }> = memo(({ isRaining }) => {
+	const [images, setImages] = useState<{ id: string; x: number }[]>([]);
+
+	useEffect(() => {
+		if (!isRaining) return;
+		const interval = setInterval(() => {
+			setImages((prev) => [
+				...prev,
+				{ id: Math.random().toString(36).substring(7), x: Math.random() * 100 },
+			]);
+		}, 150);
+		return () => clearInterval(interval);
+	}, [isRaining]);
+
+	return (
+		<>
+			{images.map((img) => (
+				<motion.img
+					key={img.id}
+					src="https://files.catbox.moe/5n0ofa.gif"
+					alt=""
+					initial={{ y: -100, x: `${img.x}vw`, opacity: 1 }}
+					animate={{ y: "110vh" }}
+					transition={{ duration: 2, ease: "linear" }}
+					onAnimationComplete={() => {
+						setImages((prev) => prev.filter((i) => i.id !== img.id));
+					}}
+					style={{
+						position: "fixed",
+						top: 0,
+						left: 0,
+						width: "40px",
+						height: "40px",
+						zIndex: 2147483647,
+						pointerEvents: "none",
+						objectFit: "contain",
+					}}
+				/>
+			))}
+		</>
+	);
+});
+
+
 function App() {
 	const isDarkTheme = useAtomValue(isDarkThemeAtom);
 	const toolMode = useAtomValue(toolModeAtom);
@@ -241,6 +285,15 @@ function App() {
 	const vRibbonPosition = useAtomValue(vRibbonPositionAtom);
 
 	const boykisserMode = useAtomValue(boykisserModeAtom);
+	const [isRaining, setIsRaining] = useState(false);
+
+	const startRain = useCallback(() => {
+		if (isRaining) return;
+		setIsRaining(true);
+		setTimeout(() => setIsRaining(false), 3000);
+	}, [isRaining]);
+
+
 
 	useEffect(() => {
 		// Extract font name from appFont string (e.g., '"Inter", sans-serif' -> 'Inter')
@@ -741,21 +794,24 @@ function App() {
 					<ToastContainer theme={effectiveTheme} />
 					{boykisserMode && (
 						<img
-							src="/boykisser/ids2sq.gif"
+							src="https://files.catbox.moe/5n0ofa.gif"
 							alt=""
+							onClick={startRain}
 							style={{
 								position: "fixed",
 								top: "28px",
 								right: "120px",
 								width: "20px",
 								height: "20px",
-								pointerEvents: "none",
+								pointerEvents: "auto",
+								cursor: "pointer",
 								zIndex: 9999,
 								objectFit: "contain",
 							}}
 						/>
 					)}
 				</div>
+				<RainEffect isRaining={isRaining} />
 			</ErrorBoundary>
 		</Theme>
 	);

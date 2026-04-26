@@ -133,31 +133,97 @@ export const AudioSpectrogram: FC = memo(() => {
 		const linesToCopy = state.lyricLines.filter(l => currentSelectedLines.has(l.id));
 		if (linesToCopy.length === 0) return;
 
-		// Find minimum start time among selected lines to calculate offset
+		const selection = store.get(spectrogramSelectionAtom);
 		const currentTimeMs = store.get(currentTimeAtom);
-		const minStart = Math.min(...linesToCopy.map(l => l.startTime));
-		const offset = currentTimeMs - minStart;
 
-		const newLines = linesToCopy.map(l => ({
-			...l,
-			id: newLyricLine().id,
-			startTime: l.startTime + offset,
-			endTime: l.endTime + offset,
-			words: l.words.map(w => ({
-				...w,
-				id: newLyricWord().id,
-				startTime: w.startTime + offset,
-				endTime: w.endTime + offset,
-			}))
-		}));
+		let newLines: any[] = [];
+
+		if (selection) {
+			const totalDuration = selection.end - selection.start;
+			const lineCount = linesToCopy.length;
+			const lineDuration = totalDuration / lineCount;
+
+			newLines = linesToCopy.map((l, i) => {
+				const lineStart = Math.round(selection.start + i * lineDuration);
+				const lineEnd = Math.round(selection.start + (i + 1) * lineDuration);
+				const duration = lineEnd - lineStart;
+
+				const nl = {
+					...l,
+					id: newLyricLine().id,
+					startTime: lineStart,
+					endTime: lineEnd,
+					words: l.words.map(w => ({
+						...w,
+						id: newLyricWord().id,
+						startTime: 0,
+						endTime: 0,
+					}))
+				};
+
+				// Distribute words
+				const nonEmptyWords = nl.words.filter(w => w.word.trim() !== "");
+				if (nonEmptyWords.length > 0) {
+					const perWordDur = duration / nonEmptyWords.length;
+					let wordIdx = 0;
+					for (const w of nl.words) {
+						if (w.word.trim() !== "") {
+							w.startTime = Math.round(lineStart + wordIdx * perWordDur);
+							w.endTime = Math.round(lineStart + (wordIdx + 1) * perWordDur);
+							wordIdx++;
+						} else {
+							w.startTime = lineStart;
+							w.endTime = lineStart;
+						}
+					}
+					// Fix rounding issues for the last word
+					const lastNonEmpty = nl.words.slice().reverse().find(w => w.word.trim() !== "");
+					if (lastNonEmpty) lastNonEmpty.endTime = lineEnd;
+				} else {
+					// No words, just set line timing
+					nl.startTime = lineStart;
+					nl.endTime = lineEnd;
+				}
+
+				return nl;
+			});
+		} else {
+			// Fallback to playhead offset
+			const minStart = Math.min(...linesToCopy.map(l => l.startTime));
+			const offset = currentTimeMs - minStart;
+
+			newLines = linesToCopy.map(l => ({
+				...l,
+				id: newLyricLine().id,
+				startTime: l.startTime + offset,
+				endTime: l.endTime + offset,
+				words: l.words.map(w => ({
+					...w,
+					id: newLyricWord().id,
+					startTime: w.startTime + offset,
+					endTime: w.endTime + offset,
+					ruby: w.ruby?.map(r => ({
+						...r,
+						startTime: r.startTime + offset,
+						endTime: r.endTime + offset,
+					}))
+				}))
+			}));
+		}
 
 		store.set(lyricLinesAtom, produce((draft) => {
+			const anchorTime = selection ? selection.start : currentTimeMs;
 			// Find insertion point to keep sorted
-			let insertIndex = draft.lyricLines.findIndex((l: any) => l.startTime > currentTimeMs);
+			let insertIndex = draft.lyricLines.findIndex((l: any) => l.startTime > anchorTime);
 			if (insertIndex === -1) insertIndex = draft.lyricLines.length;
 			
 			draft.lyricLines.splice(insertIndex, 0, ...newLines);
 		}));
+
+		// Clear selection after applying timestamps to make it "apply" and finish
+		if (selection) {
+			store.set(spectrogramSelectionAtom, null);
+		}
 	}, [globalEnableInsert, store]);
 
 	const { height: uiHeight, resizeHandleProps } = useSpectrogramResize({

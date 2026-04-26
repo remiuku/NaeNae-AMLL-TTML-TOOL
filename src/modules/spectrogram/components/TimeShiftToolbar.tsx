@@ -110,37 +110,37 @@ export const TimeShiftToolbar: FC = () => {
 					newLine.id = uid();
 					newLine.startTime += offset;
 					newLine.endTime += offset;
-					for (const word of newLine.words) {
-						word.id = uid();
-						word.startTime += offset;
-						word.endTime += offset;
-						if (word.ruby) {
-							for (const ruby of word.ruby) {
-								ruby.startTime += offset;
-								ruby.endTime += offset;
-							}
+					newLine.words.forEach((w: any) => {
+						w.id = uid();
+						w.startTime += offset;
+						w.endTime += offset;
+						if (w.ruby) {
+							w.ruby.forEach((r: any) => {
+								r.startTime += offset;
+								r.endTime += offset;
+							});
 						}
-					}
+					});
 					return newLine;
 				});
 				draft.lyricLines.push(...newLines);
 				draft.lyricLines.sort((a, b) => a.startTime - b.startTime);
 			} else {
-				for (const index of targetLineIndices) {
+				targetLineIndices.forEach(index => {
 					const line = lines[index];
 					line.startTime += offset;
 					line.endTime += offset;
-					for (const word of line.words) {
-						word.startTime += offset;
-						word.endTime += offset;
-						if (word.ruby) {
-							for (const ruby of word.ruby) {
-								ruby.startTime += offset;
-								ruby.endTime += offset;
-							}
+					line.words.forEach(w => {
+						w.startTime += offset;
+						w.endTime += offset;
+						if (w.ruby) {
+							w.ruby.forEach(r => {
+								r.startTime += offset;
+								r.endTime += offset;
+							});
 						}
-					}
-				}
+					});
+				});
 			}
 		});
 
