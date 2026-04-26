@@ -199,8 +199,9 @@ const RainEffect: FC<{ isRaining: boolean }> = memo(({ isRaining }) => {
 			{images.map((img) => (
 				<motion.img
 					key={img.id}
-					src="https://files.catbox.moe/5n0ofa.gif"
+					src="https://images.weserv.nl/?url=https://files.catbox.moe/5n0ofa.gif&n=-1"
 					alt=""
+					referrerPolicy="no-referrer"
 					initial={{ y: -100, x: `${img.x}vw`, opacity: 1 }}
 					animate={{ y: "110vh" }}
 					transition={{ duration: 2, ease: "linear" }}
@@ -794,8 +795,9 @@ function App() {
 					<ToastContainer theme={effectiveTheme} />
 					{boykisserMode && (
 						<img
-							src="https://files.catbox.moe/5n0ofa.gif"
+							src="https://images.weserv.nl/?url=https://files.catbox.moe/5n0ofa.gif&n=-1"
 							alt=""
+							referrerPolicy="no-referrer"
 							onClick={startRain}
 							style={{
 								position: "fixed",
