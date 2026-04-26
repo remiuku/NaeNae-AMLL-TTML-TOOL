@@ -182,14 +182,37 @@ const AppErrorPage = ({
 
 const RainEffect: FC<{ isRaining: boolean }> = memo(({ isRaining }) => {
 	const [images, setImages] = useState<{ id: string; x: number }[]>([]);
+	const counterRef = useRef(0);
 
 	useEffect(() => {
-		if (!isRaining) return;
+		if (!isRaining) {
+			counterRef.current = 0;
+			return;
+		}
+		const columns = 8;
+		const columnIndices = Array.from({ length: columns }, (_, i) => i);
+		const shuffle = (array: number[]) => {
+			for (let i = array.length - 1; i > 0; i--) {
+				const j = Math.floor(Math.random() * (i + 1));
+				[array[i], array[j]] = [array[j], array[i]];
+			}
+			return array;
+		};
+		let shuffled = shuffle([...columnIndices]);
+
 		const interval = setInterval(() => {
+			if (counterRef.current % columns === 0) {
+				shuffled = shuffle([...columnIndices]);
+			}
+			const columnIndex = shuffled[counterRef.current % columns];
+			const x =
+				(columnIndex * (100 / columns)) +
+				(Math.random() * (100 / columns) * 0.8);
 			setImages((prev) => [
 				...prev,
-				{ id: Math.random().toString(36).substring(7), x: Math.random() * 100 },
+				{ id: Math.random().toString(36).substring(7), x },
 			]);
+			counterRef.current++;
 		}, 150);
 		return () => clearInterval(interval);
 	}, [isRaining]);
@@ -202,7 +225,7 @@ const RainEffect: FC<{ isRaining: boolean }> = memo(({ isRaining }) => {
 					src="https://images.weserv.nl/?url=https://files.catbox.moe/5n0ofa.gif&n=-1"
 					alt=""
 					referrerPolicy="no-referrer"
-					initial={{ y: -100, x: `${img.x}vw`, opacity: 1 }}
+					initial={{ y: -120, x: `${img.x}vw`, opacity: 1 }}
 					animate={{ y: "110vh" }}
 					transition={{ duration: 2, ease: "linear" }}
 					onAnimationComplete={() => {
@@ -212,8 +235,8 @@ const RainEffect: FC<{ isRaining: boolean }> = memo(({ isRaining }) => {
 						position: "fixed",
 						top: 0,
 						left: 0,
-						width: "40px",
-						height: "40px",
+						width: "120px",
+						height: "120px",
 						zIndex: 2147483647,
 						pointerEvents: "none",
 						objectFit: "contain",
