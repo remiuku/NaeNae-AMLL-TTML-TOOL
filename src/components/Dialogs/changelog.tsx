@@ -38,6 +38,24 @@ export function ChangelogDialog() {
 				<ScrollArea type="always" scrollbars="vertical" style={{ height: "calc(100% - 60px)" }}>
 					<Flex direction="column" gap="5" pr="4">
 						<Box>
+							<Heading size="4" mb="2" color="teal">v0.5.1 Updates (Spectrogram & UI)</Heading>
+							<Flex direction="column" gap="3">
+								<Text size="2">
+									<strong>Enhanced Duplicate-to-Selection:</strong> <code>CTRL + L</code> now intelligently uses the spectrogram selection range. Duplicated lines and their words are automatically distributed equally across the selected time range for instant, high-precision timing application.
+								</Text>
+								<Text size="2">
+									<strong>Interactive UI Rain Effect:</strong> Clicking the mascot in the title bar triggers a high-performance "rain" animation. Built with optimized React memoization to ensure zero impact on the core editing performance.
+								</Text>
+								<Text size="2">
+									<strong>Rendering Stack Optimization:</strong> Refactored global layout components to isolate dynamic visual effects, preventing unnecessary re-renders of the main application during animations.
+								</Text>
+								<Text size="2">
+									<strong>Mascot Asset Restoration:</strong> Updated the title bar mascot with a working high-reliability remote GIF asset, resolving the broken image issue.
+								</Text>
+							</Flex>
+						</Box>
+
+						<Box>
 							<Heading size="4" mb="2" color="gold">v0.5.0 Updates (Community Plugin Store)</Heading>
 							<Flex direction="column" gap="3">
 								<Text size="2">

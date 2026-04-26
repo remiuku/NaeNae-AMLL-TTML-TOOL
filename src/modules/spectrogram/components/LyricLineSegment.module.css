@@ -19,3 +19,11 @@
 .lineMode:hover {
 	border-color: var(--accent-13);
 }
+
+.ghost {
+	opacity: 0.5;
+	pointer-events: none;
+	background-color: var(--accent-a2);
+	border-style: dashed;
+	z-index: 5;
+}

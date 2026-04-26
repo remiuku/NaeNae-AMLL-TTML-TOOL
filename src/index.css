@@ -70,3 +70,19 @@
 .hide-scrollbar::-webkit-scrollbar {
 	display: none;
 }
+
+.ribbon-scrollbar::-webkit-scrollbar {
+	height: 4px;
+	background-color: transparent;
+}
+
+.ribbon-scrollbar::-webkit-scrollbar-thumb {
+	background-color: var(--gray-a6);
+	border-radius: 2px;
+	transition: background-color 0.2s ease-in-out;
+}
+
+.ribbon-scrollbar::-webkit-scrollbar-thumb:hover {
+	background-color: var(--gray-a9);
+}
+

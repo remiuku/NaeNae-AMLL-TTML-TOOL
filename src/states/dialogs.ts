@@ -31,6 +31,10 @@ export const changelogDialogAtom = atom(false);
 export const geniusImportLyricsDialogAtom = atom(false);
 export const fontSelectionDialogAtom = atom(false);
 export const lyricallyImportLyricsDialogAtom = atom(false);
+export const timeShiftPreviewOffsetAtom = atom(0);
+export const timeShiftPreviewActiveAtom = atom(false);
+export const timeShiftPreviewScopeAtom = atom<"all" | "selected" | "selected-following" | "custom">("all");
+export const timeShiftPreviewCustomRangeAtom = atom<[number, number]>([1, 1]);
 export const mp3ConversionDialogAtom = atom<{
 	open: boolean;
 	fileName: string;

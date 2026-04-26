@@ -12,6 +12,12 @@ import {
 	timelineDragAtom,
 } from "$/modules/spectrogram/states/dnd.ts";
 import {
+	timeShiftPreviewOffsetAtom,
+	timeShiftPreviewActiveAtom,
+	timeShiftPreviewScopeAtom,
+	timeShiftPreviewCustomRangeAtom,
+} from "$/states/dialogs.ts";
+import {
 	commitUpdatedLine,
 	getUpdatedLineForDivider,
 	getUpdatedLineForLinePan,
@@ -37,13 +43,16 @@ export const LyricTimelineOverlay: FC<LyricTimelineOverlayProps> = ({
 	const processedLines = useAtomValue(processedLyricLinesAtom);
 	const [timelineDrag, setTimelineDrag] = useAtom(timelineDragAtom);
 	const setPreviewLine = useSetAtom(previewLineAtom);
-	const currentTime = useAtomValue(currentTimeAtom);
 	const snapTargetsMs = useRef<number[]>([]);
 	const { scrollContainerRef, zoom, scrollLeft } =
 		useContext(SpectrogramContext);
 
 	const showUnselectedLines = useAtomValue(showUnselectedLinesAtom);
 	const selectedLines = useAtomValue(selectedLinesAtom);
+	const previewActive = useAtomValue(timeShiftPreviewActiveAtom);
+	const previewOffset = useAtomValue(timeShiftPreviewOffsetAtom);
+	const previewScope = useAtomValue(timeShiftPreviewScopeAtom);
+	const previewRange = useAtomValue(timeShiftPreviewCustomRangeAtom);
 
 	useEffect(() => {
 		if (!timelineDrag) {
@@ -171,7 +180,7 @@ export const LyricTimelineOverlay: FC<LyricTimelineOverlayProps> = ({
 
 		if (needsBoundarySnapping) {
 			const lineId = (timelineDrag as TimelineDragOperation).lineId;
-			const targets: number[] = [currentTime];
+			const targets: number[] = [globalStore.get(currentTimeAtom)];
 			const otherLineBoundaries = processedLines
 				.filter((line) => line.id !== lineId)
 				.flatMap((line) => [line.startTime, line.endTime]);
@@ -198,7 +207,6 @@ export const LyricTimelineOverlay: FC<LyricTimelineOverlayProps> = ({
 		scrollLeft,
 		scrollContainerRef,
 		processedLines,
-		currentTime,
 	]);
 
 	const bufferPx = 500;
@@ -251,6 +259,60 @@ export const LyricTimelineOverlay: FC<LyricTimelineOverlayProps> = ({
 			{linesToRender.map((line) => (
 				<LyricLineSegment key={line.id} line={line} allLines={processedLines} />
 			))}
+			{previewActive &&
+				previewOffset !== 0 &&
+				processedLines.map((line) => {
+					if (line.startTime == null || line.endTime == null) return null;
+
+					// Calculate visibility based on SHIFTED position
+					const shiftedStartMs = line.startTime + previewOffset;
+					const shiftedEndMs = line.endTime + previewOffset;
+
+					const inBufferedView =
+						shiftedEndMs > viewStartMs && shiftedStartMs < viewEndMs;
+
+					if (!inBufferedView) return null;
+
+					let shouldShowGhost = false;
+					if (previewScope === "all") {
+						shouldShowGhost = true;
+					} else if (previewScope === "selected") {
+						shouldShowGhost = selectedLines.has(line.id);
+					} else if (previewScope === "selected-following") {
+						let firstSelectedIndex = -1;
+						processedLines.forEach((l, index) => {
+							if (selectedLines.has(l.id)) {
+								if (firstSelectedIndex === -1 || index < firstSelectedIndex) {
+									firstSelectedIndex = index;
+								}
+							}
+						});
+						const currentLineIndex = processedLines.findIndex(
+							(l) => l.id === line.id,
+						);
+						shouldShowGhost =
+							firstSelectedIndex !== -1 && currentLineIndex >= firstSelectedIndex;
+					} else if (previewScope === "custom") {
+						const currentLineIndex = processedLines.findIndex(
+							(l) => l.id === line.id,
+						);
+						shouldShowGhost =
+							currentLineIndex >= previewRange[0] - 1 &&
+							currentLineIndex < previewRange[1];
+					}
+
+					if (!shouldShowGhost) return null;
+
+					return (
+						<LyricLineSegment
+							key={`ghost-${line.id}`}
+							line={line}
+							allLines={processedLines}
+							isGhost
+							offset={previewOffset}
+						/>
+					);
+				})}
 		</div>
 	);
 };

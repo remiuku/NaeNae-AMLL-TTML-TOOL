@@ -17,6 +17,7 @@ export const visualizeTimestampUpdateAtom = atomWithStorage(
 	false,
 );
 export const syncTimeOffsetAtom = atomWithStorage("syncTimeOffset", 0);
+export const syncCommitOffsetAtom = atomWithStorage("syncCommitOffset", 0);
 
 export type SyncLevelMode = "word" | "line";
 export const syncLevelModeAtom = atomWithStorage<SyncLevelMode>(

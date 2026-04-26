@@ -3,6 +3,7 @@ import {
 	EyeOffFilled,
 	MusicNote2Filled,
 	SettingsFilled,
+	ClockRegular,
 } from "@fluentui/react-icons";
 import {
 	Button,
@@ -62,10 +63,12 @@ import { msToTimestamp } from "$/utils/timestamp.ts";
 import { useCommand } from "$/modules/keyboard/hooks.ts";
 import { cmdDuplicatePaste } from "$/modules/keyboard/commands.ts";
 import { isDraggingAtom } from "$/modules/spectrogram/states/dnd.ts";
+import { timeShiftDialogAtom, timeShiftPreviewActiveAtom } from "$/states/dialogs.ts";
 import { draggingIdAtom, globalEnableInsertAtom } from "$/modules/lyric-editor/components/lyric-line-view-states.ts";
 import { newLyricLine, newLyricWord } from "$/types/ttml.ts";
 import styles from "./AudioSpectrogram.module.css";
 import { LyricTimelineOverlay } from "./LyricTimelineOverlay.tsx";
+import { TimeShiftToolbar } from "./TimeShiftToolbar.tsx";
 import { FrequencyRuler } from "./FrequencyRuler.tsx";
 import {
 	type ISpectrogramContext,
@@ -105,9 +108,7 @@ const getNoteFromFreq = (freq: number) => {
 
 export const AudioSpectrogram: FC = memo(() => {
 	const audioBuffer = useAtomValue(audioBufferAtom);
-	const currentTimeInMs = useAtomValue(currentTimeAtom);
 	const setCurrentTime = useSetAtom(currentTimeAtom);
-	const currentTime = currentTimeInMs / 1000;
 	const auditionTime = useAtomValue(auditionTimeAtom);
 	const selectedLines = useAtomValue(selectedLinesAtom);
 	const store = useStore();
@@ -119,6 +120,8 @@ export const AudioSpectrogram: FC = memo(() => {
 		showUnselectedLinesAtom,
 	);
 	const globalEnableInsert = useAtomValue(globalEnableInsertAtom);
+	const setDialogVisible = useSetAtom(timeShiftDialogAtom);
+	const setPreviewActive = useSetAtom(timeShiftPreviewActiveAtom);
 
 	useCommand(cmdDuplicatePaste, () => {
 		if (!globalEnableInsert) return;
@@ -130,31 +133,98 @@ export const AudioSpectrogram: FC = memo(() => {
 		const linesToCopy = state.lyricLines.filter(l => currentSelectedLines.has(l.id));
 		if (linesToCopy.length === 0) return;
 
-		// Find minimum start time among selected lines to calculate offset
-		const minStart = Math.min(...linesToCopy.map(l => l.startTime));
-		const offset = currentTimeInMs - minStart;
+		const selection = store.get(spectrogramSelectionAtom);
+		const currentTimeMs = store.get(currentTimeAtom);
 
-		const newLines = linesToCopy.map(l => ({
-			...l,
-			id: newLyricLine().id,
-			startTime: l.startTime + offset,
-			endTime: l.endTime + offset,
-			words: l.words.map(w => ({
-				...w,
-				id: newLyricWord().id,
-				startTime: w.startTime + offset,
-				endTime: w.endTime + offset,
-			}))
-		}));
+		let newLines: any[] = [];
+
+		if (selection) {
+			const totalDuration = selection.end - selection.start;
+			const lineCount = linesToCopy.length;
+			const lineDuration = totalDuration / lineCount;
+
+			newLines = linesToCopy.map((l, i) => {
+				const lineStart = Math.round(selection.start + i * lineDuration);
+				const lineEnd = Math.round(selection.start + (i + 1) * lineDuration);
+				const duration = lineEnd - lineStart;
+
+				const nl = {
+					...l,
+					id: newLyricLine().id,
+					startTime: lineStart,
+					endTime: lineEnd,
+					words: l.words.map(w => ({
+						...w,
+						id: newLyricWord().id,
+						startTime: 0,
+						endTime: 0,
+					}))
+				};
+
+				// Distribute words
+				const nonEmptyWords = nl.words.filter(w => w.word.trim() !== "");
+				if (nonEmptyWords.length > 0) {
+					const perWordDur = duration / nonEmptyWords.length;
+					let wordIdx = 0;
+					for (const w of nl.words) {
+						if (w.word.trim() !== "") {
+							w.startTime = Math.round(lineStart + wordIdx * perWordDur);
+							w.endTime = Math.round(lineStart + (wordIdx + 1) * perWordDur);
+							wordIdx++;
+						} else {
+							w.startTime = lineStart;
+							w.endTime = lineStart;
+						}
+					}
+					// Fix rounding issues for the last word
+					const lastNonEmpty = nl.words.slice().reverse().find(w => w.word.trim() !== "");
+					if (lastNonEmpty) lastNonEmpty.endTime = lineEnd;
+				} else {
+					// No words, just set line timing
+					nl.startTime = lineStart;
+					nl.endTime = lineEnd;
+				}
+
+				return nl;
+			});
+		} else {
+			// Fallback to playhead offset
+			const minStart = Math.min(...linesToCopy.map(l => l.startTime));
+			const offset = currentTimeMs - minStart;
+
+			newLines = linesToCopy.map(l => ({
+				...l,
+				id: newLyricLine().id,
+				startTime: l.startTime + offset,
+				endTime: l.endTime + offset,
+				words: l.words.map(w => ({
+					...w,
+					id: newLyricWord().id,
+					startTime: w.startTime + offset,
+					endTime: w.endTime + offset,
+					ruby: w.ruby?.map(r => ({
+						...r,
+						startTime: r.startTime + offset,
+						endTime: r.endTime + offset,
+					}))
+				}))
+			}));
+		}
 
 		store.set(lyricLinesAtom, produce((draft) => {
+			const anchorTime = selection ? selection.start : currentTimeMs;
 			// Find insertion point to keep sorted
-			let insertIndex = draft.lyricLines.findIndex((l: any) => l.startTime > currentTimeInMs);
+			let insertIndex = draft.lyricLines.findIndex((l: any) => l.startTime > anchorTime);
 			if (insertIndex === -1) insertIndex = draft.lyricLines.length;
 			
 			draft.lyricLines.splice(insertIndex, 0, ...newLines);
 		}));
-	}, [globalEnableInsert, currentTimeInMs]);
+
+		// Clear selection after applying timestamps to make it "apply" and finish
+		if (selection) {
+			store.set(spectrogramSelectionAtom, null);
+		}
+	}, [globalEnableInsert, store]);
 
 	const { height: uiHeight, resizeHandleProps } = useSpectrogramResize({
 		initialHeight: dataHeight,
@@ -357,9 +427,7 @@ export const AudioSpectrogram: FC = memo(() => {
 	};
 
 	const totalWidth = audioBuffer ? audioBuffer.duration * zoom : 0;
-	const cursorPosition = currentTime * zoom;
 	const auditionCursorPosition = auditionTime ? auditionTime * zoom : null;
-	const handleLeftPosition = cursorPosition - scrollLeft;
 
 	let hoverTimeFormatted = msToTimestamp(hoverTimeMs);
 	if (hoverFrequency > 0) {
@@ -513,17 +581,11 @@ export const AudioSpectrogram: FC = memo(() => {
 								</>
 							)}
 
-							<div
-								className={styles.playheadScrubHandle}
-								style={{
-									left: `${handleLeftPosition}px`,
-									display:
-										handleLeftPosition < 0 ||
-										handleLeftPosition > containerWidth
-											? "none"
-											: "block",
-								}}
-								onMouseDown={handleScrubStart}
+							<ScrubHandle
+								scrollContainerRef={scrollContainerRef}
+								scrollLeft={scrollLeft}
+								zoom={zoom}
+								containerWidth={containerWidth}
 							/>
 
 							<div
@@ -599,12 +661,7 @@ export const AudioSpectrogram: FC = memo(() => {
 									{visibleTiles.map((tile) => (
 										<TileComponent key={tile.tileId} {...tile} />
 									))}
-									<div
-										className={styles.playheadCursor}
-										style={{
-											left: `${cursorPosition}px`,
-										}}
-									/>
+									<PlayheadCursor zoom={zoom} />
 
 									{pendingCursorPosition !== null && (
 										<div
@@ -655,6 +712,7 @@ export const AudioSpectrogram: FC = memo(() => {
 									</SpectrogramContext.Provider>
 								</div>
 							</div>
+							<TimeShiftToolbar />
 						</>
 					)}
 				</div>
@@ -669,6 +727,18 @@ export const AudioSpectrogram: FC = memo(() => {
 							onClick={() => setShowUnselectedLines((prev) => !prev)}
 						>
 							{showUnselectedLines ? <EyeFilled /> : <EyeOffFilled />}
+						</IconButton>
+					</Tooltip>
+
+					<Tooltip content={t("timeShiftDialog.title", "Time Shift")} side="left">
+						<IconButton
+							variant="ghost"
+							color="gray"
+							onClick={() => {
+								setPreviewActive((prev) => !prev);
+							}}
+						>
+							<ClockRegular />
 						</IconButton>
 					</Tooltip>
 
@@ -724,6 +794,49 @@ export const AudioSpectrogram: FC = memo(() => {
 				</div>
 			</div>
 		</div>
+	);
+});
+
+const PlayheadCursor: FC<{ zoom: number }> = memo(({ zoom }) => {
+	const currentTimeInMs = useAtomValue(currentTimeAtom);
+	const cursorPosition = (currentTimeInMs / 1000) * zoom;
+
+	return (
+		<div
+			className={styles.playheadCursor}
+			style={{
+				left: `${cursorPosition}px`,
+			}}
+		/>
+	);
+});
+
+const ScrubHandle: FC<{
+	scrollContainerRef: React.RefObject<HTMLDivElement | null>;
+	scrollLeft: number;
+	zoom: number;
+	containerWidth: number;
+}> = memo(({ scrollContainerRef, scrollLeft, zoom, containerWidth }) => {
+	const currentTimeInMs = useAtomValue(currentTimeAtom);
+	const { handleScrubStart } = useScrubbing(
+		scrollContainerRef,
+		scrollLeft,
+		zoom,
+	);
+	const handleLeftPosition = (currentTimeInMs / 1000) * zoom - scrollLeft;
+
+	return (
+		<div
+			className={styles.playheadScrubHandle}
+			style={{
+				left: `${handleLeftPosition}px`,
+				display:
+					handleLeftPosition < 0 || handleLeftPosition > containerWidth
+						? "none"
+						: "block",
+			}}
+			onMouseDown={handleScrubStart}
+		/>
 	);
 });
 

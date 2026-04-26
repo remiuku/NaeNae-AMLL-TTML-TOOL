@@ -3,8 +3,8 @@ import { useAtom, useAtomValue, useSetAtom, useStore } from "jotai";
 import { useSetImmerAtom, withImmer } from "jotai-immer";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import saveFile from "save-file";
 import { uid } from "uid";
+import { saveFile } from "$/utils/fileSystem.ts";
 import { useFileOpener } from "$/hooks/useFileOpener.ts";
 import exportTTMLText from "$/modules/project/logic/ttml-writer";
 import {
@@ -166,15 +166,23 @@ export const useTopMenuActions = () => {
 		}
 	}, [openFile]);
 
-	const onSaveFile = useCallback(() => {
+	const onSaveFile = useCallback(async () => {
 		try {
 			const ttmlText = exportTTMLText(store.get(lyricLinesAtom));
-			const b = new Blob([ttmlText], { type: "text/plain" });
-			saveFile(b, saveFileName).catch(error);
+			const savedName = await saveFile(ttmlText, {
+				suggestedName: saveFileName,
+				types: [
+					{
+						description: "TTML Files",
+						accept: { "application/ttml+xml": [".ttml"] },
+					},
+				],
+			});
+			if (savedName) setSaveFileName(savedName);
 		} catch (e) {
 			error("Failed to save TTML file", e);
 		}
-	}, [saveFileName, store]);
+	}, [saveFileName, store, setSaveFileName]);
 
 	const onOpenHistoryRestore = useCallback(() => {
 		setHistoryRestoreDialog(true);

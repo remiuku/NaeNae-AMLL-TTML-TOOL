@@ -96,6 +96,22 @@
 				"success": "获取注音成功",
 				"error": "获取注音失败",
 				"romanize": "注音"
+			},
+			"romanization": {
+				"section": "注音/罗马音",
+				"autoFetch": "自动注音",
+				"success": "注音成功",
+				"error": "获取注音失败",
+				"noSelection": "请先选择行或单词",
+				"info": {
+					"title": "关于注音",
+					"canDo": "✓ 支持：自动生成日语罗马音（JA）、汉语拼音（ZH）和韩语罗马音（KO）。支持汉字！",
+					"cannotDo": "✗ 局限：对于罕见的汉字或专有名词，准确率并非 100%。仅支持 CJK。可能会出现微小错误。"
+				},
+				"ja": "日语 (罗马音)",
+				"zh": "中文 (拼音)",
+				"yue": "粤语 (粤拼)",
+				"ko": "韩语 (罗马音)"
 			}
 		},
 		"previewMode": {
@@ -105,14 +121,20 @@
 			"maskObsceneWords": "屏蔽不雅词汇",
 			"word": "单词",
 			"fadeWidth": "淡化宽度",
-			"mode": "Mode",
-			"standard": "Standard",
-			"timing": "Timing"
+			"mode": "模式",
+			"standard": "标准",
+			"amllDeprecated": "AMLL 模式已弃用，请使用标准模式",
+			"timing": "打轴",
+			"render": "渲染",
+			"vsync": "V-Sync",
+			"dev": "开发",
+			"showFps": "显示 FPS"
 		},
 		"syncMode": {
 			"currentEmptyBeat": "当前空拍",
 			"syncAdjustment": "同步调整",
 			"timeOffset": "时间偏移",
+			"commitOffset": "提交位移",
 			"syncLevel": "同步精度",
 			"syncLevelWord": "逐词同步",
 			"syncLevelLine": "逐行同步",
@@ -132,7 +154,12 @@
 			"startSync": "标记开始",
 			"continuousSync": "提交",
 			"endSync": "标记结束",
-			"loading": "面板加载中…"
+			"loading": "面板加载中…",
+			"manageQuickFixExclusions": {
+				"title": "管理快速修复排除项",
+				"description": "添加要在快速修复中忽略的单词。",
+				"placeholder": "输入要忽略的单词"
+			}
 		}
 	},
 	"settings": {
@@ -155,6 +182,10 @@
 			"compactBGInSyncDesc": "在同步过程中自动压缩背景歌词行的垂直空间。",
 			"syncJudgeMode": "同步时间点判定模式",
 			"syncJudgeModeDesc": "设置同步时如何判定时间戳。默认为“按下按键的第一时刻”。",
+			"syncTimeOffset": "全局同步位移 (ms)",
+			"syncTimeOffsetDesc": "统一调整所有同步时间点，用于补偿音频延迟。",
+			"syncCommitOffset": "“提交”输入位移 (ms)",
+			"syncCommitOffsetDesc": "专门针对“提交”操作的位移，用于修复部分用户的音频延迟问题。",
 			"syncJudgeModeOptions": {
 				"firstKeyDown": "按下按键的第一时刻",
 				"lastKeyUp": "松开按键的最后时刻",
@@ -210,8 +241,21 @@
 		},
 		"appearance": {
 			"theme": "主题",
+			"mode": {
+				"basic": "基础编辑器",
+				"advanced": "高级编辑器"
+			},
+			"presets": {
+				"title": "外观预设",
+				"namePlaceholder": "主题名称...",
+				"save": "保存当前",
+				"empty": "尚无保存的预设。"
+			},
 			"useCustomAccent": "自定义强调色",
 			"useCustomAccentDesc": "设置主颜色",
+			"glass": "玻璃拟态",
+			"glassBlur": "玻璃强度",
+			"glassBlurDesc": "调整玻璃拟态元素的背景模糊效果。",
 			"background": "背景",
 			"mode": {
 				"none": "无",
@@ -573,7 +617,8 @@
 		"sync": "同步",
 		"remove": "移除",
 		"about": "关于",
-		"clickToSet": "点击设置 "
+		"clickToSet": "点击设置 ",
+		"autoDetect": "自动检测"
 	},
 	"textImportDialog": {
 		"addSpaces": "添加空格",
@@ -796,7 +841,24 @@
 		"futureUse": "这些歌词将来由于 AMLL 系统作为默认 TTML 源码使用！",
 		"rightsWarning": "如果您重视保留所有权，请不要提交！",
 		"submitInstructions": "输入以下信息，然后跳到 GitHub issue 提交页面！",
-		"closeWarning": "关闭警告消息"
+		"closeWarning": "关闭上述警告信息",
+		"uploadDbType": "歌词库类型",
+		"uploadDbTypeOfficial": "官方歌词库",
+		"uploadDbTypeUser": "用户歌词库",
+		"uploadDbTypeBoth": "全部歌词库",
+		"officialDesc": "提交到官方歌词库，需要进行人工审核，确保歌词满足基本要求以及时间轴和效果后方可加入词库。此举可以把关你的歌词质量，让你的歌词能以足够好的演出效果呈现，推荐提交到此处。",
+		"userDesc": "提交到用户歌词库，仅需通过机器人审核没有严重问题后即可加入词库，无需人工审核。但是如果出现歌词内容以及呈现效果的问题则只能通过重新提交覆盖，无法进行人工核对保证质量。",
+		"bothDesc": "两个都要也不坏，知晓情况即可。上传后将会分别打开每个仓库对应的提交页面，请手动分别按下创建议题即可提交。",
+		"genFromName": "从元数据中生成",
+		"musicName": "音乐名称",
+		"musicNameDesc": "推荐使用 歌手 - 歌曲 格式，方便仓库管理员确认你的歌曲是否存在",
+		"submitReason": "提交缘由",
+		"submitReasonNew": "新歌词提交",
+		"submitReasonFix": "修正已有歌词",
+		"comment": "备注",
+		"commentPlaceholder": "有什么需要补充说明的呢？",
+		"issueFoundTitle": "发现以下问题，请修正后再提交：",
+		"submitBtn": "上传歌词并创建议题"
 	},
 	"splitWordDialog": {
 		"spaceCount": "空格 x{count}",

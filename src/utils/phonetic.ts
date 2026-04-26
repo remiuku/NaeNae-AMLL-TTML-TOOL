@@ -2,7 +2,7 @@ import { Romanize } from "hangul-romanize";
 import { pinyin as getPinyin } from "pinyin-pro";
 import * as wanakana from "wanakana";
 
-export type PhoneticLanguage = "ja" | "zh" | "ko" | "auto";
+export type PhoneticLanguage = "ja" | "zh" | "ko" | "yue" | "auto";
 
 export async function getPhonetic(text: string, lang: PhoneticLanguage = "auto"): Promise<string> {
 	if (!text.trim()) return "";
@@ -16,7 +16,8 @@ export async function getPhonetic(text: string, lang: PhoneticLanguage = "auto")
 		switch (detectedLang) {
 			case "ja":
 			case "zh":
-			case "ko": {
+			case "ko":
+			case "yue": {
 				try {
 					// 1. Try Google Transliteration API (Dedicated transliteration endpoint)
 					const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${detectedLang}&tl=en&dt=rm&q=${encodeURIComponent(text)}`;

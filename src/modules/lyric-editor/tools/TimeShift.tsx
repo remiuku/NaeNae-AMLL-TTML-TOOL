@@ -1,7 +1,9 @@
-/**
- * @description “平移时间” 模态框
- */
-import { ArrowLeftRegular, ArrowRightRegular } from "@fluentui/react-icons";
+import {
+	ArrowLeftRegular,
+	ArrowRightRegular,
+	SubtractRegular,
+	AddRegular,
+} from "@fluentui/react-icons";
 import {
 	Button,
 	Dialog,
@@ -10,12 +12,20 @@ import {
 	RadioGroup,
 	Text,
 	TextField,
+	Slider,
+	Box,
 } from "@radix-ui/themes";
-import { useAtom, useAtomValue } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { useSetImmerAtom } from "jotai-immer";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { timeShiftDialogAtom } from "$/states/dialogs.ts";
+import {
+	timeShiftDialogAtom,
+	timeShiftPreviewOffsetAtom,
+	timeShiftPreviewActiveAtom,
+	timeShiftPreviewScopeAtom,
+	timeShiftPreviewCustomRangeAtom,
+} from "$/states/dialogs.ts";
 import { lyricLinesAtom, selectedLinesAtom } from "$/states/main.ts";
 
 type ShiftDirection = "delay" | "advance";
@@ -28,7 +38,12 @@ export const TimeShiftDialog = () => {
 	const selectedLines = useAtomValue(selectedLinesAtom);
 	const setLyricLines = useSetImmerAtom(lyricLinesAtom);
 
-	const [offsetStr, setOffsetStr] = useState("100");
+	const setPreviewOffset = useSetAtom(timeShiftPreviewOffsetAtom);
+	const setPreviewActive = useSetAtom(timeShiftPreviewActiveAtom);
+	const setPreviewScope = useSetAtom(timeShiftPreviewScopeAtom);
+	const setPreviewRange = useSetAtom(timeShiftPreviewCustomRangeAtom);
+
+	const [offsetStr, setOffsetStr] = useState("0");
 	const [direction, setDirection] = useState<ShiftDirection>("delay");
 	const [scope, setScope] = useState<ShiftScope>("all");
 	const [customStart, setCustomStart] = useState("1");
@@ -37,10 +52,40 @@ export const TimeShiftDialog = () => {
 	const hasSelection = selectedLines.size > 0;
 	const totalLines = lyricLines.lyricLines.length;
 
+	const currentOffset = useMemo(() => {
+		const val = Number.parseInt(offsetStr, 10);
+		return Number.isNaN(val) ? 0 : val;
+	}, [offsetStr]);
+
+	const finalOffset = useMemo(() => {
+		return direction === "delay" ? currentOffset : -currentOffset;
+	}, [currentOffset, direction]);
+
+	// Sync with preview atoms
+	useEffect(() => {
+		if (open) {
+			setPreviewActive(true);
+			setPreviewOffset(finalOffset);
+			setPreviewScope(scope);
+			setPreviewRange([parseInt(customStart, 10), parseInt(customEnd, 10)]);
+		} else {
+			setPreviewActive(false);
+			setPreviewOffset(0);
+		}
+	}, [
+		open,
+		finalOffset,
+		scope,
+		customStart,
+		customEnd,
+		setPreviewActive,
+		setPreviewOffset,
+		setPreviewScope,
+		setPreviewRange,
+	]);
+
 	const adjustOffset = (delta: number) => {
-		const current = parseInt(offsetStr, 10);
-		const val = Number.isNaN(current) ? 0 : current;
-		setOffsetStr(Math.max(0, val + delta).toString());
+		setOffsetStr(Math.max(0, currentOffset + delta).toString());
 	};
 
 	useEffect(() => {
@@ -51,17 +96,15 @@ export const TimeShiftDialog = () => {
 				setScope("all");
 			}
 			setCustomEnd(totalLines.toString());
+			setOffsetStr("0");
 		}
 	}, [open, hasSelection, totalLines]);
 
 	const handleConfirm = () => {
-		const amount = parseInt(offsetStr, 10);
-		if (Number.isNaN(amount) || amount === 0) {
+		if (finalOffset === 0) {
 			setOpen(false);
 			return;
 		}
-
-		const finalOffset = direction === "delay" ? amount : -amount;
 
 		const targetLineIndices = new Set<number>();
 
@@ -132,34 +175,61 @@ export const TimeShiftDialog = () => {
 			<Dialog.Content maxWidth="450px">
 				<Dialog.Title>{t("timeShiftDialog.title", "平移时间")}</Dialog.Title>
 				<Flex direction="column" gap="4">
-					<Flex direction="column" gap="1">
+					<Flex direction="column" gap="2">
 						<Text size="2" weight="bold">
 							{t("timeShiftDialog.amount", "偏移量 (ms)")}
 						</Text>
-						<Flex gap="2" align="center">
-							<IconButton
-								variant="soft"
-								onClick={() => adjustOffset(-50)}
-								title="- 50ms"
-							>
-								<ArrowLeftRegular />
-							</IconButton>
+						<Flex gap="3" align="center">
+							<Flex gap="1">
+								<IconButton
+									variant="soft"
+									onClick={() => adjustOffset(-100)}
+									title="- 100ms"
+								>
+									<ArrowLeftRegular />
+								</IconButton>
+								<IconButton
+									variant="soft"
+									onClick={() => adjustOffset(-10)}
+									title="- 10ms"
+								>
+									<SubtractRegular />
+								</IconButton>
+							</Flex>
 							<TextField.Root
 								type="number"
 								min="0"
 								value={offsetStr}
 								onChange={(e) => setOffsetStr(e.target.value)}
-								placeholder="100"
+								placeholder="0"
 								style={{ flexGrow: 1 }}
 							/>
-							<IconButton
-								variant="soft"
-								onClick={() => adjustOffset(50)}
-								title="+ 50ms"
-							>
-								<ArrowRightRegular />
-							</IconButton>
+							<Flex gap="1">
+								<IconButton
+									variant="soft"
+									onClick={() => adjustOffset(10)}
+									title="+ 10ms"
+								>
+									<AddRegular />
+								</IconButton>
+								<IconButton
+									variant="soft"
+									onClick={() => adjustOffset(100)}
+									title="+ 100ms"
+								>
+									<ArrowRightRegular />
+								</IconButton>
+							</Flex>
 						</Flex>
+						<Box px="1" mt="1">
+							<Slider
+								min={0}
+								max={2000}
+								step={10}
+								value={[currentOffset]}
+								onValueChange={(v) => setOffsetStr(v[0].toString())}
+							/>
+						</Box>
 					</Flex>
 
 					<Flex direction="column" gap="1">
@@ -234,7 +304,8 @@ export const TimeShiftDialog = () => {
 				</Flex>
 
 				<Flex gap="3" mt="5" justify="end">
-					<Dialog.Close><Button variant="soft" color="gray">
+					<Dialog.Close>
+						<Button variant="soft" color="gray">
 							{t("common.cancel", "取消")}
 						</Button>
 					</Dialog.Close>

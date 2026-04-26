@@ -10,7 +10,7 @@ import {
 import { DropdownMenu } from "@radix-ui/themes";
 import { useSetAtom, useStore } from "jotai";
 import { useTranslation } from "react-i18next";
-import saveFile from "save-file";
+import { saveFile } from "$/utils/fileSystem.ts";
 import { useFileOpener } from "$/hooks/useFileOpener.ts";
 import exportTTMLText from "$/modules/project/logic/ttml-writer";
 import { pluginManager } from "$/modules/plugins/plugin-manager";
@@ -105,8 +105,15 @@ export const ImportExportLyric = () => {
 			const fileName = `${baseName}.${extension}`;
 			try {
 				const data = stringifier(lyricForExport);
-				const b = new Blob([data], { type: "text/plain" });
-				await saveFile(b, fileName);
+				await saveFile(data, {
+					suggestedName: fileName,
+					types: [
+						{
+							description: `${extension.toUpperCase()} Files`,
+							accept: { "text/plain": [`.${extension}`] },
+						},
+					],
+				});
 			} catch (e) {
 				error(`Failed to export lyric with format "${extension}"`, e);
 			}
@@ -126,7 +133,15 @@ export const ImportExportLyric = () => {
 			const saveFileName = store.get(saveFileNameAtom);
 			const baseName = saveFileName.replace(/\.[^.]*$/, "");
 			const fileName = `${baseName}.${extension}`;
-			await saveFile(new Blob([result]), fileName);
+			await saveFile(result, {
+				suggestedName: fileName,
+				types: [
+					{
+						description: `${extension.toUpperCase()} Files`,
+						accept: { "text/plain": [`.${extension}`] },
+					},
+				],
+			});
 		} catch (e) {
 			error(`Plugin export failed: ${pluginId}`, e);
 		}

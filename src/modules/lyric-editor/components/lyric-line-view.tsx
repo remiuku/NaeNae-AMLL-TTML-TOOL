@@ -26,7 +26,7 @@ import {
 import classNames from "classnames";
 import { useAtom, type Atom, atom, useAtomValue, useStore } from "jotai";
 import { useSetImmerAtom } from "jotai-immer";
-import { splitAtom } from "jotai/utils";
+import { selectAtom, splitAtom } from "jotai/utils";
 import {
 	type FC,
 	Fragment,
@@ -84,15 +84,27 @@ const parseRubyShortcut = (value: string) => {
 };
 
 // 定义一个派生 Atom，用于计算每一行的显示行号
+// 性能优化：只有当行数或 isBG 状态发生变化时，才重新计算行号
+// 这样在打轴（仅修改时间戳）时，不会触发全量行号重新计算
+const isBGSequenceAtom = selectAtom(
+	lyricLinesAtom,
+	(state) => state.lyricLines.map((line) => line.isBG),
+	(prev, next) => {
+		if (prev.length !== next.length) return false;
+		for (let i = 0; i < prev.length; i++) {
+			if (prev[i] !== next[i]) return false;
+		}
+		return true;
+	},
+);
+
 const lineDisplayNumbersAtom = atom((get) => {
 	const { lyricLines } = get(lyricLinesAtom);
+	get(isBGSequenceAtom); // 订阅稳定序列的变化
 	const displayNumbers: number[] = [];
 	let currentNumber = 0;
 
 	for (const [index, line] of lyricLines.entries()) {
-		// 核心逻辑：只有当不是背景行时，计数器才+1
-		// 这样背景行就会自动继承上一行的行号
-		// 特例：首行从 1 开始
 		if (!index || !line.isBG) {
 			currentNumber++;
 		}
@@ -256,6 +268,64 @@ const SubLineEdit = memo(
 	},
 );
 
+const InsertLineButton = ({
+	lineIndex,
+	selectedLinesCountAtom,
+	disableInsert,
+}: {
+	lineIndex: number;
+	selectedLinesCountAtom: Atom<number>;
+	disableInsert: () => void;
+}) => {
+	const { t } = useTranslation();
+	const store = useStore();
+	const editLyricLines = useSetImmerAtom(lyricLinesAtom);
+	const selectedLinesCount = useAtomValue(selectedLinesCountAtom);
+
+	return (
+		<Button
+			mx="2"
+			my="1"
+			variant="soft"
+			size="1"
+			style={{
+				width: "calc(100% - var(--space-4))",
+			}}
+			onClick={(evt) => {
+				editLyricLines((state) => {
+					const selectedLines = store.get(selectedLinesAtom);
+					if (selectedLines.size > 0) {
+						const linesToCopy = state.lyricLines.filter((l) =>
+							selectedLines.has(l.id),
+						);
+						const newLines = linesToCopy.map((l) => ({
+							...l,
+							id: newLyricLine().id,
+							words: l.words.map((w) => ({
+								...w,
+								id: newLyricWord().id,
+							})),
+						}));
+						state.lyricLines.splice(lineIndex, 0, ...newLines);
+					} else {
+						state.lyricLines.splice(lineIndex, 0, newLyricLine());
+					}
+				});
+				if (!evt.shiftKey) {
+					disableInsert();
+				}
+			}}
+		>
+			{selectedLinesCount > 0
+				? t("lyricLineView.duplicateLinesHere", {
+						count: selectedLinesCount,
+						defaultValue: "Duplicate {count} selected line(s) here",
+				  })
+				: t("lyricLineView.insertLine", "在此插入新行")}
+		</Button>
+	);
+};
+
 export const LyricLineView: FC<{
 	lineAtom: Atom<LyricLine>;
 	lineIndex: number;
@@ -297,7 +367,6 @@ export const LyricLineView: FC<{
 		() => atom((get) => get(selectedLinesAtom).size),
 		[],
 	);
-	const selectedLinesCount = useAtomValue(selectedLinesCountAtom);
 
 	// 创建一个仅订阅当前行显示行号的 atom，优化性能
 	const displayNumberAtom = useMemo(
@@ -488,53 +557,19 @@ export const LyricLineView: FC<{
 
 	return (
 		<>
-			<LyricLineScroller
-				lineAtom={lineAtom}
-				wordsContainer={wordsContainerRef.current}
-				editingRomanWordIndex={editingRomanWordIndex}
-			/>
+			{lineSelected && (
+				<LyricLineScroller
+					lineAtom={lineAtom}
+					wordsContainer={wordsContainerRef.current}
+					editingRomanWordIndex={editingRomanWordIndex}
+				/>
+			)}
 			{enableInsert && (
-				<Button
-					mx="2"
-					my="1"
-					variant="soft"
-					size="1"
-					style={{
-						width: "calc(100% - var(--space-4))",
-					}}
-					onClick={(evt) => {
-						editLyricLines((state) => {
-							const selectedLines = store.get(selectedLinesAtom);
-							if (selectedLines.size > 0) {
-								const linesToCopy = state.lyricLines.filter((l) =>
-									selectedLines.has(l.id),
-								);
-								const newLines = linesToCopy.map((l) => ({
-									...l,
-									id: newLyricLine().id,
-									words: l.words.map((w) => ({
-										...w,
-										id: newLyricWord().id,
-									})),
-								}));
-								state.lyricLines.splice(lineIndex, 0, ...newLines);
-							} else {
-								state.lyricLines.splice(lineIndex, 0, newLyricLine());
-							}
-						});
-						// setInsertMode(InsertMode.None);
-						if (!evt.shiftKey) {
-							disableInsert();
-						}
-					}}
-				>
-					{selectedLinesCount > 0
-						? t("lyricLineView.duplicateLinesHere", {
-								count: selectedLinesCount,
-								defaultValue: "Duplicate {count} selected line(s) here",
-						  })
-						: t("lyricLineView.insertLine", "在此插入新行")}
-				</Button>
+				<InsertLineButton
+					lineIndex={lineIndex}
+					selectedLinesCountAtom={selectedLinesCountAtom}
+					disableInsert={disableInsert}
+				/>
 			)}
 			<ContextMenu.Root
 				onOpenChange={(opened) => {

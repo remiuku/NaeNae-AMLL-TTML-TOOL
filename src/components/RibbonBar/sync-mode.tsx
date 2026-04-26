@@ -43,6 +43,7 @@ import {
 	showTouchSyncPanelAtom,
 	syncLevelModeAtom,
 	syncTimeOffsetAtom,
+	syncCommitOffsetAtom,
 	visualizeTimestampUpdateAtom,
 	type SyncLevelMode,
 } from "$/modules/settings/states/sync.ts";
@@ -128,6 +129,7 @@ export const SyncModeRibbonBar: FC<{ isSidebar?: boolean }> = forwardRef<HTMLDiv
 			showWordRomanizationInputAtom,
 		);
 		const [syncTimeOffset, setSyncTimeOffset] = useAtom(syncTimeOffsetAtom);
+		const [syncCommitOffset, setSyncCommitOffset] = useAtom(syncCommitOffsetAtom);
 		const [syncLevelMode, setSyncLevelMode] = useAtom(syncLevelModeAtom);
 		const { t } = useTranslation();
 
@@ -175,6 +177,28 @@ export const SyncModeRibbonBar: FC<{ isSidebar?: boolean }> = forwardRef<HTMLDiv
 								}}
 								value={syncTimeOffset}
 								onChange={(e) => setSyncTimeOffset(e.target.valueAsNumber)}
+							>
+								<TextField.Slot />
+								<TextField.Slot>
+									<Text>ms</Text>
+								</TextField.Slot>
+							</TextField.Root>
+							<Text
+								wrap="nowrap"
+								size="1"
+								style={{ color: "var(--accent-11)" }}
+							>
+								{t("ribbonBar.syncMode.commitOffset", "Commit Offset")}
+							</Text>
+							<TextField.Root
+								type="number"
+								step={1}
+								size="1"
+								style={{
+									width: "8em",
+								}}
+								value={syncCommitOffset}
+								onChange={(e) => setSyncCommitOffset(e.target.valueAsNumber)}
 							>
 								<TextField.Slot />
 								<TextField.Slot>
@@ -432,13 +456,13 @@ export const SyncModeRibbonBar: FC<{ isSidebar?: boolean }> = forwardRef<HTMLDiv
 					onOpenChange={setIsQuickFixExclusionsDialogOpen}
 				>
 					<Dialog.Content>
-						<Dialog.Title>Manage Quick Fix Exclusions</Dialog.Title>
+						<Dialog.Title>{t("ribbonBar.syncMode.manageQuickFixExclusions.title", "Manage Quick Fix Exclusions")}</Dialog.Title>
 						<Dialog.Description>
-							Add words to ignore in quick fixes.
+							{t("ribbonBar.syncMode.manageQuickFixExclusions.description", "Add words to ignore in quick fixes.")}
 						</Dialog.Description>
 						<Flex direction="column" gap="3">
 							<TextField.Root
-								placeholder="Enter word to ignore"
+								placeholder={t("ribbonBar.syncMode.manageQuickFixExclusions.placeholder", "Enter word to ignore")}
 								value={newWord}
 								onChange={(e) => setNewWord(e.target.value)}
 								onKeyDown={(e) => {

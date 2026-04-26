@@ -127,7 +127,6 @@ const ActiveLineGroup = memo(({ group, onWordClick }: { group: LineGroup; onWord
 
 export const AMLLWrapper = memo(({ variant }: { variant?: "standard" | "toxi" }) => {
 	const isToxi = variant === "toxi";
-	const currentTime = useAtomValue(currentTimeAtom);
 	const vsync = useAtomValue(vsyncAtom);
 	const showFps = useAtomValue(showFpsCounterAtom);
 	const setDisplayTime = useSetAtom(displayTimeAtom);

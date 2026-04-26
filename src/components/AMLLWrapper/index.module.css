@@ -29,6 +29,7 @@
 	position: relative;
 	z-index: 2;
 	background: radial-gradient(circle at center, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 100%);
+	backdrop-filter: blur(20px);
 }
 
 .header {
@@ -71,17 +72,16 @@
 
 /* ── Line Groups ──────────────────────────────────────────── */
 .lineGroup {
-	padding: 14px 20px;
+	padding: 30px 20px; /* Increased padding for bloom */
 	cursor: pointer;
 	width: 100%;
 	opacity: 0.45;
 	transform: scale(0.9);
 	transform-origin: left center;
 	transition: none !important;
-	content-visibility: auto;
-	contain: layout style;
 	will-change: transform, opacity;
 	backface-visibility: hidden;
+	overflow: visible; /* Ensure bloom isn't clipped */
 }
 
 .lineGroupActive {
@@ -101,6 +101,7 @@
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
+	overflow: visible;
 }
 
 .lineActive {
@@ -143,6 +144,7 @@
 	flex-wrap: wrap;
 	width: 100%;
 	row-gap: 8px;
+	overflow: visible;
 }
 
 .line .wordsContainer { justify-content: flex-start; }
@@ -158,8 +160,10 @@
 	display: inline-block;
 	cursor: pointer;
 	line-height: 1.15;
-	transition: none !important;
-	will-change: color;
+	transition: filter 0.6s ease, transform 0.8s cubic-bezier(0.34, 1.2, 0.64, 1), color 0.4s ease, opacity 0.4s ease !important;
+	will-change: color, filter, transform, opacity;
+	transform: scale(1);
+	transform-origin: center;
 }
 
 .wordStatic {
@@ -169,11 +173,16 @@
 .word:hover {
 	color: #fff !important;
 	opacity: 1 !important;
+	filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+	transform: scale(1.02);
 }
 
 .wordActive {
 	color: #fff;
 	opacity: 1 !important;
+	filter: drop-shadow(0 0 18px rgba(255, 255, 255, 0.6));
+	transform: scale(1.03);
+	transition: filter 0s, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
 }
 
 .wordPast {
@@ -187,10 +196,12 @@
 	color: rgba(255, 255, 255, 0.25);
 	font-weight: 700;
 	letter-spacing: -0.02em;
+	transition: filter 0.6s ease;
 }
 
 .lineActive .extraLine {
 	color: rgba(255, 255, 255, 0.8);
+	filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.4));
 }
 
 :global(.is-dark) .amllWrapper {

@@ -9,8 +9,8 @@
  * https://github.com/amll-dev/amll-ttml-tool/blob/main/LICENSE
  */
 
-import { atom } from "jotai";
-import { atomWithStorage } from "jotai/utils";
+import { atom, type Atom } from "jotai";
+import { atomWithStorage, selectAtom } from "jotai/utils";
 import { REDO, UNDO, withHistory } from "jotai-history";
 import { uid } from "uid";
 import { identifyProject } from "$/modules/project/logic/project-info";
@@ -47,20 +47,29 @@ export const lyricLinesAtom = atom({
 	marks: [],
 } as TTMLLyric);
 
-export const allLyricsWordsAtom = atom((get) => {
-	const lyrics = get(lyricLinesAtom);
-	const words = new Set<string>();
-	for (const line of lyrics.lyricLines) {
-		for (const wordObj of line.words) {
-			const cleaned = wordObj.word
-				.trim()
-				.toLowerCase()
-				.replace(/[^a-z']/g, "");
-			if (cleaned) words.add(cleaned);
+const setsEqual = (a: Set<string>, b: Set<string>) => {
+	if (a.size !== b.size) return false;
+	for (const v of a) if (!b.has(v)) return false;
+	return true;
+};
+
+export const allLyricsWordsAtom: Atom<Set<string>> = selectAtom(
+	lyricLinesAtom,
+	(lyrics) => {
+		const words = new Set<string>();
+		for (const line of lyrics.lyricLines) {
+			for (const wordObj of line.words) {
+				const cleaned = wordObj.word
+					.trim()
+					.toLowerCase()
+					.replace(/[^a-z']/g, "");
+				if (cleaned) words.add(cleaned);
+			}
 		}
-	}
-	return words;
-});
+		return words;
+	},
+	setsEqual,
+);
 
 /**
  * @description 当前项目的唯一标识符
