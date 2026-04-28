@@ -374,6 +374,7 @@ export const LyricLineView: FC<{
 		[lineIndex],
 	);
 	const displayNumber = useAtomValue(displayNumberAtom);
+	const selectedLinesCount = useAtomValue(selectedLinesCountAtom);
 
 	const hasError = useMemo(() => {
 		if (line.startTime > line.endTime) {
