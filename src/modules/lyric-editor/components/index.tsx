@@ -134,11 +134,12 @@ export const LyricLinesView: FC = forwardRef<HTMLDivElement>((_props, ref) => {
 			</Flex>
 		);
 	return (
-		<Box flexGrow="1" className={styles.lyricLinesWrapper}>
+		<Flex direction="column" flexGrow="1" className={styles.lyricLinesWrapper}>
 			<Box
 				flexGrow="1"
 				style={{
 					padding: toolMode === ToolMode.Sync ? "20vh 0" : undefined,
+					height: "100%",
 					maxHeight: "100%",
 					overflowY: "auto",
 					backgroundColor: "var(--editor-bg, transparent)",
@@ -168,7 +169,7 @@ export const LyricLinesView: FC = forwardRef<HTMLDivElement>((_props, ref) => {
 			>
 				<MyLocation24Regular />
 			</Button>
-		</Box>
+		</Flex>
 	);
 });
 
