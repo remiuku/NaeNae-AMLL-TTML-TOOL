@@ -52,9 +52,8 @@ import {
 	keyBindingTriggerModeAtom,
 } from "$/utils/keybindings";
 
-const languageOptions: readonly string[] = Object.keys(resources);
-
 export const SettingsCommonTab = () => {
+	const languageOptions: readonly string[] = Object.keys(resources);
 	const [layoutMode, setLayoutMode] = useAtom(layoutModeAtom);
 	const [syncJudgeMode, setSyncJudgeMode] = useAtom(syncJudgeModeAtom);
 	const [keyBindingTriggerMode, setKeyBindingTriggerMode] = useAtom(
