@@ -83,6 +83,7 @@ export const SettingsCommonTab = () => {
 	const currentLanguage = i18n.resolvedLanguage || i18n.language;
 
 	const getLanguageName = (code: string) => {
+		if (code === "lolcat") return "Lolcat";
 		try {
 			interface DisplayNamesLike {
 				new (
