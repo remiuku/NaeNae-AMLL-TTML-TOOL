@@ -87,6 +87,7 @@ class PcmPlayer extends AudioWorkletProcessor {
 	process(_inputs: Float32Array[][], outputs: Float32Array[][]) {
 		if (this.destroyed) return false;
 		const output = outputs[0];
+		const cueOutput = outputs[1];
 		if (!output?.[0] || !this.voices.music) return true;
 		try {
 			if (this.auditionOutput[0].length !== output[0].length) {
@@ -100,8 +101,8 @@ class PcmPlayer extends AudioWorkletProcessor {
 					currentTime,
 				);
 				if (report) this.post({ type: "render", voice: id, report });
-				if (id === "music")
-					this.wordCues.render(output, report ?? null, currentTime);
+				if (id === "music" && cueOutput?.[0])
+					this.wordCues.render(cueOutput, report ?? null, currentTime);
 			}
 			for (let c = 0; c < output.length; c++) {
 				for (let i = 0; i < output[c].length; i++)
@@ -109,6 +110,7 @@ class PcmPlayer extends AudioWorkletProcessor {
 			}
 		} catch (error) {
 			for (const channel of output) channel.fill(0);
+			for (const channel of cueOutput ?? []) channel.fill(0);
 			this.fail(error);
 		}
 		return !this.destroyed;

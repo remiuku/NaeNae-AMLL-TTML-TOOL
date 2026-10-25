@@ -221,7 +221,9 @@ export const AudioControls: FC = memo(() => {
 							<HoverCard.Content>
 								<Flex direction="column" align="center">
 									<Grid columns="0fr 7em 2em" gap="2" align="baseline">
-										<Text wrap="nowrap">{t("audioPanel.volume", "音量")}</Text>
+										<Text wrap="nowrap">
+											{t("wordCue.musicVolume", "Music volume")}
+										</Text>
 										<Slider
 											min={0}
 											max={1}

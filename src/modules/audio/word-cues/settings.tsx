@@ -66,14 +66,14 @@ export function WordCueSettings() {
 						? "wordCue.syllableDescription"
 						: "wordCue.wordDescription",
 					cueMode === "syllable"
-						? "Click at the start of each timed span. Split words use syllable timings; unsplit words get one click for the whole word. Background vocals are quieter; duet vocals use a distinct higher beep. Master volume also applies."
-						: "High click at word start, low click at word end. Background vocals are quieter; duet vocals use a distinct higher beep. Master volume also applies.",
+						? "Click at the start of each timed span. Split words use syllable timings; unsplit words get one click for the whole word. Background vocals are quieter; duet vocals use a distinct higher beep. Cue volume is independent of music volume."
+						: "High click at word start, low click at word end. Background vocals are quieter; duet vocals use a distinct higher beep. Cue volume is independent of music volume.",
 				)}
 			</Text>
 			<Flex align="center" gap="3">
-				<Text size="2">{t("wordCue.volume", "Click volume")}</Text>
+				<Text size="2">{t("wordCue.volume", "Cue volume")}</Text>
 				<Slider
-					aria-label={t("wordCue.volume", "Click volume")}
+					aria-label={t("wordCue.volume", "Cue volume")}
 					style={{ flex: 1, minWidth: 80 }}
 					min={0}
 					max={1}

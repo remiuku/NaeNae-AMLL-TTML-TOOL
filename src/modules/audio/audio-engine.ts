@@ -640,8 +640,8 @@ export class AudioEngine extends EventTarget {
 			assertCurrent();
 			node = new AudioWorkletNode(this.ctx, "pcm-player", {
 				numberOfInputs: 0,
-				numberOfOutputs: 1,
-				outputChannelCount: [buffer.numberOfChannels],
+				numberOfOutputs: 2,
+				outputChannelCount: [buffer.numberOfChannels, 2],
 			});
 			const ownedNode = node;
 			const ready = new Promise<void>((resolve, reject) => {
@@ -671,7 +671,9 @@ export class AudioEngine extends EventTarget {
 				() => abort.signal.removeEventListener("abort", cancelReady),
 				() => abort.signal.removeEventListener("abort", cancelReady),
 			);
-			ownedNode.connect(this.eqEntryPoint);
+			ownedNode.connect(this.eqEntryPoint, 0, 0);
+			// Cue volume is applied by the synth; bypass music gain and EQ.
+			ownedNode.connect(this.ctx.destination, 1, 0);
 			// Transfer one copy; neither structured cloning nor audition duplicates the full PCM.
 			const channels = Array.from(
 				{ length: buffer.numberOfChannels },
