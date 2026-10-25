@@ -173,6 +173,18 @@ export class AudioEngine extends EventTarget {
 	private pendingStarts = new Map<VoiceId, PendingStart>();
 	private _musicPlayBackRate = 1;
 	private _preservesPitch = true;
+	private wordCueConfig: Extract<PlayerCommand, { type: "word-cues" }> = {
+		type: "word-cues",
+		boundaries: [],
+		volume: 0,
+	};
+	setWordTimingCues(
+		boundaries: import("./word-cues/model").CueBoundary[],
+		volume: number,
+	) {
+		this.wordCueConfig = { type: "word-cues", boundaries, volume };
+		this.post(this.wordCueConfig);
+	}
 
 	get musicLoaded() {
 		return this.musicBuffer !== null;
@@ -676,6 +688,7 @@ export class AudioEngine extends EventTarget {
 			}
 			assertCurrent();
 			this.node = ownedNode;
+			this.post(this.wordCueConfig);
 			this.playerReady = ready;
 			this.musicBuffer = buffer;
 			globalStore.set(audioBufferAtom, buffer);

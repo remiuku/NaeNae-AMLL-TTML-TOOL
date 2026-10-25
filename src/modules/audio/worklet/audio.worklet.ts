@@ -6,6 +6,7 @@ import {
 	SoundTouchProcessor,
 	StretchAlgorithm,
 } from "./vendor/soundtouch";
+import { WordCueSynth } from "./word-cue";
 
 // AudioWorklet globals are absent from TypeScript's DOM/WebWorker declarations.
 declare const sampleRate: number;
@@ -26,6 +27,7 @@ class PcmPlayer extends AudioWorkletProcessor {
 	private voices: Partial<Record<VoiceId, PcmVoice>> = {};
 	private auditionOutput: Float32Array[] = [];
 	private destroyed = false;
+	private wordCues = new WordCueSynth(sampleRate);
 
 	constructor() {
 		super();
@@ -52,6 +54,9 @@ class PcmPlayer extends AudioWorkletProcessor {
 					this.post({ type: "ready" });
 				} else if (command.type === "voice") {
 					this.voices[command.voice]?.setState(command.state);
+					if (command.voice === "music") this.wordCues.reset();
+				} else if (command.type === "word-cues") {
+					this.wordCues.configure(command.boundaries, command.volume);
 				} else {
 					this.destroy();
 				}
@@ -95,6 +100,8 @@ class PcmPlayer extends AudioWorkletProcessor {
 					currentTime,
 				);
 				if (report) this.post({ type: "render", voice: id, report });
+				if (id === "music")
+					this.wordCues.render(output, report ?? null, currentTime);
 			}
 			for (let c = 0; c < output.length; c++) {
 				for (let i = 0; i < output[c].length; i++)
