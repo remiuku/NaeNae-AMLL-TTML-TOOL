@@ -284,8 +284,8 @@ export const AudioControls: FC = memo(() => {
 								{audioPlaying ? <PauseFilled /> : <PlayFilled />}
 							</IconButton>
 						</Tooltip>
-						<CurrentTimeLabel />
 						<WordCueOptions />
+						<CurrentTimeLabel />
 						<AudioSlider />
 						<Text
 							size="2"
