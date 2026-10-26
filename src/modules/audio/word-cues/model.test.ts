@@ -29,7 +29,14 @@ describe("word timing cue index", () => {
 			{ ...line(word(400, 500)), isLineSynced: true },
 			{ ...line(word(500, 600)), ignoreSync: true },
 		]);
-		expect(index.words).toEqual([{ start: 0, end: 100, boundaries: [] }]);
+		expect(index.words).toEqual([
+			{
+				start: 0,
+				end: 100,
+				boundaries: [],
+				syllables: [{ start: 0, end: 100 }],
+			},
+		]);
 	});
 	it("goes dark at the exact end and finds the next word across gaps and seeks", () => {
 		const index = buildCueIndex([line(word(300, 400), word(0, 100))]);
@@ -58,9 +65,70 @@ describe("word timing cue index", () => {
 		const index = buildCueIndex([
 			line(word(0, 100), word(0, 100), word(100, 200)),
 		]);
-		expect(index.boundaries.filter((b) => b.timeMs === 100)).toEqual([
+		expect(index.clicks.word.filter((b) => b.timeMs === 100)).toEqual([
 			{ timeMs: 100, kind: "end" },
 			{ timeMs: 100, kind: "start" },
 		]);
+	});
+	it("shows duet words and treats background duet lines as background", () => {
+		const index = buildCueIndex([
+			line(word(0, 100)),
+			{ ...line(word(200, 300)), isDuet: true },
+			{ ...line(word(400, 500)), isDuet: true, isBG: true },
+		]);
+		expect(index.words.map((w) => w.start)).toEqual([0, 200]);
+		expect(cueAt(index, 250)).toMatchObject({ progress: 0.5 });
+		expect(cueAt(index, 150).nextCueTime).toBe(200);
+		expect(index.clicks.word).toEqual([
+			{ timeMs: 0, kind: "start" },
+			{ timeMs: 100, kind: "end" },
+			{ timeMs: 200, kind: "start", voice: "duet" },
+			{ timeMs: 300, kind: "end", voice: "duet" },
+			{ timeMs: 400, kind: "start", voice: "background" },
+			{ timeMs: 500, kind: "end", voice: "background" },
+		]);
+	});
+	it("keeps punctuation-only spans in the syllable before them", () => {
+		const index = buildCueIndex([
+			{
+				...newLyricLine(),
+				words: [word(0, 100, "hel"), word(100, 200, "lo"), word(200, 300, ",")],
+			},
+		]);
+		expect(index.words[0]).toMatchObject({
+			boundaries: [100],
+			syllables: [
+				{ start: 0, end: 100 },
+				{ start: 100, end: 300 },
+			],
+		});
+		expect(index.clicks.syllable.map((b) => b.timeMs)).toEqual([0, 100]);
+		expect(cueAt(index, 250, "syllable")).toMatchObject({
+			activeSyllable: { start: 100, end: 300 },
+			progress: 0.75,
+			nextCueTime: undefined,
+		});
+		expect(cueAt(index, 50, "syllable").nextCueTime).toBe(100);
+	});
+	it("starts a new syllable after a punctuation-only span", () => {
+		const index = buildCueIndex([
+			{
+				...newLyricLine(),
+				words: [
+					word(0, 100, "("),
+					word(100, 200, "hel"),
+					word(200, 210, "-"),
+					word(210, 300, "lo"),
+				],
+			},
+		]);
+		expect(index.words[0]).toMatchObject({
+			boundaries: [210],
+			syllables: [
+				{ start: 0, end: 210 },
+				{ start: 210, end: 300 },
+			],
+		});
+		expect(cueAt(index, 255, "syllable").progress).toBe(0.5);
 	});
 });

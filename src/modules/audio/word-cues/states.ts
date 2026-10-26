@@ -2,7 +2,7 @@ import { atomWithMigratedStorage } from "$/modules/settings/states/migrated-stor
 
 export const showWordTimingCueAtom = atomWithMigratedStorage<boolean>(
 	"showWordTimingCue",
-	true,
+	false,
 );
 export const wordTimingClicksAtom = atomWithMigratedStorage<boolean>(
 	"wordTimingClicks",

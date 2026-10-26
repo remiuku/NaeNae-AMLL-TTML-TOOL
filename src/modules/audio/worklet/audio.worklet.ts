@@ -54,7 +54,6 @@ class PcmPlayer extends AudioWorkletProcessor {
 					this.post({ type: "ready" });
 				} else if (command.type === "voice") {
 					this.voices[command.voice]?.setState(command.state);
-					if (command.voice === "music") this.wordCues.reset();
 				} else if (command.type === "word-cues") {
 					this.wordCues.configure(command.boundaries, command.volume);
 				} else {

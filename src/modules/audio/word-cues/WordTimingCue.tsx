@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { playbackClock } from "$/modules/playback-clock";
 import { lyricLinesAtom } from "$/states/main";
 import { audioEngine } from "../audio-engine";
-import { buildCueIndex, cueAt } from "./model";
+import { buildCueIndex, cueAt, upperBound } from "./model";
 import {
 	showWordTimingCueAtom,
 	wordTimingClicksAtom,
@@ -31,21 +31,8 @@ export const WordTimingCue = memo(() => {
 	const syllableDot = useRef<HTMLSpanElement>(null);
 
 	useEffect(() => {
-		const foreground =
-			cueMode === "syllable" ? index.syllableBoundaries : index.boundaries;
-		const background =
-			cueMode === "syllable"
-				? index.backgroundSyllableBoundaries
-				: index.backgroundBoundaries;
-		const duet =
-			cueMode === "syllable"
-				? index.duetSyllableBoundaries
-				: index.duetBoundaries;
-		const boundaries = [...foreground, ...background, ...duet].sort(
-			(a, b) => a.timeMs - b.timeMs,
-		);
 		audioEngine.setWordTimingCues(
-			clicks ? boundaries : [],
+			clicks ? index.clicks[cueMode] : [],
 			clicks ? volume : 0,
 		);
 		return () => audioEngine.setWordTimingCues([], 0);
@@ -56,6 +43,7 @@ export const WordTimingCue = memo(() => {
 		let previousMs: number | undefined;
 		let wasPlaying = false;
 		let blink: Animation | undefined;
+		let lastActive: (typeof index.words)[number] | undefined;
 		const update = (seconds: number, _now?: number, seeked = false) => {
 			if (
 				!root.current ||
@@ -65,9 +53,10 @@ export const WordTimingCue = memo(() => {
 				!meter.current
 			)
 				return;
+			const timeMs = seconds * 1000;
 			const { active, next, nextCueTime, progress } = cueAt(
 				index,
-				seconds * 1000,
+				timeMs,
 				cueMode,
 			);
 			if (notches.current && lastActive !== active) {
@@ -84,15 +73,10 @@ export const WordTimingCue = memo(() => {
 			}
 			const loaded = audioEngine.musicLoaded;
 			const playing = audioEngine.musicPlaying;
-			const timeMs = seconds * 1000;
-			let low = 0;
-			let high = index.syllableBoundaries.length;
-			while (low < high) {
-				const mid = (low + high) >>> 1;
-				if (index.syllableBoundaries[mid].timeMs <= timeMs) low = mid + 1;
-				else high = mid;
-			}
-			const onset = index.syllableBoundaries[low - 1]?.timeMs;
+			const onset =
+				index.syllableStarts[
+					upperBound(index.syllableStarts, timeMs, (start) => start) - 1
+				];
 			if (
 				loaded &&
 				playing &&
@@ -112,21 +96,7 @@ export const WordTimingCue = memo(() => {
 			previousMs = timeMs;
 			wasPlaying = playing;
 			root.current.dataset.active = String(loaded && !!active);
-			// Each selected timing unit fills the same track from the left.
-			fill.current.style.left = "0%";
-			fill.current.style.width = "100%";
 			fill.current.style.transform = `scaleX(${loaded ? progress : 0})`;
-			meter.current.setAttribute(
-				"aria-label",
-				t(
-					cueMode === "syllable"
-						? "wordCue.syllableProgress"
-						: "wordCue.progress",
-					cueMode === "syllable"
-						? "Current syllable progress"
-						: "Current word progress",
-				),
-			);
 			meter.current.setAttribute(
 				"aria-valuenow",
 				String(Math.round((loaded ? progress : 0) * 100)),
@@ -146,9 +116,7 @@ export const WordTimingCue = memo(() => {
 				nextCueTime !== undefined && loaded
 					? Math.max(
 							0,
-							(nextCueTime - seconds * 1000) /
-								1000 /
-								audioEngine.musicPlayBackRate,
+							(nextCueTime - timeMs) / 1000 / audioEngine.musicPlayBackRate,
 						)
 					: undefined;
 			nextLabel.current.textContent =
@@ -175,11 +143,10 @@ export const WordTimingCue = memo(() => {
 			}
 			if (syllableDot.current) {
 				syllableDot.current.style.visibility =
-					loaded && index.syllableBoundaries.length ? "visible" : "hidden";
+					loaded && index.syllableStarts.length ? "visible" : "hidden";
 			}
 		};
 		const updateNow = () => update(playbackClock.getSnapshot());
-		let lastActive: (typeof index.words)[number] | undefined;
 		const unsubscribe = playbackClock.subscribe(update);
 		audioEngine.addEventListener("music-playback-rate-change", updateNow);
 		updateNow();

@@ -37,6 +37,10 @@ export class WordCueSynth {
 	};
 	private volume = 0;
 	constructor(private sampleRate: number) {}
+	/**
+	 * Boundaries are looked up per block from the music frame, so seeks and
+	 * edits need no reset; a click already sounding finishes its short decay.
+	 */
 	configure(boundaries: CueBoundary[], volume: number) {
 		this.boundaries = boundaries.map((b) => ({
 			frame: (b.timeMs * this.sampleRate) / 1000,
@@ -46,30 +50,23 @@ export class WordCueSynth {
 		this.volume = Number.isFinite(volume)
 			? Math.max(0, Math.min(1, volume))
 			: 0;
-		this.reset();
-	}
-	reset() {
-		this.ages = {
-			start: Infinity,
-			end: Infinity,
-			syllable: Infinity,
-			duet: Infinity,
-			background: Infinity,
-		};
-		this.last = {
-			start: -Infinity,
-			end: -Infinity,
-			syllable: -Infinity,
-			duet: -Infinity,
-			background: -Infinity,
-		};
 	}
 	render(
 		output: Float32Array[],
 		report: RenderReport | null,
 		contextTime: number,
 	) {
-		if (this.volume === 0 || !output[0]) return;
+		if (!output[0]) return;
+		if (this.volume === 0) {
+			// Muting drops ringing clicks so they can't resume when unmuted.
+			// Fixed assignments: muted blocks run constantly and must not allocate.
+			this.ages.start = Infinity;
+			this.ages.end = Infinity;
+			this.ages.syllable = Infinity;
+			this.ages.duet = Infinity;
+			this.ages.background = Infinity;
+			return;
+		}
 		let low = 0;
 		let high = this.boundaries.length;
 		const start = report?.startFrame ?? Infinity;

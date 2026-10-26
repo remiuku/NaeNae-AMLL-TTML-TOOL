@@ -60,16 +60,18 @@ export function WordCueSettings() {
 					</Select.Root>
 				</Flex>
 			)}
-			<Text size="1" color="gray">
-				{t(
-					cueMode === "syllable"
-						? "wordCue.syllableDescription"
-						: "wordCue.wordDescription",
-					cueMode === "syllable"
-						? "Click at the start of each timed span. Split words use syllable timings; unsplit words get one click for the whole word. Background vocals are quieter; duet vocals use a distinct higher beep. Cue volume is independent of music volume."
-						: "High click at word start, low click at word end. Background vocals are quieter; duet vocals use a distinct higher beep. Cue volume is independent of music volume.",
-				)}
-			</Text>
+			{clicks && (
+				<Text size="1" color="gray">
+					{t(
+						cueMode === "syllable"
+							? "wordCue.syllableDescription"
+							: "wordCue.wordDescription",
+						cueMode === "syllable"
+							? "Click at the start of each timed span. Split words use syllable timings; unsplit words get one click for the whole word. Background vocals are quieter; duet vocals use a distinct higher beep. Cue volume is independent of music volume."
+							: "High click at word start, low click at word end. Background vocals are quieter; duet vocals use a distinct higher beep. Cue volume is independent of music volume.",
+					)}
+				</Text>
+			)}
 			<Flex align="center" gap="3">
 				<Text size="2">{t("wordCue.volume", "Cue volume")}</Text>
 				<Slider

@@ -41,8 +41,6 @@ describe("word cue worklet synthesis", () => {
 		expect(energy(render(synth, block(1000, 1128)))).toBe(0);
 		expect(energy(render(synth, block(0, 0, 0)))).toBe(0);
 		expect(energy(render(synth, block(0, 128)))).toBeGreaterThan(0);
-		synth.reset(); // seek, pause, unload or playback generation change
-		expect(energy(render(synth, null))).toBe(0);
 	});
 	it("retains boundaries in the fractional final sample interval and emits the EOF end", () => {
 		const synth = new WordCueSynth(rate);
@@ -70,5 +68,17 @@ describe("word cue worklet synthesis", () => {
 		);
 		one.configure([boundary], 0);
 		expect(energy(render(one, block(0, 128)))).toBe(0);
+	});
+	it("lets a ringing click finish through edits and drops it when muted", () => {
+		const synth = new WordCueSynth(rate);
+		const boundary = { timeMs: 0, kind: "start" as const };
+		synth.configure([boundary], 1);
+		render(synth, block(0, 128));
+		synth.configure([boundary, { timeMs: 500, kind: "end" }], 1);
+		expect(energy(render(synth, null, 128 / rate))).toBeGreaterThan(0);
+		synth.configure([boundary], 0);
+		render(synth, null, 256 / rate);
+		synth.configure([boundary], 1);
+		expect(energy(render(synth, null, 384 / rate))).toBe(0);
 	});
 });
