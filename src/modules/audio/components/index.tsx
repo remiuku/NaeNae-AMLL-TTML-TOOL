@@ -13,6 +13,7 @@ import {
 	ChevronDownFilled,
 	ChevronUpFilled,
 	MusicNote2Filled,
+	OptionsFilled,
 	PauseFilled,
 	PlayFilled,
 } from "@fluentui/react-icons";
@@ -20,9 +21,9 @@ import {
 	Card,
 	Flex,
 	Grid,
-	HoverCard,
 	IconButton,
 	Inset,
+	Popover,
 	Slider,
 	Switch,
 	Text,
@@ -30,11 +31,14 @@ import {
 } from "@radix-ui/themes";
 import { useAtom, useAtomValue, useStore } from "jotai";
 import {
+	type ComponentProps,
 	type CSSProperties,
 	type FC,
 	memo,
 	useCallback,
 	useEffect,
+	useLayoutEffect,
+	useRef,
 	useState,
 } from "react";
 import { useTranslation } from "react-i18next";
@@ -70,6 +74,22 @@ import {
 } from "$/states/keybindings.ts";
 import { useKeyBindingAtom } from "$/utils/keybindings.ts";
 import { msToTimestamp } from "$/utils/timestamp.ts";
+
+/**
+ * Radix Themes puts `aria-label` on the slider's wrapper, but screen readers
+ * announce the focusable thumb, so the label is copied onto the thumb.
+ */
+const LabeledSlider: FC<
+	Omit<ComponentProps<typeof Slider>, "aria-label"> & { label: string }
+> = ({ label, ...props }) => {
+	const ref = useRef<HTMLSpanElement>(null);
+	useLayoutEffect(() => {
+		ref.current
+			?.querySelector('[role="slider"]')
+			?.setAttribute("aria-label", label);
+	}, [label]);
+	return <Slider ref={ref} {...props} />;
+};
 
 const AudioPlaybackKeyBinding = memo(() => {
 	const store = useStore();
@@ -223,24 +243,36 @@ export const AudioControls: FC = memo(() => {
 						gapX="2"
 						data-guide-target="audio-playback-bar"
 					>
-						<HoverCard.Root>
-							<HoverCard.Trigger>
-								<IconButton
-									my="2"
-									variant="soft"
-									onClick={onLoadMusic}
-									aria-label={t("spectrogram.loadAudio", "Load audio file")}
-								>
-									<MusicNote2Filled />
-								</IconButton>
-							</HoverCard.Trigger>
-							<HoverCard.Content>
+						<Tooltip content={t("spectrogram.loadAudio", "Load audio file")}>
+							<IconButton
+								my="2"
+								variant="soft"
+								onClick={onLoadMusic}
+								aria-label={t("spectrogram.loadAudio", "Load audio file")}
+							>
+								<MusicNote2Filled />
+							</IconButton>
+						</Tooltip>
+						<Popover.Root>
+							<Tooltip content={t("audioPanel.playbackRate", "Playback speed")}>
+								<Popover.Trigger>
+									<IconButton
+										my="2"
+										variant="soft"
+										aria-label={t("audioPanel.playbackRate", "Playback speed")}
+									>
+										<OptionsFilled />
+									</IconButton>
+								</Popover.Trigger>
+							</Tooltip>
+							<Popover.Content>
 								<Flex direction="column" align="center">
 									<Grid columns="0fr 7em 2em" gap="2" align="baseline">
 										<Text wrap="nowrap">
 											{t("wordCue.musicVolume", "Music volume")}
 										</Text>
-										<Slider
+										<LabeledSlider
+											label={t("wordCue.musicVolume", "Music volume")}
 											min={0}
 											max={1}
 											value={[volume]}
@@ -253,7 +285,8 @@ export const AudioControls: FC = memo(() => {
 										<Text wrap="nowrap">
 											{t("audioPanel.playbackRate", "Playback speed")}
 										</Text>
-										<Slider
+										<LabeledSlider
+											label={t("audioPanel.playbackRate", "Playback speed")}
 											min={MIN_PLAYBACK_RATE}
 											max={MAX_PLAYBACK_RATE}
 											value={[playbackRate]}
@@ -268,6 +301,10 @@ export const AudioControls: FC = memo(() => {
 										</Text>
 										<Flex align="center" gap="2">
 											<Switch
+												aria-label={t(
+													"audioPanel.preservesPitch",
+													"Preserve pitch",
+												)}
 												checked={preservesPitch}
 												onCheckedChange={setPreservesPitch}
 											/>
@@ -276,21 +313,9 @@ export const AudioControls: FC = memo(() => {
 											{preservesPitch ? "ON" : "OFF"}
 										</Text>
 									</Grid>
-									<Text
-										wrap="nowrap"
-										align="center"
-										mt="2"
-										size="1"
-										color="gray"
-									>
-										{t(
-											"audioPanel.clickToLoadMusic",
-											"Click the music icon to load audio",
-										)}
-									</Text>
 								</Flex>
-							</HoverCard.Content>
-						</HoverCard.Root>
+							</Popover.Content>
+						</Popover.Root>
 						<Tooltip content={t("audioPanel.playPause", "暂停 / 播放音乐")}>
 							<IconButton
 								my="2"
