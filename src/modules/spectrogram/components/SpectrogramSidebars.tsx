@@ -110,6 +110,8 @@ export function SpectrogramSettingsSidebar({
 				<IconButton
 					variant={showUnselectedLines ? "solid" : "outline"}
 					onClick={() => setShowUnselectedLines((prev) => !prev)}
+					aria-label={t("spectrogram.showUnselectedLines", "显示未选中行")}
+					aria-pressed={showUnselectedLines}
 				>
 					{showUnselectedLines ? <EyeFilled /> : <EyeOffFilled />}
 				</IconButton>
@@ -122,6 +124,7 @@ export function SpectrogramSettingsSidebar({
 					onClick={() => {
 						setPreviewActive((prev) => !prev);
 					}}
+					aria-label={t("timeShiftDialog.title", "Time Shift")}
 				>
 					<ClockRegular />
 				</IconButton>

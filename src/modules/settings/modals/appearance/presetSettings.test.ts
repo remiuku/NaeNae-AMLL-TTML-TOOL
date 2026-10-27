@@ -59,6 +59,7 @@ const settings: PresetSnapshotInput = {
 	layoutOrder: ["titlebar", "ribbonbar", "editor", "audio-controls"],
 	legacyDarkTheme: false,
 	legacySpaceLabels: true,
+	spicyLyricsDesign: false,
 };
 
 describe("appearance preset snapshots", () => {

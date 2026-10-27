@@ -516,6 +516,13 @@
         "image": "Imagem",
         "gradient": "Gradiente"
       },
+      "design": {
+        "title": "Visual do Spicy Lyrics",
+        "description": "O visual escuro em lavanda e a fonte Geist do restante do Spicy Lyrics. Ele é sempre escuro, então desative para seguir o modo claro ou escuro do sistema.",
+        "accentNote": "O visual do Spicy Lyrics tem sua própria cor de destaque lavanda. Ative uma cor de destaque personalizada para usar outra.",
+        "legacyDarkThemeNote": "Não tem efeito enquanto o visual do Spicy Lyrics estiver ativado.",
+        "fontNote": "Geist, do visual do Spicy Lyrics"
+      },
       "presets": {
         "missingBackground": "A imagem de fundo desta predefinição não está disponível neste dispositivo. A imagem atual foi mantida.",
         "title": "Predefinições de aparência",
@@ -1216,10 +1223,6 @@
     "processLyrics": "Processar letra",
     "processedSuccess": "Letra preparada para sincronizar por sílabas.",
     "title": "Importar letras de texto simples",
-    "tab": {
-      "import": "Importar"
-    },
-    "guides": "Guias",
     "actionButton": "Importar",
     "contentMode": {
       "caption": "Conteúdo do texto",
@@ -1239,31 +1242,6 @@
     "enableSpecialPrefix": "Usar prefixos de linha",
     "bgLyricPrefix": "Prefixo de linhas de vocais de apoio",
     "duetLyricPrefix": "Prefixo de linhas de dueto",
-    "guide": {
-      "prepare": {
-        "title": "1. Prepare as letras",
-        "desc": "Recomendamos o Lyrprep para preparar a letra: busque a música, escolha uma versão e copie o resultado."
-      },
-      "import": {
-        "title": "2. Importe para TTML Tool",
-        "desc": "Cole o texto preparado no editor à esquerda e escolha a opção correspondente em Conteúdo do texto. Se houver prefixos para linhas de vocais de apoio ou dueto, ative Usar prefixos de linha."
-      },
-      "sync": {
-        "title": "3. Comece a sincronizar",
-        "desc": "Após importar, mude para o modo Sincronização e use estas teclas:",
-        "f": "Iniciar a palavra",
-        "g": "Encerrar a palavra e iniciar a próxima",
-        "h": "Encerrar apenas a palavra",
-        "ad": "Alternar entre palavras"
-      },
-      "community": {
-        "title": "Guias da comunidade e folhas de dicas",
-        "desc": "Recursos úteis da comunidade para idiomas e gêneros específicos."
-      }
-    },
-    "guidesMenu": {
-      "full": "Guia TTML completo"
-    },
     "description": "Importe letras de texto simples ou de outros formatos."
   },
   "sectionImportReview": {

@@ -516,6 +516,13 @@
         "image": "Imagen",
         "gradient": "Degradado"
       },
+      "design": {
+        "title": "Diseño de Spicy Lyrics",
+        "description": "El aspecto oscuro en lavanda y la tipografía Geist del resto de Spicy Lyrics. Siempre es oscuro, así que desactívalo para seguir el modo claro u oscuro del sistema.",
+        "accentNote": "El diseño de Spicy Lyrics trae su propio acento lavanda. Activa un color de acento personalizado para usar otro.",
+        "legacyDarkThemeNote": "No tiene efecto mientras el diseño de Spicy Lyrics esté activado.",
+        "fontNote": "Geist, del diseño de Spicy Lyrics"
+      },
       "presets": {
         "missingBackground": "La imagen de fondo de este ajuste preestablecido no está disponible en este dispositivo. Se mantuvo la imagen actual.",
         "title": "Ajustes preestablecidos de apariencia",
@@ -1216,10 +1223,6 @@
     "processLyrics": "Procesar letra",
     "processedSuccess": "Letra preparada para sincronizar por sílabas.",
     "title": "Importar letras desde texto sin formato",
-    "tab": {
-      "import": "Importar"
-    },
-    "guides": "Guías",
     "actionButton": "Importar",
     "contentMode": {
       "caption": "Contenido del texto",
@@ -1239,31 +1242,6 @@
     "enableSpecialPrefix": "Usar prefijos de línea",
     "bgLyricPrefix": "Prefijo de líneas de voces de fondo",
     "duetLyricPrefix": "Prefijo de líneas de dúo",
-    "guide": {
-      "prepare": {
-        "title": "1. Preparar letras",
-        "desc": "Recomendamos Lyrprep para preparar la letra: busca la canción, elige una versión y copia el resultado."
-      },
-      "import": {
-        "title": "2. Importar a TTML Tool",
-        "desc": "Pega el texto preparado en el editor de la izquierda y elige la opción adecuada en Contenido del texto. Si usas prefijos para las líneas de voces de fondo o dúo, activa Usar prefijos de línea."
-      },
-      "sync": {
-        "title": "3. Empieza a sincronizar",
-        "desc": "Tras importar, cambia al modo Sincronización y usa estas teclas:",
-        "f": "Iniciar la palabra",
-        "g": "Finalizar la palabra e iniciar la siguiente",
-        "h": "Finalizar solo la palabra",
-        "ad": "Cambiar entre palabras"
-      },
-      "community": {
-        "title": "Guías y fichas de la comunidad",
-        "desc": "Recursos útiles de la comunidad para idiomas y géneros específicos."
-      }
-    },
-    "guidesMenu": {
-      "full": "Guía completa de TTML"
-    },
     "description": "Importa letras desde texto plano u otros formatos."
   },
   "sectionImportReview": {

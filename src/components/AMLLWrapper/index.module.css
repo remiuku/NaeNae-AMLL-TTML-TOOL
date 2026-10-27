@@ -7,7 +7,11 @@
 	user-select: none;
 	background-color: transparent;
 	color: #fff;
-	font-family: var(--default-font-family, "Inter", -apple-system, sans-serif);
+	/* The preview keeps the user's font even when the UI font changes. */
+	font-family: var(
+		--preview-font-family,
+		var(--default-font-family, "Inter", -apple-system, sans-serif)
+	);
 	display: flex;
 	flex-direction: column;
 }

@@ -10,7 +10,7 @@ export const settingsSearchKeywords: Record<string, string> = {
 	keybinding:
 		"keyboard keys shortcut controls new open save undo redo select delete mode sync playback seek volume segment audition",
 	appearance:
-		"theme preset custom accent color background blur glass intensity image gradient font interface scale reset layout titlebar sidebar editor chip spacing padding romanization translation scrollbar dialog shadow selection",
+		"theme preset custom accent color background blur glass intensity image gradient font interface scale reset layout titlebar sidebar editor chip spacing padding romanization translation scrollbar dialog shadow selection spicy lyrics design dark lavender geist classic",
 	about: "version update credits license",
 };
 

@@ -38,6 +38,7 @@ describe("settings search", () => {
 		["wrap", "editor"],
 		["equalizer", "audio"],
 		["font", "appearance"],
+		["spicy lyrics design", "appearance"],
 		["shortcut", "keybinding"],
 	])("finds %s in the current dev category", (query, expected) => {
 		const matches = Object.entries(settingsSearchKeywords)

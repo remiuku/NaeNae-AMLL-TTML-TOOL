@@ -1,5 +1,93 @@
 [
 	{
+		"version": "0.14.1",
+		"summary": "Desktop and spectrogram fixes",
+		"color": "blue",
+		"date": "2026-10-25",
+		"entries": [
+			{
+				"type": "feature",
+				"title": "Removed the Guides tab from plain-text import",
+				"body": "The flashing Guides tab in **Import from plain text** is gone. The TTML guides are still in **Help → TTML guides**.",
+				"highlight": false
+			},
+			{
+				"type": "fix",
+				"title": "The desktop app no longer fails to open on some Macs and Linux systems",
+				"body": "If something goes wrong while the app starts, its window now still opens instead of the app running invisibly. On macOS, a window styling step that could fail on some systems no longer closes the app at launch.",
+				"highlight": true
+			},
+			{
+				"type": "fix",
+				"title": "The Linux AppImage opens on newer distros and plays audio again",
+				"body": "The AppImage no longer fails to start on Debian 13 and other recent distros, and audio inside the app works on all of them, including Arch. On NVIDIA, the app turns off the driver's explicit sync itself, so you no longer need to set `__NV_DISABLE_EXPLICIT_SYNC=1`.",
+				"highlight": true
+			},
+			{
+				"type": "fix",
+				"title": "Songwriters no longer show as \"[object Object]\" in Spicy Lyrics",
+				"body": "TTMLs saved from the macOS and Linux apps, or from the website in Safari, made Spicy Lyrics show \"[object Object]\" instead of the songwriter names. They now save the same as from Windows or Chrome. Save an affected file again to fix it.",
+				"highlight": true
+			},
+			{
+				"type": "fix",
+				"title": "Edit mode stays where you left it when you switch tabs",
+				"body": "Going to **Time** or **Preview** and back no longer jumps Edit to the playing line or the start of the song. If you played or selected lines in the other tab, Edit still follows them.",
+				"highlight": true
+			},
+			{
+				"type": "fix",
+				"title": "Scrolling the spectrogram while dragging a word no longer drops the drag",
+				"body": "Words, lines and word edges now stay under your cursor when you scroll or **Ctrl**+scroll to zoom mid-drag, and letting go keeps the new timing.",
+				"highlight": true
+			},
+			{
+				"type": "fix",
+				"title": "Stretching overlapping words in the spectrogram keeps the overlap",
+				"body": "When two words on a line overlap, as background vocals often do, each now has its own end and start handle. Dragging one no longer snaps the other word to it.",
+				"highlight": false
+			},
+			{
+				"type": "fix",
+				"title": "Easier to seek on the spectrogram timeline",
+				"body": "The time ruler above the spectrogram is taller, seeks as soon as you press it, and follows your pointer while you hold it, so a near miss is one drag away.",
+				"highlight": false
+			},
+			{
+				"type": "fix",
+				"title": "Screen readers can name the audio bar and spectrogram buttons",
+				"body": "The load audio, play/pause and spectrogram toggle buttons, plus the spectrogram's show unselected lines and Time Shift buttons, now have names, and the toggles say whether they're on.",
+				"highlight": false
+			}
+		]
+	},
+	{
+		"version": "0.14.0",
+		"summary": "Spicy Lyrics design",
+		"color": "green",
+		"date": "2026-10-25",
+		"entries": [
+			{
+				"type": "feature",
+				"title": "New Spicy Lyrics design, on by default",
+				"body": "The editor now uses the dark lavender look and Geist type from the rest of Spicy Lyrics. Turn it off in **Preferences → Appearance** to get the previous theme back. Preferences tabs fade in when clicked, toasts slide in without bouncing, and dialogs still fade with reduced motion on. The **Advanced** switch on the ribbons also stops showing as on when it's off.",
+				"highlight": true
+			},
+			{
+				"type": "feature",
+				"title": "Star the project on GitHub from Help or About",
+				"body": "Stars help more people find the tool.",
+				"highlight": false
+			},
+			{
+				"type": "fix",
+				"title": "The website can no longer be installed as an app",
+				"body": "Use the [desktop app](https://github.com/spicylyrics/ttml-tool/releases/latest) for an installed, offline TTML Tool. The website now always opens in a normal browser tab.",
+				"highlight": false
+			}
+		]
+	},
+	{
 		"version": "0.13.1",
 		"summary": "Spicy Lyrics TTML Tool",
 		"color": "ruby",

@@ -100,6 +100,7 @@ describe("resolveAnchorLineIndex", () => {
 			resolveAnchorLineIndex({
 				syncTabPosition: false,
 				toolMode: ToolMode.Sync,
+				unchangedSinceLeft: false,
 				modeAnchor: 2,
 				sharedAnchor: 1,
 				selectedLineIds: new Set(["line-1"]),
@@ -117,6 +118,7 @@ describe("resolveAnchorLineIndex", () => {
 			resolveAnchorLineIndex({
 				syncTabPosition: true,
 				toolMode: ToolMode.Sync,
+				unchangedSinceLeft: false,
 				modeAnchor: -1,
 				sharedAnchor: -1,
 				selectedLineIds: new Set(),
@@ -134,6 +136,7 @@ describe("resolveAnchorLineIndex", () => {
 			resolveAnchorLineIndex({
 				syncTabPosition: true,
 				toolMode: ToolMode.Sync,
+				unchangedSinceLeft: false,
 				modeAnchor: -1,
 				sharedAnchor: -1,
 				selectedLineIds: new Set(),
@@ -151,6 +154,7 @@ describe("resolveAnchorLineIndex", () => {
 			resolveAnchorLineIndex({
 				syncTabPosition: true,
 				toolMode: ToolMode.Sync,
+				unchangedSinceLeft: false,
 				modeAnchor: -1,
 				sharedAnchor: 0,
 				selectedLineIds: new Set(["line-3"]),
@@ -168,6 +172,7 @@ describe("resolveAnchorLineIndex", () => {
 			resolveAnchorLineIndex({
 				syncTabPosition: true,
 				toolMode: ToolMode.Sync,
+				unchangedSinceLeft: false,
 				modeAnchor: -1,
 				sharedAnchor: 2,
 				selectedLineIds: new Set(),
@@ -185,6 +190,7 @@ describe("resolveAnchorLineIndex", () => {
 			resolveAnchorLineIndex({
 				syncTabPosition: true,
 				toolMode: ToolMode.Sync,
+				unchangedSinceLeft: false,
 				modeAnchor: -1,
 				sharedAnchor: -1,
 				selectedLineIds: new Set(),
@@ -195,5 +201,41 @@ describe("resolveAnchorLineIndex", () => {
 				findCurrentLineIndex: mockFindCurrentLineIndex,
 			}),
 		).toBe(-1);
+	});
+
+	it("returns to the tab's own position when nothing changed while away", () => {
+		expect(
+			resolveAnchorLineIndex({
+				syncTabPosition: true,
+				toolMode: ToolMode.Edit,
+				unchangedSinceLeft: true,
+				modeAnchor: 97,
+				sharedAnchor: 10,
+				selectedLineIds: new Set(),
+				currentTime: 3500,
+				lines: sampleLines,
+				previousMode: ToolMode.Sync,
+				syncFocusMainLine: true,
+				findCurrentLineIndex: mockFindCurrentLineIndex,
+			}),
+		).toBe(97);
+	});
+
+	it("follows the playhead when it moved while away", () => {
+		expect(
+			resolveAnchorLineIndex({
+				syncTabPosition: true,
+				toolMode: ToolMode.Edit,
+				unchangedSinceLeft: false,
+				modeAnchor: 97,
+				sharedAnchor: 10,
+				selectedLineIds: new Set(),
+				currentTime: 3500,
+				lines: sampleLines,
+				previousMode: ToolMode.Sync,
+				syncFocusMainLine: true,
+				findCurrentLineIndex: mockFindCurrentLineIndex,
+			}),
+		).toBe(1);
 	});
 });

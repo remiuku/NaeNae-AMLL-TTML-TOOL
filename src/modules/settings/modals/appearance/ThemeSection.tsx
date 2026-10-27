@@ -20,6 +20,7 @@ export const ThemeSection = ({
 	customAccentColor,
 	setCustomAccentColor,
 	customScale,
+	spicyLyricsDesign,
 	t,
 }: Pick<
 	AppearanceSectionState,
@@ -30,6 +31,7 @@ export const ThemeSection = ({
 	| "customAccentColor"
 	| "setCustomAccentColor"
 	| "customScale"
+	| "spicyLyricsDesign"
 	| "t"
 >) => (
 	<Flex direction="column" gap="2">
@@ -99,6 +101,13 @@ export const ThemeSection = ({
 										))}
 									</Grid>
 								</Flex>
+							) : spicyLyricsDesign ? (
+								<Text size="1" color="gray">
+									{t(
+										"settings.appearance.design.accentNote",
+										"The Spicy Lyrics design brings its own lavender accent. Turn on a custom accent color to use a different one.",
+									)}
+								</Text>
 							) : (
 								<Grid columns="8" gap="2">
 									{accentColors.map((color) => (

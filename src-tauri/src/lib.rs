@@ -450,6 +450,25 @@ async fn pick_project_folder(
     Ok(Some(project_path.to_string_lossy().into_owned()))
 }
 
+/// The main window starts hidden and the frontend shows it once it has rendered,
+/// to avoid a white flash. If the frontend fails before that (a startup error,
+/// or an API the system WebView lacks), the app would run with no window at all.
+/// Show it anyway after a few seconds so there's something to see and report.
+fn show_main_window_if_frontend_stalls(app: &tauri::App) {
+    use tauri::Manager;
+
+    let Some(window) = app.get_webview_window("main") else {
+        return;
+    };
+    std::thread::spawn(move || {
+        std::thread::sleep(Duration::from_secs(3));
+        if window.is_visible().is_ok_and(|visible| !visible) {
+            log::warn!("The frontend didn't show the main window; showing it now");
+            let _ = window.show();
+        }
+    });
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 #[allow(clippy::missing_panics_doc)]
 pub fn run() {
@@ -517,18 +536,24 @@ pub fn run() {
                 use tauri::Manager;
                 use tauri_plugin_decorum::WebviewWindowExt;
 
-                let main_window = app.get_webview_window("main").unwrap();
-                main_window.set_traffic_lights_inset(16.0, 20.0).unwrap();
-                main_window.make_transparent().unwrap();
-                let main_window_clone = main_window.clone();
-                main_window.on_window_event(move |evt| {
-                    if let tauri::WindowEvent::Resized(_) = evt {
-                        main_window_clone
-                            .set_traffic_lights_inset(16.0, 20.0)
-                            .unwrap();
+                // Cosmetic only: if any of these fail on a user's macOS version,
+                // keep going instead of crashing at launch.
+                if let Some(main_window) = app.get_webview_window("main") {
+                    if let Err(error) = main_window.set_traffic_lights_inset(16.0, 20.0) {
+                        log::warn!("Couldn't inset the traffic lights: {error}");
                     }
-                });
+                    if let Err(error) = main_window.make_transparent() {
+                        log::warn!("Couldn't make the window transparent: {error}");
+                    }
+                    let main_window_clone = main_window.clone();
+                    main_window.on_window_event(move |evt| {
+                        if let tauri::WindowEvent::Resized(_) = evt {
+                            let _ = main_window_clone.set_traffic_lights_inset(16.0, 20.0);
+                        }
+                    });
+                }
             }
+            show_main_window_if_frontend_stalls(app);
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![

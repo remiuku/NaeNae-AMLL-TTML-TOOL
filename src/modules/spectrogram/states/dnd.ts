@@ -1,10 +1,12 @@
 import { atom } from "jotai";
 import type { ProcessedLyricLine } from "$/modules/segmentation/utils/segment-processing.ts";
+import type { DividerEdge } from "$/modules/spectrogram/utils/timeline-mutations.ts";
 
 type DividerDragOperation = {
 	type: "divider";
 	lineId: string;
 	segmentIndex: number;
+	edge: DividerEdge;
 	zoom: number;
 	startX: number;
 	isGapCreation: boolean;

@@ -23,6 +23,7 @@ import {
 	previousToolModeAtom,
 	selectedLinesAtom,
 	ToolMode,
+	toolModeAtom,
 } from "$/states/main.ts";
 import {
 	calculateScrollDuration,
@@ -61,7 +62,8 @@ export function useLineListScrolling({
 
 	const updateEditorAnchor = useCallback(() => {
 		const viewEl = viewElRef.current;
-		if (!viewEl) return;
+		// A detached list measures every line at 0, which would save a junk anchor.
+		if (!viewEl?.isConnected) return;
 		const viewRect = viewEl.getBoundingClientRect();
 		const positions = Array.from(
 			viewEl.querySelectorAll<HTMLElement>("[data-lyric-line-index]"),
@@ -118,6 +120,21 @@ export function useLineListScrolling({
 			cancelScrollAnimation();
 		};
 	}, [cancelScrollAnimation]);
+
+	// The leaving view stays mounted while it fades out, so this is the last
+	// moment it can still be measured.
+	useEffect(
+		() =>
+			store.sub(toolModeAtom, () => {
+				if (store.get(toolModeAtom) === toolMode) return;
+				updateEditorAnchor();
+				modeLeftState[toolMode] = {
+					time: store.get(currentTimeAtom),
+					selectedLineIds: store.get(selectedLinesAtom),
+				};
+			}),
+		[store, toolMode, updateEditorAnchor],
+	);
 
 	const scrollToLineIndex = useCallback(
 		(index: number, smooth = false) => {
@@ -212,9 +229,14 @@ export function useLineListScrolling({
 			viewRef.current = instance;
 			if (!instance || hasRestoredAnchorRef.current) return;
 
+			const leftState = modeLeftState[toolMode];
 			const targetLineIndex = resolveAnchorLineIndex({
 				syncTabPosition,
 				toolMode,
+				unchangedSinceLeft:
+					leftState !== null &&
+					leftState.time === store.get(currentTimeAtom) &&
+					leftState.selectedLineIds === store.get(selectedLinesAtom),
 				modeAnchor: modeAnchorLines[toolMode],
 				sharedAnchor: sharedAnchorLineIndex,
 				selectedLineIds: store.get(selectedLinesAtom),
@@ -236,16 +258,6 @@ export function useLineListScrolling({
 			if (visibleIndex === -1) return;
 
 			hasRestoredAnchorRef.current = true;
-
-			if (!syncTabPosition) {
-				requestAnimationFrame(() => {
-					const viewEl = viewElRef.current;
-					if (!viewEl?.parentElement) return;
-					const offset = viewEl.parentElement.clientHeight / -2;
-					instance.scrollToIndex({ index: visibleIndex, offset });
-				});
-				return;
-			}
 
 			requestAnimationFrame(() => {
 				const viewEl = viewElRef.current;
@@ -301,3 +313,11 @@ const modeAnchorLines: Record<ToolMode, number> = {
 	[ToolMode.Preview]: -1,
 };
 let sharedAnchorLineIndex = -1;
+const modeLeftState: Record<
+	ToolMode,
+	{ time: number; selectedLineIds: Set<string> } | null
+> = {
+	[ToolMode.Edit]: null,
+	[ToolMode.Sync]: null,
+	[ToolMode.Preview]: null,
+};

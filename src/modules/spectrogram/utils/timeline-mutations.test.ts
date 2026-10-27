@@ -6,7 +6,9 @@ import { globalStore } from "$/states/store";
 import { newLyricLine, newLyricWord } from "$/types/ttml";
 import {
 	commitUpdatedLine,
+	getDividerEdge,
 	getUpdatedLineForDivider,
+	hasOverlappedStart,
 	tryFixPartialInitialization,
 	tryInitializeZeroTimestampLine,
 } from "./timeline-mutations";
@@ -119,6 +121,114 @@ describe("Alt-drag gaps", () => {
 			200,
 		);
 		expect(getUpdatedLineForDivider(original, 1, 800, true).endTime).toBe(800);
+	});
+});
+
+describe("overlapping words", () => {
+	const overlapping = {
+		...newLyricLine(),
+		id: "bg",
+		isBG: true,
+		startTime: 1000,
+		endTime: 2500,
+		words: [
+			{
+				...newLyricWord(),
+				id: "a",
+				word: "ooh",
+				startTime: 1000,
+				endTime: 2000,
+			},
+			{
+				...newLyricWord(),
+				id: "b",
+				word: "ah",
+				startTime: 1500,
+				endTime: 2500,
+			},
+		],
+	};
+	const words = (l: ReturnType<typeof processSingleLine>) =>
+		l.segments
+			.filter((s) => s.type === "word")
+			.map((s) => [s.id, s.startTime, s.endTime]);
+
+	it("gives the overlap its own end and start handles", () => {
+		const { segments } = processSingleLine(overlapping);
+		expect(getDividerEdge(segments, 0, overlapping.endTime)).toBe("end");
+		expect(hasOverlappedStart(segments, 1)).toBe(true);
+		expect(getDividerEdge(segments, 1, overlapping.endTime)).toBe("shared");
+	});
+
+	it("stretches one word's end without moving the overlapped word", () => {
+		const original = processSingleLine(overlapping);
+		const preview = getUpdatedLineForDivider(
+			original,
+			0,
+			2200,
+			false,
+			100,
+			null,
+			"end",
+		);
+		expect(words(preview)).toEqual([
+			["a", 1000, 2200],
+			["b", 1500, 2500],
+		]);
+		expect(preview.endTime).toBe(2500);
+	});
+
+	it("moves an overlapped word's start on its own", () => {
+		const original = processSingleLine(overlapping);
+		const preview = getUpdatedLineForDivider(
+			original,
+			0,
+			1300,
+			false,
+			100,
+			null,
+			"start",
+		);
+		expect(words(preview)).toEqual([
+			["a", 1000, 2000],
+			["b", 1300, 2500],
+		]);
+		expect(preview.startTime).toBe(1000);
+	});
+
+	it("extends the line when the word that ends it is stretched", () => {
+		const nested = {
+			...overlapping,
+			endTime: 3000,
+			words: [
+				{ ...overlapping.words[0], endTime: 3000 },
+				{ ...overlapping.words[1], endTime: 2000 },
+			],
+		};
+		const original = processSingleLine(nested);
+		// The nested word must not open a phantom gap over the longer one.
+		expect(original.segments.map((s) => s.type)).toEqual(["word", "word"]);
+		expect(getDividerEdge(original.segments, 1, nested.endTime)).toBe("end");
+		const preview = getUpdatedLineForDivider(
+			original,
+			0,
+			3400,
+			false,
+			100,
+			null,
+			"end",
+		);
+		expect(preview.endTime).toBe(3400);
+		const shrunk = getUpdatedLineForDivider(
+			original,
+			0,
+			1800,
+			false,
+			100,
+			null,
+			"end",
+		);
+		expect(shrunk.endTime).toBe(2000);
 	});
 });
 

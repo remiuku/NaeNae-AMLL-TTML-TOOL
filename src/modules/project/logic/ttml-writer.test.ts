@@ -4,6 +4,7 @@ import { newLyricLine, newLyricWord } from "../../../types/ttml";
 import {
 	collectFollowingBackgroundLines,
 	hasExportableLineContent,
+	removeEmptyDefaultNamespaces,
 	shouldExportAsLineSynced,
 } from "./ttml-writer";
 
@@ -79,5 +80,29 @@ describe("hasExportableLineContent", () => {
 		const line = backgroundLine("standalone-bg");
 		line.words = [{ ...newLyricWord(), word: "Oh" }];
 		expect(hasExportableLineContent(line)).toBe(true);
+	});
+});
+
+describe("removeEmptyDefaultNamespaces", () => {
+	// Captured from WebKitGTK 2.54 (the Linux app's engine) exporting songwriters.
+	const webkit =
+		'<tt xmlns="http://www.w3.org/ns/ttml" xmlns:ttm="http://www.w3.org/ns/ttml#metadata"><head xmlns=""><metadata xmlns=""><ttm:agent xmlns="" type="person" xml:id="v1"/><iTunesMetadata xmlns="http://music.apple.com/lyric-ttml-internal"><songwriters xmlns=""><songwriter xmlns="">Jane Doe</songwriter></songwriters></iTunesMetadata></metadata></head></tt>';
+	// What Chromium writes for the same document.
+	const chromium =
+		'<tt xmlns="http://www.w3.org/ns/ttml" xmlns:ttm="http://www.w3.org/ns/ttml#metadata"><head><metadata><ttm:agent type="person" xml:id="v1"/><iTunesMetadata xmlns="http://music.apple.com/lyric-ttml-internal"><songwriters><songwriter>Jane Doe</songwriter></songwriters></iTunesMetadata></metadata></head></tt>';
+
+	it("turns WebKit's output into Chromium's", () => {
+		expect(removeEmptyDefaultNamespaces(webkit)).toBe(chromium);
+	});
+
+	it("leaves Chromium's output alone", () => {
+		expect(removeEmptyDefaultNamespaces(chromium)).toBe(chromium);
+	});
+
+	it("never touches lyric text", () => {
+		const text = '<span xmlns="">say xmlns="" twice</span>';
+		expect(removeEmptyDefaultNamespaces(text)).toBe(
+			'<span>say xmlns="" twice</span>',
+		);
 	});
 });

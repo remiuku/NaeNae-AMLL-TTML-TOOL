@@ -120,7 +120,8 @@
 
 .playheadScrubHandle {
 	position: absolute;
-	top: 23px;
+	/* Sits on the ruler's bottom edge: RULER_HEIGHT - 1. */
+	top: 31px;
 	margin-top: -10px;
 	z-index: 11;
 	cursor: ew-resize;

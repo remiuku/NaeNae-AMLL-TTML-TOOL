@@ -10,6 +10,7 @@ import type { AppearanceSectionState } from "./sectionState";
 export const GlobalDesignSection = ({
 	legacyDarkTheme,
 	setLegacyDarkTheme,
+	spicyLyricsDesign,
 	vScrollbar,
 	setVScrollbar,
 	vDialogBg,
@@ -27,6 +28,7 @@ export const GlobalDesignSection = ({
 	AppearanceSectionState,
 	| "legacyDarkTheme"
 	| "setLegacyDarkTheme"
+	| "spicyLyricsDesign"
 	| "vScrollbar"
 	| "setVScrollbar"
 	| "vDialogBg"
@@ -57,15 +59,21 @@ export const GlobalDesignSection = ({
 							)}
 						</Text>
 						<Text size="1" color="gray">
-							{t(
-								"settings.appearance.advanced.legacyDarkThemeDesc",
-								"Use the lighter dark palette from before the Intonated Black redesign.",
-							)}
+							{spicyLyricsDesign
+								? t(
+										"settings.appearance.design.legacyDarkThemeNote",
+										"Has no effect while the Spicy Lyrics design is on.",
+									)
+								: t(
+										"settings.appearance.advanced.legacyDarkThemeDesc",
+										"Use the lighter dark palette from before the Intonated Black redesign.",
+									)}
 						</Text>
 					</Flex>
 					<Switch
 						checked={legacyDarkTheme}
 						onCheckedChange={setLegacyDarkTheme}
+						disabled={spicyLyricsDesign}
 					/>
 				</Flex>
 				<Grid columns="2" gap="3">

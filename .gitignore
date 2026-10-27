@@ -46,7 +46,5 @@ ffmpeg-core.js
 .wrangler
 .env*.local
 
-AGENTS.md
-
 # Local reference clone; was once committed by accident as a gitlink, which broke Cloudflare builds.
 /spicy-lyrics/

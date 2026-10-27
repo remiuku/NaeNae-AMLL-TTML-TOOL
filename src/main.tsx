@@ -17,11 +17,13 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 // Bundled timestamp font (JetBrains Mono, SIL OFL 1.1), Latin 500 only.
 import "@fontsource/jetbrains-mono/latin-500.css";
+import "@fontsource-variable/geist";
 import "react-toastify/dist/ReactToastify.css";
 
 import App from "./App.tsx";
 import "./i18n/index.ts";
 import "./index.css";
+import "./styles/spicy-lyrics-design.css";
 import "./utils/pwa.tsx";
 import { isMigrationPath } from "$/modules/domain-migration/config";
 import { MigrationRouteApp } from "$/modules/domain-migration/MigrationRouteApp";

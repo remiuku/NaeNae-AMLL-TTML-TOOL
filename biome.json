@@ -10,7 +10,8 @@
 			"!**/vendor",
 			"!!**/decode-audio.js",
 			"!src/i18n/locales",
-			"!src/modules/segmentation/data"
+			"!src/modules/segmentation/data",
+			"!skills-lock.json"
 		]
 	},
 	"formatter": {

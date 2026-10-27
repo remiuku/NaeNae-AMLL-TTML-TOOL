@@ -27,10 +27,17 @@ import { getCurrentWindow } from "@tauri-apps/api/window";
 import { platform, version } from "@tauri-apps/plugin-os";
 import { AnimatePresence, motion } from "framer-motion";
 import { useAtomValue, useSetAtom, useStore } from "jotai";
-import { Suspense, useEffect, useMemo, useRef, useState } from "react";
+import {
+	Suspense,
+	useEffect,
+	useLayoutEffect,
+	useMemo,
+	useRef,
+	useState,
+} from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { useTranslation } from "react-i18next";
-import { ToastContainer, toast } from "react-toastify";
+import { Bounce, cssTransition, ToastContainer, toast } from "react-toastify";
 import semverGt from "semver/functions/gt";
 import { backgroundGradients } from "$/modules/settings/states/gradients";
 import {
@@ -75,9 +82,12 @@ import {
 	customGradientOpacityAtom,
 	customGradientSizeAtom,
 	customGradientTypeAtom,
+	DEFAULT_APP_FONT,
 	glassmorphismBlurAtom,
 	legacyDarkThemeAtom,
+	SPICY_LYRICS_FONT_STACK,
 	selectedGradientAtom,
+	spicyLyricsDesignAtom,
 	useCustomAccentAtom,
 	useCustomGradientAtom,
 } from "$/modules/settings/states/index.ts";
@@ -127,6 +137,12 @@ const PreviewModeSwitcher = lazy(
 	() => import("./components/PreviewModeSwitcher"),
 );
 const Dialogs = lazy(() => import("./components/Dialogs"));
+
+// The default toast bounce overshoots; the design slides in and out instead.
+const spicyLyricsToastTransition = cssTransition({
+	enter: "sl-toast-enter",
+	exit: "sl-toast-exit",
+});
 
 const AppErrorPage = ({
 	error,
@@ -193,6 +209,7 @@ const AppErrorPage = ({
 function App() {
 	const isDarkTheme = useAtomValue(isDarkThemeAtom);
 	const legacyDarkTheme = useAtomValue(legacyDarkThemeAtom);
+	const spicyLyricsDesign = useAtomValue(spicyLyricsDesignAtom);
 	const toolMode = useAtomValue(toolModeAtom);
 	const showTouchSyncPanel = useAtomValue(showTouchSyncPanelAtom);
 	const showPreviewPanel = useAtomValue(showPreviewPanelAtom);
@@ -275,9 +292,45 @@ function App() {
 		}
 	}, [appFont, customFontName]);
 
+	const backgroundMode = useAtomValue(backgroundModeAtom);
+	const selectedGradientId = useAtomValue(selectedGradientAtom);
+	const selectedGradient = backgroundGradients.find(
+		(g) => g.id === selectedGradientId,
+	);
+
+	const [hasBackground, setHasBackground] = useState(false);
+	// The Spicy Lyrics design is dark-only; the OS theme applies with it off.
+	const effectiveTheme = spicyLyricsDesign || isDarkTheme ? "dark" : "light";
+
+	// On <html> rather than the Theme root, so Radix's portalled menus and
+	// dialogs pick the design up too.
+	useLayoutEffect(() => {
+		const root = document.documentElement.dataset;
+		if (!spicyLyricsDesign) {
+			delete root.design;
+			delete root.designAccent;
+			delete root.designBackdrop;
+			return;
+		}
+		root.design = "spicy-lyrics";
+		if (useCustomAccent) delete root.designAccent;
+		else root.designAccent = "brand";
+		if (hasBackground) root.designBackdrop = "";
+		else delete root.designBackdrop;
+	}, [spicyLyricsDesign, useCustomAccent, hasBackground]);
+
 	const customThemeStyles = useCustomAccent
-		? generateRadixScale(customAccentColor, isDarkTheme)
+		? generateRadixScale(customAccentColor, effectiveTheme === "dark")
 		: null;
+	const uiFont =
+		spicyLyricsDesign && appFont === DEFAULT_APP_FONT
+			? SPICY_LYRICS_FONT_STACK
+			: appFont;
+	// Solid panels under the design unless the user picked a backdrop to see through.
+	const panelBackdrop =
+		spicyLyricsDesign && !hasBackground
+			? "none"
+			: `blur(${glassmorphismBlur}px) saturate(160%)`;
 
 	const customStyleString = useMemo(() => {
 		let vars = "";
@@ -302,7 +355,8 @@ function App() {
 		return `
 		${customFontFace}
 		:root {
-			--default-font-family: ${appFont} !important;
+			--default-font-family: ${uiFont} !important;
+			--preview-font-family: ${appFont};
 			--glass-blur: ${glassmorphismBlur}px !important;
 			--backdrop-blur: ${glassmorphismBlur}px !important;
 			--custom-backdrop-blur: ${glassmorphismBlur}px !important;
@@ -311,10 +365,10 @@ function App() {
 		.radix-themes:is(.dark, .dark-theme),
 		.radix-themes:is(.light, .light-theme),
 		.radix-themes:is(.dark, .dark-theme):not([data-legacy-dark-theme="true"]) {
-			--default-font-family: ${appFont} !important;
+			--default-font-family: ${uiFont} !important;
 			--glass-blur: ${glassmorphismBlur}px !important;
 			--backdrop-blur: ${glassmorphismBlur}px !important;
-			--backdrop-filter-panel: blur(${glassmorphismBlur}px) saturate(160%) !important;
+			--backdrop-filter-panel: ${panelBackdrop} !important;
 			--custom-backdrop-blur: ${glassmorphismBlur}px !important;
 			${advPrimaryText ? `--gray-12: ${advPrimaryText} !important;` : ""}
 			${advSecondaryText ? `--gray-11: ${advSecondaryText} !important;` : ""}
@@ -383,6 +437,8 @@ function App() {
 	}, [
 		customThemeStyles,
 		appFont,
+		uiFont,
+		panelBackdrop,
 		glassmorphismBlur,
 		advPrimaryText,
 		advSecondaryText,
@@ -415,15 +471,6 @@ function App() {
 		customFontData,
 		customFontName,
 	]);
-
-	const backgroundMode = useAtomValue(backgroundModeAtom);
-	const selectedGradientId = useAtomValue(selectedGradientAtom);
-	const selectedGradient = backgroundGradients.find(
-		(g) => g.id === selectedGradientId,
-	);
-
-	const [hasBackground, setHasBackground] = useState(false);
-	const effectiveTheme = isDarkTheme ? "dark" : "light";
 
 	useEffect(() => {
 		setHasBackground(
@@ -526,6 +573,8 @@ function App() {
 	}, []);
 
 	useEffect(() => {
+		// Dev reloads constantly; the "unsaved changes" prompt only gets in the way.
+		if (import.meta.env.DEV) return;
 		const onBeforeClose = (evt: BeforeUnloadEvent) => {
 			const currentLyricLines = store.get(lyricLinesAtom);
 			if (
@@ -587,7 +636,11 @@ function App() {
 	return (
 		<Theme
 			appearance={effectiveTheme}
-			data-legacy-dark-theme={legacyDarkTheme || undefined}
+			// Ignored under the design. Stamping it would also weaken the selector
+			// that lets the user's Advanced overrides beat the design.
+			data-legacy-dark-theme={
+				(!spicyLyricsDesign && legacyDarkTheme) || undefined
+			}
 			panelBackground="translucent"
 			hasBackground={hasBackground}
 			accentColor={accentColor}
@@ -753,7 +806,10 @@ function App() {
 					<Suspense fallback={null}>
 						<Dialogs />
 					</Suspense>
-					<ToastContainer theme={effectiveTheme} />
+					<ToastContainer
+						theme={effectiveTheme}
+						transition={spicyLyricsDesign ? spicyLyricsToastTransition : Bounce}
+					/>
 				</div>
 			</ErrorBoundary>
 		</Theme>

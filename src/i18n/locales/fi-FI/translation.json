@@ -516,6 +516,13 @@
         "image": "Kuva",
         "gradient": "Liukuväri"
       },
+      "design": {
+        "title": "Spicy Lyrics -ulkoasu",
+        "description": "Tumma laventelinsävyinen ulkoasu ja Geist-fontti muualta Spicy Lyricsistä. Se on aina tumma, joten poista se käytöstä, jos haluat seurata järjestelmän vaaleaa tai tummaa tilaa.",
+        "accentNote": "Spicy Lyrics -ulkoasulla on oma laventelinsävyinen korostusväri. Ota mukautettu korostusväri käyttöön, jos haluat toisen.",
+        "legacyDarkThemeNote": "Ei vaikuta, kun Spicy Lyrics -ulkoasu on käytössä.",
+        "fontNote": "Geist, Spicy Lyrics -ulkoasusta"
+      },
       "presets": {
         "missingBackground": "Tämän esiasetuksen taustakuva ei ole käytettävissä tällä laitteella. Nykyinen kuva säilytettiin.",
         "title": "Ulkoasun esiasetukset",
@@ -1216,10 +1223,6 @@
     "processLyrics": "Käsittele sanoitukset",
     "processedSuccess": "Sanoitukset on valmisteltu tavukohtaiseen ajoitukseen.",
     "title": "Tuo sanoitukset tekstistä",
-    "tab": {
-      "import": "Tuonti"
-    },
-    "guides": "Oppaat",
     "actionButton": "Tuo",
     "contentMode": {
       "caption": "Tekstin sisältö",
@@ -1239,31 +1242,6 @@
     "enableSpecialPrefix": "Käytä rivietuliitteitä",
     "bgLyricPrefix": "Taustalaulurivin etuliite",
     "duetLyricPrefix": "Duettorivin etuliite",
-    "guide": {
-      "prepare": {
-        "title": "1. Valmistele sanoitukset",
-        "desc": "On suositeltavaa käyttää Lyrprep-työkalua sanoitusten valmisteluun. Voit etsiä kappaleita, valita version ja kopioida tulostekstin."
-      },
-      "import": {
-        "title": "2. Tuo TTML Tooliin",
-        "desc": "Liitä valmisteltu teksti vasemmalla olevaan editoriin ja valitse sopiva Tekstin sisältö -asetus. Jos teksti merkitsee taustalaulu- tai duettorivit etuliitteillä, ota Käytä rivietuliitteitä käyttöön."
-      },
-      "sync": {
-        "title": "3. Aloita ajoitus",
-        "desc": "Siirry tuonnin jälkeen Ajoitukseen ja ajoita näillä näppäimillä:",
-        "f": "Aloita sana",
-        "g": "Lopeta sana ja aloita seuraava",
-        "h": "Lopeta vain sana",
-        "ad": "Vaihda sanojen välillä"
-      },
-      "community": {
-        "title": "Yhteisön oppaat ja muistilistat",
-        "desc": "Yhteisön hyödyllisiä resursseja tietyille kielille ja genreille."
-      }
-    },
-    "guidesMenu": {
-      "full": "Kattava TTML-opas"
-    },
     "description": "Tuo sanoitukset pelkkänä tekstinä tai muista muodoista."
   },
   "sectionImportReview": {

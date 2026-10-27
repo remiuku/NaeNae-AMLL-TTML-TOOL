@@ -516,6 +516,13 @@
         "image": "Obrázek",
         "gradient": "Přechod"
       },
+      "design": {
+        "title": "Design Spicy Lyrics",
+        "description": "Tmavý levandulový vzhled a písmo Geist ze zbytku Spicy Lyrics. Je vždy tmavý, takže ho vypněte, pokud chcete světlý nebo tmavý režim podle systému.",
+        "accentNote": "Design Spicy Lyrics má vlastní levandulový akcent. Chcete-li jiný, zapněte vlastní barvu akcentu.",
+        "legacyDarkThemeNote": "Nemá vliv, dokud je zapnutý design Spicy Lyrics.",
+        "fontNote": "Geist, z designu Spicy Lyrics"
+      },
       "presets": {
         "missingBackground": "Obrázek na pozadí této předvolby není na tomto zařízení k dispozici. Aktuální obrázek byl zachován.",
         "title": "Předvolby vzhledu",
@@ -1216,10 +1223,6 @@
     "processLyrics": "Zpracovat text",
     "processedSuccess": "Text připraven pro synchronizaci slabik.",
     "title": "Importovat text písně z prostého textu",
-    "tab": {
-      "import": "Import"
-    },
-    "guides": "Průvodce",
     "actionButton": "Importovat",
     "contentMode": {
       "caption": "Obsah textu",
@@ -1239,31 +1242,6 @@
     "enableSpecialPrefix": "Použít předpony řádků",
     "bgLyricPrefix": "Předpona doprovodného řádku",
     "duetLyricPrefix": "Předpona duetového řádku",
-    "guide": {
-      "prepare": {
-        "title": "1. Připravte text",
-        "desc": "K přípravě textu doporučujeme Lyrprep: vyhledejte skladbu, vyberte verzi a zkopírujte výsledek."
-      },
-      "import": {
-        "title": "2. Importujte do TTML Tool",
-        "desc": "Vložte připravený text do editoru vlevo a vyberte odpovídající možnost „Obsah textu“. Pokud text označuje doprovodné či duetové řádky předponami, zapněte „Použít předpony řádků“."
-      },
-      "sync": {
-        "title": "3. Spusťte synchronizaci",
-        "desc": "Po importu přepněte do režimu Časování a synchronizujte těmito klávesami:",
-        "f": "Začít slovo",
-        "g": "Ukončit slovo a začít další",
-        "h": "Pouze ukončit slovo",
-        "ad": "Přepínat mezi slovy"
-      },
-      "community": {
-        "title": "Průvodce a přehledy od komunity",
-        "desc": "Užitečné zdroje od komunity pro konkrétní jazyky a žánry."
-      }
-    },
-    "guidesMenu": {
-      "full": "Kompletní průvodce TTML"
-    },
     "description": "Importovat text písně z prostého textu nebo jiných formátů."
   },
   "sectionImportReview": {

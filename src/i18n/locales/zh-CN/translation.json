@@ -516,6 +516,13 @@
         "image": "图像",
         "gradient": "渐变"
       },
+      "design": {
+        "title": "Spicy Lyrics 设计",
+        "description": "与 Spicy Lyrics 其他产品一致的深色薰衣草配色和 Geist 字体。它始终为深色，如需跟随系统的浅色或深色模式，请将其关闭。",
+        "accentNote": "Spicy Lyrics 设计自带薰衣草色强调色。如需使用其他颜色，请开启自定义强调色。",
+        "legacyDarkThemeNote": "开启 Spicy Lyrics 设计时此项无效。",
+        "fontNote": "Geist（来自 Spicy Lyrics 设计）"
+      },
       "presets": {
         "missingBackground": "此预设的背景图像在此设备上不可用。当前图像被保留。",
         "title": "外观预设",
@@ -1216,10 +1223,6 @@
     "processLyrics": "处理歌词",
     "processedSuccess": "歌词已处理，可按音节打轴。",
     "title": "从纯文本导入歌词",
-    "tab": {
-      "import": "导入"
-    },
-    "guides": "指南",
     "actionButton": "导入",
     "contentMode": {
       "caption": "文本内容",
@@ -1239,31 +1242,6 @@
     "enableSpecialPrefix": "使用行前缀",
     "bgLyricPrefix": "背景人声行前缀",
     "duetLyricPrefix": "对唱行前缀",
-    "guide": {
-      "prepare": {
-        "title": "1. 准备歌词",
-        "desc": "推荐用 Lyrprep 准备歌词：搜索歌曲、选择版本并复制输出文本。"
-      },
-      "import": {
-        "title": "2. 导入到 TTML 工具",
-        "desc": "将准备好的文本粘贴到左侧编辑器，选择匹配的“文本内容”选项。若文本使用前缀标记背景人声或对唱行，请启用“使用行前缀”。"
-      },
-      "sync": {
-        "title": "3. 开始打轴",
-        "desc": "导入后切换到打轴模式，使用以下按键打轴：",
-        "f": "开始当前字",
-        "g": "结束当前字并开始下一个字",
-        "h": "仅结束当前字",
-        "ad": "在字之间切换"
-      },
-      "community": {
-        "title": "社区指南与速查表",
-        "desc": "来自社区的针对特定语言和流派的有用资源。"
-      }
-    },
-    "guidesMenu": {
-      "full": "完整 TTML 指南"
-    },
     "description": "从纯文本或其他格式导入歌词。"
   },
   "sectionImportReview": {

@@ -1,16 +1,11 @@
-import { Open16Regular, QuestionCircle16Regular } from "@fluentui/react-icons";
 import {
-	Badge,
 	Button,
-	Card,
 	Dialog,
 	Flex,
 	Grid,
-	ScrollArea,
 	Select,
 	Separator,
 	Switch,
-	Tabs,
 	Text,
 	TextArea,
 	TextField,
@@ -60,7 +55,6 @@ import {
 	normalizeImportedLyricCyrillicEs,
 } from "$/utils/apostrophe-normalization";
 import { error as logError } from "$/utils/logging.ts";
-import styles from "./ImportFromText.module.css";
 
 // type IModelDeltaDecoration = monaco.editor.IModelDeltaDecoration;
 // type IEditorDecorationsCollection = monaco.editor.IEditorDecorationsCollection;
@@ -106,10 +100,6 @@ const duetLyricPrefixAtom = atomWithStorage(
 	"importFromText.duetLyricPrefix",
 	">",
 );
-const isGuideClickedAtom = atomWithStorage(
-	"importFromText.isGuideClicked",
-	false,
-);
 const textValueAtom = atom("");
 
 const ImportFromTextEditor = memo(() => {
@@ -149,7 +139,6 @@ export const ImportFromText = () => {
 	);
 	const [bgLyricPrefix, setBgLyricPrefix] = useAtom(bgLyricPrefixAtom);
 	const [duetLyricPrefix, setDuetLyricPrefix] = useAtom(duetLyricPrefixAtom);
-	const [isGuideClicked, setIsGuideClicked] = useAtom(isGuideClickedAtom);
 	const [geniusCategorizationEnabled, setGeniusCategorizationEnabled] = useAtom(
 		geniusCategorizationEnabledAtom,
 	);
@@ -306,17 +295,7 @@ export const ImportFromText = () => {
 							)}
 						</Dialog.Description>
 					</VisuallyHidden>
-					<Tabs.Root
-						defaultValue="import"
-						style={{
-							display: "flex",
-							flexDirection: "column",
-							minHeight: "80vh",
-						}}
-						onValueChange={(val) => {
-							if (val === "guide") setIsGuideClicked(true);
-						}}
-					>
+					<Flex direction="column" style={{ minHeight: "80vh" }}>
 						<Flex direction="column" gap="4">
 							<Flex
 								align="center"
@@ -327,508 +306,232 @@ export const ImportFromText = () => {
 								<Dialog.Title style={{ marginBottom: 0 }}>
 									{t("textImportDialog.title", "Import lyrics from plain text")}
 								</Dialog.Title>
-								<Tabs.List size="2">
-									<Tabs.Trigger value="import">
-										{t("textImportDialog.tab.import", "Import")}
-									</Tabs.Trigger>
-									<Tabs.Trigger
-										value="guide"
-										className={
-											!isGuideClicked ? styles.guideButtonFlash : undefined
-										}
-									>
-										<Flex gap="1" align="center">
-											<QuestionCircle16Regular />
-											{t("textImportDialog.guides", "Guides")}
-										</Flex>
-									</Tabs.Trigger>
-								</Tabs.List>
 							</Flex>
 
-							<Tabs.Content value="import">
-								<Flex direction="column" gap="4">
-									<Flex justify="end" gap="2">
-										<Button variant="soft" onClick={handleProcessLyrics}>
-											{t("textImportDialog.processLyrics", "Process lyrics")}
-										</Button>
-										<Button
-											onClick={() => {
-												try {
-													const text = store.get(textValueAtom);
-													if (
-														geniusCategorizationEnabled &&
-														hasReviewableSections(text)
-													) {
-														setSectionReviewOpen(true);
-														return;
-													}
-													const importAction = () => {
-														onImport(text);
-														setImportFromTextDialog(false);
-													};
-													if (isDirty)
-														setConfirmDialog({
-															open: true,
-															title: t(
-																"confirmDialog.importFile.title",
-																"Import new lyrics?",
-															),
-															description: t(
-																"confirmDialog.importFile.description",
-																"当前文件有未保存的更改。如果继续，这些更改将会丢失。确定要导入歌词吗？",
-															),
-															onConfirm: () => importAction(),
-														});
-													else importAction();
-												} catch (e) {
-													toast.error(
-														"导入纯文本歌词失败，请检查输入的文本是否正确，或者导入设置是否正确",
-													);
-													logError(e);
+							<Flex direction="column" gap="4">
+								<Flex justify="end" gap="2">
+									<Button variant="soft" onClick={handleProcessLyrics}>
+										{t("textImportDialog.processLyrics", "Process lyrics")}
+									</Button>
+									<Button
+										onClick={() => {
+											try {
+												const text = store.get(textValueAtom);
+												if (
+													geniusCategorizationEnabled &&
+													hasReviewableSections(text)
+												) {
+													setSectionReviewOpen(true);
+													return;
 												}
-											}}
-										>
-											{t("textImportDialog.actionButton", "导入歌词")}
-										</Button>
-									</Flex>
-									<Flex
-										gap="4"
-										direction={{
-											initial: "column",
-											sm: "row",
+												const importAction = () => {
+													onImport(text);
+													setImportFromTextDialog(false);
+												};
+												if (isDirty)
+													setConfirmDialog({
+														open: true,
+														title: t(
+															"confirmDialog.importFile.title",
+															"Import new lyrics?",
+														),
+														description: t(
+															"confirmDialog.importFile.description",
+															"当前文件有未保存的更改。如果继续，这些更改将会丢失。确定要导入歌词吗？",
+														),
+														onConfirm: () => importAction(),
+													});
+												else importAction();
+											} catch (e) {
+												toast.error(
+													"导入纯文本歌词失败，请检查输入的文本是否正确，或者导入设置是否正确",
+												);
+												logError(e);
+											}
 										}}
 									>
-										<ImportFromTextEditor />
-										<Grid
-											columns="2"
-											gapY="2"
-											gapX="4"
-											style={{
-												whiteSpace: "nowrap",
-												flex: "0 0 auto",
-												alignItems: "center",
-												alignContent: "start",
-												textAlign: "end",
-											}}
-										>
-											<PrefText>
-												{t("textImportDialog.contentMode.caption", "导入模式")}
-											</PrefText>
-											<Select.Root
-												value={importMode}
-												onValueChange={(v) => setImportMode(v as ImportMode)}
-											>
-												<Select.Trigger />
-												<Select.Content>
-													<Select.Item value={ImportMode.Lyric}>
-														{t(
-															"textImportDialog.contentMode.lyric",
-															"Lyrics only",
-														)}
-													</Select.Item>
-													<Select.Item value={ImportMode.LyricTrans}>
-														{t(
-															"textImportDialog.contentMode.withTranslation",
-															"歌词和翻译歌词",
-														)}
-													</Select.Item>
-													<Select.Item value={ImportMode.LyricRoman}>
-														{t(
-															"textImportDialog.contentMode.withRoman",
-															"歌词和音译歌词",
-														)}
-													</Select.Item>
-													<Select.Item value={ImportMode.LyricTransRoman}>
-														{t(
-															"textImportDialog.contentMode.withBoth",
-															"Lyrics with translation and romanization",
-														)}
-													</Select.Item>
-												</Select.Content>
-											</Select.Root>
-
-											<PrefText>
-												{t(
-													"textImportDialog.separationMode.caption",
-													"Translation and romanization layout",
-												)}
-											</PrefText>
-											<Select.Root
-												disabled={importMode === ImportMode.Lyric}
-												value={lineSeparatorMode}
-												onValueChange={(v) =>
-													setLineSeparatorMode(v as LineSeparatorMode)
-												}
-											>
-												<Select.Trigger />
-												<Select.Content>
-													<Select.Item value={LineSeparatorMode.Interleaved}>
-														{t(
-															"textImportDialog.separationMode.multipleLine",
-															"On separate lines",
-														)}
-													</Select.Item>
-													<Select.Item
-														value={LineSeparatorMode.SameLineSeparator}
-													>
-														{t(
-															"textImportDialog.separationMode.sameLine",
-															"On the same line",
-														)}
-													</Select.Item>
-												</Select.Content>
-											</Select.Root>
-
-											<PrefText>
-												{t("textImportDialog.separator", "Line separator")}
-											</PrefText>
-											<TextField.Root
-												disabled={
-													importMode === ImportMode.Lyric ||
-													lineSeparatorMode !==
-														LineSeparatorMode.SameLineSeparator
-												}
-												value={lineSeparator}
-												onChange={(evt) =>
-													setLineSeparator(evt.currentTarget.value)
-												}
-											/>
-
-											<PrefText>
-												{t(
-													"textImportDialog.swapTransAndRoman",
-													"交换翻译行和音译行",
-												)}
-											</PrefText>
-											<Switch
-												checked={swapTransAndRoman}
-												onCheckedChange={setSwapTransAndRoman}
-											/>
-
-											<PrefText>
-												{t("textImportDialog.wordSeparator", "Word separator")}
-											</PrefText>
-											<TextField.Root
-												value={wordSeparator}
-												onChange={(evt) =>
-													setWordSeparator(evt.currentTarget.value)
-												}
-											/>
-
-											<PrefText>
-												{t(
-													"textImportDialog.enableSpecialPrefix",
-													"Use line prefixes",
-												)}
-											</PrefText>
-											<Switch
-												checked={enableSpecialPrefix}
-												onCheckedChange={setEnableSpecialPrefix}
-											/>
-
-											<PrefText>
-												{t(
-													"textImportDialog.bgLyricPrefix",
-													"Background line prefix",
-												)}
-											</PrefText>
-											<TextField.Root
-												disabled={!enableSpecialPrefix}
-												value={bgLyricPrefix}
-												onChange={(evt) =>
-													setBgLyricPrefix(evt.currentTarget.value)
-												}
-											/>
-
-											<PrefText>
-												{t(
-													"textImportDialog.duetLyricPrefix",
-													"Duet line prefix",
-												)}
-											</PrefText>
-											<TextField.Root
-												disabled={!enableSpecialPrefix}
-												value={duetLyricPrefix}
-												onChange={(evt) =>
-													setDuetLyricPrefix(evt.currentTarget.value)
-												}
-											/>
-
-											<Separator size="4" style={{ gridColumn: "span 2" }} />
-											<PrefText>
-												{t(
-													"experimentalFeatures.geniusCategorization.title",
-													"Genius sections",
-												)}
-											</PrefText>
-											<Switch
-												checked={geniusCategorizationEnabled}
-												onCheckedChange={setGeniusCategorizationEnabled}
-											/>
-										</Grid>
-									</Flex>
+										{t("textImportDialog.actionButton", "导入歌词")}
+									</Button>
 								</Flex>
-							</Tabs.Content>
-
-							<Tabs.Content value="guide">
-								<ScrollArea
-									scrollbars="vertical"
-									style={{ height: "calc(80vh - 80px)" }}
+								<Flex
+									gap="4"
+									direction={{
+										initial: "column",
+										sm: "row",
+									}}
 								>
-									<Flex direction="column" gap="4" p="4">
-										<Card size="2">
-											<Flex direction="column" gap="2">
-												<Text size="5" weight="bold">
+									<ImportFromTextEditor />
+									<Grid
+										columns="2"
+										gapY="2"
+										gapX="4"
+										style={{
+											whiteSpace: "nowrap",
+											flex: "0 0 auto",
+											alignItems: "center",
+											alignContent: "start",
+											textAlign: "end",
+										}}
+									>
+										<PrefText>
+											{t("textImportDialog.contentMode.caption", "导入模式")}
+										</PrefText>
+										<Select.Root
+											value={importMode}
+											onValueChange={(v) => setImportMode(v as ImportMode)}
+										>
+											<Select.Trigger />
+											<Select.Content>
+												<Select.Item value={ImportMode.Lyric}>
 													{t(
-														"textImportDialog.guide.prepare.title",
-														"1. Prepare lyrics",
+														"textImportDialog.contentMode.lyric",
+														"Lyrics only",
 													)}
-												</Text>
-												<Text color="gray">
+												</Select.Item>
+												<Select.Item value={ImportMode.LyricTrans}>
 													{t(
-														"textImportDialog.guide.prepare.desc",
-														"We recommend Lyrprep for preparing lyrics: search for the song, pick a version and copy the output.",
+														"textImportDialog.contentMode.withTranslation",
+														"歌词和翻译歌词",
 													)}
-												</Text>
-												<Button variant="soft" onClick={handleProcessLyrics}>
+												</Select.Item>
+												<Select.Item value={ImportMode.LyricRoman}>
 													{t(
-														"textImportDialog.processLyrics",
-														"Process lyrics",
+														"textImportDialog.contentMode.withRoman",
+														"歌词和音译歌词",
 													)}
-												</Button>
-											</Flex>
-										</Card>
+												</Select.Item>
+												<Select.Item value={ImportMode.LyricTransRoman}>
+													{t(
+														"textImportDialog.contentMode.withBoth",
+														"Lyrics with translation and romanization",
+													)}
+												</Select.Item>
+											</Select.Content>
+										</Select.Root>
 
-										<Card size="2">
-											<Flex direction="column" gap="2">
-												<Text size="5" weight="bold">
-													{t(
-														"textImportDialog.guide.import.title",
-														"2. 载入到脚本工具",
-													)}
-												</Text>
-												<Text color="gray">
-													{t(
-														"textImportDialog.guide.import.desc",
-														"Paste the prepared text into the editor on the left and pick the matching Text content option. If your text marks background or duet lines with prefixes, turn on Use line prefixes.",
-													)}
-												</Text>
-											</Flex>
-										</Card>
-
-										<Card size="2">
-											<Flex direction="column" gap="2">
-												<Text size="5" weight="bold">
-													{t(
-														"textImportDialog.guide.sync.title",
-														"3. Start syncing",
-													)}
-												</Text>
-												<Text color="gray">
-													{t(
-														"textImportDialog.guide.sync.desc",
-														"After importing, switch to Time mode and sync with these keys:",
-													)}
-												</Text>
-												<Grid columns="2" gap="2">
-													<Flex gap="2">
-														<Badge color="blue">F</Badge>
-														<Text size="2">
-															{t(
-																"textImportDialog.guide.sync.f",
-																"Start the word",
-															)}
-														</Text>
-													</Flex>
-													<Flex gap="2">
-														<Badge color="blue">G</Badge>
-														<Text size="2">
-															{t(
-																"textImportDialog.guide.sync.g",
-																"End the word and start the next",
-															)}
-														</Text>
-													</Flex>
-													<Flex gap="2">
-														<Badge color="blue">H</Badge>
-														<Text size="2">
-															{t(
-																"textImportDialog.guide.sync.h",
-																"End the word only",
-															)}
-														</Text>
-													</Flex>
-													<Flex gap="2">
-														<Badge color="blue">A / D</Badge>
-														<Text size="2">
-															{t(
-																"textImportDialog.guide.sync.ad",
-																"在单词间切换",
-															)}
-														</Text>
-													</Flex>
-												</Grid>
-											</Flex>
-										</Card>
-
-										<Card size="2">
-											<Flex direction="column" gap="2">
-												<Flex align="center" gap="2">
-													<Text size="5" weight="bold">
-														{t(
-															"textImportDialog.guide.community.title",
-															"Community guides & cheat sheets",
-														)}
-													</Text>
-													<Badge color="crimson">GENIUS</Badge>
-												</Flex>
-												<Text color="gray" size="2">
-													{t(
-														"textImportDialog.guide.community.desc",
-														"Helpful resources from the community for specific languages and genres.",
-													)}
-												</Text>
-												<Separator size="4" my="2" />
-												<Grid columns={{ initial: "1", sm: "2" }} gap="2">
-													{[
-														{
-															url: "https://genius.com/Kyelergenius-the-ultimate-ttml-maker-cheat-sheet-guide-annotated",
-															description: "Kyeler's TTML Maker Guide",
-															added_by: "NaeNae",
-															featured: true,
-														},
-														{
-															url: "https://genius.com/Opp-rap-slang-spelling-guide-annotated",
-															description:
-																"opp's Rap Slang Spelling Guide for Genius",
-															added_by: "Toxi",
-															featured: true,
-														},
-														{
-															url: "https://genius.com/Riorson-rves-cheatsheet-annotated",
-															description: "rves' Cheat Sheet for Genius",
-															added_by: "NaeNae",
-															featured: false,
-														},
-														{
-															url: "https://genius.com/Housemusicfan1442-housemusicfan1442s-cheat-sheet-annotated",
-															description:
-																"HouseMusicFan1442's Cheat Sheet for Genius",
-															added_by: "NaeNae",
-															featured: false,
-														},
-														{
-															url: "https://genius.com/Yznqq-yznqqs-german-cheat-sheet-annotated",
-															description:
-																"Yznqq’s German Cheat Sheet for Genius",
-															added_by: "NaeNae",
-															featured: false,
-														},
-														{
-															url: "https://genius.com/Grafixal-genius-cheat-sheet-annotated",
-															description: "grafiXal's Cheat Sheet for Genius",
-															added_by: "NaeNae",
-															featured: false,
-														},
-														{
-															url: "https://genius.com/Vjthedj-vjthedjs-cheat-sheet-annotated",
-															description: "VJtheDJ's Cheat Sheet for Genius",
-															added_by: "NaeNae",
-															featured: false,
-														},
-														{
-															url: "https://genius.com/Zorro-kun-zorros-japan-song-cheat-sheet-annotated",
-															description:
-																"zorro’s Japanese Cheat Sheet for Genius",
-															added_by: "NaeNae",
-															featured: false,
-														},
-														{
-															url: "https://genius.com/Jeiiy-vocaloid-cheat-sheet-annotated",
-															description:
-																"jelly's Vocaloid Cheat Sheet for Genius",
-															added_by: "NaeNae",
-															featured: false,
-														},
-														{
-															url: "https://genius.com/artists/Community-guides",
-															description: "Genius' Community Guides Page",
-															added_by: "NaeNae",
-															featured: false,
-														},
-													]
-														.sort(
-															(a, b) =>
-																(b.featured ? 1 : 0) - (a.featured ? 1 : 0),
-														)
-														.map((guide) => (
-															<Button
-																key={guide.url}
-																variant={guide.featured ? "surface" : "soft"}
-																color={guide.featured ? "crimson" : "gray"}
-																onClick={() => window.open(guide.url, "_blank")}
-																style={{
-																	justifyContent: "start",
-																	textAlign: "left",
-																	height: "auto",
-																	padding: "8px 12px",
-																}}
-															>
-																<Flex
-																	direction="column"
-																	gap="1"
-																	style={{ width: "100%" }}
-																>
-																	<Flex align="center" gap="2">
-																		<Open16Regular style={{ flexShrink: 0 }} />
-																		<Text truncate size="1" weight="bold">
-																			{guide.description}
-																		</Text>
-																		{guide.featured && (
-																			<Badge
-																				size="1"
-																				color="crimson"
-																				style={{ marginLeft: "auto" }}
-																			>
-																				Featured
-																			</Badge>
-																		)}
-																	</Flex>
-																	<Text
-																		size="1"
-																		color="gray"
-																		style={{
-																			marginLeft: "20px",
-																			fontSize: "10px",
-																			opacity: 0.8,
-																		}}
-																	>
-																		Added by {guide.added_by}
-																	</Text>
-																</Flex>
-															</Button>
-														))}
-												</Grid>
-											</Flex>
-										</Card>
-
-										<Button
-											variant="ghost"
-											onClick={() =>
-												window.open(
-													"https://lyrprep.spicylyrics.org/guide/",
-													"_blank",
-												)
+										<PrefText>
+											{t(
+												"textImportDialog.separationMode.caption",
+												"Translation and romanization layout",
+											)}
+										</PrefText>
+										<Select.Root
+											disabled={importMode === ImportMode.Lyric}
+											value={lineSeparatorMode}
+											onValueChange={(v) =>
+												setLineSeparatorMode(v as LineSeparatorMode)
 											}
 										>
-											<Open16Regular />{" "}
-											{t("textImportDialog.guidesMenu.full", "Full TTML guide")}
-										</Button>
-									</Flex>
-								</ScrollArea>
-							</Tabs.Content>
+											<Select.Trigger />
+											<Select.Content>
+												<Select.Item value={LineSeparatorMode.Interleaved}>
+													{t(
+														"textImportDialog.separationMode.multipleLine",
+														"On separate lines",
+													)}
+												</Select.Item>
+												<Select.Item
+													value={LineSeparatorMode.SameLineSeparator}
+												>
+													{t(
+														"textImportDialog.separationMode.sameLine",
+														"On the same line",
+													)}
+												</Select.Item>
+											</Select.Content>
+										</Select.Root>
+
+										<PrefText>
+											{t("textImportDialog.separator", "Line separator")}
+										</PrefText>
+										<TextField.Root
+											disabled={
+												importMode === ImportMode.Lyric ||
+												lineSeparatorMode !==
+													LineSeparatorMode.SameLineSeparator
+											}
+											value={lineSeparator}
+											onChange={(evt) =>
+												setLineSeparator(evt.currentTarget.value)
+											}
+										/>
+
+										<PrefText>
+											{t(
+												"textImportDialog.swapTransAndRoman",
+												"交换翻译行和音译行",
+											)}
+										</PrefText>
+										<Switch
+											checked={swapTransAndRoman}
+											onCheckedChange={setSwapTransAndRoman}
+										/>
+
+										<PrefText>
+											{t("textImportDialog.wordSeparator", "Word separator")}
+										</PrefText>
+										<TextField.Root
+											value={wordSeparator}
+											onChange={(evt) =>
+												setWordSeparator(evt.currentTarget.value)
+											}
+										/>
+
+										<PrefText>
+											{t(
+												"textImportDialog.enableSpecialPrefix",
+												"Use line prefixes",
+											)}
+										</PrefText>
+										<Switch
+											checked={enableSpecialPrefix}
+											onCheckedChange={setEnableSpecialPrefix}
+										/>
+
+										<PrefText>
+											{t(
+												"textImportDialog.bgLyricPrefix",
+												"Background line prefix",
+											)}
+										</PrefText>
+										<TextField.Root
+											disabled={!enableSpecialPrefix}
+											value={bgLyricPrefix}
+											onChange={(evt) =>
+												setBgLyricPrefix(evt.currentTarget.value)
+											}
+										/>
+
+										<PrefText>
+											{t(
+												"textImportDialog.duetLyricPrefix",
+												"Duet line prefix",
+											)}
+										</PrefText>
+										<TextField.Root
+											disabled={!enableSpecialPrefix}
+											value={duetLyricPrefix}
+											onChange={(evt) =>
+												setDuetLyricPrefix(evt.currentTarget.value)
+											}
+										/>
+
+										<Separator size="4" style={{ gridColumn: "span 2" }} />
+										<PrefText>
+											{t(
+												"experimentalFeatures.geniusCategorization.title",
+												"Genius sections",
+											)}
+										</PrefText>
+										<Switch
+											checked={geniusCategorizationEnabled}
+											onCheckedChange={setGeniusCategorizationEnabled}
+										/>
+									</Grid>
+								</Flex>
+							</Flex>
 						</Flex>
-					</Tabs.Root>
+					</Flex>
 				</Dialog.Content>
 			</Dialog.Root>
 			<SectionImportReviewDialog

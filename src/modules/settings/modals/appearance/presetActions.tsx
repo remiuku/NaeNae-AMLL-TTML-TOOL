@@ -33,6 +33,8 @@ export function createPresetActions({
 	setLegacyDarkTheme,
 	legacySpaceLabels,
 	setLegacySpaceLabels,
+	spicyLyricsDesign,
+	setSpicyLyricsDesign,
 	advWaveformColor,
 	setAdvWaveformColor,
 	advWaveformProgress,
@@ -180,6 +182,7 @@ export function createPresetActions({
 				layoutOrder,
 				legacyDarkTheme,
 				legacySpaceLabels,
+				spicyLyricsDesign,
 			}),
 		};
 		setPresets([...presets, newPreset]);
@@ -244,6 +247,8 @@ export function createPresetActions({
 			setLegacyDarkTheme(!!s.legacyDarkTheme);
 		if (s.legacySpaceLabels !== undefined)
 			setLegacySpaceLabels(!!s.legacySpaceLabels);
+		if (s.spicyLyricsDesign !== undefined)
+			setSpicyLyricsDesign(!!s.spicyLyricsDesign);
 
 		// Advanced
 		if (s.advWaveformColor !== undefined)

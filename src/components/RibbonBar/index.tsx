@@ -24,9 +24,14 @@ const PreviewModeRibbonBar = lazy(() => import("./preview-mode"));
 export const RibbonBar = memo(
 	forwardRef<HTMLDivElement>((_props, ref) => {
 		const toolMode = useAtomValue(toolModeAtom);
-		const cardStyle: CSSProperties & { "--card-background-color": string } = {
+		const cardStyle: CSSProperties & {
+			"--card-background-color": string;
+			"--card-border-radius": string;
+		} = {
 			"--card-background-color":
 				"var(--ribbon-bg, var(--titlebar-bg, var(--color-panel-translucent)))",
+			// borderRadius alone leaves the Inset and card background rounded.
+			"--card-border-radius": "0px",
 			minHeight: "fit-content",
 			flexShrink: "0",
 			borderRadius: 0,

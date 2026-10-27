@@ -516,6 +516,13 @@
         "image": "Billede",
         "gradient": "Gradient"
       },
+      "design": {
+        "title": "Spicy Lyrics-design",
+        "description": "Det mørke lavendelfarvede udseende og Geist-skriften fra resten af Spicy Lyrics. Det er altid mørkt, så slå det fra for at følge systemets lyse eller mørke tilstand.",
+        "accentNote": "Spicy Lyrics-designet har sin egen lavendelfarvede accent. Slå en brugerdefineret accentfarve til for at bruge en anden.",
+        "legacyDarkThemeNote": "Har ingen effekt, mens Spicy Lyrics-designet er slået til.",
+        "fontNote": "Geist, fra Spicy Lyrics-designet"
+      },
       "presets": {
         "missingBackground": "Denne forudindstillings baggrundsbillede er ikke tilgængelig på denne enhed. Det aktuelle billede blev bevaret.",
         "title": "Forudindstillinger for udseende",
@@ -1216,10 +1223,6 @@
     "processLyrics": "Behandl sangtekster",
     "processedSuccess": "Sangteksten er klar til stavelsessynkronisering.",
     "title": "Importér sangtekster fra almindelig tekst",
-    "tab": {
-      "import": "Importér"
-    },
-    "guides": "Vejledninger",
     "actionButton": "Importér",
     "contentMode": {
       "caption": "Tekstindhold",
@@ -1239,31 +1242,6 @@
     "enableSpecialPrefix": "Brug linjepræfikser",
     "bgLyricPrefix": "Præfiks for baggrundslinjer",
     "duetLyricPrefix": "Præfiks for duetlinjer",
-    "guide": {
-      "prepare": {
-        "title": "1. Forbered sangtekster",
-        "desc": "Det anbefales at bruge Lyrprep-værktøjet til at forberede dine sangtekster. Du kan søge efter sange, vælge en version og kopiere outputteksten."
-      },
-      "import": {
-        "title": "2. Importér til TTML Tool",
-        "desc": "Indsæt teksten i editoren til venstre, og vælg den passende indstilling under Tekstindhold. Hvis teksten bruger præfikser til baggrunds- eller duetlinjer, skal du slå Brug linjepræfikser til."
-      },
-      "sync": {
-        "title": "3. Start synkronisering",
-        "desc": "Skift efter import til Timing, og synkronisér med disse taster:",
-        "f": "Start ordet",
-        "g": "Afslut ordet, og start det næste",
-        "h": "Afslut kun ordet",
-        "ad": "Skift mellem ord"
-      },
-      "community": {
-        "title": "Fællesskabets vejledninger og oversigter",
-        "desc": "Nyttige ressourcer fra fællesskabet til specifikke sprog og genrer."
-      }
-    },
-    "guidesMenu": {
-      "full": "Komplet TTML-guide"
-    },
     "description": "Importér sangtekster fra almindelig tekst eller andre formater."
   },
   "sectionImportReview": {

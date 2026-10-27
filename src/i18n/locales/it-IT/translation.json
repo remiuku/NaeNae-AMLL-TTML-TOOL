@@ -516,6 +516,13 @@
         "image": "Immagine",
         "gradient": "Gradiente"
       },
+      "design": {
+        "title": "Design Spicy Lyrics",
+        "description": "L'aspetto scuro color lavanda e il carattere Geist del resto di Spicy Lyrics. È sempre scuro, quindi disattivalo per seguire la modalità chiara o scura del sistema.",
+        "accentNote": "Il design Spicy Lyrics ha il suo accento lavanda. Attiva un colore di accento personalizzato per usarne un altro.",
+        "legacyDarkThemeNote": "Non ha effetto mentre il design Spicy Lyrics è attivo.",
+        "fontNote": "Geist, dal design Spicy Lyrics"
+      },
       "presets": {
         "missingBackground": "L’immagine di sfondo di questo profilo non è disponibile sul dispositivo. È stata mantenuta l’immagine attuale.",
         "title": "Profili di aspetto",
@@ -1216,10 +1223,6 @@
     "processLyrics": "Elabora testo",
     "processedSuccess": "Testo pronto per la sincronizzazione per sillabe.",
     "title": "Importa testo semplice",
-    "tab": {
-      "import": "Importa"
-    },
-    "guides": "Guide",
     "actionButton": "Importa",
     "contentMode": {
       "caption": "Contenuto testo",
@@ -1239,31 +1242,6 @@
     "enableSpecialPrefix": "Usa prefissi dei versi",
     "bgLyricPrefix": "Prefisso dei versi dei cori",
     "duetLyricPrefix": "Prefisso dei versi del duetto",
-    "guide": {
-      "prepare": {
-        "title": "1. Prepara il testo",
-        "desc": "Consigliamo Lyrprep per preparare il testo: cerca il brano, scegli una versione e copia il risultato."
-      },
-      "import": {
-        "title": "2. Importa in TTML Tool",
-        "desc": "Incolla il testo preparato nell’editor a sinistra e scegli l’opzione adatta in Contenuto testo. Se il testo usa prefissi per cori o duetti, attiva Usa prefissi dei versi."
-      },
-      "sync": {
-        "title": "3. Inizia a sincronizzare",
-        "desc": "Dopo l’importazione, passa alla modalità Sincronizzazione e usa questi tasti:",
-        "f": "Inizia la parola",
-        "g": "Termina la parola e inizia la successiva",
-        "h": "Termina solo la parola",
-        "ad": "Passa tra le parole"
-      },
-      "community": {
-        "title": "Guide e schede della comunità",
-        "desc": "Risorse utili della comunità per lingue e generi specifici."
-      }
-    },
-    "guidesMenu": {
-      "full": "Guida TTML completa"
-    },
     "description": "Importa il testo da testo semplice o da altri formati."
   },
   "sectionImportReview": {

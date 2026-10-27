@@ -11,6 +11,82 @@ import type { LyricLine, LyricWord } from "$/types/ttml";
 
 const MIN_WORD_DURATION_MS = 10;
 
+/**
+ * Which edges a divider moves. "shared" moves the boundary between two
+ * touching segments; "end" and "start" move one word's edge where words
+ * overlap, so dragging one doesn't flatten the overlap.
+ */
+export type DividerEdge = "shared" | "end" | "start";
+
+/** The edge kind of the divider drawn after `segments[index]`. */
+export function getDividerEdge(
+	segments: ProcessedLyricLine["segments"],
+	index: number,
+	lineEndTime: number,
+): DividerEdge {
+	const segment = segments[index];
+	const next = segments[index + 1];
+	if (!next) return segment.endTime === lineEndTime ? "shared" : "end";
+	return next.startTime === segment.endTime ? "shared" : "end";
+}
+
+/** Whether `segments[index]` starts inside the previous segment and needs its own start handle. */
+export function hasOverlappedStart(
+	segments: ProcessedLyricLine["segments"],
+	index: number,
+) {
+	const previous = segments[index - 1];
+	const segment = segments[index];
+	return (
+		!!previous &&
+		segment.type === "word" &&
+		segment.startTime < previous.endTime
+	);
+}
+
+function updateOverlappingEdge(
+	originalLine: ProcessedLyricLine,
+	segmentIndex: number,
+	newTime: number,
+	edge: "end" | "start",
+): ProcessedLyricLine {
+	const segments = [...originalLine.segments];
+	const words = segments.filter((s): s is WordSegment => s.type === "word");
+	let { startTime, endTime } = originalLine;
+
+	if (edge === "end") {
+		const word = segments[segmentIndex] as WordSegment;
+		const ownsLineEnd = word.endTime === originalLine.endTime;
+		const clamped = Math.min(
+			Math.max(newTime, word.startTime + MIN_WORD_DURATION_MS),
+			ownsLineEnd ? Number.POSITIVE_INFINITY : originalLine.endTime,
+		);
+		segments[segmentIndex] = { ...word, endTime: clamped };
+		if (ownsLineEnd) {
+			const otherEnds = words
+				.filter((w) => w.id !== word.id)
+				.map((w) => w.endTime);
+			endTime = Math.max(clamped, ...otherEnds);
+		}
+	} else {
+		const word = segments[segmentIndex + 1] as WordSegment;
+		const ownsLineStart = word.startTime === originalLine.startTime;
+		const clamped = Math.max(
+			Math.min(newTime, word.endTime - MIN_WORD_DURATION_MS),
+			ownsLineStart ? 0 : originalLine.startTime,
+		);
+		segments[segmentIndex + 1] = { ...word, startTime: clamped };
+		if (ownsLineStart) {
+			const otherStarts = words
+				.filter((w) => w.id !== word.id)
+				.map((w) => w.startTime);
+			startTime = Math.min(clamped, ...otherStarts);
+		}
+	}
+
+	return { ...originalLine, startTime, endTime, segments };
+}
+
 // Gap preview/direction handling adapted from apoint123's upstream ecd0594f (GPLv3).
 export function getUpdatedLineForDivider(
 	originalLine: ProcessedLyricLine,
@@ -27,7 +103,11 @@ export function getUpdatedLineForDivider(
 	isGapCreation: boolean,
 	_zoom?: number,
 	lockedGapDirection?: "left" | "right" | null,
+	edge: DividerEdge = "shared",
 ): ProcessedLyricLine {
+	if (edge !== "shared") {
+		return updateOverlappingEdge(originalLine, segmentIndex, newTime, edge);
+	}
 	const segments = [...originalLine.segments];
 	let newStartTime = originalLine.startTime;
 	let newEndTime = originalLine.endTime;

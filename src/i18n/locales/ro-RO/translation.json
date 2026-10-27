@@ -516,6 +516,13 @@
         "image": "Imagine",
         "gradient": "Gradient"
       },
+      "design": {
+        "title": "Designul Spicy Lyrics",
+        "description": "Aspectul întunecat în nuanțe de lavandă și fontul Geist din restul Spicy Lyrics. Este mereu întunecat, așa că dezactivează-l pentru a urma modul luminos sau întunecat al sistemului.",
+        "accentNote": "Designul Spicy Lyrics are propria culoare de accent lavandă. Activează o culoare de accent personalizată pentru a folosi alta.",
+        "legacyDarkThemeNote": "Nu are efect cât timp designul Spicy Lyrics este activat.",
+        "fontNote": "Geist, din designul Spicy Lyrics"
+      },
       "presets": {
         "missingBackground": "Imaginea de fundal a acestei presetări nu este disponibilă pe acest dispozitiv. Imaginea curentă a fost păstrată.",
         "title": "Presetări de aspect",
@@ -1216,10 +1223,6 @@
     "processLyrics": "Procesează versurile",
     "processedSuccess": "Versurile sunt pregătite pentru sincronizarea pe silabe.",
     "title": "Importă versuri din text simplu",
-    "tab": {
-      "import": "Importă"
-    },
-    "guides": "Ghiduri",
     "actionButton": "Importă",
     "contentMode": {
       "caption": "Conținut text",
@@ -1239,31 +1242,6 @@
     "enableSpecialPrefix": "Folosește prefixe de vers",
     "bgLyricPrefix": "Prefixul versurilor de fundal",
     "duetLyricPrefix": "Prefixul versurilor de duet",
-    "guide": {
-      "prepare": {
-        "title": "1. Pregătește versurile",
-        "desc": "Recomandăm Lyrprep pentru pregătirea versurilor: caută melodia, alege o versiune și copiază rezultatul."
-      },
-      "import": {
-        "title": "2. Importă în TTML Tool",
-        "desc": "Lipește textul pregătit în editorul din stânga și alege opțiunea potrivită din Conținut text. Dacă folosești prefixe pentru vocile de fundal sau duet, activează Folosește prefixe de vers."
-      },
-      "sync": {
-        "title": "3. Începe sincronizarea",
-        "desc": "După import, treci în modul Sincronizare și folosește aceste taste:",
-        "f": "Începe cuvântul",
-        "g": "Încheie cuvântul și începe următorul",
-        "h": "Încheie doar cuvântul",
-        "ad": "Treci de la un cuvânt la altul"
-      },
-      "community": {
-        "title": "Ghiduri și fișe ale comunității",
-        "desc": "Resurse utile din partea comunității pentru anumite limbi și genuri."
-      }
-    },
-    "guidesMenu": {
-      "full": "Ghidul complet TTML"
-    },
     "description": "Importă versurile din text simplu sau din alte formate."
   },
   "sectionImportReview": {

@@ -516,6 +516,13 @@
         "image": "Image",
         "gradient": "Gradient"
       },
+      "design": {
+        "title": "Spicy Lyrics design",
+        "description": "The dark lavender look and Geist type from the rest of Spicy Lyrics. It is always dark, so turn it off to follow your system's light or dark mode.",
+        "accentNote": "The Spicy Lyrics design brings its own lavender accent. Turn on a custom accent color to use a different one.",
+        "legacyDarkThemeNote": "Has no effect while the Spicy Lyrics design is on.",
+        "fontNote": "Geist, from the Spicy Lyrics design"
+      },
       "presets": {
         "missingBackground": "This preset's background image is unavailable on this device. The current image was kept.",
         "title": "Appearance presets",
@@ -1216,10 +1223,6 @@
     "processLyrics": "Process lyrics",
     "processedSuccess": "Lyrics prepared for syllable syncing.",
     "title": "Import lyrics from plain text",
-    "tab": {
-      "import": "Import"
-    },
-    "guides": "Guides",
     "actionButton": "Import",
     "contentMode": {
       "caption": "Text content",
@@ -1239,31 +1242,6 @@
     "enableSpecialPrefix": "Use line prefixes",
     "bgLyricPrefix": "Background line prefix",
     "duetLyricPrefix": "Duet line prefix",
-    "guide": {
-      "prepare": {
-        "title": "1. Prepare lyrics",
-        "desc": "We recommend Lyrprep for preparing lyrics: search for the song, pick a version and copy the output."
-      },
-      "import": {
-        "title": "2. Import to TTML Tool",
-        "desc": "Paste the prepared text into the editor on the left and pick the matching Text content option. If your text marks background or duet lines with prefixes, turn on Use line prefixes."
-      },
-      "sync": {
-        "title": "3. Start syncing",
-        "desc": "After importing, switch to Time mode and sync with these keys:",
-        "f": "Start the word",
-        "g": "End the word and start the next",
-        "h": "End the word only",
-        "ad": "Switch between words"
-      },
-      "community": {
-        "title": "Community guides & cheat sheets",
-        "desc": "Helpful resources from the community for specific languages and genres."
-      }
-    },
-    "guidesMenu": {
-      "full": "Full TTML guide"
-    },
     "description": "Import lyrics from plain text or other formats."
   },
   "sectionImportReview": {

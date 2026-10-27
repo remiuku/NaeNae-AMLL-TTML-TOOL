@@ -5,6 +5,7 @@ import { processedLyricLinesAtom } from "$/modules/segmentation/utils/segment-pr
 import { timelineDragAtom } from "$/modules/spectrogram/states/dnd";
 import {
 	commitUpdatedLine,
+	type DividerEdge,
 	getUpdatedLineForDivider,
 } from "$/modules/spectrogram/utils/timeline-mutations";
 import styles from "./DividerSegment.module.css";
@@ -17,6 +18,7 @@ interface DividerSegmentProps {
 	lineStartTime: number;
 	segmentsLength: number;
 	isTouching: boolean;
+	edge?: DividerEdge;
 	virtual?: boolean;
 }
 
@@ -32,6 +34,7 @@ export const DividerSegment: FC<DividerSegmentProps> = ({
 	lineStartTime,
 	segmentsLength,
 	isTouching,
+	edge = "shared",
 	virtual = false,
 }) => {
 	const setTimelineDrag = useSetAtom(timelineDragAtom);
@@ -49,13 +52,14 @@ export const DividerSegment: FC<DividerSegmentProps> = ({
 				type: "divider",
 				lineId: lineId,
 				segmentIndex: segmentIndex,
+				edge,
 				zoom: zoom,
 				startX: e.clientX,
-				isGapCreation: e.altKey,
+				isGapCreation: edge === "shared" && e.altKey,
 				virtual: virtual,
 			});
 		},
-		[lineId, segmentIndex, setTimelineDrag, zoom, virtual],
+		[lineId, segmentIndex, edge, setTimelineDrag, zoom, virtual],
 	);
 
 	// The timeline blocks mouse focus elsewhere, so drop it on any outside click
@@ -106,18 +110,21 @@ export const DividerSegment: FC<DividerSegmentProps> = ({
 				newTime,
 				false,
 				zoom,
+				null,
+				edge,
 			);
 
 			commitUpdatedLine(updatedLine);
 		},
-		[lineId, processedLines, segmentIndex, timeMs, zoom],
+		[lineId, processedLines, segmentIndex, timeMs, zoom, edge],
 	);
 
 	if (timeMs == null || timeMs < 0 || lineStartTime == null) return null;
 
 	const timePx = ((timeMs - lineStartTime) / 1000) * zoom;
 	const isLineStartHandle = segmentIndex === -1;
-	const isLineEndHandle = segmentIndex === segmentsLength - 1;
+	const isLineEndHandle =
+		edge === "shared" && segmentIndex === segmentsLength - 1;
 
 	const handleWidthPx = DIVIDER_WIDTH_PX;
 	let handleOffsetPx: number;

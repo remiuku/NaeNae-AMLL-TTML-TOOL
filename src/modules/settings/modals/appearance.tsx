@@ -14,6 +14,7 @@ import { ProjectColorsSection } from "./appearance/ProjectColorsSection";
 import { createPresetActions } from "./appearance/presetActions";
 import { ResetAdvancedSection } from "./appearance/ResetAdvancedSection";
 import { ResetThemeSection } from "./appearance/ResetThemeSection";
+import { SpicyLyricsDesignSection } from "./appearance/SpicyLyricsDesignSection";
 import { ThemeSection } from "./appearance/ThemeSection";
 import { useAppearanceSettings } from "./appearance/useAppearanceSettings";
 import { WorkspaceSection } from "./appearance/WorkspaceSection";
@@ -33,6 +34,7 @@ export const SettingsAppearanceTab = () => {
 
 	return (
 		<Flex direction="column" gap="4">
+			<SpicyLyricsDesignSection {...state} />
 			<AppearanceEditorModeSection {...state} />
 
 			<PresetsSection {...state} />

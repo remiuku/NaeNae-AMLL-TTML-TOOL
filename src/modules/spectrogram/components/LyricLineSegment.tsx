@@ -7,6 +7,10 @@ import {
 	selectedWordIdAtom,
 	timelineDragAtom,
 } from "$/modules/spectrogram/states/dnd.ts";
+import {
+	getDividerEdge,
+	hasOverlappedStart,
+} from "$/modules/spectrogram/utils/timeline-mutations.ts";
 import { editingTimeFieldAtom, selectedLinesAtom } from "$/states/main.ts";
 import { DividerSegment } from "./DividerSegment.tsx";
 import { GapSegment } from "./GapSegment.tsx";
@@ -145,6 +149,18 @@ export const LyricLineSegment: FC<LyricLineSegmentProps> = ({
 
 			{segments.map((segment, index) => (
 				<React.Fragment key={segment.id}>
+					{!isGhost && hasOverlappedStart(segments, index) && (
+						<DividerSegment
+							key={`divider-start-${segment.id}`}
+							lineId={displayLine.id}
+							segmentIndex={index - 1}
+							timeMs={segment.startTime}
+							lineStartTime={startTime}
+							segmentsLength={segmentsLength}
+							isTouching={false}
+							edge="start"
+						/>
+					)}
 					{segment.type === "word" ? (
 						<LyricWordSegment
 							lineId={displayLine.id}
@@ -170,6 +186,7 @@ export const LyricLineSegment: FC<LyricLineSegmentProps> = ({
 							lineStartTime={startTime}
 							segmentsLength={segmentsLength}
 							isTouching={index === segmentsLength - 1 ? isTouchingEnd : false}
+							edge={getDividerEdge(segments, index, displayLine.endTime)}
 						/>
 					)}
 				</React.Fragment>

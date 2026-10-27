@@ -85,6 +85,10 @@ export const SettingsDialog = memo(() => {
 		useAtom(settingsDialogAtom);
 	const [activeTab, setActiveTab] = useAtom(settingsTabAtom);
 	const [searchQuery, setSearchQuery] = useState("");
+	// Only a click fades the new pane in. Arrow keys, search and the first
+	// open swap instantly: they repeat too often for motion to be anything but drag.
+	const [instantTab, setInstantTab] = useState(true);
+	const tabPointerRef = useRef(false);
 	const searchRef = useRef<HTMLInputElement>(null);
 	const contentRef = useRef<HTMLElement>(null);
 	const { t } = useTranslation();
@@ -145,6 +149,7 @@ export const SettingsDialog = memo(() => {
 	useEffect(() => {
 		if (!settingsDialogOpen) {
 			setSearchQuery("");
+			setInstantTab(true);
 			return;
 		}
 		if (
@@ -200,7 +205,10 @@ export const SettingsDialog = memo(() => {
 			<Dialog.Content maxWidth="980px" className={styles.dialogContent}>
 				<Tabs.Root
 					value={displayedTab}
-					onValueChange={setActiveTab}
+					onValueChange={(value) => {
+						setInstantTab(!tabPointerRef.current);
+						setActiveTab(value);
+					}}
 					orientation="vertical"
 					className={styles.settingsLayout}
 				>
@@ -212,7 +220,10 @@ export const SettingsDialog = memo(() => {
 							ref={searchRef}
 							className={styles.searchField}
 							value={searchQuery}
-							onChange={(event) => setSearchQuery(event.target.value)}
+							onChange={(event) => {
+								setSearchQuery(event.target.value);
+								setInstantTab(true);
+							}}
 							placeholder={t("settingsDialog.search", "Search settings")}
 							aria-label={t("settingsDialog.search", "Search settings")}
 						>
@@ -236,7 +247,16 @@ export const SettingsDialog = memo(() => {
 								</TextField.Slot>
 							)}
 						</TextField.Root>
-						<Tabs.List className={styles.navigation}>
+						<Tabs.List
+							className={styles.navigation}
+							onPointerDown={() => {
+								tabPointerRef.current = true;
+							}}
+							// Capture: the trigger moves focus, and so the tab, in its own keydown.
+							onKeyDownCapture={() => {
+								tabPointerRef.current = false;
+							}}
+						>
 							{visibleItems.map((item) => (
 								<NavigationItem
 									key={item.value}
@@ -259,7 +279,11 @@ export const SettingsDialog = memo(() => {
 						)}
 					</aside>
 
-					<main ref={contentRef} className={styles.contentPane}>
+					<main
+						ref={contentRef}
+						className={styles.contentPane}
+						data-instant={instantTab || undefined}
+					>
 						<Tabs.Content value="common" className={styles.tabContent}>
 							<SettingsPage
 								title={t("settingsDialog.tab.common", "General")}

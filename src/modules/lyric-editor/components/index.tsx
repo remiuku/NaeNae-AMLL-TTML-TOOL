@@ -9,7 +9,10 @@
  * https://github.com/spicylyrics/ttml-tool/blob/main/LICENSE
  */
 
-import { MyLocation24Regular } from "@fluentui/react-icons";
+import {
+	MyLocation24Regular,
+	TextBulletListSquare24Regular,
+} from "@fluentui/react-icons";
 import { Box, Button, Flex, Text } from "@radix-ui/themes";
 import { useAtom, useAtomValue, useSetAtom, useStore } from "jotai";
 import { useSetImmerAtom } from "jotai-immer";
@@ -19,6 +22,7 @@ import {
 	useEffect,
 	useImperativeHandle,
 	useRef,
+	useState,
 } from "react";
 import { useTranslation } from "react-i18next";
 import { ViewportList, type ViewportListRef } from "react-viewport-list";
@@ -62,7 +66,10 @@ export const LyricLinesView: FC = forwardRef<HTMLDivElement>((_props, ref) => {
 	const viewRef = useRef<ViewportListRef>(null);
 	const viewElRef = useRef<HTMLDivElement>(null);
 	const editLyricLines = useSetImmerAtom(lyricLinesAtom);
-	const toolMode = useAtomValue(toolModeAtom);
+	// Each mode mounts its own view (keyed by mode in App), and the old one
+	// keeps rendering while it fades out. Pin the mode so the leaving view
+	// doesn't adopt the next mode's layout and overwrite its scroll anchor.
+	const [toolMode] = useState(() => store.get(toolModeAtom));
 	const { t } = useTranslation();
 	const setGuideWelcome = useSetAtom(guideWelcomeOpenAtom);
 	const setGuidePanel = useSetAtom(guidePanelOpenAtom);
@@ -153,34 +160,47 @@ export const LyricLinesView: FC = forwardRef<HTMLDivElement>((_props, ref) => {
 				height="100%"
 				ref={ref}
 			>
-				<Text color="gray">{t("app.empty.title", "没有歌词行")}</Text>
-				<Text color="gray" align="center">
-					{t(
-						"app.empty.description",
-						"Add lines from the ribbon above, or open or import lyrics from the File menu.",
-					)}
-				</Text>
-				<Flex gap="2" wrap="wrap" justify="center" mt="2">
-					<Button
-						onClick={() => {
-							setGuideStep(0);
-							setGuidePanel(false);
-							setGuideWelcome(true);
-						}}
-					>
-						{t("beginnerGuide.empty.start", "Start guide")}
-					</Button>
-					<Button variant="soft" onClick={() => setImportChooser(true)}>
-						{t("beginnerGuide.empty.import", "Import lyrics")}
-					</Button>
-					<Button variant="outline" onClick={onOpenFile}>
-						{t("beginnerGuide.empty.open", "Open lyrics file")}
-					</Button>
-					{folderProjectsEnabled && (
-						<Button variant="outline" onClick={() => setProjectsDialog(true)}>
-							{t("topBar.menu.projects", "Projects")}
+				{/* The sl-empty-* hooks only draw under the Spicy Lyrics design. */}
+				<Flex
+					direction="column"
+					align="center"
+					gap="2"
+					className="sl-empty-panel"
+				>
+					<span className="sl-empty-icon" aria-hidden="true">
+						<TextBulletListSquare24Regular />
+					</span>
+					<Text color="gray" className="sl-empty-title">
+						{t("app.empty.title", "没有歌词行")}
+					</Text>
+					<Text color="gray" align="center">
+						{t(
+							"app.empty.description",
+							"Add lines from the ribbon above, or open or import lyrics from the File menu.",
+						)}
+					</Text>
+					<Flex gap="2" wrap="wrap" justify="center" mt="2">
+						<Button
+							onClick={() => {
+								setGuideStep(0);
+								setGuidePanel(false);
+								setGuideWelcome(true);
+							}}
+						>
+							{t("beginnerGuide.empty.start", "Start guide")}
 						</Button>
-					)}
+						<Button variant="soft" onClick={() => setImportChooser(true)}>
+							{t("beginnerGuide.empty.import", "Import lyrics")}
+						</Button>
+						<Button variant="outline" onClick={onOpenFile}>
+							{t("beginnerGuide.empty.open", "Open lyrics file")}
+						</Button>
+						{folderProjectsEnabled && (
+							<Button variant="outline" onClick={() => setProjectsDialog(true)}>
+								{t("topBar.menu.projects", "Projects")}
+							</Button>
+						)}
+					</Flex>
 				</Flex>
 			</Flex>
 		);

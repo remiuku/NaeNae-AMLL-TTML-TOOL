@@ -191,10 +191,15 @@ export const customGradientSizeAtom = atomWithStorage<number>(
 	1,
 );
 
-export const appFontAtom = atomWithStorage<string>(
-	"appFont",
-	'"MiSans", Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-);
+export const DEFAULT_APP_FONT =
+	'"MiSans", Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
+
+export const appFontAtom = atomWithStorage<string>("appFont", DEFAULT_APP_FONT);
+
+// Geist has no CJK glyphs, so Japanese, Chinese and Korean lyrics fall through
+// to MiSans and the system CJK faces.
+export const SPICY_LYRICS_FONT_STACK =
+	'"Geist Variable", "MiSans", system-ui, -apple-system, "Segoe UI", "Hiragino Sans", "Yu Gothic UI", "Microsoft YaHei UI", "PingFang SC", "Malgun Gothic", sans-serif';
 
 export const customFontDataAtom = atomWithStorage<string | null>(
 	"customFontData",
@@ -266,6 +271,14 @@ export const appearanceEditorModeAtom = atomWithStorage<AppearanceEditorMode>(
 export const legacyDarkThemeAtom = atomWithStorage<boolean>(
 	"legacyDarkTheme",
 	false,
+);
+
+// Read on init so people who turned it off don't see the new design flash in.
+export const spicyLyricsDesignAtom = atomWithStorage<boolean>(
+	"spicyLyricsDesign",
+	true,
+	undefined,
+	{ getOnInit: true },
 );
 
 export const advancedWaveformColorAtom = atomWithStorage<string>(
@@ -410,6 +423,7 @@ export interface AppearancePresetSettings {
 	layoutOrder: string[];
 	legacyDarkTheme: boolean;
 	legacySpaceLabels: boolean;
+	spicyLyricsDesign: boolean;
 }
 
 export interface AppearancePreset {

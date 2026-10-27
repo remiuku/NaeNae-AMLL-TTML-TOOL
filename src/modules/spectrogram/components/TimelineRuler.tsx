@@ -7,7 +7,7 @@ import {
 } from "react";
 import { msToTimestamp } from "$/utils/timestamp";
 
-export const RULER_HEIGHT = 24;
+export const RULER_HEIGHT = 32;
 
 export interface TimelineRulerHandle {
 	draw: (scrollLeft: number) => void;
@@ -19,7 +19,8 @@ interface TimelineRulerProps {
 	zoom: number;
 	duration: number;
 	containerWidth: number;
-	onSeek: (timeInSeconds: number) => void;
+	/** Seeks on press and follows the pointer while held, so a near miss is one drag away. */
+	onScrubStart: (event: React.MouseEvent) => void;
 }
 
 function getTickInterval(zoom: number) {
@@ -37,7 +38,7 @@ function getTickInterval(zoom: number) {
 export const TimelineRuler = forwardRef<
 	TimelineRulerHandle,
 	TimelineRulerProps
->(({ zoom, duration, containerWidth, onSeek }, ref) => {
+>(({ zoom, duration, containerWidth, onScrubStart }, ref) => {
 	const canvasRef = useRef<HTMLCanvasElement>(null);
 	const lastScrollLeft = useRef(0);
 
@@ -113,21 +114,6 @@ export const TimelineRuler = forwardRef<
 		drawRuler(lastScrollLeft.current);
 	}, [drawRuler]);
 
-	const handleClick = (event: React.MouseEvent<HTMLCanvasElement>) => {
-		const canvas = canvasRef.current;
-		if (!canvas) return;
-
-		const rect = canvas.getBoundingClientRect();
-		const clickX = event.clientX - rect.left;
-		const scrollLeft = lastScrollLeft.current;
-
-		const timeInSeconds = (scrollLeft + clickX) / zoom;
-
-		if (timeInSeconds >= 0 && timeInSeconds <= duration) {
-			onSeek(timeInSeconds);
-		}
-	};
-
 	return (
 		<canvas
 			ref={canvasRef}
@@ -135,8 +121,9 @@ export const TimelineRuler = forwardRef<
 				width: "100%",
 				height: `${RULER_HEIGHT}px`,
 				backgroundColor: "var(--gray-2)",
+				cursor: "ew-resize",
 			}}
-			onClick={handleClick}
+			onMouseDown={onScrubStart}
 			onContextMenu={(e) => e.preventDefault()}
 		/>
 	);

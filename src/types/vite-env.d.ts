@@ -10,7 +10,6 @@
  */
 
 /// <reference types="vite/client" />
-/// <reference types="vite-plugin-pwa/client" />
 
 declare module "virtual:i18next-loader" {
 	// One entry per locale folder, e.g. { "en-US": { translation: {...} } }.

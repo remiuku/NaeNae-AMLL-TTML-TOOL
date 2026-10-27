@@ -9,6 +9,7 @@ import {
 	appFontWeightAtom,
 	customFontDataAtom,
 	customFontNameAtom,
+	DEFAULT_APP_FONT,
 } from "../../states/index.ts";
 import { GOOGLE_FONTS, SYSTEM_FONTS } from "./catalog";
 import { filterFonts, getImportedFontName } from "./fontHelpers";
@@ -57,9 +58,7 @@ export function useFontSelection() {
 	const clearCustomFont = () => {
 		setCustomFontData(null);
 		setCustomFontName(null);
-		setAppFont(
-			'"MiSans", Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-		);
+		setAppFont(DEFAULT_APP_FONT);
 	};
 	return {
 		t,

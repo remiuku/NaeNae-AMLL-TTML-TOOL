@@ -28,7 +28,7 @@ export function SpectrogramView({
 	rulerRef,
 	zoom,
 	containerWidth,
-	handleRulerSeek,
+	handleRulerScrubStart,
 	isDragging,
 	hoverPx,
 	isHovering,
@@ -106,7 +106,7 @@ export function SpectrogramView({
 								zoom={zoom}
 								duration={audioBuffer?.duration || 0}
 								containerWidth={containerWidth}
-								onSeek={handleRulerSeek}
+								onScrubStart={handleRulerScrubStart}
 							/>
 
 							{!isDragging && (

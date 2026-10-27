@@ -45,7 +45,9 @@ export function processSingleLine(line: LyricLine): ProcessedLyricLine {
 
 		segments.push({ ...word, type: "word" });
 
-		cursor = word.endTime;
+		// A word nested inside an earlier one must not move the cursor back,
+		// or a phantom gap gets drawn over the longer word.
+		cursor = Math.max(cursor, word.endTime);
 	}
 
 	if (line.endTime > cursor) {

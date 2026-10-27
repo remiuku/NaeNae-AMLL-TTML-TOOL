@@ -9,12 +9,11 @@ import {
 } from "react";
 import { useTranslation } from "react-i18next";
 import { useLoadAudio } from "$/hooks/useLoadAudio.ts";
-import { audioEngine } from "$/modules/audio/audio-engine.ts";
 import {
 	audioBufferAtom,
 	auditionTimeAtom,
-	currentTimeAtom,
 } from "$/modules/audio/states/index.ts";
+import { useScrubbing } from "$/modules/spectrogram/hooks/useScrubbing.ts";
 import { useSpectrogramInteraction } from "$/modules/spectrogram/hooks/useSpectrogramInteraction.ts";
 import { useSpectrogramResize } from "$/modules/spectrogram/hooks/useSpectrogramResize.ts";
 import { useSpectrogramSelection } from "$/modules/spectrogram/hooks/useSpectrogramSelection.ts";
@@ -46,7 +45,6 @@ import { useSpectrogramTransfers } from "./useSpectrogramTransfers";
 
 export function useAudioSpectrogram() {
 	const audioBuffer = useAtomValue(audioBufferAtom);
-	const setCurrentTime = useSetAtom(currentTimeAtom);
 	const auditionTime = useAtomValue(auditionTimeAtom);
 	const selectedLines = useAtomValue(selectedLinesAtom);
 	const store = useStore();
@@ -170,10 +168,11 @@ export function useAudioSpectrogram() {
 		updateVisibleTiles();
 	}, [updateVisibleTiles, lastTileTimestamp]);
 
-	const handleRulerSeek = (timeInSeconds: number) => {
-		audioEngine.seekMusic(timeInSeconds);
-		setCurrentTime(Math.round(timeInSeconds * 1000));
-	};
+	const { handleScrubStart: handleRulerScrubStart } = useScrubbing(
+		scrollContainerRef,
+		scrollLeft,
+		zoom,
+	);
 
 	useLayoutEffect(() => {
 		if (lastTileTimestamp === 0) {
@@ -282,7 +281,7 @@ export function useAudioSpectrogram() {
 		rulerRef,
 		zoom,
 		containerWidth,
-		handleRulerSeek,
+		handleRulerScrubStart,
 		isDragging,
 		hoverPx,
 		isHovering,

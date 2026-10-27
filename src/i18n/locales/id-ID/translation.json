@@ -516,6 +516,13 @@
         "image": "Gambar",
         "gradient": "Gradien"
       },
+      "design": {
+        "title": "Desain Spicy Lyrics",
+        "description": "Tampilan gelap bernuansa lavender dan huruf Geist dari bagian lain Spicy Lyrics. Selalu gelap, jadi matikan untuk mengikuti mode terang atau gelap sistem.",
+        "accentNote": "Desain Spicy Lyrics punya warna aksen lavender sendiri. Aktifkan warna aksen kustom untuk memakai warna lain.",
+        "legacyDarkThemeNote": "Tidak berpengaruh selama desain Spicy Lyrics aktif.",
+        "fontNote": "Geist, dari desain Spicy Lyrics"
+      },
       "presets": {
         "missingBackground": "Gambar latar preset ini tidak tersedia di perangkat ini. Gambar saat ini dipertahankan.",
         "title": "Preset tampilan",
@@ -1216,10 +1223,6 @@
     "processLyrics": "Proses lirik",
     "processedSuccess": "Lirik siap untuk sinkronisasi suku kata.",
     "title": "Impor lirik dari teks biasa",
-    "tab": {
-      "import": "Impor"
-    },
-    "guides": "Panduan",
     "actionButton": "Impor",
     "contentMode": {
       "caption": "Isi teks",
@@ -1239,31 +1242,6 @@
     "enableSpecialPrefix": "Gunakan prefiks baris",
     "bgLyricPrefix": "Prefiks baris vokal latar",
     "duetLyricPrefix": "Prefiks baris duet",
-    "guide": {
-      "prepare": {
-        "title": "1. Siapkan lirik",
-        "desc": "Disarankan untuk menggunakan alat Lyrprep untuk menyiapkan lirik Anda. Anda dapat mencari lagu, memilih versi, dan menyalin teks keluaran."
-      },
-      "import": {
-        "title": "2. Impor ke TTML Tool",
-        "desc": "Tempel teks yang sudah disiapkan ke editor di kiri dan pilih opsi Isi teks yang sesuai. Jika teks memakai prefiks untuk menandai baris vokal latar atau duet, aktifkan Gunakan prefiks baris."
-      },
-      "sync": {
-        "title": "3. Mulai sinkronisasi",
-        "desc": "Setelah impor, buka mode Sinkronisasi dan sinkronkan dengan tombol berikut:",
-        "f": "Mulai kata",
-        "g": "Akhiri kata dan mulai kata berikutnya",
-        "h": "Akhiri kata saja",
-        "ad": "Beralih antar kata"
-      },
-      "community": {
-        "title": "Panduan & lembar ringkasan komunitas",
-        "desc": "Sumber daya bermanfaat dari komunitas untuk bahasa dan genre tertentu."
-      }
-    },
-    "guidesMenu": {
-      "full": "Panduan lengkap TTML"
-    },
     "description": "Impor lirik dari teks biasa atau format lain."
   },
   "sectionImportReview": {

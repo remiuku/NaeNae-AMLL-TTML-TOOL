@@ -516,6 +516,13 @@
         "image": "Obraz",
         "gradient": "Gradient"
       },
+      "design": {
+        "title": "Wygląd Spicy Lyrics",
+        "description": "Ciemny, lawendowy wygląd i krój Geist z reszty Spicy Lyrics. Jest zawsze ciemny, więc wyłącz go, aby korzystać z jasnego lub ciemnego trybu systemu.",
+        "accentNote": "Wygląd Spicy Lyrics ma własny lawendowy kolor akcentu. Włącz własny kolor akcentu, aby użyć innego.",
+        "legacyDarkThemeNote": "Nie działa, gdy wygląd Spicy Lyrics jest włączony.",
+        "fontNote": "Geist, z wyglądu Spicy Lyrics"
+      },
       "presets": {
         "missingBackground": "Obraz tła tego zestawu ustawień jest niedostępny na tym urządzeniu. Zachowano bieżący obraz.",
         "title": "Zestawy ustawień wyglądu",
@@ -1216,10 +1223,6 @@
     "processLyrics": "Przetwórz tekst",
     "processedSuccess": "Tekst przygotowany do synchronizacji sylab.",
     "title": "Importuj tekst ze zwykłego tekstu",
-    "tab": {
-      "import": "Import"
-    },
-    "guides": "Przewodniki",
     "actionButton": "Importuj",
     "contentMode": {
       "caption": "Zawartość tekstu",
@@ -1239,31 +1242,6 @@
     "enableSpecialPrefix": "Używaj prefiksów wersów",
     "bgLyricPrefix": "Prefiks wersu wokalu w tle",
     "duetLyricPrefix": "Prefiks wersu duetu",
-    "guide": {
-      "prepare": {
-        "title": "1. Przygotuj tekst",
-        "desc": "Do przygotowania tekstu polecamy Lyrprep: wyszukaj utwór, wybierz wersję i skopiuj wynik."
-      },
-      "import": {
-        "title": "2. Importuj do TTML Tool",
-        "desc": "Wklej przygotowany tekst do edytora po lewej i wybierz pasującą opcję „Zawartość tekstu”. Jeśli wersy wokalu w tle lub duetu mają prefiksy, włącz „Używaj prefiksów wersów”."
-      },
-      "sync": {
-        "title": "3. Rozpocznij synchronizację",
-        "desc": "Po imporcie przejdź do trybu Synchronizacja i użyj tych klawiszy:",
-        "f": "Rozpocznij słowo",
-        "g": "Zakończ słowo i rozpocznij następne",
-        "h": "Zakończ tylko to słowo",
-        "ad": "Przełączaj się między słowami"
-      },
-      "community": {
-        "title": "Przewodniki i ściągawki społeczności",
-        "desc": "Przydatne zasoby społeczności dotyczące określonych języków i gatunków."
-      }
-    },
-    "guidesMenu": {
-      "full": "Pełny przewodnik TTML"
-    },
     "description": "Importuj tekst ze zwykłego tekstu lub innych formatów."
   },
   "sectionImportReview": {

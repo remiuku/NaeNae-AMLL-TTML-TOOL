@@ -20,6 +20,7 @@ import {
 	useState,
 } from "react";
 import { useTranslation } from "react-i18next";
+import { BrandBandMark, brandBandClassName } from "$/components/BrandBand";
 import { useTopMenuActions } from "$/components/TopMenu/useTopMenuActions";
 import { useLoadAudio } from "$/hooks/useLoadAudio";
 import { audioEngine } from "$/modules/audio/audio-engine";
@@ -319,7 +320,8 @@ export const BeginnerGuide = () => {
 	return (
 		<>
 			<Dialog.Root open={welcomeOpen} onOpenChange={setWelcomeOpen}>
-				<Dialog.Content maxWidth="560px">
+				<Dialog.Content maxWidth="560px" className={brandBandClassName}>
+					<BrandBandMark />
 					<Dialog.Title>
 						{t("beginnerGuide.welcome.title", "Make your first synced TTML")}
 					</Dialog.Title>

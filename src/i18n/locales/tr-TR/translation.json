@@ -516,6 +516,13 @@
         "image": "Resim",
         "gradient": "Gradyan"
       },
+      "design": {
+        "title": "Spicy Lyrics tasarımı",
+        "description": "Spicy Lyrics'in geri kalanındaki koyu lavanta görünüm ve Geist yazı tipi. Her zaman koyudur, bu yüzden sistemin açık veya koyu modunu izlemek için kapatın.",
+        "accentNote": "Spicy Lyrics tasarımının kendi lavanta vurgu rengi var. Başka bir renk kullanmak için özel vurgu rengini açın.",
+        "legacyDarkThemeNote": "Spicy Lyrics tasarımı açıkken etkisi yoktur.",
+        "fontNote": "Geist, Spicy Lyrics tasarımından"
+      },
       "presets": {
         "missingBackground": "Bu ön ayarın arka plan resmi bu cihazda kullanılamıyor. Mevcut görüntü korundu.",
         "title": "Görünüm ön ayarları",
@@ -1216,10 +1223,6 @@
     "processLyrics": "Şarkı sözlerini işle",
     "processedSuccess": "Şarkı sözleri hece senkronizasyonu için hazırlandı.",
     "title": "Düz metinden şarkı sözlerini içe aktar",
-    "tab": {
-      "import": "İçe aktarma"
-    },
-    "guides": "Rehberler",
     "actionButton": "İçe aktar",
     "contentMode": {
       "caption": "Metin içeriği",
@@ -1239,31 +1242,6 @@
     "enableSpecialPrefix": "Satır öneklerini kullan",
     "bgLyricPrefix": "Arka vokal satırı öneki",
     "duetLyricPrefix": "Düet satırı öneki",
-    "guide": {
-      "prepare": {
-        "title": "1. Şarkı sözlerini hazırlayın",
-        "desc": "Şarkı sözlerini hazırlamak için Lyrprep'i öneririz: şarkıyı arayın, sürümü seçin ve sonucu kopyalayın."
-      },
-      "import": {
-        "title": "2. TTML Tool'a içe aktarın",
-        "desc": "Hazırlanan metni soldaki düzenleyiciye yapıştırın ve uygun Metin içeriği seçeneğini belirleyin. Arka vokal veya düet satırları öneklerle işaretlenmişse Satır öneklerini kullan'ı açın."
-      },
-      "sync": {
-        "title": "3. Senkronize etmeye başlayın",
-        "desc": "İçe aktardıktan sonra Zamanla moduna geçin ve şu tuşlarla senkronize edin:",
-        "f": "Kelimeyi başlat",
-        "g": "Kelimeyi bitir ve sonrakini başlat",
-        "h": "Yalnızca kelimeyi bitir",
-        "ad": "Kelimeler arası geçiş yap"
-      },
-      "community": {
-        "title": "Topluluk rehberleri ve özetleri",
-        "desc": "Belirli diller ve türler için topluluktan faydalı kaynaklar."
-      }
-    },
-    "guidesMenu": {
-      "full": "Tam TTML rehberi"
-    },
     "description": "Şarkı sözlerini düz metinden veya başka biçimlerden içe aktarın."
   },
   "sectionImportReview": {

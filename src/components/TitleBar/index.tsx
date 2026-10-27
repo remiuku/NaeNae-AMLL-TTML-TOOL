@@ -3,6 +3,7 @@ import { useAtom, useSetAtom } from "jotai";
 import { useSetImmerAtom } from "jotai-immer";
 import { type FC, useCallback } from "react";
 import { useTranslation } from "react-i18next";
+import { BrandMark } from "$/components/BrandBand";
 import WindowControls from "$/components/WindowControls";
 import {
 	keySwitchEditModeAtom,
@@ -82,7 +83,9 @@ export const TitleBar: FC = () => {
 								style={{ color: "var(--accent-11)" }}
 								wrap="nowrap"
 								size="2"
+								className={styles.lockup}
 							>
+								<BrandMark className={styles.lockupMark} />
 								<span className={styles.title}>
 									{t("topBar.appName", "TTML Tool")}
 								</span>

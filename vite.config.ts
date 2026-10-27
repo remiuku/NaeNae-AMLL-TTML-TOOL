@@ -8,7 +8,6 @@ import jotaiReactRefresh from "jotai/babel/plugin-react-refresh";
 import ConditionalCompile from "unplugin-preprocessor-directives/vite";
 import { defineConfig, type Plugin } from "vite";
 import i18nextLoader from "vite-plugin-i18next-loader";
-import { VitePWA } from "vite-plugin-pwa";
 import wasm from "vite-plugin-wasm";
 import svgLoader from "vite-svg-loader";
 import { configDefaults } from "vitest/config";
@@ -73,34 +72,6 @@ const plugins: Plugin[] = [
 			}
 		},
 	},
-	VitePWA({
-		injectRegister: null,
-		disable: !!process.env.TAURI_PLATFORM,
-		// The website no longer works offline (the desktop app does). This ships
-		// an sw.js that unregisters itself and clears its caches, so browsers
-		// still running the old offline worker drop it on their next update check.
-		selfDestroying: true,
-		manifest: {
-			name: "Spicy Lyrics TTML Tool",
-			id: "amll-ttml-tool",
-			short_name: "TTML Tool",
-			description:
-				"A word-by-word TTML lyrics editor and timing tool for Spicy Lyrics",
-			theme_color: "#18a058",
-			icons: [
-				{
-					src: "./pwa-256x256.png",
-					sizes: "256x256",
-					type: "image/png",
-				},
-				{
-					src: "./logo.png",
-					sizes: "512x512",
-					type: "image/png",
-				},
-			],
-		},
-	}),
 ];
 
 export default defineConfig({

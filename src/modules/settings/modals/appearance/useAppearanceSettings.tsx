@@ -51,6 +51,7 @@ import {
 	legacyDarkThemeAtom,
 	legacySpaceLabelsAtom,
 	selectedGradientAtom,
+	spicyLyricsDesignAtom,
 	useCustomAccentAtom,
 	useCustomGradientAtom,
 } from "$/modules/settings/states/index.ts";
@@ -71,7 +72,11 @@ export function useAppearanceSettings() {
 	const [customAccentColor, setCustomAccentColor] = useAtom(
 		customAccentColorAtom,
 	);
-	const isDarkTheme = useAtomValue(isDarkThemeAtom);
+	const [spicyLyricsDesign, setSpicyLyricsDesign] = useAtom(
+		spicyLyricsDesignAtom,
+	);
+	// The Spicy Lyrics design is dark-only, so preview the dark scale under it.
+	const isDarkTheme = useAtomValue(isDarkThemeAtom) || spicyLyricsDesign;
 	const customScale = useMemo(
 		() => generateRadixScale(customAccentColor, isDarkTheme),
 		[customAccentColor, isDarkTheme],
@@ -209,6 +214,8 @@ export function useAppearanceSettings() {
 		setEditorMode,
 		legacyDarkTheme,
 		setLegacyDarkTheme,
+		spicyLyricsDesign,
+		setSpicyLyricsDesign,
 		advWaveformColor,
 		setAdvWaveformColor,
 		advWaveformProgress,

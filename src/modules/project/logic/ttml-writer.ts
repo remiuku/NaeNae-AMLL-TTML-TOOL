@@ -483,5 +483,21 @@ export default function exportTTMLText(
 	ttRoot.appendChild(body);
 	log("ttml document built", ttRoot);
 
-	return new XMLSerializer().serializeToString(doc);
+	return removeEmptyDefaultNamespaces(
+		new XMLSerializer().serializeToString(doc),
+	);
+}
+
+/**
+ * The document is built with createElement, so every element has no namespace.
+ * WebKit (the macOS and Linux apps, Safari) serializes that faithfully as
+ * `xmlns=""` on each element; Chromium leaves it out. Spicy Lyrics' parser
+ * then reads `<songwriter xmlns="">Name</songwriter>` as an object and shows
+ * "[object Object]" for the credits. Dropping the attribute gives every engine
+ * Chromium's output. Only tags are touched: text can't start a tag because the
+ * serializer escapes `<`, and attribute values can't hold the literal because
+ * it escapes `"`.
+ */
+export function removeEmptyDefaultNamespaces(xml: string): string {
+	return xml.replace(/<[^>]*>/g, (tag) => tag.replace(/ xmlns=""/g, ""));
 }

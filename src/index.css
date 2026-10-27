@@ -166,6 +166,17 @@
 	background-color: var(--accent-a5);
 }
 
+/* A Tooltip wrapping a Switch overwrites its data-state with the tooltip's
+   ("closed"), so Radix's unchecked rule never matches and an off switch draws
+   as on. aria-checked is left alone. */
+.rt-SwitchRoot[aria-checked="false"]::before {
+	background-position-x: 100%;
+}
+
+.rt-SwitchRoot[aria-checked="true"]::before {
+	background-position: 0%;
+}
+
 .amll-lyric-player {
 	margin: 0;
 	padding: 0;

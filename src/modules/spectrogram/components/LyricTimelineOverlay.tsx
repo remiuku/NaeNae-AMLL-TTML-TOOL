@@ -12,6 +12,10 @@ import {
 	timelineDragAtom,
 } from "$/modules/spectrogram/states/dnd.ts";
 import {
+	spectrogramScrollLeftAtom,
+	spectrogramZoomAtom,
+} from "$/modules/spectrogram/states/index.ts";
+import {
 	commitUpdatedLine,
 	getUpdatedLineForDivider,
 	getUpdatedLineForLinePan,
@@ -61,29 +65,56 @@ export const LyricTimelineOverlay: FC<LyricTimelineOverlayProps> = ({
 
 		let lockedGapDirection: "left" | "right" | null = null;
 
-		const handleGlobalMouseMove = (event: MouseEvent) => {
-			event.preventDefault();
+		// Scroll and zoom are read live, not from the render, so wheeling mid-drag
+		// keeps the dragged item under the cursor instead of restarting the drag.
+		const mouseTimeMs = (
+			clientX: number,
+			zoom = globalStore.get(spectrogramZoomAtom),
+		) => {
+			const container = scrollContainerRef.current;
+			if (!container) return null;
+			const mouseXPx = clientX - container.getBoundingClientRect().left;
+			return (
+				((globalStore.get(spectrogramScrollLeftAtom) + mouseXPx) / zoom) * 1000
+			);
+		};
+
+		const dividerStartMouseTimeMs =
+			timelineDrag.type === "divider"
+				? mouseTimeMs(timelineDrag.startX, timelineDrag.zoom)
+				: null;
+
+		let lastPointer: { clientX: number; shiftKey: boolean } | null = null;
+
+		const updatePreview = (clientX: number, shiftKey: boolean) => {
+			const zoom = globalStore.get(spectrogramZoomAtom);
+			const currentMouseTimeMS = mouseTimeMs(clientX);
+			if (currentMouseTimeMS === null) return;
 
 			switch (timelineDrag.type) {
 				case "divider": {
-					const { startX, lineId, segmentIndex, isGapCreation, zoom } =
-						timelineDrag;
+					const { lineId, segmentIndex, edge, isGapCreation } = timelineDrag;
 					const lineBeingDragged = processedLines.find((l) => l.id === lineId);
-					if (!lineBeingDragged) return;
+					if (!lineBeingDragged || dividerStartMouseTimeMs === null) return;
 
-					const deltaX = event.clientX - startX;
+					const deltaTimeMs = Math.round(
+						currentMouseTimeMS - dividerStartMouseTimeMs,
+					);
+					const deltaX = (deltaTimeMs / 1000) * zoom;
 					if (isGapCreation && !lockedGapDirection) {
 						if (deltaX > 2) lockedGapDirection = "right";
 						else if (deltaX < -2) lockedGapDirection = "left";
 					}
 					if (isGapCreation && !lockedGapDirection) return;
-					const deltaTimeMs = Math.round((deltaX / zoom) * 1000);
-					let newTime =
-						(segmentIndex === -1
+					const handleTime =
+						segmentIndex === -1
 							? lineBeingDragged.startTime
-							: lineBeingDragged.segments[segmentIndex].endTime) + deltaTimeMs;
+							: edge === "start"
+								? lineBeingDragged.segments[segmentIndex + 1].startTime
+								: lineBeingDragged.segments[segmentIndex].endTime;
+					let newTime = handleTime + deltaTimeMs;
 
-					if (!event.shiftKey) {
+					if (!shiftKey) {
 						let closestSnapTime: number | null = null;
 						let minDistancePx = SNAP_THRESHOLD_PX;
 						const newTimePx = (newTime / 1000) * zoom;
@@ -106,6 +137,7 @@ export const LyricTimelineOverlay: FC<LyricTimelineOverlayProps> = ({
 						isGapCreation,
 						zoom,
 						lockedGapDirection,
+						edge,
 					);
 					setPreviewLine(preview);
 					break;
@@ -117,12 +149,6 @@ export const LyricTimelineOverlay: FC<LyricTimelineOverlayProps> = ({
 					const processedLine = processedLines.find((l) => l.id === lineId);
 					if (!processedLine) return;
 
-					const scrollContainer = scrollContainerRef.current;
-					if (!scrollContainer) return;
-					const rect = scrollContainer.getBoundingClientRect();
-
-					const mouseXPx = event.clientX - rect.left;
-					const currentMouseTimeMS = ((scrollLeft + mouseXPx) / zoom) * 1000;
 					const timeDeltaMS = currentMouseTimeMS - initialMouseTimeMS;
 					const desiredNewStartMS = initialWordStartMS + timeDeltaMS;
 
@@ -141,12 +167,6 @@ export const LyricTimelineOverlay: FC<LyricTimelineOverlayProps> = ({
 					const processedLine = processedLines.find((l) => l.id === lineId);
 					if (!processedLine) return;
 
-					const scrollContainer = scrollContainerRef.current;
-					if (!scrollContainer) return;
-					const rect = scrollContainer.getBoundingClientRect();
-
-					const mouseXPx = event.clientX - rect.left;
-					const currentMouseTimeMS = ((scrollLeft + mouseXPx) / zoom) * 1000;
 					const timeDeltaMS = currentMouseTimeMS - initialMouseTimeMS;
 					const desiredNewStartMS = initialLineStartMS + timeDeltaMS;
 
@@ -159,6 +179,24 @@ export const LyricTimelineOverlay: FC<LyricTimelineOverlayProps> = ({
 				}
 			}
 		};
+
+		const handleGlobalMouseMove = (event: MouseEvent) => {
+			event.preventDefault();
+			lastPointer = { clientX: event.clientX, shiftKey: event.shiftKey };
+			updatePreview(event.clientX, event.shiftKey);
+		};
+
+		const replayLastPointer = () => {
+			if (lastPointer) updatePreview(lastPointer.clientX, lastPointer.shiftKey);
+		};
+		const unsubscribeScroll = globalStore.sub(
+			spectrogramScrollLeftAtom,
+			replayLastPointer,
+		);
+		const unsubscribeZoom = globalStore.sub(
+			spectrogramZoomAtom,
+			replayLastPointer,
+		);
 
 		const handleGlobalMouseUp = (event: MouseEvent) => {
 			event.preventDefault();
@@ -204,6 +242,8 @@ export const LyricTimelineOverlay: FC<LyricTimelineOverlayProps> = ({
 		return () => {
 			window.removeEventListener("mousemove", handleGlobalMouseMove);
 			window.removeEventListener("mouseup", handleGlobalMouseUp);
+			unsubscribeScroll();
+			unsubscribeZoom();
 			snapTargetsMs.current = [];
 			setPreviewLine(null);
 		};
@@ -211,8 +251,6 @@ export const LyricTimelineOverlay: FC<LyricTimelineOverlayProps> = ({
 		timelineDrag,
 		setTimelineDrag,
 		setPreviewLine,
-		zoom,
-		scrollLeft,
 		scrollContainerRef,
 		processedLines,
 	]);

@@ -4,6 +4,7 @@ set -euo pipefail
 
 appimage_path="${1:?Usage: patch-appimage.sh <path-to-appimage>}"
 appimage_path="$(realpath "$appimage_path")"
+script_dir="$(dirname "$(realpath "$0")")"
 
 if [[ ! -f "$appimage_path" ]]; then
 	echo "AppImage not found: $appimage_path" >&2
@@ -41,6 +42,15 @@ trap 'rm -rf "$work_dir"' EXIT
 	rm -rf \
 		squashfs-root/usr/lib/gstreamer-1.0 \
 		squashfs-root/usr/libexec/gstreamer-1.0
+
+	# A hook points GStreamer at the host plugins and, when the host GLib is
+	# newer, switches to it (see the hook for why). linuxdeploy's AppRun
+	# sources hooks by name, so add it after the GTK hook, which sets APPDIR.
+	cp "$script_dir/appimage/host-gstreamer.sh" \
+		squashfs-root/apprun-hooks/host-gstreamer.sh
+	grep -q 'apprun-hooks/"linuxdeploy-plugin-gtk.sh"' squashfs-root/AppRun
+	sed -i '/apprun-hooks\/"linuxdeploy-plugin-gtk.sh"/a source "$this_dir"/apprun-hooks/"host-gstreamer.sh"' \
+		squashfs-root/AppRun
 
 	ARCH=x86_64 appimagetool squashfs-root patched.AppImage >/dev/null
 )

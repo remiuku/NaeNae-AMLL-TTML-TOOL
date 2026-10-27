@@ -44,6 +44,8 @@ export const easeInOutSine = (t: number): number =>
 export interface ResolveAnchorParams {
 	syncTabPosition: boolean;
 	toolMode: ToolMode;
+	/** The playhead and line selection are the same as when this tab was left. */
+	unchangedSinceLeft: boolean;
 	modeAnchor: number;
 	sharedAnchor: number;
 	selectedLineIds: Set<string>;
@@ -60,6 +62,7 @@ export interface ResolveAnchorParams {
 
 export const resolveAnchorLineIndex = ({
 	syncTabPosition,
+	unchangedSinceLeft,
 	modeAnchor,
 	sharedAnchor,
 	selectedLineIds,
@@ -69,6 +72,10 @@ export const resolveAnchorLineIndex = ({
 	syncFocusMainLine,
 	findCurrentLineIndex,
 }: ResolveAnchorParams): number => {
+	// Nothing was played or selected elsewhere, so go back to where this tab was.
+	if (unchangedSinceLeft && modeAnchor !== -1) {
+		return modeAnchor;
+	}
 	if (!syncTabPosition) {
 		return modeAnchor;
 	}

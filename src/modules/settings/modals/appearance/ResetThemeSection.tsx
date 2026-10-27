@@ -21,6 +21,7 @@ type ResetThemeProps = AdvancedOverrideSetters &
 		| "setCustomGradientCenter"
 		| "setCustomGradientAngle"
 		| "setCustomGradientSize"
+		| "setSpicyLyricsDesign"
 		| "t"
 	>;
 
@@ -58,6 +59,7 @@ export const ResetThemeSection = (props: ResetThemeProps) => {
 							props.setCustomGradientCenter([50, 50]);
 							props.setCustomGradientAngle(45);
 							props.setCustomGradientSize(1);
+							props.setSpicyLyricsDesign(true);
 							resetAdvancedOverrides(props);
 						}}
 					>
