@@ -880,6 +880,7 @@
       "latencyTest": "Test latencie zvuku/vstupu"
     },
     "keybindings": {
+      "clearWordTiming": "Časovanie - Vymazať časové značky slova/slabiky",
       "newFile": "Nový súbor",
       "openFile": "Otvoriť súbor",
       "saveFile": "Uložiť súbor",
