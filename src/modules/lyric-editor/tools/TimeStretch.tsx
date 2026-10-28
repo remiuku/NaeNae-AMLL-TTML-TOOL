@@ -11,6 +11,7 @@ import { useAtom, useAtomValue, useStore } from "jotai";
 import { useSetImmerAtom } from "jotai-immer";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useLyricLinesWhileOpen } from "$/hooks/useLyricLinesWhileOpen.ts";
 import { currentDurationAtom } from "$/modules/audio/states";
 import { timeStretchDialogAtom } from "$/states/dialogs";
 import { lyricLinesAtom, selectedLinesAtom } from "$/states/main";
@@ -29,7 +30,7 @@ export const TimeStretchDialog = () => {
 	const { t } = useTranslation();
 	const [open, setOpen] = useAtom(timeStretchDialogAtom);
 	const store = useStore();
-	const lyricLines = useAtomValue(lyricLinesAtom);
+	const lyricLines = useLyricLinesWhileOpen(open);
 	const selectedLines = useAtomValue(selectedLinesAtom);
 	const setLyricLines = useSetImmerAtom(lyricLinesAtom);
 	const [oldDurationInput, setOldDurationInput] = useState("");

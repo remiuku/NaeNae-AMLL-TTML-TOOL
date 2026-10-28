@@ -41,9 +41,17 @@ export const AutosaveSection = ({
 					<Save24Regular />
 					<Box flexGrow="1">
 						<Flex gap="2" align="center" justify="between">
-							<Text>
-								{t("settings.common.autosave.enable", "Enable autosave")}
-							</Text>
+							<Flex direction="column" gap="1">
+								<Text>
+									{t("settings.common.autosave.enable", "Enable autosave")}
+								</Text>
+								<Text size="1" color="gray">
+									{t(
+										"settings.common.autosave.enableDesc",
+										"Saves your lyrics a few seconds after each change and keeps snapshots you can restore from the File menu.",
+									)}
+								</Text>
+							</Flex>
 							<Switch
 								checked={autosaveEnabled}
 								onCheckedChange={setAutosaveEnabled}
@@ -60,9 +68,20 @@ export const AutosaveSection = ({
 					<History24Regular />
 					<Box flexGrow="1">
 						<Flex direction="column" gap="2" align="start">
-							<Text>
-								{t("settings.common.autosave.interval", "Save every (minutes)")}
-							</Text>
+							<Flex direction="column" gap="1">
+								<Text>
+									{t(
+										"settings.common.autosave.interval",
+										"Save every (minutes)",
+									)}
+								</Text>
+								<Text size="1" color="gray">
+									{t(
+										"settings.common.autosave.intervalDesc",
+										"Minimum time between snapshots. Your latest changes are still saved after every edit.",
+									)}
+								</Text>
+							</Flex>
 							<TextField.Root
 								type="number"
 								disabled={!autosaveEnabled}
@@ -96,6 +115,12 @@ export const AutosaveSection = ({
 								{autosaveLimit}
 							</Text>
 						</Flex>
+						<Text size="1" color="gray">
+							{t(
+								"settings.common.autosave.limitDesc",
+								"How many snapshots to keep for each song. The oldest are deleted first.",
+							)}
+						</Text>
 						<Slider
 							min={1}
 							max={50}

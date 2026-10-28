@@ -27,12 +27,7 @@
     }
   },
   "onlineImport": {
-    "processDescription": "Bij import wordt de tekst in woorden gesplitst, worden leestekens en spaties opgeschoond en wordt zang tussen haakjes omgezet in regels voor achtergrondzang.",
-    "noLyricsLabel": "Geen songteksten beschikbaar voor dit nummer.",
-    "editingRawText": "Ruwe tekst bewerken",
-    "backToPreview": "Terug naar voorbeeld",
-    "manualEdit": "Handmatig bewerken",
-    "source": "Bron: "
+    "noLyricsLabel": "Geen songteksten beschikbaar voor dit nummer."
   },
   "preview": {
     "untimedLines": "{count, plural, one {# regel heeft nog geen timing} other {# regels hebben nog geen timing}}",
@@ -66,7 +61,7 @@
       "link": "Uiterlijk van de editor aanpassen"
     },
     "status": {
-      "complete": "Klaar — de tool heeft gedetecteerd dat deze stap voltooid is."
+      "complete": "Klaar. De tool heeft gedetecteerd dat deze stap voltooid is."
     },
     "readMore": "Volledige gids",
     "continue": "Doorgaan",
@@ -90,7 +85,7 @@
       "step1": "1. Open Genius API Clients en meld je aan.",
       "step2": "2. Kies New API Client, geef hem een herkenbare appnaam en vul het verplichte veld voor de appwebsite in.",
       "step3": "3. Sla de client op en kies daarna Generate Access Token.",
-      "step4": "4. Kopieer het Client Access Token — niet de Client ID of het Client Secret.",
+      "step4": "4. Kopieer het Client Access Token, niet de Client ID of het Client Secret.",
       "reuse": "De tool slaat dit token lokaal op en hergebruikt het voor het importeren van songteksten en het opzoeken van liedschrijvers.",
       "openPortal": "Genius API Clients openen",
       "paste": "Token plakken in Genius-import"
@@ -109,8 +104,8 @@
       },
       "lyrics": {
         "title": "Importeer de songtekst",
-        "description": "Kies hieronder een bron voor de songtekst. Controleer het resultaat in het importvenster en bevestig de import.",
-        "waiting": "Kies hieronder een bron en voltooi de import."
+        "description": "Kies hieronder een bron voor de songtekst. Het importscherm opent; bovenaan wissel je tussen Plakken, LRCLIB en Genius, je ruimt de tekst op en importeert hem.",
+        "waiting": "Kies hieronder een bron en importeer de songtekst vanuit het importscherm."
       },
       "review": {
         "title": "Controleer songtekst en regeltypen",
@@ -140,17 +135,92 @@
       }
     }
   },
-  "importChooser": {
+  "importLyrics": {
     "title": "Songteksten importeren",
-    "description": "Kies waar je je songteksten vandaan wilt importeren.",
+    "description": "Plak een songtekst of zoek hem online, ruim hem op en importeer.",
+    "sourceLabel": "Bron van de songtekst",
+    "paste": "Plakken",
+    "textLabel": "Songtekst",
+    "textPlaceholder": "Plak de songtekst hier, één regel per rij. Sectiekoppen zoals [Chorus] staan op een eigen rij.",
+    "backToText": "Terug naar de tekst",
+    "showResults": "Zoekresultaten tonen",
+    "usingTrack": "Gegevens van {title} door {artist}",
+    "dropTrack": "Deze gegevens niet gebruiken",
+    "prepareTitle": "Opschonen",
+    "processHint": "Splitst woorden, ruimt leestekens en spaties op en zet zang tussen haakjes op achtergrondregels.",
+    "splitSyllables": "Lettergrepen splitsen",
+    "splitHint": "Markeert lettergrepen met het woordscheidingsteken, volgens je segmentatie-instellingen en geleerde splitsingen. Corrigeer de markeringen in de tekst voordat je importeert.",
+    "splitDone": "Lettergrepen gemarkeerd. Controleer ze voordat je importeert.",
+    "splitNothing": "Niets om te splitsen.",
+    "restoreOriginal": "Oorspronkelijke tekst herstellen",
+    "sectionsTitle": "Sectiekoppen",
+    "sectionsFound": "{count, plural, one {# kop gevonden} other {# koppen gevonden}}",
+    "makeSections": "Secties maken",
+    "makeSectionsHint": "Elke kop begint een sectie. Zet Genius-secties aan.",
+    "removeHeaders": "Verwijderen",
+    "removeHeadersHint": "Haalt de koprijen uit de songtekst.",
+    "textFormat": "Tekstopmaak",
+    "reviewSections": "Secties controleren",
+    "reviewHint": "Corrigeer verkeerd geraden categorieën. Kleuren, zangers en opmerkingen stel je later in via het sectiemenu.",
+    "sectionLabel": "Sectienaam",
+    "sectionCategory": "Sectiecategorie",
+    "lowConfidence": "Categorie geraden. Controleer hem.",
+    "importSuccess": "{count, plural, one {# regel geïmporteerd.} other {# regels geïmporteerd.}}",
+    "importFailed": "Kan deze songtekst niet lezen. Controleer de tekst en de instellingen voor tekstopmaak.",
+    "stepsLabel": "Importstappen",
+    "stepText": "Tekst bewerken",
+    "processSteps": {
+      "advanced": "Geavanceerd",
+      "removeInlineBrackets": "Notities in de regel verwijderen",
+      "removeInlineBracketsHint": "Haalt [notities] midden in een regel weg. Koprijen blijven staan.",
+      "backgroundVocals": "Haakjes naar achtergrond",
+      "backgroundVocalsHint": "Zet (zang) op een eigen achtergrondregel.",
+      "capitalizeBackground": "Hoofdletter voor achtergrond",
+      "capitalizeBackgroundHint": "Begint elke achtergrondregel met een hoofdletter.",
+      "emDashes": "Gedachtestreepjes",
+      "emDashesHint": "Maakt van dubbele en losse streepjes een lang gedachtestreepje.",
+      "splitHyphens": "Woorden met koppelteken splitsen",
+      "splitHyphensHint": "Splitst woorden als mm-hmm na het koppelteken.",
+      "splitCjk": "CJK-tekens splitsen",
+      "splitCjkHint": "Splitst Chinese, Japanse en Koreaanse tekst in tekens en bij schriftwisselingen.",
+      "punctuationSpacing": "Leestekens opschonen",
+      "punctuationSpacingHint": "Eén spatie na komma's, geen voor leestekens, en aanhalingstekens blijven bij hun woord.",
+      "collapseSpaces": "Spaties samenvoegen",
+      "collapseSpacesHint": "Maakt van meerdere spaties achter elkaar één.",
+      "splitWords": "Splitsen bij spaties",
+      "splitWordsHint": "Markeert elke spatie als woordgrens voor de import."
+    }
+  },
+  "lyricMarkup": {
+    "section": "Sectie: {label}",
+    "joinSyllables": "Lettergrepen samenvoegen",
+    "toolbar": "Regelhulpmiddelen",
+    "background": "Achtergrondregel",
+    "duet": "Duetregel",
+    "split": "Lettergreep splitsen of samenvoegen",
+    "hint": "Alt+klik tussen letters om te splitsen, klik op een punt om samen te voegen. Alt+C wijzigt een sectie.",
+    "headerText": "Koptekst",
+    "category": "Categorie",
+    "gutter": {
+      "background": "Achtergrond",
+      "duet": "Duet",
+      "translation": "Vertaling",
+      "romanization": "Romanisering",
+      "removed": "Verwijderd",
+      "dropped": "Niet geïmporteerd",
+      "missingTranslation": "Vertaling ontbreekt",
+      "missingRomanization": "Romanisering ontbreekt"
+    }
+  },
+  "importChooser": {
     "options": {
       "plainText": {
-        "title": "Platte tekst",
+        "title": "Plakken",
         "description": "Plak songteksten en kies hoe regels, vertalingen, romanisatie en woordsplitsingen worden verwerkt."
       },
       "lrclib": {
         "title": "LRCLIB",
-        "description": "Zoek in LRCLIB op nummer en artiest naar songteksten met of zonder timing."
+        "description": "Zoek in LRCLIB op nummer en artiest en haal de songtekst op als platte tekst."
       },
       "genius": {
         "title": "Genius",
@@ -206,8 +276,7 @@
       "snapToPlayhead": "Uitlijnen op afspeelkop",
       "noPreviousFound": "Geen eerdere overeenkomende sectie met timing gevonden.",
       "noMatchingLines": "Geen regels in deze sectie komen overeen met de eerdere, dus er is niets gekopieerd.",
-      "copyPrevious": "Vorige timing kopiëren",
-      "headersRestored": "Sectiekoppen hersteld."
+      "copyPrevious": "Vorige timing kopiëren"
     }
   },
   "common": {
@@ -305,6 +374,15 @@
   },
   "ribbonBar": {
     "advancedTooltip": "Geldt voor de linten Bewerken, Timing en Voorbeeld.",
+    "tooltips": {
+      "newLyricLine": "Voegt een lege regel toe aan het einde van de songtekst.",
+      "bgLyric": "Markeert de geselecteerde regels als achtergrondzang.",
+      "duetLyric": "Markeert de geselecteerde regels als gezongen door de tweede zanger.",
+      "ignoreSync": "De synchronisatietoetsen slaan de geselecteerde regels over, zodat je ze niet timet.",
+      "romanizationLanguage": "Romanisatietaal",
+      "romanizationLanguageDesc": "De taal van de geselecteerde songtekst. Automatische detectie werkt voor de meeste nummers.",
+      "romanize": "Vult de romanisatie in voor de geselecteerde regels of woorden."
+    },
     "editMode": {
       "multipleValues": "Meerdere waarden…",
       "duration": "Duur",
@@ -355,7 +433,7 @@
       "mode": "Modus",
       "standard": "Standard",
       "timing": "Timing",
-      "spicy": "Spicy",
+      "spicy": "Spicy Lyrics",
       "simpleLyrics": "Eenvoudige songtekstmodus",
       "forceLineRendering": "Als regelsynchronisatie tonen",
       "background": "Achtergrond",
@@ -381,10 +459,10 @@
       "showTimestampUpdate": "Tijdstempelupdates tonen",
       "touchSyncPanel": "Synchronisatiepaneel voor aanraking",
       "bgLyricSync": "Achtergrondregels",
-      "bgSyncInline": "Doorlopend",
+      "bgSyncInline": "Met de hoofdregel",
       "bgSyncInlineDesc": "Synchroniseer elke achtergrondregel direct na de hoofdregel.",
-      "bgSyncSeparate": "Aparte ronde",
-      "bgSyncSeparateDesc": "G en H blijven op de hoofdregels. Klik op een achtergrondregel om de achtergrondregels apart te synchroniseren.",
+      "bgSyncSeparate": "Overslaan bij synchroniseren",
+      "bgSyncSeparateDesc": "G en H blijven op de hoofdregels. Klik op een achtergrondregel om ze apart te synchroniseren.",
       "quickFixes": "Snelle correcties",
       "manualTimestampEdit": "Tijdstempels handmatig bewerken",
       "doubleClickEdit": "Woorden bewerken met dubbelklik",
@@ -414,6 +492,7 @@
     "common": {
       "highlightActiveLineDesc": "Markeert visueel de tekstregel die momenteel wordt gespeeld in de geselecteerde modus.",
       "playbackSettingsMode": "Afspeelgedrag voor",
+      "playbackSettingsModeDesc": "Automatisch scrollen en de positie tussen tabbladen stel je apart in voor Bewerken en Timing. Kies welke je wilt wijzigen.",
       "editMode": "Bewerken",
       "timeMode": "Timing",
       "enabled": "Ingeschakeld",
@@ -449,8 +528,11 @@
       "playbackRate": "Afspeelsnelheid",
       "autosave": {
         "enable": "Automatisch opslaan inschakelen",
+        "enableDesc": "Slaat je songtekst een paar seconden na elke wijziging op en bewaart momentopnamen die je via het menu Bestand kunt herstellen.",
         "interval": "Opslaan om de (minuten)",
-        "limit": "Aantal te bewaren momentopnamen"
+        "intervalDesc": "Minimale tijd tussen momentopnamen. Je laatste wijzigingen worden nog steeds na elke bewerking opgeslagen.",
+        "limit": "Aantal te bewaren momentopnamen",
+        "limitDesc": "Hoeveel momentopnamen per nummer bewaard blijven. De oudste worden eerst verwijderd."
       },
       "customBackground": "Aangepaste achtergrond",
       "customBackgroundDesc": "Kies een afbeelding om als achtergrond te gebruiken.",
@@ -510,6 +592,7 @@
     "appearance": {
       "mode": {
         "label": "Weergave-editor",
+        "labelDesc": "Eenvoudig bevat thema, achtergrond, schaal en lettertype. Geavanceerd stelt losse kleuren, afstanden en de volgorde van panelen in.",
         "basic": "Eenvoudige indeling",
         "advanced": "Geavanceerde indeling",
         "none": "Geen",
@@ -540,6 +623,7 @@
       "glassBlur": "Sterkte glaseffect",
       "glassBlurDesc": "Pas de achtergrondvervaging van glaselementen aan.",
       "background": "Achtergrond",
+      "backgroundDesc": "Toon een afbeelding of een kleurverloop achter de app.",
       "useCustomGradient": "Aangepaste verloopkleur",
       "useCustomGradientDesc": "Genereer een gradiënt van één kleur.",
       "syncGradientToAccent": "Eerste kleur synchroniseren met accentkleur",
@@ -754,7 +838,7 @@
       "timingOverviewAutoScrollDesc": "Houd het timingoverzicht gescrold naar de afspeelpositie.",
       "vsyncDesc": "Werk de Standard- en Toxi-voorbeelden elk frame bij in plaats van ongeveer 30 keer per seconde. Vloeiender, maar gebruikt meer CPU.",
       "showFpsDesc": "Toon een framerateteller op het voorbeeld.",
-      "syncLevelDesc": "Woord: synchroniseer elk woord. Regel: synchroniseer hele regels en verdeel de woorden gelijkmatig voor een ruwe timing die je in het spectrogram verfijnt.",
+      "syncLevelDesc": "Woord: synchroniseer elk woord. Regel: synchroniseer hele regels en verdeel de woorden gelijkmatig. Ook Regel slaat timing per woord op, geen per regel gesynchroniseerde songtekst, dus verfijn de woorden in het spectrogram.",
       "previewModeDesc": "Kies welk voorbeeld het tabblad Voorbeeld toont.",
       "spicyBackgroundDesc": "Wat er achter het Spicy-voorbeeld te zien is.",
       "fadeWidthDesc": "Hoe zacht de rand van de markering is terwijl een woord vult in de Standard- en Toxi-voorbeelden."
@@ -779,7 +863,10 @@
     "modeBtns": {
       "edit": "Bewerken",
       "sync": "Timing",
-      "preview": "Voorbeeld"
+      "preview": "Voorbeeld",
+      "editDesc": "Typ, splits en markeer de songtekst.",
+      "syncDesc": "Time elk woord op de audio.",
+      "previewDesc": "Speel de songtekst af zoals luisteraars hem zien."
     },
     "appName": "TTML Tool",
     "menu": {
@@ -808,10 +895,7 @@
       "ttmlChecklist": "TTML-controlelijst",
       "tool": "Hulpmiddelen",
       "importLyric": {
-        "import": "Songteksten importeren",
-        "fromPlainText": "Importeren uit onopgemaakte tekst…",
-        "fromLRCLIB": "Importeren uit LRCLIB...",
-        "fromGenius": "Importeren uit Genius…"
+        "import": "Songteksten importeren..."
       },
       "exportLyric": {
         "export": "Songtekst exporteren",
@@ -1055,7 +1139,6 @@
       "searchError": "Zoeken mislukt: {error}",
       "fetchError": "Kan de songteksten niet ophalen: {error}",
       "noLyricsError": "Geen songteksten om te importeren.",
-      "importSuccess": "{count, plural, one {# regel geïmporteerd van Genius.} other {# regels geïmporteerd van Genius.}}",
       "howToGetKey": "Een Genius-toegangstoken verkrijgen"
     },
     "openLink": "Koppeling openen",
@@ -1079,11 +1162,15 @@
     "addPresets": "Alle standaardvelden toevoegen",
     "clear": "Wissen"
   },
+  "helpText": {
+    "metadataArtists": "Wie het nummer uitvoert, zoals het op streamingdiensten wordt vermeld. Voorbeeld: \"Shake It Off\" is van Taylor Swift.",
+    "metadataSongwriter": "Wie de muziek en tekst schreef, volgens de schrijverscredits. Vaak andere mensen dan de artiesten. Voorbeeld: \"Shake It Off\" is geschreven door Taylor Swift, Max Martin en Shellback.",
+    "openSongwritersGuide": "Open de gids over songwriters"
+  },
   "lrclib": {
     "placeholder": "Songtitel en artiest…",
     "notFound": "Geen resultaten gevonden, probeer andere trefwoorden",
     "noResult": "Typ een nummer of artiest om te zoeken",
-    "title": "Songteksten importeren van LRCLIB",
     "matchesAudio": "Komt overeen met je audio"
   },
   "lyricEditor": {
@@ -1208,13 +1295,8 @@
     "setupTitle": "Genius-toegangstoken",
     "setupDesc": "Om te importeren van Genius heb je een Genius-toegangstoken nodig (bij Genius heet dit Client Access Token). Je kunt er een maken in de ontwikkelaarsportal van Genius.",
     "keyPlaceholder": "Plak je Genius-toegangstoken…",
-    "previewTitle": "Genius — Songtekstvoorbeeld",
-    "back": "Terug",
-    "previewSubtitle": "Je kunt onderstaande songtekst bewerken voordat je importeert.",
     "linesCount": "{count, plural, one {# regel} other {# regels}}",
     "importButton": "Songteksten importeren",
-    "importTitle": "Songteksten importeren van Genius",
-    "searchPlaceholder": "Artiest – songtitel…",
     "notFound": "Geen resultaten gevonden. Probeer andere trefwoorden.",
     "noResult": "Voer de naam van het nummer of de artiest in om te starten.",
     "howToGetKey": "Een Genius-toegangstoken verkrijgen",
@@ -1223,8 +1305,6 @@
   "textImportDialog": {
     "processLyrics": "Songteksten verwerken",
     "processedSuccess": "Songtekst voorbereid voor synchronisatie per lettergreep.",
-    "title": "Importeer songteksten uit platte tekst",
-    "actionButton": "Importeren",
     "contentMode": {
       "caption": "Tekstinhoud",
       "lyric": "Alleen songteksten",
@@ -1242,20 +1322,11 @@
     "wordSeparator": "Woordscheidingsteken",
     "enableSpecialPrefix": "Regelvoorvoegsels gebruiken",
     "bgLyricPrefix": "Voorvoegsel achtergrondregel",
-    "duetLyricPrefix": "Voorvoegsel duetregel",
-    "description": "Importeer songteksten uit platte tekst of andere formaten."
+    "duetLyricPrefix": "Voorvoegsel duetregel"
   },
   "sectionImportReview": {
     "title": "Controleer gedetecteerde secties",
-    "description": "Controleer de genormaliseerde categorieën en metagegevens voordat je de songtekst vervangt.",
-    "sourceLyrics": "Oorspronkelijke songtekst",
-    "structure": "Structuur",
-    "sectionCount": "{count, plural, one {# sectie} other {# secties}}",
-    "vocalist": "Zanger / rol",
-    "color": "Sectiekleur",
-    "notes": "Opmerkingen",
-    "lineCount": "{count, plural, one {# songtekstregel} other {# songtekstregels}}",
-    "import": "Gecontroleerde songtekst importeren"
+    "lineCount": "{count, plural, one {# songtekstregel} other {# songtekstregels}}"
   },
   "globalDragOverlay": {
     "title": "Loslaten om te laden"

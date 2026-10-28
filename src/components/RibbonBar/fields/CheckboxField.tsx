@@ -9,16 +9,18 @@
  * https://github.com/spicylyrics/ttml-tool/blob/main/LICENSE
  */
 
-import { Checkbox, Text } from "@radix-ui/themes";
+import { Checkbox } from "@radix-ui/themes";
 import { atom, useAtomValue, useStore } from "jotai";
 import { useSetImmerAtom } from "jotai-immer";
 import { useId, useMemo } from "react";
+import { ActionTooltip } from "$/components/ActionTooltip";
 import {
 	lyricLinesAtom,
 	selectedLinesAtom,
 	selectedWordsAtom,
 } from "$/states/main.ts";
 import type { LyricLine, LyricWord } from "$/types/ttml";
+import { RibbonLabel } from "../RibbonToggle";
 
 import {
 	applySelectedField,
@@ -32,11 +34,14 @@ export function CheckboxField<
 	Word extends boolean | undefined = undefined,
 >({
 	label,
+	description,
 	isWordField,
 	fieldName,
 	defaultValue,
 }: {
 	label: string;
+	/** One line for the tooltip on what the field does. */
+	description?: string;
 	isWordField: Word;
 	fieldName: F;
 	defaultValue: V;
@@ -74,38 +79,38 @@ export function CheckboxField<
 
 	return (
 		<>
-			<Text
-				wrap="nowrap"
-				size="1"
-				style={{ color: "var(--ribbon-label-color)" }}
-			>
-				<label htmlFor={checkboxId}>{label}</label>
-			</Text>
-			<Checkbox
-				disabled={isDisabled}
-				id={checkboxId}
-				checked={
-					currentValue
-						? currentValue === MULTIPLE_VALUES
-							? "indeterminate"
-							: (currentValue as boolean)
-						: defaultValue
-				}
-				onCheckedChange={(value) => {
-					if (value === "indeterminate") return;
-					editLyricLines((state) => {
-						const selectedItems = store.get(itemAtom);
-						state.lyricLines = applySelectedField<L, F>(
-							state.lyricLines,
-							selectedItems,
-							isWordField,
-							fieldName,
-							value as L[F],
-						);
-						return state;
-					});
-				}}
+			<RibbonLabel
+				label={label}
+				description={description}
+				htmlFor={checkboxId}
 			/>
+			<ActionTooltip label={label} description={description}>
+				<Checkbox
+					disabled={isDisabled}
+					id={checkboxId}
+					checked={
+						currentValue
+							? currentValue === MULTIPLE_VALUES
+								? "indeterminate"
+								: (currentValue as boolean)
+							: defaultValue
+					}
+					onCheckedChange={(value) => {
+						if (value === "indeterminate") return;
+						editLyricLines((state) => {
+							const selectedItems = store.get(itemAtom);
+							state.lyricLines = applySelectedField<L, F>(
+								state.lyricLines,
+								selectedItems,
+								isWordField,
+								fieldName,
+								value as L[F],
+							);
+							return state;
+						});
+					}}
+				/>
+			</ActionTooltip>
 		</>
 	);
 }

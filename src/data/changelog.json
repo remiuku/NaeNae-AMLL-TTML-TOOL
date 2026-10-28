@@ -1,5 +1,105 @@
 [
 	{
+		"version": "0.16.0",
+		"summary": "Import and preview overhaul",
+		"color": "cyan",
+		"date": "2026-10-27",
+		"entries": [
+			{
+				"type": "feature",
+				"title": "One import screen for pasted text, LRCLIB and Genius",
+				"body": "Pick a source at the top, then clean up, **split syllables** (with your learned splits) and review Genius sections in the same place before importing. The text shows section headers as pills, background and duet lines by role, syllable splits as dots and translations under their line, while the line you're on stays plain text.",
+				"highlight": true
+			},
+			{
+				"type": "feature",
+				"title": "Choose what Process lyrics does, and run it safely more than once",
+				"body": "Every step of **Process lyrics** (em dashes, splitting hyphenated words, parentheses to background lines and the rest) now has its own switch under **Advanced**. Running it twice no longer mangles the text, quotes and closing punctuation like `sorry,\"` stay on their word, and tool changes in the import text can be undone with `Ctrl+Z`.",
+				"highlight": false
+			},
+			{
+				"type": "feature",
+				"title": "Tooltips on ribbon and mode buttons",
+				"body": "Hover any ribbon control or the **Edit**, **Time** and **Preview** buttons to see what it does and its shortcut, which follows your own keybindings. The **Preview panel** toggle now sits in the Time ribbon without turning on Advanced. The **Background lines** options are now called **Sync with main** and **Skip while syncing** (previously Inline and Separate pass); your saved choice carries over.",
+				"highlight": true
+			},
+			{
+				"type": "fix",
+				"title": "Spicy preview now matches Spicy Lyrics for background vocals",
+				"body": "A line now stays active until its **background vocal** ends, so the next line and interludes no longer start early. Background vocals placed before their line, consecutive and standalone background vocals, and split or hyphenated words render the way Spicy Lyrics renders them. Lines that aren't being sung are no longer redrawn every frame. Spicy is now the default preview if you haven't picked one; a mode you chose before stays.",
+				"highlight": true
+			},
+			{
+				"type": "fix",
+				"title": "Spicy preview keeps up with long songs",
+				"body": "The Spicy preview now only keeps the lines near the screen loaded, and scrolls to the next line the way Spicy Lyrics does by default, waiting for an interlude to close first. On a 220-line test song, each frame takes a fraction of the work it did before.",
+				"highlight": false
+			},
+			{
+				"type": "fix",
+				"title": "Sync keys do less work on long songs",
+				"body": "Each **F**, **G** or **H** press used to re-render the menu bar and about a dozen closed dialogs, and rebuild data for every line. On a 180-line song that is now about 230 component renders per press instead of 500, and the closed dialogs no longer react to timing changes.",
+				"highlight": false
+			},
+			{
+				"type": "fix",
+				"title": "Readable shortcut names",
+				"body": "Shortcuts in menus, tooltips and **Preferences › Shortcuts** now read as you'd type them, like **Shift+2**, **Ctrl+=** and **Num 5**, instead of internal key codes like \"Shift + Digit2\".",
+				"highlight": false
+			}
+		]
+	},
+	{
+		"version": "0.15.0",
+		"summary": "Searchable preferences",
+		"color": "iris",
+		"date": "2026-10-27",
+		"entries": [
+			{
+				"type": "feature",
+				"title": "Preferences search finds settings by their name or description, in your language",
+				"body": "Search used to know only a short list of English words for each page. It now looks through everything on every page, including descriptions, in whatever language the app is in. Accents are optional, so \"sincronizacion\" finds \"Sincronización\".",
+				"highlight": true
+			},
+			{
+				"type": "feature",
+				"title": "More Preferences explain what they do",
+				"body": "Autosave, its snapshot interval and limit, the Edit/Time playback switch, the Appearance layout picker and Background now have a one-line description, in every language.",
+				"highlight": false
+			},
+			{
+				"type": "fix",
+				"title": "Half-timed words respond to clicks again in Edit mode",
+				"body": "A word with a start time but no end time is marked as a timing error, and in the Spicy Lyrics design and the newer dark theme that hid its red outline and every hover and selection highlight, so it looked stuck. It now shows a red outline, and clicking it visibly selects it.",
+				"highlight": false
+			},
+			{
+				"type": "fix",
+				"title": "Dragging a word shows where it will land again",
+				"body": "The drop marker was hidden in the Spicy Lyrics design and the newer dark theme. It now shows as a bar between words in every theme, and no longer nudges the line while you drag.",
+				"highlight": false
+			},
+			{
+				"type": "fix",
+				"title": "The ribbon's Advanced switch shows whether it's on",
+				"body": "When it was on, the switch drew a white thumb on a white track in the Spicy Lyrics design, and in the classic look its track didn't slide. Both now match the other switches, and screen readers announce it as \"Advanced\".",
+				"highlight": false
+			},
+			{
+				"type": "fix",
+				"title": "Audio bar times stay on one line on macOS",
+				"body": "The current time and duration no longer push their last digit onto a second line when the system's monospace font is wider than expected.",
+				"highlight": false
+			},
+			{
+				"type": "fix",
+				"title": "The empty editor's buttons line up when Projects is on",
+				"body": "With folder projects turned on, the four buttons (Start guide, Import lyrics, Open lyrics file, Projects) sit in an even two-by-two grid instead of one button wrapping onto its own line. Long translations wrap inside their button.",
+				"highlight": false
+			}
+		]
+	},
+	{
 		"version": "0.14.1",
 		"summary": "Desktop and spectrogram fixes",
 		"color": "blue",

@@ -3,7 +3,18 @@ export interface PreviewScrollTarget {
 	getNode: () => HTMLElement | null | undefined;
 	/** Virtual lists can mount an offscreen row before centering it. */
 	reveal?: () => void;
+	/**
+	 * Scroll position that centers this target, for lists that know it without
+	 * a mounted node. Used instead of measuring `getNode()`.
+	 */
+	getTop?: (anchor: number, offset: number) => number | undefined;
+	/** Not ready to follow yet; ask again next frame. Seeks still jump. */
+	deferred?: boolean;
 }
+
+const prefersReducedMotion = () =>
+	typeof matchMedia === "function" &&
+	matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 export function previewScrollTop(
 	currentTop: number,
@@ -65,22 +76,29 @@ export function createPreviewScroll(
 		viewport.scrollTo({ top, behavior: "auto" });
 		viewport.style.scrollBehavior = behavior;
 	};
-	const center = (target: PreviewScrollTarget, seeked: boolean) => {
+	const targetTop = (target: PreviewScrollTarget) => {
+		const anchor = options.anchor ?? 0.5;
+		const offset = options.offset ?? 0;
+		if (target.getTop) return target.getTop(anchor, offset);
 		const node = target.getNode();
-		if (!node) return false;
+		if (!node) return undefined;
 		const rect = node.getBoundingClientRect();
 		const viewportRect = viewport.getBoundingClientRect();
-		const top = previewScrollTop(
+		return previewScrollTop(
 			viewport.scrollTop,
 			rect.top - viewportRect.top,
 			rect.height,
 			viewport.clientHeight,
 			viewport.scrollHeight - viewport.clientHeight,
-			options.anchor ?? 0.5,
-			options.offset ?? 0,
+			anchor,
+			offset,
 		);
+	};
+	const center = (target: PreviewScrollTarget, seeked: boolean) => {
+		const top = targetTop(target);
+		if (top === undefined) return false;
 		markProgrammatic();
-		if (seeked) jumpTo(top);
+		if (seeked || prefersReducedMotion()) jumpTo(top);
 		else viewport.scrollTo({ top, behavior: "smooth" });
 		lastId = target.id;
 		return true;
@@ -95,6 +113,7 @@ export function createPreviewScroll(
 			return;
 		}
 		if (!seeked && (target.id === lastId || target.id === pendingId)) return;
+		if (!seeked && target.deferred) return;
 		cancelReveal();
 		if (center(target, seeked) || !target.reveal) return;
 		pendingId = target.id;

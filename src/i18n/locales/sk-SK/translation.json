@@ -27,12 +27,7 @@
     }
   },
   "onlineImport": {
-    "processDescription": "Pri importe rozdelí text na slová, upraví interpunkciu a medzery a prevedie vokály v zátvorkách na riadky sprievodného vokálu.",
-    "noLyricsLabel": "Pre túto skladbu nie sú k dispozícii žiadne texty.",
-    "editingRawText": "Úprava obyčajného textu",
-    "backToPreview": "Späť na náhľad",
-    "manualEdit": "Ručná úprava",
-    "source": "Zdroj:"
+    "noLyricsLabel": "Pre túto skladbu nie sú k dispozícii žiadne texty."
   },
   "preview": {
     "untimedLines": "{count, plural, one {# riadok ešte nemá časovanie} few {# riadky ešte nemajú časovanie} many {# riadka ešte nemá časovanie} other {# riadkov ešte nemá časovanie}}",
@@ -66,7 +61,7 @@
       "link": "Prispôsobiť vzhľad editora"
     },
     "status": {
-      "complete": "Hotovo — nástroj zistil, že tento krok je dokončený."
+      "complete": "Hotovo. Nástroj zistil, že tento krok je dokončený."
     },
     "readMore": "Celý sprievodca",
     "continue": "Pokračovať",
@@ -90,7 +85,7 @@
       "step1": "1. Otvorte Genius API Clients a prihláste sa.",
       "step2": "2. Zvoľte New API Client, zadajte ľubovoľný rozpoznateľný názov aplikácie a vyplňte povinné pole s webom aplikácie.",
       "step3": "3. Uložte klienta a potom zvoľte Generate Access Token.",
-      "step4": "4. Skopírujte Client Access Token — nie Client ID ani Client Secret.",
+      "step4": "4. Skopírujte Client Access Token, nie Client ID ani Client Secret.",
       "reuse": "Nástroj token uloží lokálne a použije ho na import textov a vyhľadávanie autorov skladieb.",
       "openPortal": "Otvoriť Genius API Clients",
       "paste": "Vložiť token do importu z Genius"
@@ -109,8 +104,8 @@
       },
       "lyrics": {
         "title": "Importujte text",
-        "description": "Nižšie vyberte zdroj textu. Výsledok skontrolujte v okne importu a import potvrďte.",
-        "waiting": "Vyberte nižšie jeden zdroj a dokončite jeho okno importu."
+        "description": "Nižšie vyberte zdroj textu. Otvorí sa obrazovka importu, kde hore prepínate medzi Vložiť, LRCLIB a Genius, upravíte text a importujete ho.",
+        "waiting": "Vyberte nižšie zdroj a importujte text na obrazovke importu."
       },
       "review": {
         "title": "Skontrolujte text a typy riadkov",
@@ -140,17 +135,92 @@
       }
     }
   },
-  "importChooser": {
+  "importLyrics": {
     "title": "Importovať text piesne",
-    "description": "Vyberte, odkiaľ chcete importovať svoje texty.",
+    "description": "Vložte text alebo ho nájdite online, upravte ho a importujte.",
+    "sourceLabel": "Zdroj textu",
+    "paste": "Vložiť",
+    "textLabel": "Text piesne",
+    "textPlaceholder": "Sem vložte text, každý verš na vlastný riadok. Hlavičky sekcií ako [Chorus] dajte na samostatný riadok.",
+    "backToText": "Späť na text",
+    "showResults": "Zobraziť výsledky hľadania",
+    "usingTrack": "Údaje zo skladby {title} od {artist}",
+    "dropTrack": "Nepoužívať tieto údaje",
+    "prepareTitle": "Úprava",
+    "processHint": "Rozdelí slová, upraví interpunkciu a medzery a presunie vokály v zátvorkách na sprievodné riadky.",
+    "splitSyllables": "Rozdeliť slabiky",
+    "splitHint": "Označí slabiky oddeľovačom slov podľa vašich nastavení delenia a naučených delení. Pred importom opravte značky priamo v texte.",
+    "splitDone": "Slabiky označené. Pred importom ich skontrolujte.",
+    "splitNothing": "Nie je čo rozdeliť.",
+    "restoreOriginal": "Obnoviť pôvodný text",
+    "sectionsTitle": "Hlavičky sekcií",
+    "sectionsFound": "{count, plural, one {Nájdená # hlavička} few {Nájdené # hlavičky} many {Nájdenej # hlavičky} other {Nájdených # hlavičiek}}",
+    "makeSections": "Vytvoriť sekcie",
+    "makeSectionsHint": "Každá hlavička začne sekciu. Zapne Sekcie Genius.",
+    "removeHeaders": "Odstrániť",
+    "removeHeadersHint": "Odstráni riadky s hlavičkami z textu.",
+    "textFormat": "Formát textu",
+    "reviewSections": "Skontrolovať sekcie",
+    "reviewHint": "Opravte kategórie, ktoré boli odhadnuté zle. Farby, spevákov a poznámky môžete nastaviť neskôr v ponuke sekcie.",
+    "sectionLabel": "Názov sekcie",
+    "sectionCategory": "Kategória sekcie",
+    "lowConfidence": "Kategória je odhad. Skontrolujte ju.",
+    "importSuccess": "{count, plural, one {Importoval sa # riadok.} few {Importovali sa # riadky.} many {Importovalo sa # riadka.} other {Importovalo sa # riadkov.}}",
+    "importFailed": "Tento text sa nepodarilo načítať. Skontrolujte text a nastavenia formátu textu.",
+    "stepsLabel": "Kroky importu",
+    "stepText": "Upraviť text",
+    "processSteps": {
+      "advanced": "Rozšírené",
+      "removeInlineBrackets": "Odstrániť vložené poznámky",
+      "removeInlineBracketsHint": "Odstráni [poznámky] uprostred riadka. Riadky s hlavičkami zostanú.",
+      "backgroundVocals": "Zátvorky do sprievodu",
+      "backgroundVocalsHint": "Presunie (vokály) na vlastný sprievodný riadok.",
+      "capitalizeBackground": "Veľké písmeno v sprievode",
+      "capitalizeBackgroundHint": "Každý sprievodný riadok začne veľkým písmenom.",
+      "emDashes": "Dlhé pomlčky",
+      "emDashesHint": "Prevedie dvojité a osamotené spojovníky na dlhé pomlčky.",
+      "splitHyphens": "Deliť slová so spojovníkom",
+      "splitHyphensHint": "Rozdelí slová ako mm-hmm za spojovníkom.",
+      "splitCjk": "Deliť znaky CJK",
+      "splitCjkHint": "Rozdelí čínsky, japonský a kórejský text na znaky a pri zmene písma.",
+      "punctuationSpacing": "Upraviť interpunkciu",
+      "punctuationSpacingHint": "Jedna medzera za čiarkou, žiadna pred interpunkciou a úvodzovky zostanú pri slove.",
+      "collapseSpaces": "Zlúčiť medzery",
+      "collapseSpacesHint": "Viac medzier za sebou nahradí jednou.",
+      "splitWords": "Deliť pri medzerách",
+      "splitWordsHint": "Každú medzeru označí ako hranicu slova pre import."
+    }
+  },
+  "lyricMarkup": {
+    "section": "Sekcia: {label}",
+    "joinSyllables": "Spojiť slabiky",
+    "toolbar": "Nástroje riadka",
+    "background": "Sprievodný riadok",
+    "duet": "Duetový riadok",
+    "split": "Rozdeliť alebo spojiť slabiku",
+    "hint": "Alt+kliknutím medzi písmená rozdelíte, kliknutím na bodku spojíte. Alt+C zmení sekciu.",
+    "headerText": "Text hlavičky",
+    "category": "Kategória",
+    "gutter": {
+      "background": "Sprievod",
+      "duet": "Duet",
+      "translation": "Preklad",
+      "romanization": "Romanizácia",
+      "removed": "Odstránené",
+      "dropped": "Neimportuje sa",
+      "missingTranslation": "Chýba preklad",
+      "missingRomanization": "Chýba romanizácia"
+    }
+  },
+  "importChooser": {
     "options": {
       "plainText": {
-        "title": "Obyčajný text",
+        "title": "Vložiť",
         "description": "Vložte text piesne a zvoľte, ako sa majú spracovať riadky, preklad, prepis do latinky a delenie slov."
       },
       "lrclib": {
         "title": "LRCLIB",
-        "description": "Vyhľadajte v LRCLIB časovaný alebo obyčajný text podľa skladby a interpreta."
+        "description": "Vyhľadajte v LRCLIB text podľa skladby a interpreta a importujte ho ako obyčajný text."
       },
       "genius": {
         "title": "Genius",
@@ -206,8 +276,7 @@
       "snapToPlayhead": "Zarovnať na pozíciu prehrávania",
       "noPreviousFound": "Nenašla sa skoršia zodpovedajúca sekcia s časovaním.",
       "noMatchingLines": "Žiadne riadky v tejto sekcii nezodpovedajú tej skoršej, nič sa neskopírovalo.",
-      "copyPrevious": "Kopírovať predchádzajúce časovanie",
-      "headersRestored": "Hlavičky sekcií boli obnovené."
+      "copyPrevious": "Kopírovať predchádzajúce časovanie"
     }
   },
   "common": {
@@ -305,6 +374,15 @@
   },
   "ribbonBar": {
     "advancedTooltip": "Platí pre pásy kariet Úpravy, Časovanie a Náhľad.",
+    "tooltips": {
+      "newLyricLine": "Pridá prázdny riadok na koniec textu.",
+      "bgLyric": "Označí vybrané riadky ako sprievodný vokál.",
+      "duetLyric": "Označí vybrané riadky ako spievané druhým spevákom.",
+      "ignoreSync": "Klávesy synchronizácie vybrané riadky preskočia, takže ich nečasujete.",
+      "romanizationLanguage": "Jazyk prepisu",
+      "romanizationLanguageDesc": "Jazyk vybraného textu. Automatická detekcia funguje pri väčšine skladieb.",
+      "romanize": "Doplní prepis do latinky pre vybrané riadky alebo slová."
+    },
     "editMode": {
       "multipleValues": "Viacero hodnôt…",
       "duration": "Trvanie",
@@ -355,7 +433,7 @@
       "mode": "Režim",
       "standard": "Standard",
       "timing": "Časovanie",
-      "spicy": "Spicy",
+      "spicy": "Spicy Lyrics",
       "simpleLyrics": "Jednoduché texty",
       "forceLineRendering": "Zobraziť časovanie po riadkoch",
       "background": "Pozadie",
@@ -381,10 +459,10 @@
       "showTimestampUpdate": "Zobraziť aktualizácie časových značiek",
       "touchSyncPanel": "Dotykový panel synchronizácie",
       "bgLyricSync": "Sprievodné riadky",
-      "bgSyncInline": "Priebežne",
+      "bgSyncInline": "S hlavným riadkom",
       "bgSyncInlineDesc": "Každý sprievodný riadok synchronizujte hneď po jeho hlavnom riadku.",
-      "bgSyncSeparate": "Zvlášť",
-      "bgSyncSeparateDesc": "G a H zostávajú na hlavných riadkoch. Kliknutím na sprievodný riadok synchronizujete sprievodné riadky samostatne.",
+      "bgSyncSeparate": "Preskočiť pri synchronizácii",
+      "bgSyncSeparateDesc": "G a H zostávajú na hlavných riadkoch. Kliknutím na sprievodný riadok ich synchronizujete samostatne.",
       "quickFixes": "Rýchle opravy",
       "manualTimestampEdit": "Ručná úprava časových značiek",
       "doubleClickEdit": "Úprava slov dvojklikom",
@@ -414,6 +492,7 @@
     "common": {
       "highlightActiveLineDesc": "Zvýrazní práve prehrávaný riadok vo zvolenom režime.",
       "playbackSettingsMode": "Správanie pri prehrávaní pre",
+      "playbackSettingsModeDesc": "Automatické posúvanie a pozícia na kartách sa nastavujú zvlášť pre Úpravy a Časovanie. Vyberte, čo chcete zmeniť.",
       "editMode": "Úpravy",
       "timeMode": "Časovanie",
       "enabled": "Zapnuté",
@@ -449,8 +528,11 @@
       "playbackRate": "Rýchlosť prehrávania",
       "autosave": {
         "enable": "Povoliť automatické ukladanie",
+        "enableDesc": "Uloží text pár sekúnd po každej zmene a uchováva snímky, ktoré obnovíte z ponuky Súbor.",
         "interval": "Ukladať každých (minúty)",
-        "limit": "Počet snímok na uchovanie"
+        "intervalDesc": "Najkratší čas medzi snímkami. Posledné zmeny sa aj tak ukladajú po každej úprave.",
+        "limit": "Počet snímok na uchovanie",
+        "limitDesc": "Koľko snímok uchovať pre každú skladbu. Najstaršie sa mažú ako prvé."
       },
       "customBackground": "Vlastné pozadie",
       "customBackgroundDesc": "Vyberte obrázok, ktorý sa použije ako pozadie.",
@@ -510,6 +592,7 @@
     "appearance": {
       "mode": {
         "label": "Editor vzhľadu",
+        "labelDesc": "Jednoduché obsahuje motív, pozadie, mierku a písmo. Pokročilé nastavuje jednotlivé farby, rozostupy a poradie panelov.",
         "basic": "Jednoduché rozloženie",
         "advanced": "Pokročilé rozloženie",
         "none": "Žiadny",
@@ -540,6 +623,7 @@
       "glassBlur": "Intenzita efektu skla",
       "glassBlurDesc": "Upravte rozostrenie pozadia prvkov s efektom skla.",
       "background": "Pozadie",
+      "backgroundDesc": "Zobrazí za aplikáciou obrázok alebo prechod.",
       "useCustomGradient": "Vlastná farba prechodu",
       "useCustomGradientDesc": "Vytvorte prechod z jednej farby.",
       "syncGradientToAccent": "Zladiť prvú farbu so zvýraznením",
@@ -754,7 +838,7 @@
       "timingOverviewAutoScrollDesc": "Udržiavať prehľad časovania posunutý na pozíciu prehrávania.",
       "vsyncDesc": "Aktualizovať náhľady Standard a Toxi v každej snímke namiesto približne 30-krát za sekundu. Plynulejšie, ale náročnejšie na CPU.",
       "showFpsDesc": "Zobraziť v náhľade počítadlo snímok za sekundu.",
-      "syncLevelDesc": "Slová: časovať každé slovo zvlášť. Riadky: časovať celé riadky a rovnomerne rozložiť ich slová. Hrubé časovanie potom doladíte v spektrograme.",
+      "syncLevelDesc": "Slová: časovať každé slovo zvlášť. Riadky: časovať celé riadky a rovnomerne rozložiť ich slová. Aj režim Riadky ukladá časovanie slov, nie časovanie po riadkoch. Slová potom doladíte v spektrograme.",
       "previewModeDesc": "Vyberte, ktorý náhľad sa zobrazí na karte Náhľad.",
       "spicyBackgroundDesc": "Čo sa zobrazuje za náhľadom Spicy.",
       "fadeWidthDesc": "Aký mäkký je okraj zvýraznenia pri vypĺňaní slova v náhľadoch Standard a Toxi."
@@ -779,7 +863,10 @@
     "modeBtns": {
       "edit": "Úpravy",
       "sync": "Časovanie",
-      "preview": "Náhľad"
+      "preview": "Náhľad",
+      "editDesc": "Písanie, delenie a označovanie textu.",
+      "syncDesc": "Časovanie každého slova podľa zvuku.",
+      "previewDesc": "Prehrá text tak, ako ho uvidia poslucháči."
     },
     "appName": "TTML Tool",
     "menu": {
@@ -808,10 +895,7 @@
       "ttmlChecklist": "Zoznam plánovaných TTML",
       "tool": "Nástroje",
       "importLyric": {
-        "import": "Importovať text piesne",
-        "fromPlainText": "Importovať z obyčajného textu…",
-        "fromLRCLIB": "Importovať z LRCLIB...",
-        "fromGenius": "Importovať z Genius…"
+        "import": "Importovať text piesne..."
       },
       "exportLyric": {
         "export": "Exportovať text piesne",
@@ -1055,7 +1139,6 @@
       "searchError": "Vyhľadávanie zlyhalo: {error}",
       "fetchError": "Nepodarilo sa načítať text: {error}",
       "noLyricsError": "Žiadne texty na import.",
-      "importSuccess": "Z Genius sa {count, plural, one {importoval # riadok} few {importovali # riadky} many {importovalo # riadka} other {importovalo # riadkov}}.",
       "howToGetKey": "Ako získať prístupový token Genius"
     },
     "openLink": "Otvoriť odkaz",
@@ -1079,11 +1162,15 @@
     "addPresets": "Pridať všetky štandardné polia",
     "clear": "Vymazať"
   },
+  "helpText": {
+    "metadataArtists": "Kto skladbu interpretuje, podľa toho, ako je skladba uvedená v streamovacích službách. Príklad: „Shake It Off“ je od Taylor Swift.",
+    "metadataSongwriter": "Kto napísal hudbu a text, podľa autorských údajov. Často ide o iných ľudí ako interpreti. Príklad: „Shake It Off“ napísali Taylor Swift, Max Martin a Shellback.",
+    "openSongwritersGuide": "Otvoriť sprievodcu k autorom"
+  },
   "lrclib": {
     "placeholder": "Názov skladby a interpret…",
     "notFound": "Žiadne výsledky, skúste iné kľúčové slová",
     "noResult": "Zadajte skladbu alebo interpreta na vyhľadanie",
-    "title": "Importovať text z LRCLIB",
     "matchesAudio": "Zodpovedá vašej nahrávke"
   },
   "lyricEditor": {
@@ -1208,13 +1295,8 @@
     "setupTitle": "Prístupový token Genius",
     "setupDesc": "Na import z Genius potrebujete prístupový token (v Genius nazvaný Client Access Token). Vytvoríte ho na vývojárskom portáli Genius.",
     "keyPlaceholder": "Vložte prístupový token Genius…",
-    "previewTitle": "Náhľad textu z Genius",
-    "back": "Späť",
-    "previewSubtitle": "Text nižšie môžete pred importom upraviť.",
     "linesCount": "{count, plural, one {# riadok} few {# riadky} many {# riadka} other {# riadkov}}",
     "importButton": "Importovať text piesne",
-    "importTitle": "Importovať text z Genius",
-    "searchPlaceholder": "Interpret – názov skladby…",
     "notFound": "Nenašli sa žiadne výsledky. Skúste iné kľúčové slová.",
     "noResult": "Začnite zadaním názvu skladby alebo interpreta.",
     "howToGetKey": "Ako získať prístupový token Genius",
@@ -1223,8 +1305,6 @@
   "textImportDialog": {
     "processLyrics": "Spracovať text",
     "processedSuccess": "Text pripravený na synchronizáciu slabík.",
-    "title": "Importovať text piesne z obyčajného textu",
-    "actionButton": "Importovať",
     "contentMode": {
       "caption": "Obsah textu",
       "lyric": "Iba text piesne",
@@ -1242,20 +1322,11 @@
     "wordSeparator": "Oddeľovač slov",
     "enableSpecialPrefix": "Použiť predpony riadkov",
     "bgLyricPrefix": "Predpona sprievodného riadka",
-    "duetLyricPrefix": "Predpona duetového riadka",
-    "description": "Importovať text piesne z obyčajného textu alebo iných formátov."
+    "duetLyricPrefix": "Predpona duetového riadka"
   },
   "sectionImportReview": {
     "title": "Kontrola nájdených sekcií",
-    "description": "Pred nahradením textov skontrolujte normalizované kategórie a metadáta.",
-    "sourceLyrics": "Zdrojový text",
-    "structure": "Štruktúra",
-    "sectionCount": "{count, plural, one {# sekcia} few {# sekcie} many {# sekcie} other {# sekcií}}",
-    "vocalist": "Spevák / rola",
-    "color": "Farba sekcie",
-    "notes": "Poznámky",
-    "lineCount": "{count, plural, one {# riadok textu} few {# riadky textu} many {# riadka textu} other {# riadkov textu}}",
-    "import": "Importovať skontrolovaný text"
+    "lineCount": "{count, plural, one {# riadok textu} few {# riadky textu} many {# riadka textu} other {# riadkov textu}}"
   },
   "globalDragOverlay": {
     "title": "Uvoľnite pre načítanie"

@@ -38,6 +38,51 @@ function setup(pauseMs = 750) {
 }
 
 describe("shared preview scroll", () => {
+	it("scrolls natively to a target's known position, deferring when asked", () => {
+		vi.useFakeTimers();
+		vi.spyOn(performance, "now").mockImplementation(() => Date.now());
+		const viewport = document.createElement("div");
+		viewport.scrollTo = vi.fn();
+		let id = "a";
+		let deferred = false;
+		const getTop = vi.fn((anchor: number, offset: number) => {
+			expect([anchor, offset]).toEqual([0.5, 30]);
+			return 640;
+		});
+		const scroll = createPreviewScroll(viewport, {
+			getTarget: () => ({ id, getNode: () => undefined, getTop, deferred }),
+			offset: 30,
+		});
+		scroll.follow();
+		expect(viewport.scrollTo).toHaveBeenLastCalledWith({
+			top: 640,
+			behavior: "smooth",
+		});
+		// A deferred line change waits; a seek to it still jumps.
+		id = "b";
+		deferred = true;
+		scroll.follow();
+		expect(viewport.scrollTo).toHaveBeenCalledTimes(1);
+		scroll.follow(true);
+		expect(viewport.scrollTo).toHaveBeenLastCalledWith({
+			top: 640,
+			behavior: "auto",
+		});
+		// Reduced motion: line changes jump too.
+		vi.stubGlobal(
+			"matchMedia",
+			vi.fn(() => ({ matches: true })),
+		);
+		id = "c";
+		deferred = false;
+		scroll.follow();
+		expect(viewport.scrollTo).toHaveBeenLastCalledWith({
+			top: 640,
+			behavior: "auto",
+		});
+		scroll.dispose();
+	});
+
 	it("retains each renderer's placement and clamps both ends", () => {
 		expect(previewScrollTop(100, 600, 80, 400, 1600, 0.4, 0)).toBe(580);
 		expect(previewScrollTop(100, 600, 80, 400, 1600, 0.5, 30)).toBe(570);

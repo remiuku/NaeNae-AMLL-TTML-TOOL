@@ -225,6 +225,10 @@ export const LyricWordViewEditSpan = ({
 				});
 			}}
 			onDragLeave={(evt) => {
+				// Crossing onto a child inside the chip also fires dragleave; keep
+				// the marker, or it flashes off and on as the pointer moves.
+				if (evt.currentTarget.contains(evt.relatedTarget as Node | null))
+					return;
 				evt.currentTarget.classList.remove(styles.dropLeft);
 				evt.currentTarget.classList.remove(styles.dropRight);
 			}}

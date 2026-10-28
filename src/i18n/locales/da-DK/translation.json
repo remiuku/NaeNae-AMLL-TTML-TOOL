@@ -27,12 +27,7 @@
     }
   },
   "onlineImport": {
-    "processDescription": "Ved import opdeles teksten i ord, tegnsætning og mellemrum ryddes op, og vokal i parentes bliver til baggrundsvokallinjer.",
-    "noLyricsLabel": "Ingen tilgængelige tekster til dette nummer.",
-    "editingRawText": "Redigering af rå tekst",
-    "backToPreview": "Tilbage til forhåndsvisning",
-    "manualEdit": "Manuel redigering",
-    "source": "Kilde: "
+    "noLyricsLabel": "Ingen tilgængelige tekster til dette nummer."
   },
   "preview": {
     "untimedLines": "{count, plural, one {# linje mangler timing} other {# linjer mangler timing}}",
@@ -66,7 +61,7 @@
       "link": "Tilpas editorens udseende"
     },
     "status": {
-      "complete": "Færdig — værktøjet har registreret, at dette trin er fuldført."
+      "complete": "Færdig. Værktøjet har registreret, at dette trin er fuldført."
     },
     "readMore": "Hele guiden",
     "continue": "Fortsæt",
@@ -90,7 +85,7 @@
       "step1": "1. Åbn Genius API Clients, og log ind.",
       "step2": "2. Vælg New API Client, giv den et genkendeligt appnavn, og udfyld det påkrævede felt til appens websted.",
       "step3": "3. Gem klienten, og vælg derefter Generate Access Token.",
-      "step4": "4. Kopiér Client Access Token — ikke Client ID eller Client Secret.",
+      "step4": "4. Kopiér Client Access Token, ikke Client ID eller Client Secret.",
       "reuse": "Værktøjet gemmer dette token lokalt og genbruger det til import af sangtekster og opslag af sangskrivere.",
       "openPortal": "Åbn Genius API Clients",
       "paste": "Indsæt token i Genius-import"
@@ -109,8 +104,8 @@
       },
       "lyrics": {
         "title": "Importér sangteksten",
-        "description": "Vælg en kilde til sangteksten nedenfor. Gennemse resultatet i importvinduet, og bekræft importen.",
-        "waiting": "Vælg en kilde nedenfor, og gennemfør importen."
+        "description": "Vælg en kilde til sangteksten nedenfor. Den åbner importskærmen, hvor du skifter mellem Indsæt, LRCLIB og Genius øverst, rydder op i teksten og importerer den.",
+        "waiting": "Vælg en kilde nedenfor, og importér sangteksten fra importskærmen."
       },
       "review": {
         "title": "Tjek sangtekst og linjetyper",
@@ -140,17 +135,92 @@
       }
     }
   },
-  "importChooser": {
+  "importLyrics": {
     "title": "Importér sangtekster",
-    "description": "Vælg, hvor du vil importere sangtekster fra.",
+    "description": "Indsæt sangtekster eller find dem online, ryd op i dem, og importér.",
+    "sourceLabel": "Kilde til sangtekst",
+    "paste": "Indsæt",
+    "textLabel": "Sangtekst",
+    "textPlaceholder": "Indsæt sangteksten her, én linje pr. række. Sektionsoverskrifter som [Chorus] skal stå på deres egen række.",
+    "backToText": "Tilbage til teksten",
+    "showResults": "Vis søgeresultater",
+    "usingTrack": "Oplysninger fra {title} af {artist}",
+    "dropTrack": "Brug ikke disse oplysninger",
+    "prepareTitle": "Ryd op",
+    "processHint": "Opdeler ord, rydder op i tegnsætning og mellemrum og flytter vokal i parentes til baggrundslinjer.",
+    "splitSyllables": "Opdel stavelser",
+    "splitHint": "Markerer stavelser med ordseparatoren ud fra dine opdelingsindstillinger og indlærte opdelinger. Ret markeringerne i teksten før import.",
+    "splitDone": "Stavelser markeret. Tjek dem før import.",
+    "splitNothing": "Intet at opdele.",
+    "restoreOriginal": "Gendan oprindelig tekst",
+    "sectionsTitle": "Sektionsoverskrifter",
+    "sectionsFound": "{count, plural, one {# overskrift fundet} other {# overskrifter fundet}}",
+    "makeSections": "Lav sektioner",
+    "makeSectionsHint": "Hver overskrift starter en sektion. Slår Genius-sektioner til.",
+    "removeHeaders": "Fjern",
+    "removeHeadersHint": "Fjerner overskriftsrækkerne fra sangteksten.",
+    "textFormat": "Tekstformat",
+    "reviewSections": "Gennemgå sektioner",
+    "reviewHint": "Ret de kategorier, der er gættet forkert. Farver, vokalister og noter kan sættes senere fra sektionsmenuen.",
+    "sectionLabel": "Sektionsnavn",
+    "sectionCategory": "Sektionskategori",
+    "lowConfidence": "Kategorien er gættet. Tjek den.",
+    "importSuccess": "{count, plural, one {Importerede # linje.} other {Importerede # linjer.}}",
+    "importFailed": "Kunne ikke læse sangteksten. Tjek teksten og tekstformatindstillingerne.",
+    "stepsLabel": "Importtrin",
+    "stepText": "Redigér tekst",
+    "processSteps": {
+      "advanced": "Avanceret",
+      "removeInlineBrackets": "Fjern indlejrede noter",
+      "removeInlineBracketsHint": "Fjerner [noter] midt i en linje. Overskriftsrækker bevares.",
+      "backgroundVocals": "Parenteser til baggrund",
+      "backgroundVocalsHint": "Flytter (vokal) til sin egen baggrundslinje.",
+      "capitalizeBackground": "Stort bogstav i baggrund",
+      "capitalizeBackgroundHint": "Starter hver baggrundslinje med stort bogstav.",
+      "emDashes": "Lange tankestreger",
+      "emDashesHint": "Laver dobbelte og løse bindestreger om til lange tankestreger.",
+      "splitHyphens": "Opdel ord med bindestreg",
+      "splitHyphensHint": "Opdeler ord som mm-hmm efter bindestregen.",
+      "splitCjk": "Opdel CJK-tegn",
+      "splitCjkHint": "Opdeler kinesisk, japansk og koreansk tekst i tegn og ved skriftskift.",
+      "punctuationSpacing": "Ryd op i tegnsætning",
+      "punctuationSpacingHint": "Ét mellemrum efter kommaer, intet før tegnsætning, og anførselstegn bliver ved deres ord.",
+      "collapseSpaces": "Saml mellemrum",
+      "collapseSpacesHint": "Gør flere mellemrum i træk til ét.",
+      "splitWords": "Opdel ved mellemrum",
+      "splitWordsHint": "Markerer hvert mellemrum som en ordgrænse til importen."
+    }
+  },
+  "lyricMarkup": {
+    "section": "Sektion: {label}",
+    "joinSyllables": "Saml stavelser",
+    "toolbar": "Linjeværktøjer",
+    "background": "Baggrundslinje",
+    "duet": "Duetlinje",
+    "split": "Opdel eller saml stavelse",
+    "hint": "Alt+klik mellem bogstaver for at opdele, klik på en prik for at samle. Alt+C ændrer en sektion.",
+    "headerText": "Overskriftstekst",
+    "category": "Kategori",
+    "gutter": {
+      "background": "Baggrund",
+      "duet": "Duet",
+      "translation": "Oversættelse",
+      "romanization": "Romanisering",
+      "removed": "Fjernet",
+      "dropped": "Importeres ikke",
+      "missingTranslation": "Mangler oversættelse",
+      "missingRomanization": "Mangler romanisering"
+    }
+  },
+  "importChooser": {
     "options": {
       "plainText": {
-        "title": "Almindelig tekst",
+        "title": "Indsæt",
         "description": "Indsæt tekster og vælg, hvordan linjer, oversættelser, romanisering og ordopdelinger skal fortolkes."
       },
       "lrclib": {
         "title": "LRCLIB",
-        "description": "Søg i LRCLIB efter synkroniserede eller usynkroniserede sangtekster ud fra sang og kunstner."
+        "description": "Søg i LRCLIB efter sang og kunstner, og hent sangteksten som almindelig tekst."
       },
       "genius": {
         "title": "Genius",
@@ -206,8 +276,7 @@
       "snapToPlayhead": "Flyt til afspilningsmarkør",
       "noPreviousFound": "Ingen tidligere tilsvarende sektion med timing fundet.",
       "noMatchingLines": "Ingen linjer i denne sektion matcher den tidligere, så intet blev kopieret.",
-      "copyPrevious": "Kopiér forrige timing",
-      "headersRestored": "Sektionsoverskrifter gendannet."
+      "copyPrevious": "Kopiér forrige timing"
     }
   },
   "common": {
@@ -305,6 +374,15 @@
   },
   "ribbonBar": {
     "advancedTooltip": "Gælder båndene Redigering, Timing og Forhåndsvisning.",
+    "tooltips": {
+      "newLyricLine": "Tilføjer en tom linje sidst i sangteksten.",
+      "bgLyric": "Markerer de valgte linjer som baggrundsvokal.",
+      "duetLyric": "Markerer de valgte linjer som sunget af den anden sanger.",
+      "ignoreSync": "Synkroniseringstasterne springer de valgte linjer over, så du ikke timer dem.",
+      "romanizationLanguage": "Romaniseringssprog",
+      "romanizationLanguageDesc": "Sproget i de valgte linjer. Automatisk registrering virker til de fleste sange.",
+      "romanize": "Udfylder romanisering for de valgte linjer eller ord."
+    },
     "editMode": {
       "multipleValues": "Flere værdier…",
       "duration": "Varighed",
@@ -355,7 +433,7 @@
       "mode": "Tilstand",
       "standard": "Standard",
       "timing": "Timing",
-      "spicy": "Spicy",
+      "spicy": "Spicy Lyrics",
       "simpleLyrics": "Enkel sangteksttilstand",
       "forceLineRendering": "Vis som linjesynkroniseret",
       "background": "Baggrund",
@@ -381,10 +459,10 @@
       "showTimestampUpdate": "Vis tidsstempelopdateringer",
       "touchSyncPanel": "Berøringspanel til synkronisering",
       "bgLyricSync": "Baggrundslinjer",
-      "bgSyncInline": "Indlejret",
+      "bgSyncInline": "Med hovedlinjen",
       "bgSyncInlineDesc": "Synkroniser hver baggrundslinje lige efter dens hovedlinje.",
-      "bgSyncSeparate": "Separat gennemgang",
-      "bgSyncSeparateDesc": "G og H bliver på hovedlinjerne. Klik på en baggrundslinje for at synkronisere baggrundslinjerne for sig.",
+      "bgSyncSeparate": "Spring over under synkronisering",
+      "bgSyncSeparateDesc": "G og H bliver på hovedlinjerne. Klik på en baggrundslinje for at synkronisere dem for sig.",
       "quickFixes": "Hurtige rettelser",
       "manualTimestampEdit": "Manuel redigering af tidsstempler",
       "doubleClickEdit": "Redigér ord med dobbeltklik",
@@ -414,6 +492,7 @@
     "common": {
       "highlightActiveLineDesc": "Fremhæver linjen, der afspilles i den valgte tilstand.",
       "playbackSettingsMode": "Afspilningsadfærd for",
+      "playbackSettingsModeDesc": "Automatisk rulning og fanepositionen indstilles separat for Redigering og Timing. Vælg, hvilken du vil ændre.",
       "editMode": "Redigering",
       "timeMode": "Timing",
       "enabled": "Aktiveret",
@@ -449,8 +528,11 @@
       "playbackRate": "Afspilningshastighed",
       "autosave": {
         "enable": "Aktiver automatisk lagring",
+        "enableDesc": "Gemmer dine sangtekster et par sekunder efter hver ændring og beholder øjebliksbilleder, du kan gendanne fra menuen Filer.",
         "interval": "Gem hvert (minutter)",
-        "limit": "Antal øjebliksbilleder at beholde"
+        "intervalDesc": "Mindste tid mellem øjebliksbilleder. Dine seneste ændringer gemmes stadig efter hver redigering.",
+        "limit": "Antal øjebliksbilleder at beholde",
+        "limitDesc": "Hvor mange øjebliksbilleder der beholdes for hver sang. De ældste slettes først."
       },
       "customBackground": "Brugerdefineret baggrund",
       "customBackgroundDesc": "Vælg et billede, der skal bruges som baggrund.",
@@ -510,6 +592,7 @@
     "appearance": {
       "mode": {
         "label": "Udseende-editor",
+        "labelDesc": "Enkelt dækker tema, baggrund, skala og skrifttype. Avanceret indstiller de enkelte farver, afstande og panelernes rækkefølge.",
         "basic": "Enkelt layout",
         "advanced": "Avanceret layout",
         "none": "Ingen",
@@ -540,6 +623,7 @@
       "glassBlur": "Glaseffektens styrke",
       "glassBlurDesc": "Juster baggrundssløring for elementer med glaseffekt.",
       "background": "Baggrund",
+      "backgroundDesc": "Vis et billede eller en gradient bag appen.",
       "useCustomGradient": "Brugerdefineret gradientfarve",
       "useCustomGradientDesc": "Generer en gradient fra en enkelt farve.",
       "syncGradientToAccent": "Synkronisér første farve med accentfarven",
@@ -754,7 +838,7 @@
       "timingOverviewAutoScrollDesc": "Hold tidsoversigten rullet til afspilningspositionen.",
       "vsyncDesc": "Opdater Standard- og Toxi-forhåndsvisningerne hvert billede i stedet for cirka 30 gange i sekundet. Mere flydende, men bruger mere CPU.",
       "showFpsDesc": "Vis en billedfrekvenstæller på forhåndsvisningen.",
-      "syncLevelDesc": "Ord: Synkronisér hvert ord. Linje: Synkronisér hele linjer, og fordel ordene jævnt som en grov timing, du finjusterer i spektrogrammet.",
+      "syncLevelDesc": "Ord: Synkronisér hvert ord. Linje: Synkronisér hele linjer, og fordel ordene jævnt. Linje gemmer stadig timing for hvert ord, ikke linjesynkroniseret tekst, så finjustér ordene i spektrogrammet.",
       "previewModeDesc": "Vælg, hvilken forhåndsvisning fanen Forhåndsvisning viser.",
       "spicyBackgroundDesc": "Hvad der vises bag Spicy-forhåndsvisningen.",
       "fadeWidthDesc": "Hvor blød kanten af fremhævningen er, når et ord fyldes i Standard- og Toxi-forhåndsvisningerne."
@@ -779,7 +863,10 @@
     "modeBtns": {
       "edit": "Redigering",
       "sync": "Timing",
-      "preview": "Forhåndsvisning"
+      "preview": "Forhåndsvisning",
+      "editDesc": "Skriv, opdel og markér sangteksten.",
+      "syncDesc": "Time hvert ord til lyden.",
+      "previewDesc": "Afspil sangteksten, som lytterne vil se den."
     },
     "appName": "TTML Tool",
     "menu": {
@@ -808,10 +895,7 @@
       "ttmlChecklist": "TTML-tjekliste",
       "tool": "Værktøjer",
       "importLyric": {
-        "import": "Importér sangtekster",
-        "fromPlainText": "Importér fra almindelig tekst…",
-        "fromLRCLIB": "Importér fra LRCLIB...",
-        "fromGenius": "Importér fra Genius…"
+        "import": "Importér sangtekster..."
       },
       "exportLyric": {
         "export": "Eksportér sangtekster",
@@ -1055,7 +1139,6 @@
       "searchError": "Søgning mislykkedes: {error}",
       "fetchError": "Kunne ikke hente sangtekster: {error}",
       "noLyricsError": "Ingen sangtekster at importere.",
-      "importSuccess": "{count, plural, one {Importerede # linje fra Genius.} other {Importerede # linjer fra Genius.}}",
       "howToGetKey": "Sådan får du et Genius-adgangstoken"
     },
     "openLink": "Åbn link",
@@ -1079,11 +1162,15 @@
     "addPresets": "Tilføj alle standardfelter",
     "clear": "Ryd"
   },
+  "helpText": {
+    "metadataArtists": "Hvem der fremfører sangen, som nummeret er krediteret på streamingtjenester. Eksempel: \"Shake It Off\" er af Taylor Swift.",
+    "metadataSongwriter": "Hvem der skrev musikken og teksten, ifølge sangskriverkrediteringerne. Ofte andre end kunstnerne. Eksempel: \"Shake It Off\" er skrevet af Taylor Swift, Max Martin og Shellback.",
+    "openSongwritersGuide": "Åbn guiden om sangskrivere"
+  },
   "lrclib": {
     "placeholder": "Sangtitel og kunstner…",
     "notFound": "Ingen resultater fundet, prøv andre søgeord",
     "noResult": "Indtast en sang eller kunstner for at søge",
-    "title": "Importér sangtekst fra LRCLIB",
     "matchesAudio": "Matcher din lyd"
   },
   "lyricEditor": {
@@ -1208,13 +1295,8 @@
     "setupTitle": "Genius-adgangstoken",
     "setupDesc": "Du skal bruge et Genius-adgangstoken for at importere fra Genius (Genius kalder det Client Access Token). Du kan oprette et på Genius' udviklerportal.",
     "keyPlaceholder": "Indsæt dit Genius-adgangstoken…",
-    "previewTitle": "Genius — Forhåndsvisning af sangtekst",
-    "back": "Tilbage",
-    "previewSubtitle": "Du kan redigere sangteksterne nedenfor, før du importerer.",
     "linesCount": "{count, plural, one {# linje} other {# linjer}}",
     "importButton": "Importér sangtekster",
-    "importTitle": "Importér sangtekster fra Genius",
-    "searchPlaceholder": "Kunstner – sangtitel…",
     "notFound": "Ingen resultater fundet. Prøv forskellige søgeord.",
     "noResult": "Indtast et sangnavn eller en kunstner for at starte.",
     "howToGetKey": "Sådan får du et Genius-adgangstoken",
@@ -1223,8 +1305,6 @@
   "textImportDialog": {
     "processLyrics": "Behandl sangtekster",
     "processedSuccess": "Sangteksten er klar til stavelsessynkronisering.",
-    "title": "Importér sangtekster fra almindelig tekst",
-    "actionButton": "Importér",
     "contentMode": {
       "caption": "Tekstindhold",
       "lyric": "Kun sangtekster",
@@ -1242,20 +1322,11 @@
     "wordSeparator": "Ordseparator",
     "enableSpecialPrefix": "Brug linjepræfikser",
     "bgLyricPrefix": "Præfiks for baggrundslinjer",
-    "duetLyricPrefix": "Præfiks for duetlinjer",
-    "description": "Importér sangtekster fra almindelig tekst eller andre formater."
+    "duetLyricPrefix": "Præfiks for duetlinjer"
   },
   "sectionImportReview": {
     "title": "Gennemgå opdagede sektioner",
-    "description": "Tjek normaliserede kategorier og metadata, før du udskifter sangteksterne.",
-    "sourceLyrics": "Oprindelig sangtekst",
-    "structure": "Struktur",
-    "sectionCount": "{count, plural, one {# sektion} other {# sektioner}}",
-    "vocalist": "Vokalist/rolle",
-    "color": "Sektionsfarve",
-    "notes": "Noter",
-    "lineCount": "{count, plural, one {# sangtekstlinje} other {# sangtekstlinjer}}",
-    "import": "Importér gennemgået sangtekst"
+    "lineCount": "{count, plural, one {# sangtekstlinje} other {# sangtekstlinjer}}"
   },
   "globalDragOverlay": {
     "title": "Slip for at indlæse"

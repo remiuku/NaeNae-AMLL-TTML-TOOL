@@ -13,6 +13,7 @@ import { useSetImmerAtom } from "jotai-immer";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { uid } from "uid";
+import { useLyricLinesWhileOpen } from "$/hooks/useLyricLinesWhileOpen.ts";
 import {
 	collapsedSectionIdsAtom,
 	lyricLinesAtom,
@@ -144,9 +145,9 @@ export function SectionActions({ section }: { section: LyricSection }) {
 
 export function SectionMetadataDialog() {
 	const { t } = useTranslation();
-	const lyrics = useAtomValue(lyricLinesAtom);
-	const editLyrics = useSetImmerAtom(lyricLinesAtom);
 	const [editingSectionId, setEditingSectionId] = useAtom(editingSectionIdAtom);
+	const lyrics = useLyricLinesWhileOpen(!!editingSectionId);
+	const editLyrics = useSetImmerAtom(lyricLinesAtom);
 	const source = lyrics.sections?.find(
 		(section) => section.id === editingSectionId,
 	);
@@ -258,8 +259,8 @@ export function SectionMetadataDialog() {
 
 export function SectionManagerDialog() {
 	const { t } = useTranslation();
-	const lyrics = useAtomValue(lyricLinesAtom);
 	const [open, setOpen] = useAtom(sectionManagerOpenAtom);
+	const lyrics = useLyricLinesWhileOpen(open);
 	const setSelectedLines = useSetAtom(selectedLinesAtom);
 	const setEditingSectionId = useSetAtom(editingSectionIdAtom);
 	const sections = getOrderedSections(lyrics);

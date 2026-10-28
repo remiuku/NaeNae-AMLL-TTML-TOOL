@@ -59,9 +59,52 @@ export const keyBindingTriggerModeAtom = atom(
 	},
 );
 
+// Display names for KeyboardEvent.code values that don't read as typed.
+const KEY_LABELS: Record<string, string> = {
+	ArrowLeft: "←",
+	ArrowRight: "→",
+	ArrowUp: "↑",
+	ArrowDown: "↓",
+	BracketLeft: "[",
+	BracketRight: "]",
+	Backquote: "`",
+	Backslash: "\\",
+	IntlBackslash: "\\",
+	Comma: ",",
+	Equal: "=",
+	Minus: "-",
+	Period: ".",
+	Quote: "'",
+	Semicolon: ";",
+	Slash: "/",
+	Escape: "Esc",
+	PageUp: "Page Up",
+	PageDown: "Page Down",
+	NumpadAdd: "Num +",
+	NumpadSubtract: "Num -",
+	NumpadMultiply: "Num *",
+	NumpadDivide: "Num /",
+	NumpadDecimal: "Num .",
+	NumpadEqual: "Num =",
+	NumpadEnter: "Num Enter",
+	MouseMiddle: "Middle click",
+	MouseRight: "Right click",
+	MouseBack: "Mouse back",
+	MouseForward: "Mouse forward",
+};
+
+function formatKeyName(key: string): string {
+	const label = KEY_LABELS[key];
+	if (label) return label;
+	const match = /^(?:Key([A-Z])|Digit(\d)|Numpad(\d))$/.exec(key);
+	if (match) return match[1] ?? match[2] ?? `Num ${match[3]}`;
+	return key;
+}
+
+/** Display text such as "Ctrl+Shift+2", or "⌃⇧2" on macOS. Display only. */
 export function formatKeyBindings(cfg: KeyBindingsConfig): string {
 	return formatKeyBindingsAsArray(cfg).join(
-		navigator.userAgent.includes("Mac") ? " " : " + ",
+		navigator.userAgent.includes("Mac") ? "" : "+",
 	);
 }
 
@@ -75,30 +118,17 @@ export function formatKeyBindingsAsArray(cfg: KeyBindingsConfig): string[] {
 		return a.localeCompare(b);
 	});
 	return sorted.map((key) => {
-		const labels: Record<string, string> = {
-			ArrowLeft: "←",
-			ArrowRight: "→",
-			ArrowUp: "↑",
-			ArrowDown: "↓",
-			BracketLeft: "[",
-			BracketRight: "]",
-			MouseMiddle: "Middle click",
-			MouseRight: "Right click",
-			MouseBack: "Mouse back",
-			MouseForward: "Mouse forward",
-		};
-		if (labels[key]) return labels[key];
-		if (key.startsWith("Key")) return key.substring(3);
 		if (navigator.userAgent.includes("Mac")) {
 			if (key === "Control") return "⌃";
 			if (key === "Alt") return "⌥";
 			if (key === "Shift") return "⇧";
 			if (key === "Meta") return "⌘";
-		} else if (navigator.userAgent.includes("Windows")) {
-			if (key.startsWith("Control")) return "Ctrl";
-			if (key === "Meta") return "Win";
+		} else {
+			if (key === "Control") return "Ctrl";
+			if (key === "Meta" && navigator.userAgent.includes("Windows"))
+				return "Win";
 		}
-		return key;
+		return formatKeyName(key);
 	});
 }
 

@@ -1,10 +1,10 @@
-import { Button, Grid, Switch, Text, Tooltip } from "@radix-ui/themes";
-import { useAtom, useAtomValue } from "jotai";
+import { Button, Grid } from "@radix-ui/themes";
+import { useAtomValue } from "jotai";
 import { useSetImmerAtom } from "jotai-immer";
 import { forwardRef } from "react";
 import { useTranslation } from "react-i18next";
+import { ActionTooltip } from "$/components/ActionTooltip";
 import { advancedRibbonControlsAtom } from "$/modules/onboarding/states";
-import { SettingToggle } from "$/modules/settings/components/WorkflowControls";
 /*
  * Copyright 2023-2025 Steve Xiao (stevexmh@qq.com) and contributors.
  *
@@ -27,34 +27,44 @@ import {
 } from "$/states/main.ts";
 import { newLyricLine } from "$/types/ttml";
 import { msToTimestamp, parseTimespan } from "$/utils/timestamp.ts";
+import { AdvancedSection } from "./AdvancedSection";
 import { RibbonFrame, RibbonSection } from "./common";
 import { AuxiliaryDisplayField } from "./edit-mode/AuxiliaryDisplayField";
 import { PhoneticSection } from "./edit-mode/PhoneticSection";
 import { CheckboxField } from "./fields/CheckboxField";
 import { EditField } from "./fields/EditField";
+import { RibbonToggle } from "./RibbonToggle";
 
 export const EditModeRibbonBar = forwardRef<HTMLDivElement>((_props, ref) => {
 	const editLyricLines = useSetImmerAtom(lyricLinesAtom);
 	const { t } = useTranslation();
 	const selectedLines = useAtomValue(selectedLinesAtom);
 	const selectedWords = useAtomValue(selectedWordsAtom);
-	const [showAdvanced, setShowAdvanced] = useAtom(advancedRibbonControlsAtom);
+	const showAdvanced = useAtomValue(advancedRibbonControlsAtom);
 
 	return (
 		<RibbonFrame ref={ref} reserveControlRows={3}>
 			<RibbonSection label={t("ribbonBar.editMode.new", "新建")}>
 				<Grid columns="1" gap="1" gapY="1" flexGrow="1" align="center">
-					<Button
-						size="1"
-						variant="soft"
-						onClick={() =>
-							editLyricLines((draft) => {
-								draft.lyricLines.push(newLyricLine());
-							})
-						}
+					<ActionTooltip
+						label={t("ribbonBar.editMode.lyricLine", "Lyric line")}
+						description={t(
+							"ribbonBar.tooltips.newLyricLine",
+							"Add an empty line at the end of the lyrics.",
+						)}
 					>
-						{t("ribbonBar.editMode.lyricLine", "Lyric line")}
-					</Button>
+						<Button
+							size="1"
+							variant="soft"
+							onClick={() =>
+								editLyricLines((draft) => {
+									draft.lyricLines.push(newLyricLine());
+								})
+							}
+						>
+							{t("ribbonBar.editMode.lyricLine", "Lyric line")}
+						</Button>
+					</ActionTooltip>
 				</Grid>
 			</RibbonSection>
 			<RibbonSection
@@ -67,22 +77,25 @@ export const EditModeRibbonBar = forwardRef<HTMLDivElement>((_props, ref) => {
 					flexGrow="1"
 					align="center"
 				>
-					<Text
-						wrap="nowrap"
-						size="1"
-						style={{ color: "var(--ribbon-label-color)" }}
-					>
-						{t("ribbonBar.editMode.autoScroll", "Auto-scroll")}
-					</Text>
-					<SettingToggle setting={editAutoScrollAtom} compact />
-					<Text
-						wrap="nowrap"
-						size="1"
-						style={{ color: "var(--ribbon-label-color)" }}
-					>
-						{t("ribbonBar.editMode.highlightActiveLine", "Highlight line")}
-					</Text>
-					<SettingToggle setting={editActiveLineHighlightAtom} compact />
+					<RibbonToggle
+						label={t("ribbonBar.editMode.autoScroll", "Auto-scroll")}
+						description={t(
+							"settings.common.syncAutoScrollDesc",
+							"Scrolls the editor to follow the line that is playing.",
+						)}
+						setting={editAutoScrollAtom}
+					/>
+					<RibbonToggle
+						label={t(
+							"ribbonBar.editMode.highlightActiveLine",
+							"Highlight line",
+						)}
+						description={t(
+							"settings.common.highlightActiveLineDesc",
+							"Highlights the line that is playing in the selected mode.",
+						)}
+						setting={editActiveLineHighlightAtom}
+					/>
 				</Grid>
 			</RibbonSection>
 			{selectedLines.size > 0 && (
@@ -124,18 +137,30 @@ export const EditModeRibbonBar = forwardRef<HTMLDivElement>((_props, ref) => {
 					>
 						<CheckboxField
 							label={t("ribbonBar.editMode.bgLyric", "Background vocal")}
+							description={t(
+								"ribbonBar.tooltips.bgLyric",
+								"Mark the selected lines as background vocals.",
+							)}
 							defaultValue={false}
 							isWordField={false}
 							fieldName="isBG"
 						/>
 						<CheckboxField
 							label={t("ribbonBar.editMode.duetLyric", "Duet vocal")}
+							description={t(
+								"ribbonBar.tooltips.duetLyric",
+								"Mark the selected lines as sung by the second singer.",
+							)}
 							isWordField={false}
 							fieldName="isDuet"
 							defaultValue={false}
 						/>
 						<CheckboxField
 							label={t("ribbonBar.editMode.ignoreSync", "Skip when syncing")}
+							description={t(
+								"ribbonBar.tooltips.ignoreSync",
+								"Sync keys jump past the selected lines, so you don't time them.",
+							)}
 							isWordField={false}
 							fieldName="ignoreSync"
 							defaultValue={false}
@@ -240,16 +265,7 @@ export const EditModeRibbonBar = forwardRef<HTMLDivElement>((_props, ref) => {
 					<AuxiliaryDisplayField />
 				</RibbonSection>
 			)}
-			<RibbonSection label={t("ribbonBar.advanced", "Advanced")}>
-				<Tooltip
-					content={t(
-						"ribbonBar.advancedTooltip",
-						"Applies to the Edit, Time and Preview ribbons.",
-					)}
-				>
-					<Switch checked={showAdvanced} onCheckedChange={setShowAdvanced} />
-				</Tooltip>
-			</RibbonSection>
+			<AdvancedSection />
 		</RibbonFrame>
 	);
 });

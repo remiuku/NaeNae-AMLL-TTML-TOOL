@@ -10,7 +10,7 @@ export enum PreviewModeType {
 
 const storedPreviewModeTypeAtom = atomWithStorage<string>(
 	"previewModeType",
-	PreviewModeType.Standard,
+	PreviewModeType.Spicy,
 	undefined,
 	{ getOnInit: true },
 );

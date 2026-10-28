@@ -1,6 +1,5 @@
 import {
 	type LyricLine,
-	stringifyAss,
 	stringifyEslrc,
 	stringifyLrc,
 	stringifyLys,
@@ -11,15 +10,12 @@ import { DropdownMenu } from "@radix-ui/themes";
 import { useSetAtom, useStore } from "jotai";
 import { useTranslation } from "react-i18next";
 import { lyricTextNormalizationOptionsAtom } from "$/modules/settings/states";
-import {
-	geniusImportLyricsDialogAtom,
-	importFromLRCLIBDialogAtom,
-	importFromTextDialogAtom,
-} from "$/states/dialogs.ts";
+import { importLyricsDialogAtom } from "$/states/dialogs.ts";
 import { lyricLinesAtom, saveFileNameAtom } from "$/states/main.ts";
 import { normalizeLyricText } from "$/utils/apostrophe-normalization";
 import { saveFile } from "$/utils/fileSystem.ts";
 import { error } from "$/utils/logging.ts";
+import { stringifyAss } from "$/utils/stringify-ass.ts";
 
 export const ImportExportLyric = ({
 	onSaveTtml,
@@ -27,9 +23,7 @@ export const ImportExportLyric = ({
 	onSaveTtml: () => void | Promise<void>;
 }) => {
 	const store = useStore();
-	const setImportFromTextDialog = useSetAtom(importFromTextDialogAtom);
-	const setImportFromLRCLIBDialog = useSetAtom(importFromLRCLIBDialogAtom);
-	const setGeniusImportLyricsDialog = useSetAtom(geniusImportLyricsDialogAtom);
+	const setImportLyricsDialog = useSetAtom(importLyricsDialogAtom);
 	const { t } = useTranslation();
 	const onExportLyric =
 		(stringifier: (lines: LyricLine[]) => string, extension: string) =>
@@ -83,23 +77,9 @@ export const ImportExportLyric = ({
 
 	return (
 		<>
-			<DropdownMenu.Sub>
-				<DropdownMenu.SubTrigger>
-					{t("topBar.menu.importLyric.import", "导入歌词...")}
-				</DropdownMenu.SubTrigger>
-				<DropdownMenu.SubContent>
-					<DropdownMenu.Item onClick={() => setImportFromTextDialog(true)}>
-						{t("topBar.menu.importLyric.fromPlainText", "从纯文本导入")}
-					</DropdownMenu.Item>
-					<DropdownMenu.Item onClick={() => setImportFromLRCLIBDialog(true)}>
-						{t("topBar.menu.importLyric.fromLRCLIB", "Import from LRCLIB…")}
-					</DropdownMenu.Item>
-
-					<DropdownMenu.Item onClick={() => setGeniusImportLyricsDialog(true)}>
-						{t("topBar.menu.importLyric.fromGenius", "从 Genius 导入…")}
-					</DropdownMenu.Item>
-				</DropdownMenu.SubContent>
-			</DropdownMenu.Sub>
+			<DropdownMenu.Item onSelect={() => setImportLyricsDialog(true)}>
+				{t("topBar.menu.importLyric.import", "Import lyrics...")}
+			</DropdownMenu.Item>
 			<DropdownMenu.Sub>
 				<DropdownMenu.SubTrigger>
 					{t("topBar.menu.exportLyric.export", "导出歌词...")}

@@ -35,11 +35,12 @@ describe("preview renderer persistence", () => {
 		unsubscribe();
 	});
 
-	it("keeps each remaining renderer and the existing default", async () => {
+	it("keeps each renderer and defaults to Spicy when none was picked", async () => {
+		const setItem = vi.fn();
 		vi.stubGlobal("window", {
 			localStorage: {
 				getItem: () => null,
-				setItem: vi.fn(),
+				setItem,
 				removeItem: vi.fn(),
 			},
 		});
@@ -48,8 +49,29 @@ describe("preview renderer persistence", () => {
 		for (const renderer of Object.values(PreviewModeType)) {
 			expect(normalizePreviewMode(renderer)).toBe(renderer);
 		}
-		expect(createStore().get(previewModeTypeAtom)).toBe(
-			PreviewModeType.Standard,
-		);
+		const store = createStore();
+		expect(store.get(previewModeTypeAtom)).toBe(PreviewModeType.Spicy);
+		// Reading the default doesn't save it, so a later default can still apply.
+		const unsubscribe = store.sub(previewModeTypeAtom, () => {});
+		expect(setItem).not.toHaveBeenCalled();
+		unsubscribe();
+	});
+
+	it.each([
+		"standard",
+		"toxi",
+		"timing",
+		"spicy",
+	])("keeps a renderer the user saved before (%s)", async (saved) => {
+		const values = new Map([["previewModeType", JSON.stringify(saved)]]);
+		vi.stubGlobal("window", {
+			localStorage: {
+				getItem: (key: string) => values.get(key) ?? null,
+				setItem: (key: string, value: string) => values.set(key, value),
+				removeItem: (key: string) => values.delete(key),
+			},
+		});
+		const { previewModeTypeAtom } = await import("./preview");
+		expect(createStore().get(previewModeTypeAtom)).toBe(saved);
 	});
 });

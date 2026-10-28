@@ -280,7 +280,46 @@ describe("shortcut normalization and dispatch", () => {
 		}
 		expect(
 			keyboard.formatKeyBindings(["KeyS", "ShiftRight", "ControlLeft"]),
-		).toBe("Ctrl + Shift + S");
+		).toBe("Ctrl+Shift+S");
+	});
+
+	it.each([
+		[["Shift", "Digit2"], "Shift+2"],
+		[["Control", "Numpad5"], "Ctrl+Num 5"],
+		[["NumpadAdd"], "Num +"],
+		[["Control", "Equal"], "Ctrl+="],
+		[["Control", "Minus"], "Ctrl+-"],
+		[["Backquote"], "`"],
+		[["Comma"], ","],
+		[["Period"], "."],
+		[["Slash"], "/"],
+		[["Semicolon"], ";"],
+		[["Quote"], "'"],
+		[["Space"], "Space"],
+		[["Escape"], "Esc"],
+		[["Alt", "ArrowUp"], "Alt+↑"],
+		[["Meta", "KeyK"], "Win+K"],
+	])("formats %j as %s", (keys, label) => {
+		expect(keyboard.formatKeyBindings(keys)).toBe(label);
+	});
+
+	it("formats macOS shortcuts as joined symbols", () => {
+		vi.stubGlobal("navigator", { userAgent: "Mac" });
+		try {
+			expect(keyboard.formatKeyBindings(["Meta", "Shift", "Digit2"])).toBe(
+				"⌘⇧2",
+			);
+		} finally {
+			vi.stubGlobal("navigator", { userAgent: "Windows" });
+		}
+	});
+
+	it("leaves stored bindings and matching untouched", () => {
+		expect(keyboard.getShortcutKey(["Shift", "Digit2"])).toBe("Shift + Digit2");
+		const callback = vi.fn();
+		cleanups.push(keyboard.registerKeyBindings(["KeyG"], callback));
+		key("keydown", "KeyG");
+		expect(callback).toHaveBeenCalledOnce();
 	});
 
 	it.each([

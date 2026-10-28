@@ -21,6 +21,7 @@ import {
 	Switch,
 	Text,
 } from "@radix-ui/themes";
+import { ActionTooltip } from "$/components/ActionTooltip";
 import { displayRomanizationInSyncAtom } from "$/modules/settings/states/index.ts";
 import { RibbonSection } from "../common";
 
@@ -35,6 +36,22 @@ export const PhoneticSection = () => {
 		displayRomanization,
 		store,
 	} = usePhoneticSection();
+	const aboutLabel = t(
+		"ribbonBar.editMode.romanization.info.title",
+		"About romanization",
+	);
+	const languageLabel = t(
+		"ribbonBar.tooltips.romanizationLanguage",
+		"Romanization language",
+	);
+	const showRomanizationLabel = t(
+		"ribbonBar.syncMode.showPerWordRomanization",
+		"Show per-word romanization",
+	);
+	const showRomanizationDescription = t(
+		"settings.workflow.showPerWordRomanizationDesc",
+		"Show each word's romanization under it.",
+	);
 
 	return (
 		<RibbonSection
@@ -42,22 +59,22 @@ export const PhoneticSection = () => {
 				<Flex gap="1" align="center">
 					{t("ribbonBar.editMode.romanization.section", "Romanization")}
 					<Popover.Root>
-						<Popover.Trigger>
-							<IconButton
-								size="1"
-								variant="ghost"
-								style={{ cursor: "pointer" }}
-							>
-								<QuestionCircle16Regular />
-							</IconButton>
-						</Popover.Trigger>
+						<ActionTooltip label={aboutLabel}>
+							<Popover.Trigger>
+								<IconButton
+									size="1"
+									variant="ghost"
+									style={{ cursor: "pointer" }}
+									aria-label={aboutLabel}
+								>
+									<QuestionCircle16Regular />
+								</IconButton>
+							</Popover.Trigger>
+						</ActionTooltip>
 						<Popover.Content size="1" style={{ width: 300 }}>
 							<Flex direction="column" gap="2">
 								<Text size="2" weight="bold">
-									{t(
-										"ribbonBar.editMode.romanization.info.title",
-										"About romanization",
-									)}
+									{aboutLabel}
 								</Text>
 								<Text size="1">
 									{t(
@@ -93,7 +110,15 @@ export const PhoneticSection = () => {
 					}}
 					size="1"
 				>
-					<Select.Trigger />
+					<ActionTooltip
+						label={languageLabel}
+						description={t(
+							"ribbonBar.tooltips.romanizationLanguageDesc",
+							"The language the selected lyrics are in. Auto-detect works for most songs.",
+						)}
+					>
+						<Select.Trigger aria-label={languageLabel} />
+					</ActionTooltip>
 					<Select.Content>
 						<Select.Item value="auto">
 							{t("common.autoDetect", "Auto-detect")}
@@ -115,33 +140,45 @@ export const PhoneticSection = () => {
 						</Select.Item>
 					</Select.Content>
 				</Select.Root>
-				<Button
-					size="1"
-					variant="soft"
-					onClick={handleAutoFetch}
-					disabled={loading}
-				>
-					{loading ? (
-						<Spinner size="1" />
-					) : (
-						t("ribbonBar.editMode.romanization.autoFetch", "Romanize")
+				<ActionTooltip
+					label={t("ribbonBar.editMode.romanization.autoFetch", "Romanize")}
+					description={t(
+						"ribbonBar.tooltips.romanize",
+						"Fill in romanization for the selected lines or words.",
 					)}
-				</Button>
-				<Flex
-					gap="2"
-					align="center"
-					style={{ gridColumn: "span 2", justifyContent: "center" }}
 				>
-					<Text size="1" color="gray">
-						{t("settings.common.enabled", "Enabled")}
-					</Text>
-					<Switch
+					<Button
 						size="1"
-						checked={displayRomanization}
-						onCheckedChange={(checked) =>
-							store.set(displayRomanizationInSyncAtom, checked)
-						}
-					/>
+						variant="soft"
+						onClick={handleAutoFetch}
+						disabled={loading}
+					>
+						{loading ? (
+							<Spinner size="1" />
+						) : (
+							t("ribbonBar.editMode.romanization.autoFetch", "Romanize")
+						)}
+					</Button>
+				</ActionTooltip>
+				<Flex style={{ gridColumn: "span 2", justifyContent: "center" }}>
+					<ActionTooltip
+						label={showRomanizationLabel}
+						description={showRomanizationDescription}
+					>
+						<Flex gap="2" align="center">
+							<Text size="1" color="gray">
+								{t("settings.common.enabled", "Enabled")}
+							</Text>
+							<Switch
+								size="1"
+								checked={displayRomanization}
+								onCheckedChange={(checked) =>
+									store.set(displayRomanizationInSyncAtom, checked)
+								}
+								aria-label={showRomanizationLabel}
+							/>
+						</Flex>
+					</ActionTooltip>
 				</Flex>
 			</Grid>
 		</RibbonSection>

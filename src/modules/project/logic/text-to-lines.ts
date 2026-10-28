@@ -1,6 +1,6 @@
 import { getGeniusHeader } from "$/modules/lyric-editor/utils/genius-sections";
 import { type LyricLine, newLyricLine, newLyricWord } from "$/types/ttml";
-import { prepareLyricLine } from "$/utils/lyric-prep";
+import { type LyricPrepOptions, prepareLyricLine } from "$/utils/lyric-prep";
 import { splitTextImportWords } from "./text-import-words";
 
 export interface TextToLinesOptions {
@@ -23,6 +23,7 @@ export interface TextToLinesOptions {
 export function prepareTextImport(
 	text: string,
 	keepSectionHeaders: boolean,
+	steps: Partial<LyricPrepOptions> = {},
 ): string {
 	return text
 		.split(/\r\n|\r|\n/)
@@ -30,7 +31,7 @@ export function prepareTextImport(
 			if (/^\[.*\]$/.test(line.trim())) {
 				return keepSectionHeaders ? [line.trim()] : [];
 			}
-			return prepareLyricLine(line).split("\n");
+			return prepareLyricLine(line, steps).split("\n");
 		})
 		.filter((line) => line.trim().length > 0)
 		.join("\n");

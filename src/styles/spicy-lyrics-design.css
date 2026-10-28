@@ -298,10 +298,11 @@
 
 /* -------------------------------------------------------------- controls */
 
-/* With a near-white checked track, the thumb flips to dark ink to stay visible. */
+/* With a near-white checked track, the thumb flips to dark ink to stay visible.
+   aria-checked, not data-state: a wrapping Tooltip overwrites data-state. */
 :root[data-design="spicy-lyrics"][data-design-accent="brand"]
 	.radix-themes:is(.dark, .dark-theme)
-	.rt-SwitchRoot[data-state="checked"]
+	.rt-SwitchRoot[aria-checked="true"]
 	.rt-SwitchThumb {
 	background-color: var(--sl-primary-ink);
 }
@@ -347,6 +348,20 @@
 	.radix-themes:is(.dark, .dark-theme)
 	.rt-BaseMenuSeparator {
 	background-color: var(--sl-border) !important;
+}
+
+/* -------------------------------------------------------------- tooltips */
+
+/* Solid popover surface, like menus. Fill, arrow and ink come from index.css
+   through the remapped --color-panel-solid and --gray-* (so Advanced text
+   overrides still apply); the design adds its hairline, shadow and radius. */
+:root[data-design="spicy-lyrics"] .radix-themes.rt-TooltipContent {
+	border-radius: var(--radius-4);
+	box-shadow:
+		inset 0 0 0 1px var(--sl-border),
+		var(--sl-shadow-float);
+	backdrop-filter: none;
+	-webkit-backdrop-filter: none;
 }
 
 /* --------------------------------------------------------------- dialogs */

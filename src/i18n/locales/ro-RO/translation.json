@@ -27,12 +27,7 @@
     }
   },
   "onlineImport": {
-    "processDescription": "La import, împarte textul în cuvinte, corectează punctuația și spațiile și transformă vocile din paranteze în versuri pentru vocile de fundal.",
-    "noLyricsLabel": "Nu sunt disponibile versuri pentru această piesă.",
-    "editingRawText": "Editarea textului brut",
-    "backToPreview": "Înapoi la previzualizare",
-    "manualEdit": "Editare manuală",
-    "source": "Sursă: "
+    "noLyricsLabel": "Nu sunt disponibile versuri pentru această piesă."
   },
   "preview": {
     "untimedLines": "{count, plural, one {# vers nu este încă sincronizat} few {# versuri nu sunt încă sincronizate} other {# de versuri nu sunt încă sincronizate}}",
@@ -66,7 +61,7 @@
       "link": "Personalizează aspectul editorului"
     },
     "status": {
-      "complete": "Gata — instrumentul a detectat că acest pas este finalizat."
+      "complete": "Gata. Instrumentul a detectat că acest pas este finalizat."
     },
     "readMore": "Ghidul complet",
     "continue": "Continuă",
@@ -109,8 +104,8 @@
       },
       "lyrics": {
         "title": "Importă versurile",
-        "description": "Alege mai jos o sursă pentru versuri. Verifică rezultatul în fereastra de import și confirmă importul.",
-        "waiting": "Alege o sursă mai jos și finalizează fereastra ei de import."
+        "description": "Alege mai jos o sursă pentru versuri. Se deschide ecranul de import, unde comuți sus între Lipește, LRCLIB și Genius, cureți textul și îl imporți.",
+        "waiting": "Alege o sursă mai jos și importă versurile din ecranul de import."
       },
       "review": {
         "title": "Verifică versurile și tipurile de vers",
@@ -140,17 +135,92 @@
       }
     }
   },
-  "importChooser": {
+  "importLyrics": {
     "title": "Importă versuri",
-    "description": "Alege de unde vrei să imporți versurile.",
+    "description": "Lipește versurile sau caută-le online, curăță-le și importă-le.",
+    "sourceLabel": "Sursa versurilor",
+    "paste": "Lipește",
+    "textLabel": "Textul versurilor",
+    "textPlaceholder": "Lipește versurile aici, câte un vers pe rând. Antetele de secțiune precum [Chorus] stau pe un rând separat.",
+    "backToText": "Înapoi la text",
+    "showResults": "Arată rezultatele căutării",
+    "usingTrack": "Detalii din {title} de {artist}",
+    "dropTrack": "Nu folosi aceste detalii",
+    "prepareTitle": "Curățare",
+    "processHint": "Împarte cuvintele, corectează punctuația și spațiile și mută vocile din paranteze pe versuri de fundal.",
+    "splitSyllables": "Desparte în silabe",
+    "splitHint": "Marchează silabele cu separatorul de cuvinte, după setările de segmentare și despărțirile învățate. Corectează marcajele în text înainte de import.",
+    "splitDone": "Silabe marcate. Verifică-le înainte de import.",
+    "splitNothing": "Nimic de despărțit.",
+    "restoreOriginal": "Restaurează textul original",
+    "sectionsTitle": "Antete de secțiune",
+    "sectionsFound": "{count, plural, one {# antet găsit} few {# antete găsite} other {# de antete găsite}}",
+    "makeSections": "Creează secțiuni",
+    "makeSectionsHint": "Fiecare antet începe o secțiune. Activează Secțiuni Genius.",
+    "removeHeaders": "Elimină",
+    "removeHeadersHint": "Scoate rândurile de antet din versuri.",
+    "textFormat": "Formatul textului",
+    "reviewSections": "Verifică secțiunile",
+    "reviewHint": "Corectează categoriile ghicite greșit. Culorile, vocaliștii și notele se pot seta mai târziu din meniul secțiunii.",
+    "sectionLabel": "Numele secțiunii",
+    "sectionCategory": "Categoria secțiunii",
+    "lowConfidence": "Categorie ghicită. Verific-o.",
+    "importSuccess": "{count, plural, one {# vers importat.} few {# versuri importate.} other {# de versuri importate.}}",
+    "importFailed": "Nu am putut citi aceste versuri. Verifică textul și setările formatului textului.",
+    "stepsLabel": "Pașii importului",
+    "stepText": "Editează textul",
+    "processSteps": {
+      "advanced": "Avansat",
+      "removeInlineBrackets": "Elimină notele din rând",
+      "removeInlineBracketsHint": "Scoate [notele] din mijlocul unui rând. Rândurile de antet rămân.",
+      "backgroundVocals": "Parantezele în fundal",
+      "backgroundVocalsHint": "Mută (vocile) pe propriul vers de fundal.",
+      "capitalizeBackground": "Majusculă la fundal",
+      "capitalizeBackgroundHint": "Începe fiecare vers de fundal cu majusculă.",
+      "emDashes": "Linii de pauză",
+      "emDashesHint": "Transformă cratimele duble și izolate în linii de pauză.",
+      "splitHyphens": "Desparte cuvintele cu cratimă",
+      "splitHyphensHint": "Desparte cuvinte ca mm-hmm după cratimă.",
+      "splitCjk": "Desparte caracterele CJK",
+      "splitCjkHint": "Desparte textul chinezesc, japonez și coreean în caractere și la schimbarea scrierii.",
+      "punctuationSpacing": "Aranjează punctuația",
+      "punctuationSpacingHint": "Un spațiu după virgule, niciunul înainte de punctuație, iar ghilimelele rămân lângă cuvânt.",
+      "collapseSpaces": "Unește spațiile",
+      "collapseSpacesHint": "Transformă mai multe spații la rând într-unul.",
+      "splitWords": "Desparte la spații",
+      "splitWordsHint": "Marchează fiecare spațiu ca limită de cuvânt pentru import."
+    }
+  },
+  "lyricMarkup": {
+    "section": "Secțiune: {label}",
+    "joinSyllables": "Unește silabele",
+    "toolbar": "Instrumente pentru rând",
+    "background": "Vers de fundal",
+    "duet": "Vers de duet",
+    "split": "Desparte sau unește silaba",
+    "hint": "Alt+clic între litere pentru a despărți, clic pe un punct pentru a uni. Alt+C schimbă o secțiune.",
+    "headerText": "Textul antetului",
+    "category": "Categorie",
+    "gutter": {
+      "background": "Fundal",
+      "duet": "Duet",
+      "translation": "Traducere",
+      "romanization": "Romanizare",
+      "removed": "Eliminat",
+      "dropped": "Nu se importă",
+      "missingTranslation": "Lipsește traducerea",
+      "missingRomanization": "Lipsește romanizarea"
+    }
+  },
+  "importChooser": {
     "options": {
       "plainText": {
-        "title": "Text simplu",
+        "title": "Lipește",
         "description": "Lipește versurile și alege cum să fie interpretate versurile, traducerile, romanizarea și împărțirea cuvintelor."
       },
       "lrclib": {
         "title": "LRCLIB",
-        "description": "Caută în LRCLIB versuri sincronizate sau simple după melodie și artist."
+        "description": "Caută în LRCLIB după melodie și artist și adu versurile ca text simplu."
       },
       "genius": {
         "title": "Genius",
@@ -206,8 +276,7 @@
       "snapToPlayhead": "Aliniază la cursorul de redare",
       "noPreviousFound": "Nu s-a găsit nicio secțiune anterioară corespunzătoare cu timpi.",
       "noMatchingLines": "Niciun rând din această secțiune nu se potrivește cu cea anterioară, așa că nu s-a copiat nimic.",
-      "copyPrevious": "Copiază timpii anteriori",
-      "headersRestored": "Antetele secțiunilor au fost restaurate."
+      "copyPrevious": "Copiază timpii anteriori"
     }
   },
   "common": {
@@ -305,6 +374,15 @@
   },
   "ribbonBar": {
     "advancedTooltip": "Se aplică panglicilor Editare, Sincronizare și Previzualizare.",
+    "tooltips": {
+      "newLyricLine": "Adaugă un vers gol la finalul versurilor.",
+      "bgLyric": "Marchează versurile selectate ca voce de fundal.",
+      "duetLyric": "Marchează versurile selectate ca fiind cântate de al doilea cântăreț.",
+      "ignoreSync": "Tastele de sincronizare sar peste versurile selectate, așa că nu le sincronizezi.",
+      "romanizationLanguage": "Limba romanizării",
+      "romanizationLanguageDesc": "Limba versurilor selectate. Detectarea automată merge pentru majoritatea melodiilor.",
+      "romanize": "Completează romanizarea pentru versurile sau cuvintele selectate."
+    },
     "editMode": {
       "multipleValues": "Valori multiple",
       "duration": "Durată",
@@ -355,7 +433,7 @@
       "mode": "Mod",
       "standard": "Standard",
       "timing": "Timpi",
-      "spicy": "Spicy",
+      "spicy": "Spicy Lyrics",
       "simpleLyrics": "Versuri simple",
       "forceLineRendering": "Arată sincronizarea pe versuri",
       "background": "Fundal",
@@ -381,9 +459,9 @@
       "showTimestampUpdate": "Arată actualizările marcajelor temporale",
       "touchSyncPanel": "Panou de sincronizare tactilă",
       "bgLyricSync": "Versurile vocilor de fundal",
-      "bgSyncInline": "Împreună",
+      "bgSyncInline": "Cu versul principal",
       "bgSyncInlineDesc": "Sincronizezi fiecare vers al vocilor de fundal imediat după versul principal.",
-      "bgSyncSeparate": "Separat",
+      "bgSyncSeparate": "Omite la sincronizare",
       "bgSyncSeparateDesc": "G și H rămân pe versurile principale. Dă clic pe un vers al vocilor de fundal pentru a le sincroniza separat.",
       "quickFixes": "Corecții rapide",
       "manualTimestampEdit": "Editare manuală a marcajelor temporale",
@@ -414,6 +492,7 @@
     "common": {
       "highlightActiveLineDesc": "Evidențiază versul redat în modul selectat.",
       "playbackSettingsMode": "Comportament de redare pentru",
+      "playbackSettingsModeDesc": "Derularea automată și poziția între file se setează separat pentru Editare și Sincronizare. Alege pe care o modifici.",
       "editMode": "Editare",
       "timeMode": "Sincronizare",
       "enabled": "Activat",
@@ -449,8 +528,11 @@
       "playbackRate": "Viteză de redare",
       "autosave": {
         "enable": "Activează salvarea automată",
+        "enableDesc": "Salvează versurile la câteva secunde după fiecare modificare și păstrează versiuni pe care le poți restaura din meniul Fișier.",
         "interval": "Salvează la fiecare (minute)",
-        "limit": "Versiuni de păstrat"
+        "intervalDesc": "Timpul minim între versiuni. Ultimele modificări sunt salvate oricum după fiecare editare.",
+        "limit": "Versiuni de păstrat",
+        "limitDesc": "Câte versiuni se păstrează pentru fiecare melodie. Cele mai vechi se șterg primele."
       },
       "customBackground": "Imagine de fundal personalizată",
       "customBackgroundDesc": "Alege o imagine pentru a fi folosită ca fundal.",
@@ -510,6 +592,7 @@
     "appearance": {
       "mode": {
         "label": "Editor de aspect",
+        "labelDesc": "Simplă include tema, fundalul, scara și fontul. Avansată setează fiecare culoare, spațierea și ordinea panourilor.",
         "basic": "Aranjare simplă",
         "advanced": "Aranjare avansată",
         "none": "Niciunul",
@@ -540,6 +623,7 @@
       "glassBlur": "Intensitatea efectului de sticlă",
       "glassBlurDesc": "Reglează estomparea fundalului elementelor cu efect de sticlă.",
       "background": "Fundal",
+      "backgroundDesc": "Afișează o imagine sau un gradient în spatele aplicației.",
       "useCustomGradient": "Culoare personalizată a gradientului",
       "useCustomGradientDesc": "Generează un gradient dintr-o singură culoare.",
       "syncGradientToAccent": "Sincronizează prima culoare cu cea de accent",
@@ -754,7 +838,7 @@
       "timingOverviewAutoScrollDesc": "Vederea de ansamblu a timpilor urmărește cursorul de redare.",
       "vsyncDesc": "Actualizează previzualizările Standard și Toxi la fiecare cadru în loc de aproximativ 30 de ori pe secundă. Mai fluid, dar folosește mai mult procesorul.",
       "showFpsDesc": "Afișează un contor de cadre pe secundă pe previzualizare.",
-      "syncLevelDesc": "Cuvânt: sincronizează fiecare cuvânt pe parcurs. Vers: sincronizează versuri întregi și distribuie cuvintele uniform, pentru o sincronizare aproximativă pe care o rafinezi în spectrogramă.",
+      "syncLevelDesc": "Cuvânt: sincronizează fiecare cuvânt pe parcurs. Vers: sincronizează versuri întregi și distribuie cuvintele uniform. Și modul Vers salvează timpii fiecărui cuvânt, nu versuri sincronizate pe rând, așa că rafinează cuvintele în spectrogramă.",
       "previewModeDesc": "Alege ce previzualizare afișează fila Previzualizare.",
       "spicyBackgroundDesc": "Ce se afișează în spatele previzualizării Spicy.",
       "fadeWidthDesc": "Cât de moale este marginea evidențierii când un cuvânt se umple în previzualizările Standard și Toxi."
@@ -779,7 +863,10 @@
     "modeBtns": {
       "edit": "Editare",
       "sync": "Sincronizare",
-      "preview": "Previzualizare"
+      "preview": "Previzualizare",
+      "editDesc": "Scrie, împarte și marchează versurile.",
+      "syncDesc": "Sincronizează fiecare cuvânt cu sunetul.",
+      "previewDesc": "Redă versurile așa cum le vor vedea ascultătorii."
     },
     "appName": "TTML Tool",
     "menu": {
@@ -808,10 +895,7 @@
       "ttmlChecklist": "Listă de TTML de creat",
       "tool": "Unelte",
       "importLyric": {
-        "import": "Importă versuri",
-        "fromPlainText": "Importă din text simplu…",
-        "fromLRCLIB": "Importă din LRCLIB...",
-        "fromGenius": "Importă din Genius…"
+        "import": "Importă versuri..."
       },
       "exportLyric": {
         "export": "Exportă versuri",
@@ -1055,7 +1139,6 @@
       "searchError": "Căutare eșuată: {error}",
       "fetchError": "Nu s-au putut prelua versurile: {error}",
       "noLyricsError": "Nu există versuri de importat.",
-      "importSuccess": "{count, plural, one {# vers importat din Genius.} few {# versuri importate din Genius.} other {# de versuri importate din Genius.}}",
       "howToGetKey": "Cum obții un token de acces Genius"
     },
     "openLink": "Deschide link-ul",
@@ -1079,11 +1162,15 @@
     "addPresets": "Adaugă toate câmpurile standard",
     "clear": "Curăță"
   },
+  "helpText": {
+    "metadataArtists": "Cine interpretează melodia, așa cum este creditată piesa pe serviciile de streaming. Exemplu: „Shake It Off” este de Taylor Swift.",
+    "metadataSongwriter": "Cine a scris muzica și versurile, conform creditelor de compoziție. Adesea alte persoane decât artiștii. Exemplu: „Shake It Off” a fost scrisă de Taylor Swift, Max Martin și Shellback.",
+    "openSongwritersGuide": "Deschide ghidul despre compozitori"
+  },
   "lrclib": {
     "placeholder": "Titlul melodiei și artistul…",
     "notFound": "Niciun rezultat. Încearcă alte cuvinte-cheie.",
     "noResult": "Introdu o melodie sau un artist pentru căutare",
-    "title": "Importă versuri din LRCLIB",
     "matchesAudio": "Se potrivește cu sunetul tău"
   },
   "lyricEditor": {
@@ -1208,13 +1295,8 @@
     "setupTitle": "Token de acces Genius",
     "setupDesc": "Pentru a importa din Genius, ai nevoie de un token de acces (Client Access Token). Îl poți crea în portalul pentru dezvoltatori Genius.",
     "keyPlaceholder": "Lipește tokenul de acces Genius…",
-    "previewTitle": "Previzualizarea versurilor din Genius",
-    "back": "Înapoi",
-    "previewSubtitle": "Poți edita versurile de mai jos înainte de import.",
     "linesCount": "{count, plural, one {# vers} few {# versuri} other {# de versuri}}",
     "importButton": "Importă versuri",
-    "importTitle": "Importă versuri din Genius",
-    "searchPlaceholder": "Artist – titlul melodiei…",
     "notFound": "Niciun rezultat găsit. Încearcă cuvinte cheie diferite.",
     "noResult": "Introdu un nume de melodie sau un artist pentru a începe.",
     "howToGetKey": "Cum obții un token de acces Genius",
@@ -1223,8 +1305,6 @@
   "textImportDialog": {
     "processLyrics": "Procesează versurile",
     "processedSuccess": "Versurile sunt pregătite pentru sincronizarea pe silabe.",
-    "title": "Importă versuri din text simplu",
-    "actionButton": "Importă",
     "contentMode": {
       "caption": "Conținut text",
       "lyric": "Doar versuri",
@@ -1242,20 +1322,11 @@
     "wordSeparator": "Separator de cuvinte",
     "enableSpecialPrefix": "Folosește prefixe de vers",
     "bgLyricPrefix": "Prefixul versurilor de fundal",
-    "duetLyricPrefix": "Prefixul versurilor de duet",
-    "description": "Importă versurile din text simplu sau din alte formate."
+    "duetLyricPrefix": "Prefixul versurilor de duet"
   },
   "sectionImportReview": {
     "title": "Verifică secțiunile detectate",
-    "description": "Verifică categoriile normalizate și metadatele înainte de a înlocui versurile.",
-    "sourceLyrics": "Versuri sursă",
-    "structure": "Structură",
-    "sectionCount": "{count, plural, one {# secțiune} few {# secțiuni} other {# de secțiuni}}",
-    "vocalist": "Vocalist / rol",
-    "color": "Culoarea secțiunii",
-    "notes": "Note",
-    "lineCount": "{count, plural, one {# vers} few {# versuri} other {# de versuri}}",
-    "import": "Importă versuri revizuite"
+    "lineCount": "{count, plural, one {# vers} few {# versuri} other {# de versuri}}"
   },
   "globalDragOverlay": {
     "title": "Eliberează pentru a încărca"

@@ -57,12 +57,31 @@
 		animation: laneItemFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 	}
 
-	&.dropLeft {
-		border-left: solid 3px var(--accent-a11);
+	/* Drawn in the gap rather than as a border: dark themes reset the chip
+	   border, and a border-width change would shift the line while dragging. */
+	&.dropLeft,
+	&.dropRight {
+		position: relative;
 	}
 
-	&.dropRight {
-		border-right: solid 3px var(--accent-a11);
+	&.dropLeft::after,
+	&.dropRight::after {
+		content: "";
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		width: 3px;
+		border-radius: 9999px;
+		background-color: var(--accent-a11);
+		pointer-events: none;
+	}
+
+	&.dropLeft::after {
+		left: calc(var(--chip-gap, var(--space-2)) / -2 - 1.5px);
+	}
+
+	&.dropRight::after {
+		right: calc(var(--chip-gap, var(--space-2)) / -2 - 1.5px);
 	}
 }
 
@@ -649,6 +668,38 @@
 	background-color: var(--red-a4);
 }
 
+/* The dark themes reset the chip and line surface with a more specific rule,
+   which also wiped the error ring and every hover and selected cue, so a
+   half-timed word looked dead. Same specificity here; errors stay tinted. */
+:global(
+		.radix-themes:is(.dark, .dark-theme):not([data-legacy-dark-theme="true"])
+	)
+	:is(.lyricWord.edit, .lyricLine).error {
+	box-shadow: 0 0 0 var(--global-border-width, 2px) var(--red-a9);
+}
+
+:global(
+		.radix-themes:is(.dark, .dark-theme):not([data-legacy-dark-theme="true"])
+	)
+	:is(.lyricWord.edit, .lyricLine).error:hover {
+	background-color: var(--red-a3);
+}
+
+:global(
+		.radix-themes:is(.dark, .dark-theme):not([data-legacy-dark-theme="true"])
+	)
+	:is(.lyricWord.edit, .lyricLine).error.selected {
+	box-shadow: 0 0 0 var(--global-border-width, 2px) var(--red-11);
+	background-color: var(--red-a4);
+}
+
+:global(
+		.radix-themes:is(.dark, .dark-theme):not([data-legacy-dark-theme="true"])
+	)
+	:is(.lyricWord.edit, .lyricLine).error.selected:hover {
+	background-color: var(--red-a5);
+}
+
 .lyricWord.selected {
 	.startTime,
 	.endTime {
@@ -794,4 +845,14 @@
 		box-shadow: 0 0 35px var(--accent-a9);
 		background-color: var(--accent-a9);
 	}
+}
+
+/* Empty-state actions in a 2x2 grid: long translations wrap inside the button
+   instead of spilling out of its fixed height. */
+.emptyActions :global(.rt-Button) {
+	height: auto;
+	min-height: var(--base-button-height);
+	padding-block: var(--space-1);
+	white-space: normal;
+	text-wrap: balance;
 }

@@ -110,18 +110,21 @@ const AudioPlaybackKeyBinding = memo(() => {
 	return null;
 });
 
+// Never wrap or shrink: the inherited overflow-wrap breaks off the last digit
+// when the fallback monospace font (Menlo on macOS) runs wider than min-width.
+const timeLabelStyle: CSSProperties = {
+	minWidth: "5.5em",
+	flexShrink: 0,
+	whiteSpace: "nowrap",
+	fontVariantNumeric: "tabular-nums",
+	color: "var(--audio-bar-text, inherit)",
+	fontFamily: "var(--timestamp-font-family)",
+};
+
 const CurrentTimeLabel: FC = () => {
 	const currentTime = useAtomValue(currentTimeAtom);
 	return (
-		<Text
-			size="2"
-			style={{
-				minWidth: "5.5em",
-				textAlign: "left",
-				color: "var(--audio-bar-text, inherit)",
-				fontFamily: "var(--timestamp-font-family)",
-			}}
-		>
+		<Text size="2" style={{ ...timeLabelStyle, textAlign: "left" }}>
 			{msToTimestamp(currentTime)}
 		</Text>
 	);
@@ -301,14 +304,7 @@ export const AudioControls: FC = memo(() => {
 						</Tooltip>
 						<CurrentTimeLabel />
 						<AudioSlider />
-						<Text
-							size="2"
-							style={{
-								minWidth: "5.5em",
-								color: "var(--audio-bar-text, inherit)",
-								fontFamily: "var(--timestamp-font-family)",
-							}}
-						>
+						<Text size="2" style={timeLabelStyle}>
 							{msToTimestamp(currentDuration)}
 						</Text>
 						<Tooltip

@@ -12,6 +12,7 @@ import { useAtom, useAtomValue } from "jotai";
 import { useSetImmerAtom } from "jotai-immer";
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useLyricLinesWhileOpen } from "$/hooks/useLyricLinesWhileOpen.ts";
 import {
 	segmentationCustomRulesAtom,
 	segmentationEngineAtom,
@@ -49,7 +50,7 @@ import { ManualWordSplitter } from "./ManualWordSplitter";
 export const SplitWordDialog = memo(() => {
 	const [splitWordDialog, splitWordDialogOpen] = useAtom(splitWordDialogAtom);
 	const editingState = useAtomValue(editingWordStateAtom);
-	const lyricLines = useAtomValue(lyricLinesAtom);
+	const lyricLines = useLyricLinesWhileOpen(splitWordDialog);
 	const editLyricLines = useSetImmerAtom(lyricLinesAtom);
 	const { t } = useTranslation();
 

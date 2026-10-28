@@ -27,12 +27,7 @@
     }
   },
   "onlineImport": {
-    "processDescription": "导入时按单词拆分文本，清理标点和空格，并将括号内的人声转为背景歌词行。",
-    "noLyricsLabel": "此曲目没有可用的歌词。",
-    "editingRawText": "编辑原始文本",
-    "backToPreview": "返回预览",
-    "manualEdit": "手动编辑",
-    "source": "来源："
+    "noLyricsLabel": "此曲目没有可用的歌词。"
   },
   "preview": {
     "untimedLines": "{count, plural, other {# 行尚未打轴}}",
@@ -109,8 +104,8 @@
       },
       "lyrics": {
         "title": "导入歌词",
-        "description": "在下方选择一个歌词来源。在导入窗口中检查结果并确认导入。",
-        "waiting": "在下方选择一个来源并完成导入。"
+        "description": "在下方选择一个歌词来源，会打开导入界面。你可以在顶部切换粘贴、LRCLIB 和 Genius，整理文本后导入。",
+        "waiting": "在下方选择一个来源，然后在导入界面中导入歌词。"
       },
       "review": {
         "title": "检查歌词与行类型",
@@ -140,17 +135,92 @@
       }
     }
   },
-  "importChooser": {
+  "importLyrics": {
     "title": "导入歌词",
-    "description": "选择要从哪里导入歌词。",
+    "description": "粘贴歌词或在线查找，整理后导入。",
+    "sourceLabel": "歌词来源",
+    "paste": "粘贴",
+    "textLabel": "歌词文本",
+    "textPlaceholder": "在此粘贴歌词，每行一句。[Chorus] 这样的分段标题单独占一行。",
+    "backToText": "返回文本",
+    "showResults": "显示搜索结果",
+    "usingTrack": "来自 {artist} 的《{title}》的信息",
+    "dropTrack": "不使用这些信息",
+    "prepareTitle": "整理",
+    "processHint": "拆分单词，清理标点和空格，并把括号内的人声移到背景歌词行。",
+    "splitSyllables": "拆分音节",
+    "splitHint": "根据你的分词设置和已学习的拆分，用单词分隔符标记音节。导入前请在文本中修正标记。",
+    "splitDone": "已标记音节。导入前请检查。",
+    "splitNothing": "没有可拆分的内容。",
+    "restoreOriginal": "恢复原始文本",
+    "sectionsTitle": "分段标题",
+    "sectionsFound": "{count, plural, other {找到 # 个标题}}",
+    "makeSections": "创建分段",
+    "makeSectionsHint": "每个标题开始一个分段。会开启 Genius 分段。",
+    "removeHeaders": "移除",
+    "removeHeadersHint": "从歌词中删除标题行。",
+    "textFormat": "文本格式",
+    "reviewSections": "检查分段",
+    "reviewHint": "修正猜错的类别。颜色、演唱者和备注可以稍后在分段菜单中设置。",
+    "sectionLabel": "分段名称",
+    "sectionCategory": "分段类别",
+    "lowConfidence": "类别为猜测，请检查。",
+    "importSuccess": "{count, plural, other {已导入 # 行。}}",
+    "importFailed": "无法读取这些歌词。请检查文本和文本格式设置。",
+    "stepsLabel": "导入步骤",
+    "stepText": "编辑文本",
+    "processSteps": {
+      "advanced": "高级",
+      "removeInlineBrackets": "移除行内注释",
+      "removeInlineBracketsHint": "删除行中间的 [注释]。保留标题行。",
+      "backgroundVocals": "括号转为背景",
+      "backgroundVocalsHint": "把（人声）移到单独的背景行。",
+      "capitalizeBackground": "背景行首字母大写",
+      "capitalizeBackgroundHint": "每个背景行以大写字母开头。",
+      "emDashes": "长破折号",
+      "emDashesHint": "把双连字符和单独的连字符转为长破折号。",
+      "splitHyphens": "拆分带连字符的词",
+      "splitHyphensHint": "在连字符后拆分 mm-hmm 这样的词。",
+      "splitCjk": "拆分 CJK 字符",
+      "splitCjkHint": "把中文、日文和韩文按字符以及文字切换处拆分。",
+      "punctuationSpacing": "整理标点",
+      "punctuationSpacingHint": "逗号后留一个空格，标点前不留空格，引号贴着所属的词。",
+      "collapseSpaces": "合并空格",
+      "collapseSpacesHint": "把连续的多个空格合并为一个。",
+      "splitWords": "按空格拆分",
+      "splitWordsHint": "把每个空格标记为导入时的词边界。"
+    }
+  },
+  "lyricMarkup": {
+    "section": "分段：{label}",
+    "joinSyllables": "合并音节",
+    "toolbar": "行工具",
+    "background": "背景行",
+    "duet": "对唱行",
+    "split": "拆分或合并音节",
+    "hint": "Alt+点击字母之间可拆分，点击圆点可合并。Alt+C 修改分段。",
+    "headerText": "标题文本",
+    "category": "类别",
+    "gutter": {
+      "background": "背景",
+      "duet": "对唱",
+      "translation": "翻译",
+      "romanization": "罗马音",
+      "removed": "已移除",
+      "dropped": "不会导入",
+      "missingTranslation": "缺少翻译",
+      "missingRomanization": "缺少罗马音"
+    }
+  },
+  "importChooser": {
     "options": {
       "plainText": {
-        "title": "纯文本",
+        "title": "粘贴",
         "description": "粘贴歌词，选择如何识别歌词行、译文、罗马音及分词。"
       },
       "lrclib": {
         "title": "LRCLIB",
-        "description": "按歌曲和歌手在 LRCLIB 中搜索带时间戳或纯文本歌词。"
+        "description": "按歌曲和歌手在 LRCLIB 中搜索，并以纯文本导入歌词。"
       },
       "genius": {
         "title": "Genius",
@@ -206,8 +276,7 @@
       "snapToPlayhead": "吸附到播放指针",
       "noPreviousFound": "未找到已打轴且匹配的先前分段。",
       "noMatchingLines": "此段落中没有与之前段落匹配的行，因此未复制任何内容。",
-      "copyPrevious": "复制上一段时间",
-      "headersRestored": "分段标题已恢复。"
+      "copyPrevious": "复制上一段时间"
     }
   },
   "common": {
@@ -305,6 +374,15 @@
   },
   "ribbonBar": {
     "advancedTooltip": "适用于编辑、打轴和预览功能区。",
+    "tooltips": {
+      "newLyricLine": "在歌词末尾添加一个空行。",
+      "bgLyric": "将所选行标记为背景人声。",
+      "duetLyric": "将所选行标记为第二位歌手演唱。",
+      "ignoreSync": "打轴按键会跳过所选行，这些行不会被打轴。",
+      "romanizationLanguage": "罗马音语言",
+      "romanizationLanguageDesc": "所选歌词的语言。大多数歌曲用自动检测即可。",
+      "romanize": "为所选行或单词填写罗马音。"
+    },
     "editMode": {
       "multipleValues": "多值…",
       "duration": "持续时间",
@@ -355,7 +433,7 @@
       "mode": "模式",
       "standard": "Standard",
       "timing": "打轴",
-      "spicy": "Spicy",
+      "spicy": "Spicy Lyrics",
       "simpleLyrics": "简洁歌词模式",
       "forceLineRendering": "显示为逐行同步",
       "background": "背景",
@@ -381,10 +459,10 @@
       "showTimestampUpdate": "显示时间戳更新",
       "touchSyncPanel": "触控打轴面板",
       "bgLyricSync": "背景人声行",
-      "bgSyncInline": "随主行",
+      "bgSyncInline": "随主行打轴",
       "bgSyncInlineDesc": "每行背景人声紧跟其主行打轴。",
-      "bgSyncSeparate": "单独一遍",
-      "bgSyncSeparateDesc": "G 和 H 只在主行间移动。点击一行背景人声即可单独为背景人声打轴。",
+      "bgSyncSeparate": "打轴时跳过",
+      "bgSyncSeparateDesc": "G 和 H 只在主行间移动。点击一行背景人声即可单独为它们打轴。",
       "quickFixes": "快速修复",
       "manualTimestampEdit": "手动编辑时间戳",
       "doubleClickEdit": "双击编辑字内容",
@@ -414,6 +492,7 @@
     "common": {
       "highlightActiveLineDesc": "高亮所选模式中正在播放的歌词行。",
       "playbackSettingsMode": "播放行为适用模式",
+      "playbackSettingsModeDesc": "自动滚动和跨选项卡位置会分别为“编辑”和“打轴”模式设置。请选择要修改的模式。",
       "editMode": "编辑",
       "timeMode": "打轴",
       "enabled": "已启用",
@@ -449,8 +528,11 @@
       "playbackRate": "播放倍速",
       "autosave": {
         "enable": "启用自动保存",
+        "enableDesc": "每次修改几秒后保存歌词，并保留快照，可从“文件”菜单恢复。",
         "interval": "保存间隔（分钟）",
-        "limit": "保留快照数量"
+        "intervalDesc": "两次快照之间的最短间隔。最新的修改仍会在每次编辑后保存。",
+        "limit": "保留快照数量",
+        "limitDesc": "每首歌保留的快照数量。超出时会先删除最早的快照。"
       },
       "customBackground": "自定义背景",
       "customBackgroundDesc": "选择一张图片作为背景。",
@@ -510,6 +592,7 @@
     "appearance": {
       "mode": {
         "label": "外观编辑器",
+        "labelDesc": "简洁布局包含主题、背景、缩放和字体。高级布局可单独设置各处颜色、间距和面板顺序。",
         "basic": "简洁布局",
         "advanced": "高级布局",
         "none": "无",
@@ -540,6 +623,7 @@
       "glassBlur": "毛玻璃强度",
       "glassBlurDesc": "调整毛玻璃元素的背景模糊效果。",
       "background": "背景",
+      "backgroundDesc": "在程序背后显示图片或渐变。",
       "useCustomGradient": "自定义渐变颜色",
       "useCustomGradientDesc": "从单一颜色生成渐变。",
       "syncGradientToAccent": "将第一个颜色与强调色同步",
@@ -754,7 +838,7 @@
       "timingOverviewAutoScrollDesc": "让时间轴概览始终滚动到播放位置。",
       "vsyncDesc": "每帧更新 Standard 和 Toxi 预览，而不是每秒约 30 次。更流畅，但占用更多 CPU。",
       "showFpsDesc": "在预览上显示帧率计数器。",
-      "syncLevelDesc": "字：逐字打轴。行：为整行打轴，并均匀分配字时间，生成粗略时间轴，再到频谱图中微调。",
+      "syncLevelDesc": "字：逐字打轴。行：为整行打轴，并均匀分配字时间。行模式保存的仍是逐字时间，而不是逐行歌词，之后到频谱图中微调各字。",
       "previewModeDesc": "选择预览标签页显示哪种预览。",
       "spicyBackgroundDesc": "Spicy 预览背后显示的内容。",
       "fadeWidthDesc": "Standard 和 Toxi 预览中字高亮填充边缘的柔和程度。"
@@ -779,7 +863,10 @@
     "modeBtns": {
       "edit": "编辑",
       "sync": "打轴",
-      "preview": "预览"
+      "preview": "预览",
+      "editDesc": "输入、拆分并标注歌词。",
+      "syncDesc": "按音频为每个单词打轴。",
+      "previewDesc": "按听众看到的样子播放歌词。"
     },
     "appName": "TTML Tool",
     "menu": {
@@ -808,10 +895,7 @@
       "ttmlChecklist": "TTML 检查清单",
       "tool": "工具",
       "importLyric": {
-        "import": "导入歌词",
-        "fromPlainText": "从纯文本导入...",
-        "fromLRCLIB": "从 LRCLIB 导入...",
-        "fromGenius": "从 Genius 导入..."
+        "import": "导入歌词..."
       },
       "exportLyric": {
         "export": "导出歌词",
@@ -1055,7 +1139,6 @@
       "searchError": "搜索失败: {error}",
       "fetchError": "无法获取歌词: {error}",
       "noLyricsError": "没有可导入的歌词。",
-      "importSuccess": "{count, plural, other {从 Genius 导入了 # 行。}}",
       "howToGetKey": "如何获取 Genius 访问令牌"
     },
     "openLink": "打开链接",
@@ -1079,11 +1162,15 @@
     "addPresets": "添加所有标准字段",
     "clear": "清除"
   },
+  "helpText": {
+    "metadataArtists": "演唱这首歌的人，按流媒体平台上的署名填写。例如：《Shake It Off》的歌手是 Taylor Swift。",
+    "metadataSongwriter": "创作词曲的人，按词曲作者署名填写，常与歌手不同。例如：《Shake It Off》的词曲作者是 Taylor Swift、Max Martin 和 Shellback。",
+    "openSongwritersGuide": "打开词曲作者指南"
+  },
   "lrclib": {
     "placeholder": "歌曲名称和歌手…",
     "notFound": "未找到结果，请尝试不同的关键词",
     "noResult": "输入歌曲或歌手进行搜索",
-    "title": "从 LRCLIB 导入歌词",
     "matchesAudio": "与音频匹配"
   },
   "lyricEditor": {
@@ -1208,13 +1295,8 @@
     "setupTitle": "Genius 访问令牌",
     "setupDesc": "从 Genius 导入需要 Genius 访问令牌（Genius 将其称为 Client Access Token）。你可以在 Genius 开发者门户创建。",
     "keyPlaceholder": "粘贴 Genius 访问令牌…",
-    "previewTitle": "Genius — 歌词预览",
-    "back": "返回",
-    "previewSubtitle": "导入前可在下方编辑歌词。",
     "linesCount": "{count, plural, other {# 行}}",
     "importButton": "导入歌词",
-    "importTitle": "从 Genius 导入歌词",
-    "searchPlaceholder": "歌手 – 歌曲名称…",
     "notFound": "未找到结果。请尝试不同的关键词。",
     "noResult": "输入歌曲名称或歌手以开始。",
     "howToGetKey": "如何获取 Genius 访问令牌",
@@ -1223,8 +1305,6 @@
   "textImportDialog": {
     "processLyrics": "处理歌词",
     "processedSuccess": "歌词已处理，可按音节打轴。",
-    "title": "从纯文本导入歌词",
-    "actionButton": "导入",
     "contentMode": {
       "caption": "文本内容",
       "lyric": "仅歌词",
@@ -1242,20 +1322,11 @@
     "wordSeparator": "单词分隔符",
     "enableSpecialPrefix": "使用行前缀",
     "bgLyricPrefix": "背景人声行前缀",
-    "duetLyricPrefix": "对唱行前缀",
-    "description": "从纯文本或其他格式导入歌词。"
+    "duetLyricPrefix": "对唱行前缀"
   },
   "sectionImportReview": {
     "title": "检查识别出的分段",
-    "description": "在替换歌词之前检查标准化类别和元数据。",
-    "sourceLyrics": "原始歌词",
-    "structure": "结构",
-    "sectionCount": "{count, plural, other {# 个分段}}",
-    "vocalist": "演唱者 / 角色",
-    "color": "分段颜色",
-    "notes": "备注",
-    "lineCount": "{count, plural, other {# 行歌词}}",
-    "import": "导入已检查的歌词"
+    "lineCount": "{count, plural, other {# 行歌词}}"
   },
   "globalDragOverlay": {
     "title": "松开以加载"

@@ -22,6 +22,9 @@ export const SpicyLyrics = memo(() => {
 		viewportRef,
 		hasDuetLines,
 		lines,
+		rows,
+		totalSize,
+		measureRow,
 		lineNodes,
 		wordNodes,
 		showTranslation,
@@ -69,6 +72,9 @@ export const SpicyLyrics = memo(() => {
 			>
 				<SpicyLyricLines
 					lines={lines}
+					rows={rows}
+					totalSize={totalSize}
+					measureRow={measureRow}
 					lineNodes={lineNodes}
 					wordNodes={wordNodes}
 					showTranslation={showTranslation}

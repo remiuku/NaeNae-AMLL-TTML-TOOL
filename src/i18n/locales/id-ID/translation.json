@@ -27,12 +27,7 @@
     }
   },
   "onlineImport": {
-    "processDescription": "Saat diimpor, teks dipisah menjadi kata, tanda baca dan spasi dirapikan, lalu vokal dalam kurung dijadikan baris lirik latar.",
-    "noLyricsLabel": "Tidak ada lirik yang tersedia untuk lagu ini.",
-    "editingRawText": "Mengedit teks mentah",
-    "backToPreview": "Kembali ke pratinjau",
-    "manualEdit": "Edit manual",
-    "source": "Sumber: "
+    "noLyricsLabel": "Tidak ada lirik yang tersedia untuk lagu ini."
   },
   "preview": {
     "untimedLines": "{count, plural, other {# baris belum diberi waktu}}",
@@ -66,7 +61,7 @@
       "link": "Sesuaikan tampilan editor"
     },
     "status": {
-      "complete": "Selesai — alat mendeteksi langkah ini sudah selesai."
+      "complete": "Selesai. Alat mendeteksi langkah ini sudah selesai."
     },
     "readMore": "Panduan lengkap",
     "continue": "Lanjutkan",
@@ -90,7 +85,7 @@
       "step1": "1. Buka Genius API Clients dan masuk.",
       "step2": "2. Pilih New API Client, beri nama aplikasi yang mudah dikenali, lalu isi kolom situs web aplikasi yang wajib.",
       "step3": "3. Simpan klien, lalu pilih Generate Access Token.",
-      "step4": "4. Salin Client Access Token—bukan Client ID atau Client Secret.",
+      "step4": "4. Salin Client Access Token, bukan Client ID atau Client Secret.",
       "reuse": "Alat menyimpan token ini secara lokal dan menggunakannya kembali untuk impor lirik dan pencarian penulis lagu.",
       "openPortal": "Buka Genius API Clients",
       "paste": "Tempel token di impor Genius"
@@ -109,8 +104,8 @@
       },
       "lyrics": {
         "title": "Impor lirik",
-        "description": "Pilih sumber lirik di bawah. Tinjau hasilnya di jendela impor dan konfirmasi impor.",
-        "waiting": "Pilih sumber di bawah dan selesaikan proses impornya."
+        "description": "Pilih sumber lirik di bawah. Layar impor akan terbuka; di sana Anda bisa beralih antara Tempel, LRCLIB, dan Genius di bagian atas, merapikan teks, lalu mengimpornya.",
+        "waiting": "Pilih sumber di bawah dan impor lirik dari layar impor."
       },
       "review": {
         "title": "Periksa lirik dan jenis baris",
@@ -140,17 +135,92 @@
       }
     }
   },
-  "importChooser": {
+  "importLyrics": {
     "title": "Impor lirik",
-    "description": "Pilih dari mana Anda ingin mengimpor lirik Anda.",
+    "description": "Tempel lirik atau cari secara online, rapikan, lalu impor.",
+    "sourceLabel": "Sumber lirik",
+    "paste": "Tempel",
+    "textLabel": "Teks lirik",
+    "textPlaceholder": "Tempel lirik di sini, satu larik per baris. Judul bagian seperti [Chorus] diletakkan di barisnya sendiri.",
+    "backToText": "Kembali ke teks",
+    "showResults": "Tampilkan hasil pencarian",
+    "usingTrack": "Detail dari {title} oleh {artist}",
+    "dropTrack": "Jangan gunakan detail ini",
+    "prepareTitle": "Rapikan",
+    "processHint": "Memisahkan kata, merapikan tanda baca dan spasi, serta memindahkan vokal dalam kurung ke baris latar.",
+    "splitSyllables": "Pisahkan suku kata",
+    "splitHint": "Menandai suku kata dengan pemisah kata, memakai pengaturan segmentasi dan pemisahan yang dipelajari. Perbaiki tanda di teks sebelum mengimpor.",
+    "splitDone": "Suku kata ditandai. Periksa sebelum mengimpor.",
+    "splitNothing": "Tidak ada yang perlu dipisahkan.",
+    "restoreOriginal": "Pulihkan teks asli",
+    "sectionsTitle": "Judul bagian",
+    "sectionsFound": "{count, plural, other {# judul ditemukan}}",
+    "makeSections": "Buat bagian",
+    "makeSectionsHint": "Setiap judul memulai bagian. Mengaktifkan Bagian Genius.",
+    "removeHeaders": "Hapus",
+    "removeHeadersHint": "Membuang baris judul dari lirik.",
+    "textFormat": "Format teks",
+    "reviewSections": "Tinjau bagian",
+    "reviewHint": "Perbaiki kategori yang salah tebak. Warna, vokalis, dan catatan bisa diatur nanti dari menu bagian.",
+    "sectionLabel": "Label bagian",
+    "sectionCategory": "Kategori bagian",
+    "lowConfidence": "Kategori ditebak. Periksa kembali.",
+    "importSuccess": "{count, plural, other {# baris diimpor.}}",
+    "importFailed": "Lirik ini tidak dapat dibaca. Periksa teks dan pengaturan format teks.",
+    "stepsLabel": "Langkah impor",
+    "stepText": "Edit teks",
+    "processSteps": {
+      "advanced": "Lanjutan",
+      "removeInlineBrackets": "Hapus catatan dalam baris",
+      "removeInlineBracketsHint": "Membuang [catatan] di tengah baris. Baris judul tetap ada.",
+      "backgroundVocals": "Kurung jadi vokal latar",
+      "backgroundVocalsHint": "Memindahkan (vokal) ke baris latarnya sendiri.",
+      "capitalizeBackground": "Kapitalkan baris latar",
+      "capitalizeBackgroundHint": "Memulai setiap baris latar dengan huruf kapital.",
+      "emDashes": "Tanda pisah panjang",
+      "emDashesHint": "Mengubah tanda hubung ganda dan yang berdiri sendiri menjadi tanda pisah panjang.",
+      "splitHyphens": "Pisahkan kata bertanda hubung",
+      "splitHyphensHint": "Memisahkan kata seperti mm-hmm setelah tanda hubung.",
+      "splitCjk": "Pisahkan karakter CJK",
+      "splitCjkHint": "Memisahkan teks Tionghoa, Jepang, dan Korea menjadi karakter dan di pergantian aksara.",
+      "punctuationSpacing": "Rapikan tanda baca",
+      "punctuationSpacingHint": "Satu spasi setelah koma, tanpa spasi sebelum tanda baca, dan tanda kutip tetap menempel pada katanya.",
+      "collapseSpaces": "Gabungkan spasi",
+      "collapseSpacesHint": "Mengubah beberapa spasi berturut-turut menjadi satu.",
+      "splitWords": "Pisahkan di spasi",
+      "splitWordsHint": "Menandai setiap spasi sebagai batas kata untuk impor."
+    }
+  },
+  "lyricMarkup": {
+    "section": "Bagian: {label}",
+    "joinSyllables": "Gabungkan suku kata",
+    "toolbar": "Alat baris",
+    "background": "Baris latar",
+    "duet": "Baris duet",
+    "split": "Pisahkan atau gabungkan suku kata",
+    "hint": "Alt+klik di antara huruf untuk memisahkan, klik titik untuk menggabungkan. Alt+C mengubah bagian.",
+    "headerText": "Teks judul",
+    "category": "Kategori",
+    "gutter": {
+      "background": "Latar",
+      "duet": "Duet",
+      "translation": "Terjemahan",
+      "romanization": "Romanisasi",
+      "removed": "Dihapus",
+      "dropped": "Tidak diimpor",
+      "missingTranslation": "Terjemahan kosong",
+      "missingRomanization": "Romanisasi kosong"
+    }
+  },
+  "importChooser": {
     "options": {
       "plainText": {
-        "title": "Teks biasa",
+        "title": "Tempel",
         "description": "Tempel lirik dan pilih cara memproses baris, terjemahan, romanisasi, serta pemisahan kata."
       },
       "lrclib": {
         "title": "LRCLIB",
-        "description": "Cari lirik dengan atau tanpa waktu di LRCLIB berdasarkan lagu dan artis."
+        "description": "Cari di LRCLIB berdasarkan lagu dan artis, lalu ambil liriknya sebagai teks biasa."
       },
       "genius": {
         "title": "Genius",
@@ -206,8 +276,7 @@
       "snapToPlayhead": "Paskan ke penunjuk putar",
       "noPreviousFound": "Tidak ditemukan bagian sebelumnya yang cocok dan sudah diberi waktu.",
       "noMatchingLines": "Tidak ada baris di bagian ini yang cocok dengan bagian sebelumnya, jadi tidak ada yang disalin.",
-      "copyPrevious": "Salin waktu sebelumnya",
-      "headersRestored": "Judul bagian dipulihkan."
+      "copyPrevious": "Salin waktu sebelumnya"
     }
   },
   "common": {
@@ -305,6 +374,15 @@
   },
   "ribbonBar": {
     "advancedTooltip": "Berlaku untuk pita Edit, Sinkronisasi, dan Pratinjau.",
+    "tooltips": {
+      "newLyricLine": "Menambahkan baris kosong di akhir lirik.",
+      "bgLyric": "Menandai baris yang dipilih sebagai vokal latar.",
+      "duetLyric": "Menandai baris yang dipilih sebagai dinyanyikan oleh penyanyi kedua.",
+      "ignoreSync": "Tombol sinkronisasi melompati baris yang dipilih, jadi baris itu tidak diberi waktu.",
+      "romanizationLanguage": "Bahasa romanisasi",
+      "romanizationLanguageDesc": "Bahasa lirik yang dipilih. Deteksi otomatis cocok untuk sebagian besar lagu.",
+      "romanize": "Mengisi romanisasi untuk baris atau kata yang dipilih."
+    },
     "editMode": {
       "multipleValues": "Beberapa nilai…",
       "duration": "Durasi",
@@ -355,7 +433,7 @@
       "mode": "Modus",
       "standard": "Standard",
       "timing": "Sinkronisasi",
-      "spicy": "Spicy",
+      "spicy": "Spicy Lyrics",
       "simpleLyrics": "Mode lirik sederhana",
       "forceLineRendering": "Tampilkan sinkronisasi per baris",
       "background": "Latar belakang",
@@ -381,10 +459,10 @@
       "showTimestampUpdate": "Tampilkan perubahan penanda waktu",
       "touchSyncPanel": "Panel sinkronisasi sentuh",
       "bgLyricSync": "Baris vokal latar",
-      "bgSyncInline": "Sekaligus",
+      "bgSyncInline": "Bersama baris utama",
       "bgSyncInlineDesc": "Sinkronkan setiap baris vokal latar tepat setelah baris utamanya.",
-      "bgSyncSeparate": "Terpisah",
-      "bgSyncSeparateDesc": "G dan H tetap di baris utama. Klik baris vokal latar untuk menyinkronkan vokal latar secara terpisah.",
+      "bgSyncSeparate": "Lewati saat sinkronisasi",
+      "bgSyncSeparateDesc": "G dan H tetap di baris utama. Klik baris vokal latar untuk menyinkronkannya secara terpisah.",
       "quickFixes": "Perbaikan cepat",
       "manualTimestampEdit": "Edit penanda waktu manual",
       "doubleClickEdit": "Edit kata dengan klik dua kali",
@@ -414,6 +492,7 @@
     "common": {
       "highlightActiveLineDesc": "Menyorot secara visual baris lirik yang sedang diputar dalam mode yang dipilih.",
       "playbackSettingsMode": "Perilaku pemutaran untuk",
+      "playbackSettingsModeDesc": "Gulir otomatis dan posisi antartab diatur terpisah untuk Edit dan Sinkronisasi. Pilih yang ingin diubah.",
       "editMode": "Edit",
       "timeMode": "Sinkronisasi",
       "enabled": "Aktif",
@@ -449,8 +528,11 @@
       "playbackRate": "Kecepatan putar",
       "autosave": {
         "enable": "Aktifkan simpan otomatis",
+        "enableDesc": "Menyimpan lirik beberapa detik setelah setiap perubahan dan menyimpan snapshot yang bisa dipulihkan lewat menu File.",
         "interval": "Simpan setiap (menit)",
-        "limit": "Jumlah snapshot yang disimpan"
+        "intervalDesc": "Jeda minimum antar-snapshot. Perubahan terbaru tetap disimpan setelah setiap edit.",
+        "limit": "Jumlah snapshot yang disimpan",
+        "limitDesc": "Jumlah snapshot yang disimpan untuk setiap lagu. Yang paling lama dihapus lebih dulu."
       },
       "customBackground": "Latar belakang kustom",
       "customBackgroundDesc": "Pilih gambar sebagai latar belakang.",
@@ -510,6 +592,7 @@
     "appearance": {
       "mode": {
         "label": "Editor tampilan",
+        "labelDesc": "Sederhana berisi tema, latar, skala, dan font. Lanjutan mengatur setiap warna, jarak, dan urutan panel.",
         "basic": "Tata letak sederhana",
         "advanced": "Tata letak lanjutan",
         "none": "Tidak ada",
@@ -540,6 +623,7 @@
       "glassBlur": "Intensitas efek kaca",
       "glassBlurDesc": "Sesuaikan pemburaman latar belakang elemen berefek kaca.",
       "background": "Latar belakang",
+      "backgroundDesc": "Tampilkan gambar atau gradien di belakang aplikasi.",
       "useCustomGradient": "Warna gradien kustom",
       "useCustomGradientDesc": "Hasilkan gradien dari satu warna.",
       "syncGradientToAccent": "Sinkronkan warna pertama dengan aksen",
@@ -754,7 +838,7 @@
       "timingOverviewAutoScrollDesc": "Jaga ikhtisar waktu tetap tergulir ke posisi pemutaran.",
       "vsyncDesc": "Perbarui pratinjau Standard dan Toxi setiap frame, bukan sekitar 30 kali per detik. Lebih mulus, tetapi memakai lebih banyak CPU.",
       "showFpsDesc": "Tampilkan penghitung frame rate di pratinjau.",
-      "syncLevelDesc": "Kata: beri waktu setiap kata. Baris: beri waktu seluruh baris dan sebarkan kata secara merata sebagai waktu awal yang bisa disempurnakan di spektrogram.",
+      "syncLevelDesc": "Kata: beri waktu setiap kata. Baris: beri waktu seluruh baris dan sebarkan kata secara merata. Mode Baris tetap menyimpan waktu per kata, bukan lirik yang disinkronkan per baris, jadi sempurnakan kata-katanya di spektrogram.",
       "previewModeDesc": "Pilih pratinjau yang ditampilkan tab Pratinjau.",
       "spicyBackgroundDesc": "Apa yang tampil di belakang pratinjau Spicy.",
       "fadeWidthDesc": "Seberapa lembut tepi sorotan saat kata terisi di pratinjau Standard dan Toxi."
@@ -779,7 +863,10 @@
     "modeBtns": {
       "edit": "Edit",
       "sync": "Sinkronisasi",
-      "preview": "Pratinjau"
+      "preview": "Pratinjau",
+      "editDesc": "Ketik, pisahkan, dan tandai lirik.",
+      "syncDesc": "Atur waktu setiap kata sesuai audio.",
+      "previewDesc": "Putar lirik seperti yang akan dilihat pendengar."
     },
     "appName": "TTML Tool",
     "menu": {
@@ -808,10 +895,7 @@
       "ttmlChecklist": "Daftar periksa TTML",
       "tool": "Alat",
       "importLyric": {
-        "import": "Impor lirik",
-        "fromPlainText": "Impor dari teks biasa…",
-        "fromLRCLIB": "Impor dari LRCLIB...",
-        "fromGenius": "Impor dari Genius…"
+        "import": "Impor lirik..."
       },
       "exportLyric": {
         "export": "Ekspor lirik",
@@ -1055,7 +1139,6 @@
       "searchError": "Pencarian gagal: {error}",
       "fetchError": "Tidak dapat mengambil lirik: {error}",
       "noLyricsError": "Tidak ada lirik untuk diimpor.",
-      "importSuccess": "{count, plural, other {# baris diimpor dari Genius.}}",
       "howToGetKey": "Cara mendapatkan token akses Genius"
     },
     "openLink": "Buka tautan",
@@ -1079,11 +1162,15 @@
     "addPresets": "Tambah semua kolom standar",
     "clear": "Kosongkan"
   },
+  "helpText": {
+    "metadataArtists": "Siapa yang membawakan lagu, sesuai kredit lagu di layanan streaming. Contoh: \"Shake It Off\" oleh Taylor Swift.",
+    "metadataSongwriter": "Siapa yang menulis musik dan liriknya, sesuai kredit penulisan. Sering kali berbeda dari artisnya. Contoh: \"Shake It Off\" ditulis oleh Taylor Swift, Max Martin, dan Shellback.",
+    "openSongwritersGuide": "Buka panduan penulis lagu"
+  },
   "lrclib": {
     "placeholder": "Judul lagu dan artis…",
     "notFound": "Hasil tidak ditemukan, silakan coba ganti kata kunci",
     "noResult": "Ketik lagu atau artis untuk mencari",
-    "title": "Impor lirik dari LRCLIB",
     "matchesAudio": "Cocok dengan audio Anda"
   },
   "lyricEditor": {
@@ -1208,13 +1295,8 @@
     "setupTitle": "Token akses Genius",
     "setupDesc": "Untuk mengimpor dari Genius, Anda memerlukan token akses Genius (disebut Client Access Token oleh Genius). Anda dapat membuatnya di portal pengembang Genius.",
     "keyPlaceholder": "Tempel token akses Genius Anda…",
-    "previewTitle": "Genius — Pratinjau lirik",
-    "back": "Kembali",
-    "previewSubtitle": "Anda dapat mengedit lirik di bawah ini sebelum mengimpor.",
     "linesCount": "{count, plural, other {# baris}}",
     "importButton": "Impor lirik",
-    "importTitle": "Impor lirik dari Genius",
-    "searchPlaceholder": "Artis – Judul lagu…",
     "notFound": "Tidak ada hasil yang ditemukan. Coba kata kunci yang berbeda.",
     "noResult": "Masukkan nama lagu atau artis untuk memulai.",
     "howToGetKey": "Cara mendapatkan token akses Genius",
@@ -1223,8 +1305,6 @@
   "textImportDialog": {
     "processLyrics": "Proses lirik",
     "processedSuccess": "Lirik siap untuk sinkronisasi suku kata.",
-    "title": "Impor lirik dari teks biasa",
-    "actionButton": "Impor",
     "contentMode": {
       "caption": "Isi teks",
       "lyric": "Hanya lirik",
@@ -1242,20 +1322,11 @@
     "wordSeparator": "Pemisah kata",
     "enableSpecialPrefix": "Gunakan prefiks baris",
     "bgLyricPrefix": "Prefiks baris vokal latar",
-    "duetLyricPrefix": "Prefiks baris duet",
-    "description": "Impor lirik dari teks biasa atau format lain."
+    "duetLyricPrefix": "Prefiks baris duet"
   },
   "sectionImportReview": {
     "title": "Tinjau bagian yang terdeteksi",
-    "description": "Periksa kategori dan metadata yang dinormalisasi sebelum mengganti lirik.",
-    "sourceLyrics": "Lirik sumber",
-    "structure": "Struktur",
-    "sectionCount": "{count, plural, other {# bagian}}",
-    "vocalist": "Vokalis / peran",
-    "color": "Warna bagian",
-    "notes": "Catatan",
-    "lineCount": "{count, plural, other {# baris lirik}}",
-    "import": "Impor lirik yang telah ditinjau"
+    "lineCount": "{count, plural, other {# baris lirik}}"
   },
   "globalDragOverlay": {
     "title": "Lepaskan di sini untuk memuat"

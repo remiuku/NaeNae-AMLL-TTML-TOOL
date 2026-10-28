@@ -51,6 +51,8 @@ import {
 	keyUnselectAllAtom,
 } from "$/states/keybindings.ts";
 import {
+	canRedoLyricLinesAtom,
+	canUndoLyricLinesAtom,
 	isDirtyAtom,
 	lyricLinesAtom,
 	newLyricLinesAtom,
@@ -60,7 +62,6 @@ import {
 	selectedLinesAtom,
 	selectedWordsAtom,
 	startFreshLyricDocumentAtom,
-	undoableLyricLinesAtom,
 	undoLyricLinesAtom,
 } from "$/states/main.ts";
 import { openFileWithDialog } from "$/utils/fileDialog.ts";
@@ -78,7 +79,8 @@ export const useTopMenuActions = () => {
 	const editLyricLines = useSetImmerAtom(lyricLinesAtom);
 	const setMetadataEditorOpened = useSetAtom(metadataEditorDialogAtom);
 	const setSettingsDialogOpened = useSetAtom(settingsDialogAtom);
-	const undoLyricLines = useAtomValue(undoableLyricLinesAtom);
+	const canUndo = useAtomValue(canUndoLyricLinesAtom);
+	const canRedo = useAtomValue(canRedoLyricLinesAtom);
 	const store = useStore();
 	const isDirty = useAtomValue(isDirtyAtom);
 	const setConfirmDialog = useSetAtom(confirmDialogAtom);
@@ -97,7 +99,6 @@ export const useTopMenuActions = () => {
 	const { openFile } = useFileOpener();
 	const setProjectId = useSetAtom(projectIdAtom);
 	const { config: segmentationConfig } = useSegmentationConfig();
-	const lyricLines = useAtomValue(lyricLinesAtom);
 	const newFileKey = useAtomValue(keyNewFileAtom);
 	const openFileKey = useAtomValue(keyOpenFileAtom);
 	const saveFileKey = useAtomValue(keySaveFileAtom);
@@ -238,12 +239,12 @@ export const useTopMenuActions = () => {
 	}, []);
 
 	const onUndo = useCallback(() => {
-		if (!store.get(undoableLyricLinesAtom).canUndo) return;
+		if (!store.get(canUndoLyricLinesAtom)) return;
 		runHistoryAction(() => store.set(undoLyricLinesAtom));
 	}, [runHistoryAction, store]);
 
 	const onRedo = useCallback(() => {
-		if (!store.get(undoableLyricLinesAtom).canRedo) return;
+		if (!store.get(canRedoLyricLinesAtom)) return;
 		runHistoryAction(() => store.set(redoLyricLinesAtom));
 	}, [runHistoryAction, store]);
 
@@ -322,7 +323,7 @@ export const useTopMenuActions = () => {
 	const onQuickAutoSegment = useCallback(() => {
 		if (
 			!matchesSavedSyllabificationEngine(
-				lyricLines.lyricLines,
+				store.get(lyricLinesAtom).lyricLines,
 				savedSegmentationEngine,
 			)
 		) {
@@ -349,8 +350,8 @@ export const useTopMenuActions = () => {
 		);
 	}, [
 		editLyricLines,
-		lyricLines.lyricLines,
 		savedSegmentationEngine,
+		store,
 		segmentationConfig,
 		setAutoSegmentDialog,
 		setSplitEnglish,
@@ -422,8 +423,8 @@ export const useTopMenuActions = () => {
 		selectAllLinesKey,
 		unselectAllLinesKey,
 		deleteSelectionKey,
-		undoDisabled: !undoLyricLines.canUndo,
-		redoDisabled: !undoLyricLines.canRedo,
+		undoDisabled: !canUndo,
+		redoDisabled: !canRedo,
 		onNewFile,
 		onOpenFile,
 		onOpenFileFromClipboard,
