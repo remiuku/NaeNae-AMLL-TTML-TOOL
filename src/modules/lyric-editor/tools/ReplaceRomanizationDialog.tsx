@@ -6,10 +6,11 @@ import {
 	Text,
 	TextField,
 } from "@radix-ui/themes";
-import { useAtom, useAtomValue } from "jotai";
+import { useAtom } from "jotai";
 import { useSetImmerAtom } from "jotai-immer";
 import { memo, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useLyricLinesWhileOpen } from "$/hooks/useLyricLinesWhileOpen.ts";
 import { replaceRomanizationDialogAtom } from "$/states/dialogs";
 import { lyricLinesAtom } from "$/states/main";
 import { replaceRomanization } from "./replace-romanization";
@@ -17,7 +18,7 @@ import { replaceRomanization } from "./replace-romanization";
 export const ReplaceRomanizationDialog = memo(() => {
 	const { t } = useTranslation();
 	const [dialogState, setDialogState] = useAtom(replaceRomanizationDialogAtom);
-	const lyricState = useAtomValue(lyricLinesAtom);
+	const lyricState = useLyricLinesWhileOpen(dialogState.open);
 	const editLyricLines = useSetImmerAtom(lyricLinesAtom);
 	const [replacementText, setReplacementText] = useState("");
 	const [applyToAll, setApplyToAll] = useState(false);

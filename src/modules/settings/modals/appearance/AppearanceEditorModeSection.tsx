@@ -1,4 +1,4 @@
-import { Flex } from "@radix-ui/themes";
+import { Flex, Text } from "@radix-ui/themes";
 import { OptionPicker } from "$/components/OptionPicker";
 import { AppearanceEditorMode } from "$/modules/settings/states/index.ts";
 import type { AppearanceSectionState } from "./sectionState";
@@ -25,5 +25,11 @@ export const AppearanceEditorModeSection = ({
 				},
 			]}
 		/>
+		<Text size="1" color="gray">
+			{t(
+				"settings.appearance.mode.labelDesc",
+				"Simple covers theme, background, scale and font. Advanced sets individual colors, spacing and the panel order.",
+			)}
+		</Text>
 	</Flex>
 );

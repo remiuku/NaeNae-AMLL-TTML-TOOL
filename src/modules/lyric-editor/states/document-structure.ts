@@ -8,6 +8,7 @@ import { atom } from "jotai";
 import { selectAtom, splitAtom } from "jotai/utils";
 import { focusAtom } from "jotai-optics";
 import { lyricLinesAtom } from "$/states/main.ts";
+import type { LyricLine } from "$/types/ttml.ts";
 
 export const lyricLinesOnlyAtom = splitAtom(
 	focusAtom(lyricLinesAtom, (o) => o.prop("lyricLines")),
@@ -42,12 +43,26 @@ export const lineDisplayNumbersAtom = atom((get) => {
 	});
 });
 
+const GENIUS_HEADER_PATTERN =
+	/^\[(Chorus|Verse|Bridge|Intro|Outro|Pre-Chorus|Hook|Strofa|Refren|Skit|Interlude|Instrumental|Pre-Refren|Partea|Slofa|Section|Part|S\d+|V\d+|C\d+|Strophe|Refrain|Pont|Couplet|Refrain|Break).*?\]$/i;
+
+// Edits replace only the lines they touch, so untouched lines answer from here
+// instead of re-joining every word in the song on each sync key press.
+const geniusHeaderLineCache = new WeakMap<LyricLine, boolean>();
+
+const isGeniusHeaderLine = (line: LyricLine) => {
+	let isHeader = geniusHeaderLineCache.get(line);
+	if (isHeader === undefined) {
+		isHeader = GENIUS_HEADER_PATTERN.test(
+			line.words.map((word) => word.word).join(""),
+		);
+		geniusHeaderLineCache.set(line, isHeader);
+	}
+	return isHeader;
+};
+
 // Header detection must still respond to text edits without subscribing the list
 // to every word and timestamp in the document.
 export const hasGeniusHeaderAtom = selectAtom(lyricLinesAtom, (state) =>
-	state.lyricLines.some((line) =>
-		/^\[(Chorus|Verse|Bridge|Intro|Outro|Pre-Chorus|Hook|Strofa|Refren|Skit|Interlude|Instrumental|Pre-Refren|Partea|Slofa|Section|Part|S\d+|V\d+|C\d+|Strophe|Refrain|Pont|Couplet|Refrain|Break).*?\]$/i.test(
-			line.words.map((word) => word.word).join(""),
-		),
-	),
+	state.lyricLines.some(isGeniusHeaderLine),
 );

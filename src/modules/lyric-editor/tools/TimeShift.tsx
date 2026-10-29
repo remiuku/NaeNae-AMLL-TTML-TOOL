@@ -19,6 +19,7 @@ import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { useSetImmerAtom } from "jotai-immer";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useLyricLinesWhileOpen } from "$/hooks/useLyricLinesWhileOpen.ts";
 import {
 	timeShiftDialogAtom,
 	timeShiftPreviewActiveAtom,
@@ -34,7 +35,7 @@ type ShiftScope = "all" | "selected" | "selected-following" | "custom";
 export const TimeShiftDialog = () => {
 	const { t } = useTranslation();
 	const [open, setOpen] = useAtom(timeShiftDialogAtom);
-	const lyricLines = useAtomValue(lyricLinesAtom);
+	const lyricLines = useLyricLinesWhileOpen(open);
 	const selectedLines = useAtomValue(selectedLinesAtom);
 	const setLyricLines = useSetImmerAtom(lyricLinesAtom);
 

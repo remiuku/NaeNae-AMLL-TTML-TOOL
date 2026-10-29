@@ -24,6 +24,7 @@ import {
 	memo,
 	type ReactNode,
 	useEffect,
+	useLayoutEffect,
 	useMemo,
 	useRef,
 	useState,
@@ -31,6 +32,7 @@ import {
 import { useTranslation } from "react-i18next";
 import { settingsDialogAtom, settingsTabAtom } from "$/states/dialogs.ts";
 import {
+	matchesSettingsPage,
 	matchesSettingsSearch,
 	settingsSearchKeywords,
 } from "../logic/settings-search";
@@ -79,6 +81,110 @@ const NavigationItem = ({
 		<span>{children}</span>
 	</Tabs.Trigger>
 );
+
+/**
+ * Every page, as tab panels. While searching, all of them stay mounted (the
+ * inactive ones hidden) so their text can be matched. Memoized on that flag
+ * alone so typing in the search box doesn't re-render seven pages.
+ */
+const SettingsPages = memo(({ forceMount }: { forceMount: boolean }) => {
+	const { t } = useTranslation();
+	const mount = forceMount || undefined;
+	return (
+		<>
+			<Tabs.Content
+				value="common"
+				forceMount={mount}
+				className={styles.tabContent}
+			>
+				<SettingsPage
+					title={t("settingsDialog.tab.common", "General")}
+					description={t(
+						"settingsDialog.page.generalDesc",
+						"Language, privacy, and app-wide behavior.",
+					)}
+				>
+					<SettingsCommonTab section="general" />
+				</SettingsPage>
+			</Tabs.Content>
+			<Tabs.Content
+				value="editor"
+				forceMount={mount}
+				className={styles.tabContent}
+			>
+				<SettingsPage
+					title={t("settingsDialog.tab.editor", "Editor & sync")}
+					description={t(
+						"settingsDialog.page.editorDesc",
+						"Timing input, synchronization behavior, and visual cues.",
+					)}
+				>
+					<SettingsCommonTab section="editor" />
+				</SettingsPage>
+			</Tabs.Content>
+			<Tabs.Content
+				value="files"
+				forceMount={mount}
+				className={styles.tabContent}
+			>
+				<SettingsPage
+					title={t("settingsDialog.tab.files", "Files & storage")}
+					description={t(
+						"settingsDialog.page.filesDesc",
+						"Import cleanup, autosave history, and portable backups.",
+					)}
+				>
+					<SettingsCommonTab section="files" />
+					<SettingsBackupTab />
+				</SettingsPage>
+			</Tabs.Content>
+			<Tabs.Content
+				value="audio"
+				forceMount={mount}
+				className={styles.tabContent}
+			>
+				<SettingsPage
+					title={t("settingsDialog.tab.audio", "Audio")}
+					description={t(
+						"settingsDialog.page.audioDesc",
+						"Playback, equalizer, and spectrogram display.",
+					)}
+				>
+					<SettingsCommonTab section="audio" />
+					<AudioSettingsTab />
+					<SettingsSpectrogramTab />
+				</SettingsPage>
+			</Tabs.Content>
+			<Tabs.Content
+				value="keybinding"
+				forceMount={mount}
+				className={styles.tabContent}
+			>
+				<SettingsPage title={t("settingsDialog.tab.keybindings", "Shortcuts")}>
+					<SettingsKeyBindingsDialog />
+				</SettingsPage>
+			</Tabs.Content>
+			<Tabs.Content
+				value="appearance"
+				forceMount={mount}
+				className={styles.tabContent}
+			>
+				<SettingsPage title={t("settingsDialog.tab.appearance", "Appearance")}>
+					<SettingsAppearanceTab />
+				</SettingsPage>
+			</Tabs.Content>
+			<Tabs.Content
+				value="about"
+				forceMount={mount}
+				className={styles.tabContent}
+			>
+				<SettingsPage title={t("common.about", "About")}>
+					<SettingsAboutTab />
+				</SettingsPage>
+			</Tabs.Content>
+		</>
+	);
+});
 
 export const SettingsDialog = memo(() => {
 	const [settingsDialogOpen, setSettingsDialogOpen] =
@@ -135,15 +241,56 @@ export const SettingsDialog = memo(() => {
 		],
 		[t],
 	);
+	const searching = settingsDialogOpen && searchQuery.trim() !== "";
+	// Rendered text of every page while searching. Force-mounted panels fill in
+	// a commit later (and some sections load async), so re-read on DOM changes.
+	const [pageTexts, setPageTexts] = useState<Record<string, string> | null>(
+		null,
+	);
+	useLayoutEffect(() => {
+		const pane = contentRef.current;
+		if (!searching || !pane) {
+			setPageTexts(null);
+			return;
+		}
+		const read = () => {
+			const texts: Record<string, string> = {};
+			for (const item of navigationItems) {
+				const panel = pane.querySelector(`[id$="-content-${item.value}"]`);
+				// Not filled in yet: stay null so the tab jump doesn't act on
+				// keyword-only results.
+				if (!panel?.childElementCount) return;
+				texts[item.value] = panel.textContent ?? "";
+			}
+			setPageTexts((prev) =>
+				prev &&
+				navigationItems.every(({ value }) => prev[value] === texts[value])
+					? prev
+					: texts,
+			);
+		};
+		read();
+		const observer = new MutationObserver(read);
+		observer.observe(pane, {
+			childList: true,
+			subtree: true,
+			characterData: true,
+		});
+		return () => observer.disconnect();
+	}, [searching, navigationItems]);
 	const visibleItems = useMemo(
 		() =>
 			navigationItems.filter((item) =>
-				matchesSettingsSearch(
-					`${item.label} ${settingsSearchKeywords[item.value]}`,
+				matchesSettingsPage(
+					{
+						label: item.label,
+						keywords: settingsSearchKeywords[item.value],
+						text: pageTexts?.[item.value],
+					},
 					searchQuery,
 				),
 			),
-		[navigationItems, searchQuery],
+		[navigationItems, searchQuery, pageTexts],
 	);
 
 	useEffect(() => {
@@ -153,7 +300,8 @@ export const SettingsDialog = memo(() => {
 			return;
 		}
 		if (
-			searchQuery.trim() &&
+			searching &&
+			pageTexts &&
 			visibleItems.length &&
 			!visibleItems.some((item) => item.value === displayedTab)
 		) {
@@ -161,7 +309,8 @@ export const SettingsDialog = memo(() => {
 		}
 	}, [
 		settingsDialogOpen,
-		searchQuery,
+		searching,
+		pageTexts,
 		displayedTab,
 		visibleItems,
 		setActiveTab,
@@ -284,72 +433,7 @@ export const SettingsDialog = memo(() => {
 						className={styles.contentPane}
 						data-instant={instantTab || undefined}
 					>
-						<Tabs.Content value="common" className={styles.tabContent}>
-							<SettingsPage
-								title={t("settingsDialog.tab.common", "General")}
-								description={t(
-									"settingsDialog.page.generalDesc",
-									"Language, privacy, and app-wide behavior.",
-								)}
-							>
-								<SettingsCommonTab section="general" />
-							</SettingsPage>
-						</Tabs.Content>
-						<Tabs.Content value="editor" className={styles.tabContent}>
-							<SettingsPage
-								title={t("settingsDialog.tab.editor", "Editor & sync")}
-								description={t(
-									"settingsDialog.page.editorDesc",
-									"Timing input, synchronization behavior, and visual cues.",
-								)}
-							>
-								<SettingsCommonTab section="editor" />
-							</SettingsPage>
-						</Tabs.Content>
-						<Tabs.Content value="files" className={styles.tabContent}>
-							<SettingsPage
-								title={t("settingsDialog.tab.files", "Files & storage")}
-								description={t(
-									"settingsDialog.page.filesDesc",
-									"Import cleanup, autosave history, and portable backups.",
-								)}
-							>
-								<SettingsCommonTab section="files" />
-								<SettingsBackupTab />
-							</SettingsPage>
-						</Tabs.Content>
-						<Tabs.Content value="audio" className={styles.tabContent}>
-							<SettingsPage
-								title={t("settingsDialog.tab.audio", "Audio")}
-								description={t(
-									"settingsDialog.page.audioDesc",
-									"Playback, equalizer, and spectrogram display.",
-								)}
-							>
-								<SettingsCommonTab section="audio" />
-								<AudioSettingsTab />
-								<SettingsSpectrogramTab />
-							</SettingsPage>
-						</Tabs.Content>
-						<Tabs.Content value="keybinding" className={styles.tabContent}>
-							<SettingsPage
-								title={t("settingsDialog.tab.keybindings", "Shortcuts")}
-							>
-								<SettingsKeyBindingsDialog />
-							</SettingsPage>
-						</Tabs.Content>
-						<Tabs.Content value="appearance" className={styles.tabContent}>
-							<SettingsPage
-								title={t("settingsDialog.tab.appearance", "Appearance")}
-							>
-								<SettingsAppearanceTab />
-							</SettingsPage>
-						</Tabs.Content>
-						<Tabs.Content value="about" className={styles.tabContent}>
-							<SettingsPage title={t("common.about", "About")}>
-								<SettingsAboutTab />
-							</SettingsPage>
-						</Tabs.Content>
+						<SettingsPages forceMount={searching} />
 					</main>
 				</Tabs.Root>
 			</Dialog.Content>

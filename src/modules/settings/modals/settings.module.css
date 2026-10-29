@@ -133,6 +133,11 @@
 	outline: none;
 }
 
+/* While searching, every page stays mounted so its text can be matched. */
+.tabContent[data-state="inactive"] {
+	display: none;
+}
+
 /* A clicked tab fades its pane in. Opacity only: the pane changed, nothing
    travelled, so reduced motion keeps it too. data-instant is set in index.tsx. */
 :global(:root[data-design="spicy-lyrics"])

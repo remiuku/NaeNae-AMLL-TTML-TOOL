@@ -1,7 +1,6 @@
-import { Grid, Text } from "@radix-ui/themes";
-import { type FC, useId } from "react";
+import { Grid } from "@radix-ui/themes";
+import type { FC } from "react";
 import { useTranslation } from "react-i18next";
-import { SettingToggle } from "$/modules/settings/components/WorkflowControls";
 /*
  * Copyright 2023-2025 Steve Xiao (stevexmh@qq.com) and contributors.
  *
@@ -18,48 +17,42 @@ import {
 	showLineTranslationAtom,
 	showWordRomanizationInputAtom,
 } from "$/modules/settings/states/index.ts";
+import { RibbonToggle } from "../RibbonToggle";
 
 export const AuxiliaryDisplayField: FC = () => {
 	const { t } = useTranslation();
 
-	const idTranslation = useId();
-	const idRomanization = useId();
-	const idPerWord = useId();
-
 	return (
 		<Grid columns="1fr auto" gapX="4" gapY="1" flexGrow="1" align="center">
-			<Text size="1" asChild style={{ color: "var(--ribbon-label-color)" }}>
-				<label htmlFor={idTranslation}>
-					{t("ribbonBar.editMode.showTranslation", "Show translation line")}
-				</label>
-			</Text>
-			<SettingToggle
+			<RibbonToggle
+				label={t("ribbonBar.editMode.showTranslation", "Show translation line")}
+				description={t(
+					"settings.workflow.showTranslationDesc",
+					"Show a translation field under each lyric line.",
+				)}
 				setting={showLineTranslationAtom}
-				compact
-				id={idTranslation}
 			/>
-			<Text size="1" asChild style={{ color: "var(--ribbon-label-color)" }}>
-				<label htmlFor={idRomanization}>
-					{t("ribbonBar.editMode.showRomanization", "Show romanization line")}
-				</label>
-			</Text>
-			<SettingToggle
+			<RibbonToggle
+				label={t(
+					"ribbonBar.editMode.showRomanization",
+					"Show romanization line",
+				)}
+				description={t(
+					"settings.workflow.showRomanizationDesc",
+					"Show a romanization field under each lyric line.",
+				)}
 				setting={showLineRomanizationAtom}
-				compact
-				id={idRomanization}
 			/>
-			<Text size="1" asChild style={{ color: "var(--ribbon-label-color)" }}>
-				<label htmlFor={idPerWord}>
-					{t(
-						"ribbonBar.editMode.showWordRomanizationInput",
-						"Show per-word romanization",
-					)}
-				</label>
-			</Text>
-			<SettingToggle
+			<RibbonToggle
+				label={t(
+					"ribbonBar.editMode.showWordRomanizationInput",
+					"Show per-word romanization",
+				)}
+				description={t(
+					"settings.workflow.showWordRomanizationInputDesc",
+					"Show a romanization field on each word.",
+				)}
 				setting={showWordRomanizationInputAtom}
-				compact
-				id={idPerWord}
 			/>
 		</Grid>
 	);

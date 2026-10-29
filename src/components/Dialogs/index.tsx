@@ -1,16 +1,14 @@
 import { lazy, Suspense } from "react";
 import { LatencyTestDialog } from "$/modules/audio/modals/LatencyTest.tsx";
-import { GeniusImportLyricsDialog } from "$/modules/genius/modals/GeniusImportLyricsDialog.tsx";
 import { GeniusSearchDialog } from "$/modules/genius/modals/GeniusSearchDialog.tsx";
-import { ImportFromLRCLIB } from "$/modules/lrclib/modals/ImportDialog.tsx";
 import { UrbanDictionaryDialog } from "$/modules/lyric-editor/modals/UrbanDictionaryDialog.tsx";
 import { CombineWordsDialog } from "$/modules/lyric-editor/tools/CombineWordsDialog.tsx";
 import { ReplaceRomanizationDialog } from "$/modules/lyric-editor/tools/ReplaceRomanizationDialog.tsx";
 import { ReplaceWordDialog } from "$/modules/lyric-editor/tools/ReplaceWordDialog.tsx";
 import { TimeShiftDialog } from "$/modules/lyric-editor/tools/TimeShift.tsx";
 import { TimeStretchDialog } from "$/modules/lyric-editor/tools/TimeStretch.tsx";
+import { ImportLyricsDialog } from "$/modules/lyrics-import/modals/ImportLyricsDialog.tsx";
 import { HistoryRestoreDialog } from "$/modules/project/modals/HistoryRestore.tsx";
-import { ImportFromText } from "$/modules/project/modals/ImportFromText.tsx";
 import { MetadataEditor } from "$/modules/project/modals/MetadataEditor.tsx";
 import { AdvancedSegmentationDialog } from "$/modules/segmentation/components/AdvancedSegmentation.tsx";
 
@@ -31,14 +29,11 @@ import { ChangelogDialog } from "./changelog.tsx";
 import { ConfirmationDialog } from "./confirmation.tsx";
 import { CreateProjectPromptDialog } from "./create-project-prompt.tsx";
 import { GeniusHeaderDetectionDialog } from "./genius-header-detection.tsx";
-import { ImportLyricsChooserDialog } from "./import-lyrics-chooser.tsx";
 
 export const Dialogs = () => {
 	return (
 		<>
-			<ImportLyricsChooserDialog />
-			<ImportFromText />
-			<ImportFromLRCLIB />
+			<ImportLyricsDialog />
 			<MetadataEditor />
 			<SettingsDialog />
 			<SplitWordDialog />
@@ -60,7 +55,6 @@ export const Dialogs = () => {
 			<TimeStretchDialog />
 
 			<GeniusSearchDialog />
-			<GeniusImportLyricsDialog />
 			<ChangelogDialog />
 			<FontSelectionDialog />
 			<UrbanDictionaryDialog />

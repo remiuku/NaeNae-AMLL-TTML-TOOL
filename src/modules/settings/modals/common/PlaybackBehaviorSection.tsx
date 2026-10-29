@@ -68,9 +68,17 @@ export const PlaybackBehaviorSection = ({
 				</Flex>
 			</Text>
 		</Card>
-		<Text weight="bold">
-			{t("settings.common.playbackSettingsMode", "Playback behavior for")}
-		</Text>
+		<Flex direction="column" gap="1">
+			<Text weight="bold">
+				{t("settings.common.playbackSettingsMode", "Playback behavior for")}
+			</Text>
+			<Text size="1" color="gray">
+				{t(
+					"settings.common.playbackSettingsModeDesc",
+					"Auto-scroll and tab position are set separately for Edit and Time. Pick which one to change.",
+				)}
+			</Text>
+		</Flex>
 		<OptionPicker
 			variant="segmented"
 			size="2"

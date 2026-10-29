@@ -15,10 +15,12 @@ import {
  * https://github.com/spicylyrics/ttml-tool/blob/main/LICENSE
  */
 
-import { Flex, Grid, Switch, Text, Tooltip } from "@radix-ui/themes";
-import { useAtom, useAtomValue } from "jotai";
+import { Flex, Grid } from "@radix-ui/themes";
+import { useAtomValue } from "jotai";
 import { forwardRef } from "react";
 import { useTranslation } from "react-i18next";
+import { ActionTooltip } from "$/components/ActionTooltip";
+import { cmdToggleWordHighlight } from "$/modules/keyboard/commands";
 import { advancedRibbonControlsAtom } from "$/modules/onboarding/states";
 import {
 	displayRomanizationInSyncAtom,
@@ -34,12 +36,20 @@ import {
 	syncAutoScrollAtom,
 } from "$/modules/settings/states/sync.ts";
 import { showPreviewPanelAtom } from "$/states/main.ts";
+import { AdvancedSection } from "./AdvancedSection";
 import { RibbonFrame, RibbonSection } from "./common";
+import { RibbonLabel, RibbonToggle } from "./RibbonToggle";
 
 export const SyncModeRibbonBar = forwardRef<HTMLDivElement>((_props, ref) => {
 	const showWordRomanizationInput = useAtomValue(showWordRomanizationInputAtom);
 	const { t } = useTranslation();
-	const [showAdvanced, setShowAdvanced] = useAtom(advancedRibbonControlsAtom);
+	const showAdvanced = useAtomValue(advancedRibbonControlsAtom);
+	const syncLevelLabel = t("ribbonBar.syncMode.syncLevel", "Sync by");
+	const bgSyncLabel = t("ribbonBar.syncMode.bgLyricSync", "Background lines");
+	const previewPanelLabel = t(
+		"ribbonBar.editMode.previewPanel",
+		"Preview panel",
+	);
 
 	return (
 		<RibbonFrame ref={ref}>
@@ -51,25 +61,25 @@ export const SyncModeRibbonBar = forwardRef<HTMLDivElement>((_props, ref) => {
 					flexGrow="1"
 					align="center"
 				>
-					<Text
-						wrap="nowrap"
-						size="1"
-						style={{ color: "var(--ribbon-label-color)" }}
-					>
-						{t("ribbonBar.syncMode.timeOffset", "Sync offset")}
-					</Text>
+					<RibbonLabel
+						label={t("ribbonBar.syncMode.timeOffset", "Sync offset")}
+						description={t(
+							"settings.common.syncTimeOffsetDesc",
+							"Shifts every timestamp you record by this amount, to make up for audio or input delay.",
+						)}
+					/>
 					<SyncOffsetControl compact />
-					<Text
-						wrap="nowrap"
-						size="1"
-						style={{ color: "var(--ribbon-label-color)" }}
-					>
-						{t("ribbonBar.syncMode.commitOffset", "Next key offset")}
-					</Text>
+					<RibbonLabel
+						label={t("ribbonBar.syncMode.commitOffset", "Next key offset")}
+						description={t(
+							"settings.common.syncCommitOffsetDesc",
+							"Extra offset for the Next key only (G by default), for when it lands consistently early or late.",
+						)}
+					/>
 					<SyncOffsetControl commit compact />
 				</Grid>
 			</RibbonSection>
-			<RibbonSection label={t("ribbonBar.syncMode.syncLevel", "Sync by")}>
+			<RibbonSection label={syncLevelLabel}>
 				<Flex
 					direction="column"
 					gap="2"
@@ -78,7 +88,15 @@ export const SyncModeRibbonBar = forwardRef<HTMLDivElement>((_props, ref) => {
 					px="2"
 					style={{ height: "100%" }}
 				>
-					<SyncLevelControl />
+					<ActionTooltip
+						label={syncLevelLabel}
+						description={t(
+							"settings.workflow.syncLevelDesc",
+							"Word: time each word as you go. Line: time whole lines and spread their words out evenly, for a rough sync you fine-tune in the spectrogram.",
+						)}
+					>
+						<SyncLevelControl />
+					</ActionTooltip>
 				</Flex>
 			</RibbonSection>
 			<RibbonSection
@@ -91,28 +109,42 @@ export const SyncModeRibbonBar = forwardRef<HTMLDivElement>((_props, ref) => {
 					flexGrow="1"
 					align="center"
 				>
-					<Text
-						wrap="nowrap"
-						size="1"
-						style={{ color: "var(--ribbon-label-color)" }}
-					>
-						{t("ribbonBar.syncMode.autoScroll", "Auto-scroll")}
-					</Text>
-					<SettingToggle setting={syncAutoScrollAtom} compact />
-					<Text
-						wrap="nowrap"
-						size="1"
-						style={{ color: "var(--ribbon-label-color)" }}
-					>
-						{t("ribbonBar.syncMode.highlightActiveLine", "Highlight line")}
-					</Text>
-					<SettingToggle setting={syncActiveLineHighlightAtom} compact />
+					<RibbonToggle
+						label={t("ribbonBar.syncMode.autoScroll", "Auto-scroll")}
+						description={t(
+							"settings.common.syncAutoScrollDesc",
+							"Scrolls the editor to follow the line that is playing.",
+						)}
+						setting={syncAutoScrollAtom}
+					/>
+					<RibbonToggle
+						label={t(
+							"ribbonBar.syncMode.highlightActiveLine",
+							"Highlight line",
+						)}
+						description={t(
+							"settings.common.highlightActiveLineDesc",
+							"Highlights the line that is playing in the selected mode.",
+						)}
+						setting={syncActiveLineHighlightAtom}
+					/>
 				</Grid>
 			</RibbonSection>
+			<RibbonSection label={previewPanelLabel}>
+				<Flex direction="column" align="center" gap="1">
+					<ActionTooltip
+						label={previewPanelLabel}
+						description={t(
+							"settings.workflow.previewPanelDesc",
+							"Show a live lyric preview next to the word list.",
+						)}
+					>
+						<SettingToggle setting={showPreviewPanelAtom} />
+					</ActionTooltip>
+				</Flex>
+			</RibbonSection>
 			{showAdvanced && (
-				<RibbonSection
-					label={t("ribbonBar.syncMode.bgLyricSync", "Background lines")}
-				>
+				<RibbonSection label={bgSyncLabel}>
 					<Flex
 						direction="column"
 						gap="2"
@@ -121,7 +153,15 @@ export const SyncModeRibbonBar = forwardRef<HTMLDivElement>((_props, ref) => {
 						px="2"
 						style={{ height: "100%" }}
 					>
-						<BackgroundSyncControl />
+						<ActionTooltip
+							label={bgSyncLabel}
+							description={t(
+								"settings.workflow.bgLyricSyncDesc",
+								"How G and H treat background lines while syncing.",
+							)}
+						>
+							<BackgroundSyncControl />
+						</ActionTooltip>
 					</Flex>
 				</RibbonSection>
 			)}
@@ -136,25 +176,25 @@ export const SyncModeRibbonBar = forwardRef<HTMLDivElement>((_props, ref) => {
 						flexGrow="1"
 						align="center"
 					>
-						<Text
-							wrap="nowrap"
-							size="1"
-							style={{ color: "var(--ribbon-label-color)" }}
-						>
-							{t("ribbonBar.syncMode.touchSyncPanel", "Touch sync panel")}
-						</Text>
-						<SettingToggle setting={showTouchSyncPanelAtom} compact />
-						<Text
-							wrap="nowrap"
-							size="1"
-							style={{ color: "var(--ribbon-label-color)" }}
-						>
-							{t(
+						<RibbonToggle
+							label={t("ribbonBar.syncMode.touchSyncPanel", "Touch sync panel")}
+							description={t(
+								"settings.workflow.touchSyncPanelDesc",
+								"Show on-screen Start, Next and End buttons for touch screens.",
+							)}
+							setting={showTouchSyncPanelAtom}
+						/>
+						<RibbonToggle
+							label={t(
 								"ribbonBar.syncMode.spectrogramHoverSync",
 								"Sync at mouse position",
 							)}
-						</Text>
-						<SettingToggle setting={spectrogramHoverSyncEnabledAtom} compact />
+							description={t(
+								"settings.common.spectrogramHoverSyncDesc",
+								"While the mouse is over the spectrogram in Time mode, the sync keys record the time under the mouse instead of the playback time.",
+							)}
+							setting={spectrogramHoverSyncEnabledAtom}
+						/>
 					</Grid>
 				</RibbonSection>
 			)}
@@ -169,75 +209,54 @@ export const SyncModeRibbonBar = forwardRef<HTMLDivElement>((_props, ref) => {
 						flexGrow="1"
 						align="center"
 					>
-						<Text
-							wrap="nowrap"
-							size="1"
-							style={{ color: "var(--ribbon-label-color)" }}
-						>
-							{t("ribbonBar.syncMode.showTimestamps", "Show timestamps")}
-						</Text>
-						<SettingToggle setting={showTimestampsAtom} compact />
-						<Text
-							wrap="nowrap"
-							size="1"
-							style={{ color: "var(--ribbon-label-color)" }}
-						>
-							{t(
+						<RibbonToggle
+							label={t("ribbonBar.syncMode.showTimestamps", "Show timestamps")}
+							description={t(
+								"settings.workflow.showTimestampsDesc",
+								"Show start and end times on each word.",
+							)}
+							setting={showTimestampsAtom}
+						/>
+						<RibbonToggle
+							label={t(
 								"ribbonBar.syncMode.highlightActiveWord",
 								"Highlight active word",
 							)}
-						</Text>
-						<SettingToggle setting={highlightActiveWordAtom} compact />
-
-						<Text
-							wrap="nowrap"
-							size="1"
-							style={{ color: "var(--ribbon-label-color)" }}
-						>
-							{t("ribbonBar.syncMode.highlightErrors", "Highlight errors")}
-						</Text>
-						<SettingToggle setting={highlightErrorsAtom} compact />
-
+							description={t(
+								"settings.workflow.highlightActiveWordDesc",
+								"Highlight the word that is playing right now.",
+							)}
+							shortcut={cmdToggleWordHighlight.atom}
+							setting={highlightActiveWordAtom}
+						/>
+						<RibbonToggle
+							label={t(
+								"ribbonBar.syncMode.highlightErrors",
+								"Highlight errors",
+							)}
+							description={t(
+								"settings.assistant.highlightErrorsDesc",
+								"Mark words whose start time is after their end time.",
+							)}
+							setting={highlightErrorsAtom}
+						/>
 						{showWordRomanizationInput && (
-							<>
-								<Text
-									wrap="nowrap"
-									size="1"
-									style={{ color: "var(--ribbon-label-color)" }}
-								>
-									{t(
-										"ribbonBar.syncMode.showPerWordRomanization",
-										"Show per-word romanization",
-									)}
-								</Text>
-								<SettingToggle
-									setting={displayRomanizationInSyncAtom}
-									compact
-								/>
-							</>
+							<RibbonToggle
+								label={t(
+									"ribbonBar.syncMode.showPerWordRomanization",
+									"Show per-word romanization",
+								)}
+								description={t(
+									"settings.workflow.showPerWordRomanizationDesc",
+									"Show each word's romanization under it.",
+								)}
+								setting={displayRomanizationInSyncAtom}
+							/>
 						)}
 					</Grid>
 				</RibbonSection>
 			)}
-			{showAdvanced && (
-				<RibbonSection
-					label={t("ribbonBar.editMode.previewPanel", "Preview panel")}
-				>
-					<Flex direction="column" align="center" gap="1">
-						<SettingToggle setting={showPreviewPanelAtom} />
-					</Flex>
-				</RibbonSection>
-			)}
-			<RibbonSection label={t("ribbonBar.advanced", "Advanced")}>
-				<Tooltip
-					content={t(
-						"ribbonBar.advancedTooltip",
-						"Applies to the Edit, Time and Preview ribbons.",
-					)}
-				>
-					<Switch checked={showAdvanced} onCheckedChange={setShowAdvanced} />
-				</Tooltip>
-			</RibbonSection>
+			<AdvancedSection />
 		</RibbonFrame>
 	);
 });

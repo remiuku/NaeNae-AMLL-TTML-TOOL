@@ -27,6 +27,14 @@ export class Spring {
 		}
 	}
 
+	/** At its goal and still, so stepping it again would change nothing visible. */
+	isSettled() {
+		return (
+			Math.abs(this.position - this.goal) < 1e-4 &&
+			Math.abs(this.velocity) < 1e-3
+		);
+	}
+
 	step(seconds: number) {
 		const dt = Math.min(Math.max(seconds, 0), 0.1);
 		const f = this.frequency * 2 * Math.PI;

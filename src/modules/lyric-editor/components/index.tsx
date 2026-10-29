@@ -13,7 +13,7 @@ import {
 	MyLocation24Regular,
 	TextBulletListSquare24Regular,
 } from "@fluentui/react-icons";
-import { Box, Button, Flex, Text } from "@radix-ui/themes";
+import { Box, Button, Flex, Grid, Text } from "@radix-ui/themes";
 import { useAtom, useAtomValue, useSetAtom, useStore } from "jotai";
 import { useSetImmerAtom } from "jotai-immer";
 import {
@@ -38,10 +38,7 @@ import {
 	geniusHeaderDetectionDialogOpenAtom,
 	geniusHeaderDetectionDialogShownAtom,
 } from "$/modules/settings/states/index.ts";
-import {
-	importLyricsChooserDialogAtom,
-	projectsDialogAtom,
-} from "$/states/dialogs";
+import { importLyricsDialogAtom, projectsDialogAtom } from "$/states/dialogs";
 import { lyricLinesAtom, ToolMode, toolModeAtom } from "$/states/main.ts";
 import {
 	hasGeniusHeaderAtom,
@@ -74,7 +71,7 @@ export const LyricLinesView: FC = forwardRef<HTMLDivElement>((_props, ref) => {
 	const setGuideWelcome = useSetAtom(guideWelcomeOpenAtom);
 	const setGuidePanel = useSetAtom(guidePanelOpenAtom);
 	const setGuideStep = useSetAtom(guideStepAtom);
-	const setImportChooser = useSetAtom(importLyricsChooserDialogAtom);
+	const setImportLyrics = useSetAtom(importLyricsDialogAtom);
 	const setProjectsDialog = useSetAtom(projectsDialogAtom);
 	const folderProjectsEnabled = useAtomValue(folderProjectsEnabledAtom);
 	const { onOpenFile } = useTopMenuActions();
@@ -148,6 +145,26 @@ export const LyricLinesView: FC = forwardRef<HTMLDivElement>((_props, ref) => {
 
 	useImperativeHandle(ref, () => viewElRef.current as HTMLDivElement, []);
 
+	const emptyActions = (
+		<>
+			<Button
+				onClick={() => {
+					setGuideStep(0);
+					setGuidePanel(false);
+					setGuideWelcome(true);
+				}}
+			>
+				{t("beginnerGuide.empty.start", "Start guide")}
+			</Button>
+			<Button variant="soft" onClick={() => setImportLyrics(true)}>
+				{t("beginnerGuide.empty.import", "Import lyrics")}
+			</Button>
+			<Button variant="outline" onClick={onOpenFile}>
+				{t("beginnerGuide.empty.open", "Open lyrics file")}
+			</Button>
+		</>
+	);
+
 	if (editLyric.length === 0)
 		return (
 			<Flex
@@ -179,28 +196,27 @@ export const LyricLinesView: FC = forwardRef<HTMLDivElement>((_props, ref) => {
 							"Add lines from the ribbon above, or open or import lyrics from the File menu.",
 						)}
 					</Text>
-					<Flex gap="2" wrap="wrap" justify="center" mt="2">
-						<Button
-							onClick={() => {
-								setGuideStep(0);
-								setGuidePanel(false);
-								setGuideWelcome(true);
-							}}
+					{folderProjectsEnabled ? (
+						// Four actions don't fit one row in the panel, so they get an even
+						// 2x2 grid instead of wrapping one button onto its own line.
+						<Grid
+							columns="2"
+							gap="2"
+							mt="2"
+							width="100%"
+							maxWidth="24rem"
+							className={styles.emptyActions}
 						>
-							{t("beginnerGuide.empty.start", "Start guide")}
-						</Button>
-						<Button variant="soft" onClick={() => setImportChooser(true)}>
-							{t("beginnerGuide.empty.import", "Import lyrics")}
-						</Button>
-						<Button variant="outline" onClick={onOpenFile}>
-							{t("beginnerGuide.empty.open", "Open lyrics file")}
-						</Button>
-						{folderProjectsEnabled && (
+							{emptyActions}
 							<Button variant="outline" onClick={() => setProjectsDialog(true)}>
 								{t("topBar.menu.projects", "Projects")}
 							</Button>
-						)}
-					</Flex>
+						</Grid>
+					) : (
+						<Flex gap="2" wrap="wrap" justify="center" mt="2">
+							{emptyActions}
+						</Flex>
+					)}
 				</Flex>
 			</Flex>
 		);

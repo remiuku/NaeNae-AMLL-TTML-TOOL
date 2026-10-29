@@ -43,6 +43,9 @@ export const lyricLinesAtom = atom({
 	sections: [],
 } as TTMLLyric);
 
+/** Keeps its identity through word and line edits, unlike the whole document. */
+export const lyricMetadataAtom = atom((get) => get(lyricLinesAtom).metadata);
+
 const setsEqual = (a: Set<string>, b: Set<string>) => {
 	if (a.size !== b.size) return false;
 	for (const v of a) if (!b.has(v)) return false;
@@ -113,6 +116,13 @@ export const saveStatusAtom = atom<SaveStatus>(SaveStatus.Saved);
 export const lastSavedTimeAtom = atom<number | null>(null);
 
 export const undoableLyricLinesAtom = withHistory(lyricLinesAtom, 10);
+// The history object changes on every edit; menus only need these flags.
+export const canUndoLyricLinesAtom = atom(
+	(get) => get(undoableLyricLinesAtom).canUndo,
+);
+export const canRedoLyricLinesAtom = atom(
+	(get) => get(undoableLyricLinesAtom).canRedo,
+);
 /**
  * The exact lyric snapshot that was last saved or opened, or null before any
  * document baseline exists. Edits always replace the lyric object, so identity

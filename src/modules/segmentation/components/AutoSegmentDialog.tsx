@@ -3,6 +3,7 @@ import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { useSetImmerAtom } from "jotai-immer";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useLyricLinesWhileOpen } from "$/hooks/useLyricLinesWhileOpen.ts";
 import {
 	segmentationEngineAtom,
 	segmentationSplitEnglishAtom,
@@ -22,7 +23,7 @@ export const AutoSegmentDialog = () => {
 	const setEngine = useSetAtom(segmentationEngineAtom);
 	const setSplitEnglish = useSetAtom(segmentationSplitEnglishAtom);
 	const editLyricLines = useSetImmerAtom(lyricLinesAtom);
-	const lyrics = useAtomValue(lyricLinesAtom);
+	const lyrics = useLyricLinesWhileOpen(open);
 	const { config, isLoading } = useSegmentationConfig();
 	const [selectedEngine, setSelectedEngine] =
 		useState<SegmentationEngineId>(savedEngine);

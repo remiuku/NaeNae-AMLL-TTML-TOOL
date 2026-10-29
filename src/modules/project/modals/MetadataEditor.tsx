@@ -16,11 +16,12 @@ import {
 	DropdownMenu,
 	Flex,
 	IconButton,
+	Link,
 	Text,
 	TextField,
 } from "@radix-ui/themes";
 import { useAtom, useSetAtom } from "jotai";
-import { useImmerAtom } from "jotai-immer";
+import { useSetImmerAtom } from "jotai-immer";
 import {
 	memo,
 	type ReactNode,
@@ -31,7 +32,9 @@ import {
 	useState,
 } from "react";
 import { useTranslation } from "react-i18next";
+import { useLyricLinesWhileOpen } from "$/hooks/useLyricLinesWhileOpen.ts";
 import { getBetterGeniusCoverArt } from "$/modules/genius/utils/image";
+import { getGuideUrl } from "$/modules/onboarding/logic";
 import {
 	geniusSearchDialogAtom,
 	metadataEditorDialogAtom,
@@ -190,6 +193,29 @@ const MetadataEntry = memo(
 											{option?.label || entry.key}
 										</Text>
 									</Flex>
+								)}
+								{ii === 0 && option?.description && (
+									<Text
+										as="p"
+										size="1"
+										color="gray"
+										mt="1"
+										style={{ whiteSpace: "normal" }}
+									>
+										{option.description}
+										{option.guideLink && (
+											<>
+												{" "}
+												<Link
+													href={option.guideLink.url}
+													target="_blank"
+													rel="noopener noreferrer"
+												>
+													{option.guideLink.label}
+												</Link>
+											</>
+										)}
+									</Text>
 								)}
 							</td>
 							<td>
@@ -394,6 +420,10 @@ interface SelectOption {
 	label: string;
 	value: string;
 	icon: ReactNode;
+	/** Help text shown under the label, on the field's first row. */
+	description?: string;
+	/** Guide link appended to the description. */
+	guideLink?: { url: string; label: string };
 	isLinkable?: true;
 	urlFormatter?: (value: string) => string | null;
 	validation?: {
@@ -409,7 +439,8 @@ export const MetadataEditor = () => {
 		metadataEditorDialogAtom,
 	);
 	const [customKey, setCustomKey] = useState("");
-	const [lyricLines, setLyricLines] = useImmerAtom(lyricLinesAtom);
+	const lyricLines = useLyricLinesWhileOpen(metadataEditorDialog);
+	const setLyricLines = useSetImmerAtom(lyricLinesAtom);
 	const addKeyButtonRef = useRef<HTMLButtonElement | null>(null);
 	const setGeniusSearchDialogOpen = useSetAtom(geniusSearchDialogAtom);
 
@@ -428,6 +459,10 @@ export const MetadataEditor = () => {
 				label: t("metadataDialog.builtinOptions.artists", "Artists"),
 				value: "artists",
 				icon: <Person16Regular />,
+				description: t(
+					"helpText.metadataArtists",
+					'Who performs the song, as the track is credited on streaming services. Example: "Shake It Off" is by Taylor Swift.',
+				),
 				validation: {
 					verifier: (value: string) => !/^.+[,;&，；、].+$/.test(value),
 					message: t(
@@ -440,6 +475,17 @@ export const MetadataEditor = () => {
 				label: t("metadataDialog.builtinOptions.songwriter", "词曲作者"),
 				value: "songwriter",
 				icon: <Person16Regular />,
+				description: t(
+					"helpText.metadataSongwriter",
+					'Who wrote the music and lyrics, from the writing credits. Often different from the artists. Example: "Shake It Off" was written by Taylor Swift, Max Martin and Shellback.',
+				),
+				guideLink: {
+					url: getGuideUrl("songwriters"),
+					label: t(
+						"helpText.openSongwritersGuide",
+						"Open the songwriters guide",
+					),
+				},
 				validation: {
 					verifier: (value: string) => !/^.+[,;&，；、].+$/.test(value),
 					message: t(

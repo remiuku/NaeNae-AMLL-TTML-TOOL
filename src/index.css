@@ -121,6 +121,37 @@
 	color: var(--accent-contrast) !important;
 }
 
+/* Tooltips match menus in dark themes instead of Radix's inverted light bubble.
+   The portalled content carries .radix-themes.dark itself, so the selector is
+   compound. Light theme keeps the Radix default. */
+.radix-themes:is(.dark, .dark-theme).rt-TooltipContent {
+	background-color: var(--color-panel-solid);
+	box-shadow:
+		inset 0 0 0 1px var(--gray-a6),
+		0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+.radix-themes:is(.dark, .dark-theme) .rt-TooltipArrow {
+	fill: var(--color-panel-solid);
+}
+
+.radix-themes:is(.dark, .dark-theme) .rt-TooltipText {
+	color: var(--gray-12);
+}
+
+.radix-themes:is(.dark, .dark-theme)
+	:is([data-action-tooltip-description], [data-action-tooltip-shortcut]) {
+	color: var(--gray-11);
+}
+
+@media (prefers-contrast: more) {
+	.radix-themes:is(.dark, .dark-theme).rt-TooltipContent {
+		box-shadow:
+			inset 0 0 0 1px var(--gray-a9),
+			0 4px 16px rgba(0, 0, 0, 0.5);
+	}
+}
+
 ::selection {
 	background-color: var(--selection-color, var(--accent-a5));
 	color: var(--accent-contrast);

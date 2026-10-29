@@ -120,4 +120,29 @@ describe("lyric document structure subscriptions", () => {
 		);
 		expect(store.get(hasGeniusHeaderAtom)).toBe(true);
 	});
+
+	it("drops a Genius header once its text is edited away", () => {
+		const store = songStore();
+		store.set(
+			lyricLinesAtom,
+			produce(store.get(lyricLinesAtom), (draft) => {
+				draft.lyricLines[40].words[0].word = "[Verse 2]";
+			}),
+		);
+		expect(store.get(hasGeniusHeaderAtom)).toBe(true);
+		store.set(
+			lyricLinesAtom,
+			produce(store.get(lyricLinesAtom), (draft) => {
+				draft.lyricLines[40].words[0].startTime += 10;
+			}),
+		);
+		expect(store.get(hasGeniusHeaderAtom)).toBe(true);
+		store.set(
+			lyricLinesAtom,
+			produce(store.get(lyricLinesAtom), (draft) => {
+				draft.lyricLines[40].words[0].word = "Verse 2";
+			}),
+		);
+		expect(store.get(hasGeniusHeaderAtom)).toBe(false);
+	});
 });

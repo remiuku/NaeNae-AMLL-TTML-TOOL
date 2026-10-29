@@ -10,7 +10,7 @@ export enum PreviewModeType {
 
 const storedPreviewModeTypeAtom = atomWithStorage<string>(
 	"previewModeType",
-	PreviewModeType.Standard,
+	PreviewModeType.Spicy,
 	undefined,
 	{ getOnInit: true },
 );
@@ -54,6 +54,13 @@ export const spicySimpleLyricsModeAtom = atomWithStorage(
 export const spicyForceLineSyncedAtom = atomWithStorage(
 	"spicyForceLineSynced",
 	false,
+);
+/** Spicy Lyrics' "Join Split Words": show a word sung in syllables as one word. Off by default, as in Spicy. */
+export const spicyJoinSplitWordsAtom = atomWithStorage(
+	"spicyJoinSplitWords",
+	false,
+	undefined,
+	{ getOnInit: true },
 );
 export type SpicyBackgroundMode = "animated" | "color" | "static";
 export const spicyBackgroundModeAtom = atomWithStorage<SpicyBackgroundMode>(

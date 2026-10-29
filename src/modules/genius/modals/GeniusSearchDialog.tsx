@@ -11,10 +11,11 @@ import {
 	TextField,
 } from "@radix-ui/themes";
 import { useAtom } from "jotai";
-import { useImmerAtom } from "jotai-immer";
+import { useSetImmerAtom } from "jotai-immer";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
+import { useLyricLinesWhileOpen } from "$/hooks/useLyricLinesWhileOpen.ts";
 import { geniusApiKeyAtom } from "$/modules/settings/states/index.ts";
 import { geniusSearchDialogAtom } from "$/states/dialogs.ts";
 import { lyricLinesAtom } from "$/states/main.ts";
@@ -27,7 +28,8 @@ import styles from "./GeniusSearchDialog.module.css";
 export const GeniusSearchDialog = () => {
 	const { t } = useTranslation();
 	const [isOpen, setIsOpen] = useAtom(geniusSearchDialogAtom);
-	const [lyricLines, setLyricLines] = useImmerAtom(lyricLinesAtom);
+	const lyricLines = useLyricLinesWhileOpen(isOpen);
+	const setLyricLines = useSetImmerAtom(lyricLinesAtom);
 
 	const [query, setQuery] = useState("");
 	const [results, setResults] = useState<GeniusSearchHit[]>([]);

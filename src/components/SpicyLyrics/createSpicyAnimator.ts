@@ -4,10 +4,10 @@
  */
 import type { Dispatch, RefObject, SetStateAction } from "react";
 import { audioEngine } from "$/modules/audio/audio-engine";
-import { findSpicyActiveIndex } from "./active-line";
+import { findSpicyBlurAnchor } from "./active-line";
 import { lineGlowSpline } from "./animation-curves";
 import { progressAt, Spring, stateAt } from "./math";
-import type { SpicyLine, SpicyToken } from "./model";
+import type { SpicyLine } from "./model";
 import { keyFor } from "./model";
 import { createTokenAnimator } from "./token-animation";
 export type SpringSet = {
@@ -16,10 +16,8 @@ export type SpringSet = {
 	glow: Spring;
 	opacity: Spring;
 };
-export type SlmAnimation = {
-	animation?: Animation;
-	phase: "idle" | "pre" | "fill" | "sung";
-};
+
+type LineState = "not-sung" | "active" | "sung";
 
 interface AnimationContext {
 	lines: SpicyLine[];
@@ -28,12 +26,25 @@ interface AnimationContext {
 	wordNodes: RefObject<Map<string, HTMLElement>>;
 	springs: RefObject<Map<string, SpringSet>>;
 	lineGlowSprings: RefObject<Map<string, Spring>>;
-	slmAnimations: RefObject<Map<string, SlmAnimation>>;
 	lastTime: RefObject<number>;
 	setFps: Dispatch<SetStateAction<number>>;
 	fpsRef: RefObject<{ frames: number; lastTime: number }>;
 	showFpsRef: RefObject<boolean>;
 }
+
+const settled = (set: SpringSet | undefined) =>
+	!set ||
+	(set.scale.isSettled() &&
+		set.y.isSettled() &&
+		set.glow.isSettled() &&
+		set.opacity.isSettled());
+
+/** Spicy's blur step per row away from the active one, and its ceiling. */
+const BLUR_STEP = 1.25;
+const BLUR_MAX = BLUR_STEP * 5.465;
+/** How far behind the playhead Spicy animates in Simple Lyrics mode, in ms. */
+const SIMPLE_LYRICS_LAG = 33.5;
+
 export function createSpicyAnimator({
 	lines,
 	simple,
@@ -41,12 +52,140 @@ export function createSpicyAnimator({
 	wordNodes,
 	springs,
 	lineGlowSprings,
-	slmAnimations,
 	lastTime,
 	setFps,
 	fpsRef,
 	showFpsRef,
 }: AnimationContext) {
+	// Animation bookkeeping lives here, outside React, and is rebuilt with the
+	// lines. Only active rows and rows whose springs are still settling after a
+	// state change get word work; a long song's resting rows cost one state
+	// comparison per frame.
+	const lineStates: Array<LineState | undefined> = [];
+	const lineResting: boolean[] = [];
+	const blurValues: Array<string | undefined> = [];
+	// The line node each row was last drawn on, to spot rows that just mounted.
+	const shownNodes: Array<HTMLDivElement | undefined> = [];
+	let blurAnchor = -1;
+
+	/** Keys of every word and held letter node in a line. */
+	const nodeKeys = (line: SpicyLine) => {
+		const keys: string[] = [];
+		for (let wi = 0; wi < line.words.length; wi++) {
+			const word = line.words[wi];
+			const rootKey = keyFor(line, word, wi);
+			keys.push(rootKey);
+			if (word.letters)
+				for (let index = 0; index < word.letters.length; index++)
+					keys.push(
+						`${rootKey}:${word.startTime + index * ((word.endTime - word.startTime) / word.letters.length)}`,
+					);
+		}
+		return keys;
+	};
+
+	const lineSettled = (line: SpicyLine) => {
+		if (line.isLineSynced && !line.isDotLine) {
+			const glow = lineGlowSprings.current.get(line.id);
+			return !glow || glow.isSettled();
+		}
+		return nodeKeys(line).every((key) => settled(springs.current.get(key)));
+	};
+
+	const animateLineSynced = (
+		line: SpicyLine,
+		node: HTMLDivElement,
+		status: LineState,
+		time: number,
+		snap: boolean,
+		dt: number,
+	) => {
+		const lineProgress =
+			status === "active"
+				? progressAt(time, line.startTime, line.endTime)
+				: status === "sung"
+					? 1
+					: 0;
+		if (simple) {
+			// The normal line renderer writes this variable inline. Pin it here
+			// as well, otherwise switching into SLM leaves a stale mid-sweep
+			// normal-mode value that the SLM stylesheet cannot override.
+			node.style.setProperty("--line-gradient-position", "100%");
+			node.style.setProperty("--line-shadow-alpha", "0");
+			return;
+		}
+		let glow = lineGlowSprings.current.get(line.id);
+		if (!glow) {
+			glow = new Spring(0, 1, 0.5);
+			lineGlowSprings.current.set(line.id, glow);
+		}
+		glow.setGoal(lineGlowSpline.at(lineProgress), snap);
+		const currentGlow = glow.step(dt);
+		node.style.setProperty("--line-shadow-blur", `${4 + 8 * currentGlow}px`);
+		node.style.setProperty("--line-shadow-alpha", String(currentGlow * 0.5));
+		node.style.setProperty(
+			"--line-gradient-position",
+			`${status === "active" ? lineProgress * 100 : status === "sung" ? 100 : -20}%`,
+		);
+	};
+
+	const animateWords = (
+		line: SpicyLine,
+		lineState: LineState,
+		time: number,
+		snap: boolean,
+		dt: number,
+	) => {
+		for (let wi = 0; wi < line.words.length; wi++) {
+			const word = line.words[wi];
+			const rootKey = keyFor(line, word, wi);
+			// Spicy's TimeSetter cascades the line state to every child when
+			// the line itself is not active. This matters for adjusted held-word
+			// timings near a line boundary.
+			const wordState =
+				lineState === "active"
+					? stateAt(time, word.startTime, word.endTime)
+					: lineState;
+			const progress =
+				wordState === "active"
+					? progressAt(time, word.startTime, word.endTime)
+					: wordState === "sung"
+						? 1
+						: 0;
+			const { animateNode, animateHeldGroup, animateHeldLetters } =
+				createTokenAnimator({
+					springs,
+					wordNodes,
+					wordState,
+					simple,
+					snap,
+					dt,
+					time,
+				});
+			if (line.isDotLine)
+				animateNode(rootKey, wordNodes.current.get(rootKey), progress, true);
+			else if (word.letters) {
+				animateHeldGroup(rootKey, wordNodes.current.get(rootKey), progress);
+				animateHeldLetters(word, rootKey, wordState);
+			} else animateNode(rootKey, wordNodes.current.get(rootKey), progress);
+		}
+	};
+
+	const writeBlur = (
+		index: number,
+		node: HTMLDivElement,
+		status: LineState,
+	) => {
+		const distance = blurAnchor < 0 ? 0 : Math.abs(index - blurAnchor);
+		const value =
+			status === "active" || distance === 0
+				? "0px"
+				: `${Math.min(BLUR_STEP * distance, BLUR_MAX)}px`;
+		if (blurValues[index] === value) return;
+		blurValues[index] = value;
+		node.style.setProperty("--blur", value);
+	};
+
 	const animate = (seconds: number, now: number, seeked = false) => {
 		const snap = seeked || !audioEngine.musicPlaying;
 		if (showFpsRef.current) {
@@ -63,197 +202,49 @@ export function createSpicyAnimator({
 		}
 		const dt = (now - lastTime.current) / 1000;
 		lastTime.current = now;
-		const time = seconds * 1000;
-		const activeIndex = findSpicyActiveIndex(lines, time);
+		// Spicy draws Simple Lyrics mode 33.5ms behind the playhead; its
+		// scrolling still follows the playhead itself.
+		const time = seconds * 1000 - (simple ? SIMPLE_LYRICS_LAG : 0);
+		const anchor = findSpicyBlurAnchor(lines, time, blurAnchor);
+		const anchorMoved = anchor !== blurAnchor;
+		blurAnchor = anchor;
 		for (let i = 0; i < lines.length; i++) {
 			const line = lines[i];
 			const status = stateAt(time, line.startTime, line.endTime);
+			const changed = lineStates[i] !== status;
+			lineStates[i] = status;
 			const node = lineNodes.current.get(line.id);
-			if (node) {
-				node.dataset.state = status;
-				node.dataset.prehidden = String(
-					!!line.isDotLine &&
-						(status === "not-sung" || time > line.endTime - 500),
-				);
-				const blur =
-					status === "active"
-						? 0
-						: Math.min(Math.abs(i - activeIndex) * 1.25, 6.8);
-				node.style.setProperty("--blur", `${blur}px`);
-				if (line.isLineSynced && !line.isDotLine) {
-					const lineProgress =
-						status === "active"
-							? progressAt(time, line.startTime, line.endTime)
-							: status === "sung"
-								? 1
-								: 0;
-					if (simple) {
-						// The normal line renderer writes this variable inline. Pin it here
-						// as well, otherwise switching into SLM leaves a stale mid-sweep
-						// normal-mode value that the SLM stylesheet cannot override.
-						node.style.setProperty("--line-gradient-position", "100%");
-						node.style.setProperty("--line-shadow-alpha", "0");
-					} else {
-						let glow = lineGlowSprings.current.get(line.id);
-						if (!glow) {
-							glow = new Spring(0, 1, 0.5);
-							lineGlowSprings.current.set(line.id, glow);
-						}
-						glow.setGoal(lineGlowSpline.at(lineProgress), snap);
-						const currentGlow = glow.step(dt);
-						node.style.setProperty(
-							"--line-shadow-blur",
-							`${4 + 8 * currentGlow}px`,
-						);
-						node.style.setProperty(
-							"--line-shadow-alpha",
-							String(currentGlow * 0.5),
-						);
-						node.style.setProperty(
-							"--line-gradient-position",
-							`${status === "active" ? lineProgress * 100 : status === "sung" ? 100 : -20}%`,
-						);
-					}
-				}
+			// Only rows near the viewport are mounted. The others keep their
+			// state here and are drawn from it when they mount.
+			if (!node) {
+				shownNodes[i] = undefined;
+				continue;
 			}
+			// A row that just mounted carries none of the animation state yet:
+			// write all of it and snap its springs to where they belong.
+			const mounted = shownNodes[i] !== node;
+			shownNodes[i] = node;
+			if (mounted) blurValues[i] = undefined;
+			const lineSnap = snap || mounted;
+			if (changed || mounted) node.dataset.state = status;
+			if (line.isDotLine) {
+				const prehidden = String(
+					status === "not-sung" || time > line.endTime - 500,
+				);
+				if (node.dataset.prehidden !== prehidden)
+					node.dataset.prehidden = prehidden;
+			}
+			if (changed || anchorMoved || lineSnap) writeBlur(i, node, status);
+			// An untimed row has nothing to sing; it only blurs with its neighbours.
+			if (line.isUntimed) continue;
+			if (changed || mounted) lineResting[i] = false;
+			if (status !== "active" && !lineSnap && lineResting[i]) continue;
+
+			if (line.isLineSynced && !line.isDotLine)
+				animateLineSynced(line, node, status, time, lineSnap, dt);
+			else animateWords(line, status, time, lineSnap, dt);
+			lineResting[i] = status !== "active" && lineSettled(line);
 		}
-		for (const line of lines)
-			if (line.isLineSynced && !line.isDotLine) continue;
-			else
-				for (let wi = 0; wi < line.words.length; wi++) {
-					const word = line.words[wi];
-					const rootKey = keyFor(line, word, wi);
-					// Spicy's TimeSetter cascades the line state to every child when
-					// the line itself is not active. This matters for adjusted held-word
-					// timings near a line boundary.
-					const wordState =
-						stateAt(time, line.startTime, line.endTime) === "active"
-							? stateAt(time, word.startTime, word.endTime)
-							: stateAt(time, line.startTime, line.endTime);
-					const progress =
-						wordState === "active"
-							? progressAt(time, word.startTime, word.endTime)
-							: wordState === "sung"
-								? 1
-								: 0;
-					const slmStateFor = (nodeKey: string) => {
-						let result = slmAnimations.current.get(nodeKey);
-						if (!result) {
-							result = { phase: "idle" };
-							slmAnimations.current.set(nodeKey, result);
-						}
-						return result;
-					};
-					const pinSlmGradient = (
-						nodeKey: string,
-						node: HTMLElement | undefined,
-						position: "-50%" | "100%",
-					) => {
-						if (!node) return;
-						const animation = slmStateFor(nodeKey);
-						const phase = position === "100%" ? "sung" : "idle";
-						if (animation.phase === phase) return;
-						animation.animation?.cancel();
-						animation.animation = undefined;
-						animation.phase = phase;
-						node.style.setProperty("--spicy-slm-gradient-position", position);
-					};
-					const runSlmAnimation = (
-						nodeKey: string,
-						node: HTMLElement | undefined,
-						phase: "pre" | "fill",
-						duration: number,
-						elapsed: number,
-					) => {
-						if (!node || !simple) return;
-						const animation = slmStateFor(nodeKey);
-						if (animation.phase !== phase || !animation.animation) {
-							animation.animation?.cancel();
-							node.style.removeProperty("--spicy-slm-gradient-position");
-							animation.phase = phase;
-							animation.animation = node.animate(
-								phase === "fill"
-									? [
-											{ "--spicy-slm-gradient-position": "-27.5%" },
-											{ "--spicy-slm-gradient-position": "100%" },
-										]
-									: [
-											{ "--spicy-slm-gradient-position": "-50%" },
-											{ "--spicy-slm-gradient-position": "-27.5%" },
-										],
-								{
-									duration: Math.max(0, duration),
-									easing: "linear",
-									fill: "forwards",
-								},
-							);
-						}
-						animation.animation?.pause();
-						if (animation.animation)
-							animation.animation.currentTime = Math.max(
-								0,
-								Math.min(duration, elapsed),
-							);
-					};
-					const prefillToken = (
-						next: SpicyToken | undefined,
-						nextIndex: number,
-					) => {
-						if (
-							!next ||
-							stateAt(time, next.startTime, next.endTime) !== "not-sung"
-						)
-							return;
-						const nextKey = keyFor(line, next, nextIndex);
-						if (next.letters) {
-							for (let index = 0; index < next.letters.length; index++) {
-								const letterStart =
-									next.startTime +
-									index *
-										((next.endTime - next.startTime) / next.letters.length);
-								runSlmAnimation(
-									`${nextKey}:${letterStart}`,
-									wordNodes.current.get(`${nextKey}:${letterStart}`),
-									"pre",
-									125,
-									125 - (letterStart - time),
-								);
-							}
-						} else
-							runSlmAnimation(
-								nextKey,
-								wordNodes.current.get(nextKey),
-								"pre",
-								125,
-								125 - (next.startTime - time),
-							);
-					};
-					const { animateNode, animateHeldGroup, animateHeldLetters } =
-						createTokenAnimator({
-							springs,
-							wordNodes,
-							word,
-							wordState,
-							simple,
-							snap,
-							dt,
-							time,
-							prefillNext: () => prefillToken(line.words[wi + 1], wi + 1),
-							runSlmAnimation,
-							pinSlmGradient,
-						});
-					if (line.isDotLine)
-						animateNode(
-							rootKey,
-							wordNodes.current.get(rootKey),
-							progress,
-							true,
-						);
-					else if (word.letters) {
-						animateHeldGroup(rootKey, wordNodes.current.get(rootKey), progress);
-						animateHeldLetters(word, rootKey, wordState);
-					} else animateNode(rootKey, wordNodes.current.get(rootKey), progress);
-				}
 	};
 	return animate;
 }

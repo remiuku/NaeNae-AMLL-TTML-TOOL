@@ -4,13 +4,14 @@
  */
 import { useAtomValue, useSetAtom } from "jotai";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { timedPreviewLyricsAtom } from "$/components/PreviewModeSwitcher/states";
 import { audioEngine } from "$/modules/audio/audio-engine";
 import { audioCoverArtAtom, currentTimeAtom } from "$/modules/audio/states";
 import { playbackClock } from "$/modules/playback-clock";
 import { usePreviewScroll } from "$/modules/playback-clock/use-preview-scroll";
+import { previewTimingProblemsAtom } from "$/modules/preview-problems/states";
 import { customBackgroundImageAtom } from "$/modules/settings/modals/customBackground";
 import {
+	allowConsecutiveBackgroundLinesAtom,
 	customAccentColorAtom,
 	useCustomAccentAtom,
 } from "$/modules/settings/states";
@@ -20,22 +21,30 @@ import {
 	showTranslationLinesAtom,
 	spicyBackgroundModeAtom,
 	spicyForceLineSyncedAtom,
+	spicyJoinSplitWordsAtom,
 	spicySimpleLyricsModeAtom,
 } from "$/modules/settings/states/preview";
+import { lyricLinesAtom } from "$/states/main";
 import { findSpicyScrollIndex } from "./active-line";
-import {
-	createSpicyAnimator,
-	type SlmAnimation,
-	type SpringSet,
-} from "./createSpicyAnimator";
+import { createSpicyAnimator, type SpringSet } from "./createSpicyAnimator";
+import { joinSplitWordsInLines, remapToJoinedWords } from "./join-split-words";
 import type { Spring } from "./math";
 import { buildSpicyLines } from "./model";
 import { useCoverPalette, useKawarpBackground } from "./useBackground";
+import { useSpicyVirtualList } from "./useSpicyVirtualList";
 
 export function useSpicyLyrics() {
-	const lyrics = useAtomValue(timedPreviewLyricsAtom);
+	// Every line, untimed ones included: they stay in place, hollow.
+	const lyrics = useAtomValue(lyricLinesAtom);
 	const simple = useAtomValue(spicySimpleLyricsModeAtom);
 	const forceLineSynced = useAtomValue(spicyForceLineSyncedAtom);
+	const joinWords = useAtomValue(spicyJoinSplitWordsAtom);
+	// Off, the lines pass through untouched, so the preview is unchanged.
+	const sourceLines = useMemo(
+		() =>
+			joinWords ? joinSplitWordsInLines(lyrics.lyricLines) : lyrics.lyricLines,
+		[joinWords, lyrics.lyricLines],
+	);
 	const romanized = useAtomValue(showRomanLinesAtom);
 	const showTranslation = useAtomValue(showTranslationLinesAtom);
 	const showFps = useAtomValue(showFpsCounterAtom);
@@ -44,11 +53,40 @@ export function useSpicyLyrics() {
 	const customBackgroundImage = useAtomValue(customBackgroundImageAtom);
 	const useAccent = useAtomValue(useCustomAccentAtom);
 	const accent = useAtomValue(customAccentColorAtom);
+	// Background lines nest under their lead exactly as the export writes them.
+	const allowConsecutiveBackgrounds = useAtomValue(
+		allowConsecutiveBackgroundLinesAtom,
+	);
 	const setCurrentTime = useSetAtom(currentTimeAtom);
+	// Empty unless "Show timing problems" is on; then flagged words are marked.
+	const timingProblems = useAtomValue(previewTimingProblemsAtom);
+	// A joined word shows its parts' problems, so one on "ti" in "Beautiful" stays visible.
+	const problems = useMemo(() => {
+		if (timingProblems.length === 0) return undefined;
+		const byWordId = new Map(
+			timingProblems.map((issue) => [issue.wordId, issue.problems]),
+		);
+		return joinWords ? remapToJoinedWords(sourceLines, byWordId) : byWordId;
+	}, [timingProblems, joinWords, sourceLines]);
 	const lines = useMemo(
 		() =>
-			buildSpicyLines(lyrics.lyricLines, simple, romanized, forceLineSynced),
-		[lyrics.lyricLines, simple, romanized, forceLineSynced],
+			buildSpicyLines(
+				sourceLines,
+				simple,
+				romanized,
+				forceLineSynced,
+				allowConsecutiveBackgrounds,
+				problems,
+				true,
+			),
+		[
+			sourceLines,
+			simple,
+			romanized,
+			forceLineSynced,
+			allowConsecutiveBackgrounds,
+			problems,
+		],
 	);
 	const hasDuetLines = useMemo(
 		() => lines.some((line) => !line.isDotLine && line.isDuet),
@@ -72,7 +110,6 @@ export function useSpicyLyrics() {
 	const wordNodes = useRef(new Map<string, HTMLElement>());
 	const springs = useRef(new Map<string, SpringSet>());
 	const lineGlowSprings = useRef(new Map<string, Spring>());
-	const slmAnimations = useRef(new Map<string, SlmAnimation>());
 	const lastTime = useRef(performance.now());
 	const [fps, setFps] = useState(0);
 	const fpsRef = useRef({ frames: 0, lastTime: performance.now() });
@@ -85,25 +122,37 @@ export function useSpicyLyrics() {
 		setFps(0);
 	}, [showFps]);
 
-	useEffect(() => {
-		if (simple) return;
-		for (const [key, animation] of slmAnimations.current) {
-			animation.animation?.cancel();
-			wordNodes.current
-				.get(key)
-				?.style.removeProperty("--spicy-slm-gradient-position");
-		}
-		slmAnimations.current.clear();
-	}, [simple]);
+	const animator = useRef<ReturnType<typeof createSpicyAnimator>>(null);
+	const { rows, totalSize, measureRow, getTop } = useSpicyVirtualList(
+		lines,
+		viewportRef,
+		() => animator.current?.(playbackClock.getSnapshot(), performance.now()),
+	);
 
+	// Leaving a "•••" interlude, Spicy waits for it to collapse before
+	// scrolling to the next line, so the two don't read as one jerk.
+	const interludeWait = useRef<{ id: string; until: number }>(null);
 	const getScrollTarget = useCallback(
 		(timeMs: number) => {
 			const index = findSpicyScrollIndex(lines, timeMs);
 			if (index < 0) return undefined;
 			const line = lines[index];
-			return { id: line.id, getNode: () => lineNodes.current.get(line.id) };
+			let deferred = false;
+			if (lines[index - 1]?.isDotLine) {
+				const now = performance.now();
+				if (interludeWait.current?.id !== line.id)
+					interludeWait.current = { id: line.id, until: now + 240 };
+				deferred = now < interludeWait.current.until;
+			} else interludeWait.current = null;
+			return {
+				id: line.id,
+				getNode: () => lineNodes.current.get(line.id),
+				getTop: (anchor: number, offset: number) =>
+					getTop(index, anchor, offset),
+				deferred,
+			};
 		},
-		[lines],
+		[lines, getTop],
 	);
 	usePreviewScroll(viewportRef, getScrollTarget, { offset: 30 });
 
@@ -116,20 +165,27 @@ export function useSpicyLyrics() {
 			wordNodes,
 			springs,
 			lineGlowSprings,
-			slmAnimations,
 			lastTime,
 			setFps,
 			fpsRef,
 			showFpsRef,
 		});
+		animator.current = animate;
 		animate(playbackClock.getSnapshot(), performance.now(), true);
-		return playbackClock.subscribe(animate);
+		const unsubscribe = playbackClock.subscribe(animate);
+		return () => {
+			unsubscribe();
+			animator.current = null;
+		};
 	}, [lines, simple]);
 
-	const seek = (time: number) => {
-		setCurrentTime(time);
-		audioEngine.seekMusic(time / 1000);
-	};
+	const seek = useCallback(
+		(time: number) => {
+			setCurrentTime(time);
+			audioEngine.seekMusic(time / 1000);
+		},
+		[setCurrentTime],
+	);
 	return {
 		simple,
 		useAccent,
@@ -143,6 +199,9 @@ export function useSpicyLyrics() {
 		viewportRef,
 		hasDuetLines,
 		lines,
+		rows,
+		totalSize,
+		measureRow,
 		lineNodes,
 		wordNodes,
 		showTranslation,

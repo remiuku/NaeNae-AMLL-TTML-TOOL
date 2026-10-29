@@ -5,8 +5,47 @@ const isCJKChar = (char: string) =>
 const isAlphaNum = (char: string) => /[\p{L}\p{N}]/u.test(char);
 const isLatinAlphaNum = (char: string) => /[\p{Script=Latin}\p{N}]/u.test(char);
 const isComma = (char: string) => /[,，、]/u.test(char);
+/** Marks that close a phrase and belong to the word before them. */
+const CLOSING = `"'”’»)]}`;
+/** Marks that open a phrase and belong to the word after them. */
+const OPENING = `"'“‘«([{`;
+const charClass = (chars: string) => `[${chars.replace(/[\]\\[^-]/g, "\\$&")}]`;
 
-const normalize = (value: string) => {
+/** The steps Process lyrics runs. Each can be turned off; all are on by default. */
+export interface LyricPrepOptions {
+	/** Drop inline `[...]` notes inside a line. */
+	removeInlineBrackets: boolean;
+	/** Move `(...)` vocals to their own background line. */
+	backgroundVocals: boolean;
+	/** Start background lines with a capital letter. */
+	capitalizeBackground: boolean;
+	/** Turn `--`, `- ` and stray hyphens into em dashes. */
+	emDashes: boolean;
+	/** Split hyphenated words after the hyphen. */
+	splitHyphens: boolean;
+	/** Split CJK text into characters and at script changes. */
+	splitCjk: boolean;
+	/** One space after commas, none before punctuation, quotes kept on their word. */
+	punctuationSpacing: boolean;
+	/** Collapse runs of spaces into one. */
+	collapseSpaces: boolean;
+	/** Mark spaces as word boundaries for the importer. */
+	splitWords: boolean;
+}
+
+export const DEFAULT_LYRIC_PREP_OPTIONS: LyricPrepOptions = {
+	removeInlineBrackets: true,
+	backgroundVocals: true,
+	capitalizeBackground: true,
+	emDashes: true,
+	splitHyphens: true,
+	splitCjk: true,
+	punctuationSpacing: true,
+	collapseSpaces: true,
+	splitWords: true,
+};
+
+const normalize = (value: string, options: LyricPrepOptions) => {
 	const chars = Array.from(value);
 	let processed = "";
 	for (let index = 0; index < chars.length; index++) {
@@ -16,55 +55,95 @@ const normalize = (value: string) => {
 			continue;
 		}
 		const nextChar = chars[index + 1];
-		if (nextChar === " ") {
+		const inWord =
+			!!nextChar &&
+			index > 0 &&
+			isAlphaNum(chars[index - 1]) &&
+			isAlphaNum(nextChar);
+		if (nextChar === "\\") {
+			// Already split after the hyphen by an earlier pass; keep it.
+			processed += "-";
+		} else if (inWord) {
+			processed += options.splitHyphens ? "-\\" : "-";
+		} else if (!options.emDashes) {
+			processed += "-";
+		} else if (nextChar === " ") {
 			processed += "— ";
 			index++;
 		} else if (nextChar === "-") {
 			processed += "—";
 			index++;
-		} else if (
-			nextChar &&
-			index > 0 &&
-			isAlphaNum(chars[index - 1]) &&
-			isAlphaNum(nextChar)
-		) {
-			processed += "-\\";
 		} else {
 			processed += "—";
 		}
 	}
 
-	const processedChars = Array.from(processed);
-	let cjkProcessed = "";
-	for (let index = 0; index < processedChars.length; index++) {
-		const char = processedChars[index];
-		const nextChar = processedChars[index + 1] ?? "";
-		cjkProcessed += char;
-		if (
-			(isCJKChar(char) && (isCJKChar(nextChar) || isLatinAlphaNum(nextChar))) ||
-			(isLatinAlphaNum(char) && isCJKChar(nextChar)) ||
-			(isComma(char) && (isCJKChar(nextChar) || isLatinAlphaNum(nextChar)))
-		) {
-			cjkProcessed += "\\";
+	if (options.splitCjk) {
+		const processedChars = Array.from(processed);
+		let cjkProcessed = "";
+		for (let index = 0; index < processedChars.length; index++) {
+			const char = processedChars[index];
+			const nextChar = processedChars[index + 1] ?? "";
+			cjkProcessed += char;
+			if (
+				(isCJKChar(char) &&
+					(isCJKChar(nextChar) || isLatinAlphaNum(nextChar))) ||
+				(isLatinAlphaNum(char) && isCJKChar(nextChar)) ||
+				(isComma(char) && (isCJKChar(nextChar) || isLatinAlphaNum(nextChar)))
+			) {
+				cjkProcessed += "\\";
+			}
 		}
+		processed = cjkProcessed;
 	}
-	return cjkProcessed
-		.replace(/\s*,\s*/g, ", ")
-		.replace(/\s+/g, " ")
-		.replace(/\s+,/g, ",")
-		.replace(/\s+(?=[,.;:!?])/g, "")
-		.trim();
+
+	if (options.punctuationSpacing) {
+		processed = processed
+			// A comma touching a closing mark (`sorry,"`) stays touching it.
+			.replace(/\s*,(\s*)(?=(.?))/gu, (_match, space: string, next: string) =>
+				!next || (!space && CLOSING.includes(next)) ? "," : ", ",
+			)
+			.replace(/\s+,/g, ",")
+			.replace(/\s+(?=[,.;:!?])/g, "")
+			// A closing mark left alone by a space joins the word before it,
+			// and an opening one the word after it.
+			.replace(new RegExp(`\\s+(${charClass(CLOSING)}+)(?=\\s|$)`, "gu"), "$1")
+			.replace(new RegExp(`(^|\\s)(${charClass(OPENING)}+)\\s+`, "gu"), "$1$2");
+	}
+	if (options.collapseSpaces) processed = processed.replace(/\s+/g, " ");
+	// Edges are always trimmed: the line itself is, and removed parts leave gaps.
+	return processed.trim();
 };
 
-/** Process one lyric line into the plain-text import representation. */
-export const prepareLyricLine = (line: string, escapeSpaces = true) => {
+const capitalize = (text: string, options: LyricPrepOptions) =>
+	options.capitalizeBackground
+		? text.charAt(0).toUpperCase() + text.slice(1)
+		: text;
+
+/**
+ * Process one lyric line into the plain-text import representation.
+ * Running it on its own output gives the same output: escaped spaces are read
+ * back as spaces and existing split marks are kept.
+ */
+export const prepareLyricLine = (
+	line: string,
+	steps: Partial<LyricPrepOptions> = {},
+) => {
+	const options = { ...DEFAULT_LYRIC_PREP_OPTIONS, ...steps };
 	const backgroundVocals: string[] = [];
 	let mainLine = "";
 	let currentParen = "";
 	let inParen = false;
+	let source = line
+		.replace(/\\? \\?/g, " ")
+		.replace(/^\\+|\\+$/g, "")
+		.trim();
+	if (options.removeInlineBrackets) source = source.replace(/\[.*?\]/g, "");
 
-	for (const char of line.replace(/\[.*?\]/g, "").trim()) {
-		if (["(", "（"].includes(char) && !inParen) {
+	for (const char of source) {
+		if (!options.backgroundVocals) {
+			mainLine += char;
+		} else if (["(", "（"].includes(char) && !inParen) {
 			inParen = true;
 			currentParen = "";
 		} else if ([")", "）"].includes(char) && inParen) {
@@ -77,12 +156,15 @@ export const prepareLyricLine = (line: string, escapeSpaces = true) => {
 		}
 	}
 
-	const main = normalize(mainLine);
-	const background = backgroundVocals.map(normalize).filter(Boolean).join(", ");
+	const main = normalize(mainLine, options);
+	const background = backgroundVocals
+		.map((vocal) => normalize(vocal, options))
+		.filter(Boolean)
+		.join(", ");
 	const output = background
 		? main
-			? main + "\n<" + background.charAt(0).toUpperCase() + background.slice(1)
-			: "<" + background.charAt(0).toUpperCase() + background.slice(1)
+			? `${main}\n<${capitalize(background, options)}`
+			: `<${capitalize(background, options)}`
 		: main;
-	return escapeSpaces ? output.replace(/ /g, "\\ \\") : output;
+	return options.splitWords ? output.replace(/ /g, "\\ \\") : output;
 };

@@ -184,7 +184,10 @@ function postProcess(
 	for (const token of tokens) {
 		const tokenWeight = calculateWeight(token, config);
 		const firstChar = token.length > 0 ? Array.from(token)[0] : " ";
-		const charType = getCharType(firstChar);
+		// A token of only apostrophes is a quote mark, not a syllable: `Run!'`.
+		const charType = /^['’]+$/.test(token)
+			? CharType.Other
+			: getCharType(firstChar);
 
 		if (config.punctuationMode === "merge" && charType === CharType.Other) {
 			let direction = getMergeDirection(token);

@@ -21,10 +21,11 @@ import {
 	TextArea,
 	TextField,
 } from "@radix-ui/themes";
-import { useAtom, useAtomValue } from "jotai";
+import { useAtom } from "jotai";
 import { useSetImmerAtom } from "jotai-immer";
 import { memo, useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useLyricLinesWhileOpen } from "$/hooks/useLyricLinesWhileOpen.ts";
 import {
 	segmentationCustomRulesAtom,
 	segmentationEngineAtom,
@@ -77,7 +78,7 @@ export const AdvancedSegmentationDialog = memo(() => {
 	);
 
 	const editLyricLines = useSetImmerAtom(lyricLinesAtom);
-	const currentLyric = useAtomValue(lyricLinesAtom);
+	const currentLyric = useLyricLinesWhileOpen(open);
 
 	const { t } = useTranslation();
 

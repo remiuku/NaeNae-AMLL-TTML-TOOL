@@ -27,16 +27,20 @@
     }
   },
   "onlineImport": {
-    "processDescription": "Tuonti jakaa tekstin sanoiksi, siistii välimerkit ja välilyönnit sekä muuttaa sulkeissa olevan laulun taustalauluriveiksi.",
-    "noLyricsLabel": "Tälle kappaleelle ei ole saatavilla sanoituksia.",
-    "editingRawText": "Raakatekstin muokkaaminen",
-    "backToPreview": "Takaisin esikatseluun",
-    "manualEdit": "Manuaalinen muokkaus",
-    "source": "Lähde: "
+    "noLyricsLabel": "Tälle kappaleelle ei ole saatavilla sanoituksia."
   },
   "preview": {
     "untimedLines": "{count, plural, one {# riviltä puuttuu ajoitus} other {# riviltä puuttuu ajoitus}}",
     "jumpToUntimed": "Ajoita ensimmäinen ajoittamaton rivi"
+  },
+  "previewProblems": {
+    "count": "{count, plural, one {# sanan ajoituksessa on ongelma} other {# sanan ajoituksessa on ongelmia}}",
+    "jump": "Valitse ensimmäinen",
+    "untimed": "Ei ajoitusta ajoitetulla rivillä",
+    "untimedLine": "Ei vielä ajoitettu",
+    "endsBeforeStart": "Päättyy ennen kuin alkaa",
+    "startsBeforeLine": "Alkaa ennen riviään",
+    "endsAfterLine": "Päättyy rivinsä jälkeen"
   },
   "beginnerGuide": {
     "empty": {
@@ -66,7 +70,7 @@
       "link": "Muokkaa editorin ulkoasua"
     },
     "status": {
-      "complete": "Valmis — työkalu havaitsi, että tämä vaihe on suoritettu."
+      "complete": "Valmis. Työkalu havaitsi, että tämä vaihe on suoritettu."
     },
     "readMore": "Koko opas",
     "continue": "Jatka",
@@ -90,7 +94,7 @@
       "step1": "1. Avaa Genius API Clients ja kirjaudu sisään.",
       "step2": "2. Valitse New API Client, anna sille jokin tunnistettava sovelluksen nimi ja täytä pakollinen sovelluksen verkkosivustokenttä.",
       "step3": "3. Tallenna API-asiakas ja valitse sitten Generate Access Token.",
-      "step4": "4. Kopioi Client Access Token — ei Client ID:tä tai Client Secretiä.",
+      "step4": "4. Kopioi Client Access Token, ei Client ID:tä tai Client Secretiä.",
       "reuse": "Työkalu tallentaa käyttöoikeustunnuksen paikallisesti ja käyttää sitä sanoitusten tuontiin ja lauluntekijöiden hakuun.",
       "openPortal": "Avaa Genius API Clients",
       "paste": "Liitä käyttöoikeustunnus Genius-tuontiin"
@@ -109,8 +113,8 @@
       },
       "lyrics": {
         "title": "Tuo sanoitukset",
-        "description": "Valitse sanoitusten lähde alta. Tarkista tulos tuontiikkunassa ja vahvista tuonti.",
-        "waiting": "Valitse lähde alta ja viimeistele tuonti."
+        "description": "Valitse sanoitusten lähde alta. Se avaa tuontinäkymän, jossa vaihdat ylhäältä Liitä-, LRCLIB- ja Genius-lähteen välillä, siistit tekstin ja tuot sen.",
+        "waiting": "Valitse lähde alta ja tuo sanoitukset tuontinäkymästä."
       },
       "review": {
         "title": "Tarkista sanoitukset ja rivityypit",
@@ -140,17 +144,92 @@
       }
     }
   },
-  "importChooser": {
+  "importLyrics": {
     "title": "Tuo sanoituksia",
-    "description": "Valitse, mistä haluat tuoda sanoituksesi.",
+    "description": "Liitä sanoitukset tai hae ne verkosta, siisti ne ja tuo.",
+    "sourceLabel": "Sanoitusten lähde",
+    "paste": "Liitä",
+    "textLabel": "Sanoitusteksti",
+    "textPlaceholder": "Liitä sanoitukset tähän, yksi säe riviä kohden. Osioiden otsikot kuten [Chorus] tulevat omille riveilleen.",
+    "backToText": "Takaisin tekstiin",
+    "showResults": "Näytä hakutulokset",
+    "usingTrack": "Tiedot kappaleesta {title}, esittäjä {artist}",
+    "dropTrack": "Älä käytä näitä tietoja",
+    "prepareTitle": "Siistiminen",
+    "processHint": "Jakaa sanat, siistii välimerkit ja välilyönnit ja siirtää sulkeissa olevan laulun taustalauluriveille.",
+    "splitSyllables": "Jaa tavuihin",
+    "splitHint": "Merkitsee tavut sanaerottimella jakoasetustesi ja opittujen jakojen mukaan. Korjaa merkinnät tekstiin ennen tuontia.",
+    "splitDone": "Tavut merkitty. Tarkista ne ennen tuontia.",
+    "splitNothing": "Ei jaettavaa.",
+    "restoreOriginal": "Palauta alkuperäinen teksti",
+    "sectionsTitle": "Osioiden otsikot",
+    "sectionsFound": "{count, plural, one {# otsikko löytyi} other {# otsikkoa löytyi}}",
+    "makeSections": "Luo osiot",
+    "makeSectionsHint": "Jokainen otsikko aloittaa osion. Ottaa Genius-osiot käyttöön.",
+    "removeHeaders": "Poista",
+    "removeHeadersHint": "Poistaa otsikkorivit sanoituksista.",
+    "textFormat": "Tekstin muoto",
+    "reviewSections": "Tarkista osiot",
+    "reviewHint": "Korjaa väärin arvatut luokat. Värit, laulajat ja huomautukset voi asettaa myöhemmin osion valikosta.",
+    "sectionLabel": "Osion nimi",
+    "sectionCategory": "Osion luokka",
+    "lowConfidence": "Luokka on arvattu. Tarkista se.",
+    "importSuccess": "{count, plural, one {Tuotiin # rivi.} other {Tuotiin # riviä.}}",
+    "importFailed": "Sanoituksia ei voitu lukea. Tarkista teksti ja tekstin muodon asetukset.",
+    "stepsLabel": "Tuonnin vaiheet",
+    "stepText": "Muokkaa tekstiä",
+    "processSteps": {
+      "advanced": "Lisäasetukset",
+      "removeInlineBrackets": "Poista rivin sisäiset huomautukset",
+      "removeInlineBracketsHint": "Poistaa [huomautukset] rivin keskeltä. Otsikkorivit säilyvät.",
+      "backgroundVocals": "Sulkeet taustalauluksi",
+      "backgroundVocalsHint": "Siirtää (laulun) omalle taustariville.",
+      "capitalizeBackground": "Iso alkukirjain taustariveille",
+      "capitalizeBackgroundHint": "Aloittaa jokaisen taustarivin isolla kirjaimella.",
+      "emDashes": "Ajatusviivat",
+      "emDashesHint": "Muuttaa kaksoistavuviivat ja irralliset tavuviivat ajatusviivoiksi.",
+      "splitHyphens": "Jaa yhdysmerkilliset sanat",
+      "splitHyphensHint": "Jakaa sanat kuten mm-hmm yhdysmerkin jälkeen.",
+      "splitCjk": "Jaa CJK-merkit",
+      "splitCjkHint": "Jakaa kiinan, japanin ja korean tekstin merkeiksi ja kirjoitusjärjestelmän vaihtuessa.",
+      "punctuationSpacing": "Siisti välimerkit",
+      "punctuationSpacingHint": "Yksi välilyönti pilkun jälkeen, ei välilyöntiä ennen välimerkkiä, ja lainausmerkit pysyvät sanassaan.",
+      "collapseSpaces": "Yhdistä välilyönnit",
+      "collapseSpacesHint": "Muuttaa peräkkäiset välilyönnit yhdeksi.",
+      "splitWords": "Jaa välilyönneistä",
+      "splitWordsHint": "Merkitsee jokaisen välilyönnin sanarajaksi tuontia varten."
+    }
+  },
+  "lyricMarkup": {
+    "section": "Osio: {label}",
+    "joinSyllables": "Yhdistä tavut",
+    "toolbar": "Rivityökalut",
+    "background": "Taustarivi",
+    "duet": "Duettorivi",
+    "split": "Jaa tai yhdistä tavu",
+    "hint": "Alt+napsautus kirjainten väliin jakaa, pisteen napsautus yhdistää. Alt+C vaihtaa osion.",
+    "headerText": "Otsikon teksti",
+    "category": "Luokka",
+    "gutter": {
+      "background": "Tausta",
+      "duet": "Duetto",
+      "translation": "Käännös",
+      "romanization": "Latinisointi",
+      "removed": "Poistettu",
+      "dropped": "Ei tuoda",
+      "missingTranslation": "Käännös puuttuu",
+      "missingRomanization": "Latinisointi puuttuu"
+    }
+  },
+  "importChooser": {
     "options": {
       "plainText": {
-        "title": "Pelkkä teksti",
+        "title": "Liitä",
         "description": "Liitä sanoitukset ja valitse, miten rivit, käännökset, latinalaistus ja sananjaot tulkitaan."
       },
       "lrclib": {
         "title": "LRCLIB",
-        "description": "Etsi LRCLIB-palvelusta ajoitettuja tai ajoittamattomia sanoituksia kappaleen ja esittäjän perusteella."
+        "description": "Hae LRCLIB-palvelusta kappaleen ja esittäjän perusteella ja tuo sanoitukset pelkkänä tekstinä."
       },
       "genius": {
         "title": "Genius",
@@ -206,8 +285,7 @@
       "snapToPlayhead": "Kohdista toistokohdistimeen",
       "noPreviousFound": "Aiempaa vastaavaa ajoitettua osiota ei löytynyt.",
       "noMatchingLines": "Mikään tämän osion rivi ei vastaa aiempaa, joten mitään ei kopioitu.",
-      "copyPrevious": "Kopioi edellinen ajoitus",
-      "headersRestored": "Osioiden otsikot palautettu."
+      "copyPrevious": "Kopioi edellinen ajoitus"
     }
   },
   "common": {
@@ -305,6 +383,15 @@
   },
   "ribbonBar": {
     "advancedTooltip": "Koskee Muokkaus-, Ajoitus- ja Esikatselu-valintanauhoja.",
+    "tooltips": {
+      "newLyricLine": "Lisää tyhjän rivin sanoitusten loppuun.",
+      "bgLyric": "Merkitsee valitut rivit taustalauluksi.",
+      "duetLyric": "Merkitsee valitut rivit toisen laulajan laulamiksi.",
+      "ignoreSync": "Ajoitusnäppäimet hyppäävät valittujen rivien yli, joten niitä ei ajoiteta.",
+      "romanizationLanguage": "Latinalaistuksen kieli",
+      "romanizationLanguageDesc": "Valittujen sanoitusten kieli. Automaattinen tunnistus toimii useimmissa kappaleissa.",
+      "romanize": "Täyttää latinalaistuksen valituille riveille tai sanoille."
+    },
     "editMode": {
       "multipleValues": "Useita arvoja...",
       "duration": "Kesto",
@@ -355,7 +442,7 @@
       "mode": "Tila",
       "standard": "Standard",
       "timing": "Ajoitus",
-      "spicy": "Spicy",
+      "spicy": "Spicy Lyrics",
       "simpleLyrics": "Yksinkertainen sanoitustila",
       "forceLineRendering": "Näytä rivikohtaisesti ajoitettuna",
       "background": "Tausta",
@@ -381,10 +468,10 @@
       "showTimestampUpdate": "Näytä aikaleimapäivitykset",
       "touchSyncPanel": "Kosketusajoituspaneeli",
       "bgLyricSync": "Taustalaulurivit",
-      "bgSyncInline": "Samalla",
+      "bgSyncInline": "Päärivin kanssa",
       "bgSyncInlineDesc": "Ajoita jokainen taustalaulurivi heti päärivinsä jälkeen.",
-      "bgSyncSeparate": "Erikseen",
-      "bgSyncSeparateDesc": "G ja H pysyvät pääriveillä. Napsauta taustalauluriviä ajoittaaksesi taustalaulurivit omana kierroksenaan.",
+      "bgSyncSeparate": "Ohita ajoitettaessa",
+      "bgSyncSeparateDesc": "G ja H pysyvät pääriveillä. Napsauta taustalauluriviä ajoittaaksesi ne erikseen.",
       "quickFixes": "Pikakorjaukset",
       "manualTimestampEdit": "Aikaleimojen manuaalinen muokkaus",
       "doubleClickEdit": "Muokkaa sanaa kaksoisnapsauttamalla",
@@ -414,6 +501,7 @@
     "common": {
       "highlightActiveLineDesc": "Korostaa valitussa tilassa parhaillaan toistettavan rivin.",
       "playbackSettingsMode": "Toiminta toistettaessa",
+      "playbackSettingsModeDesc": "Automaattinen vieritys ja välilehtien sijainti asetetaan erikseen Muokkaus- ja Ajoitus-tilalle. Valitse, kumpaa muutat.",
       "editMode": "Muokkaus",
       "timeMode": "Ajoitus",
       "enabled": "Käytössä",
@@ -449,8 +537,11 @@
       "playbackRate": "Toistonopeus",
       "autosave": {
         "enable": "Ota automaattinen tallennus käyttöön",
+        "enableDesc": "Tallentaa sanoitukset muutaman sekunnin kuluttua jokaisesta muutoksesta ja säilyttää tilannekuvia, jotka voit palauttaa Tiedosto-valikosta.",
         "interval": "Tallennusväli (minuuttia)",
-        "limit": "Säilytettävät tilannekuvat"
+        "intervalDesc": "Lyhin aika tilannekuvien välillä. Viimeisimmät muutokset tallennetaan silti jokaisen muokkauksen jälkeen.",
+        "limit": "Säilytettävät tilannekuvat",
+        "limitDesc": "Montako tilannekuvaa säilytetään kutakin kappaletta kohden. Vanhimmat poistetaan ensin."
       },
       "customBackground": "Mukautettu tausta",
       "customBackgroundDesc": "Valitse taustana käytettävä kuva.",
@@ -510,6 +601,7 @@
     "appearance": {
       "mode": {
         "label": "Ulkoasun muokkain",
+        "labelDesc": "Yksinkertainen sisältää teeman, taustan, skaalauksen ja fontin. Edistynyt säätää yksittäiset värit, välit ja paneelien järjestyksen.",
         "basic": "Yksinkertainen asettelu",
         "advanced": "Edistynyt asettelu",
         "none": "Ei mitään",
@@ -540,6 +632,7 @@
       "glassBlur": "Lasitehosteen voimakkuus",
       "glassBlurDesc": "Säädä lasitehosteisten elementtien taustan sumennusta.",
       "background": "Tausta",
+      "backgroundDesc": "Näytä kuva tai liukuväri sovelluksen takana.",
       "useCustomGradient": "Mukautettu liukuväri",
       "useCustomGradientDesc": "Luo liukuväri yhdestä väristä.",
       "syncGradientToAccent": "Synkronoi ensimmäinen väri korostusväriin",
@@ -754,7 +847,7 @@
       "timingOverviewAutoScrollDesc": "Pidä ajoituskatsaus vieritettynä toistokohtaan.",
       "vsyncDesc": "Päivitä Standard- ja Toxi-esikatselut joka ruudulla noin 30 kertaa sekunnissa tapahtuvan päivityksen sijaan. Sulavampi, mutta kuormittaa suoritinta enemmän.",
       "showFpsDesc": "Näytä esikatselussa kuvataajuuslaskuri.",
-      "syncLevelDesc": "Sana: ajoita jokainen sana erikseen. Rivi: ajoita kokonaiset rivit ja jaa sanat tasaisesti alustavaksi ajoitukseksi, jota tarkennat spektrogrammissa.",
+      "syncLevelDesc": "Sana: ajoita jokainen sana erikseen. Rivi: ajoita kokonaiset rivit ja jaa sanat tasaisesti. Rivi-tilakin tallentaa sanakohtaiset ajat, ei rivikohtaisesti synkronoituja sanoituksia, joten tarkenna sanat spektrogrammissa.",
       "previewModeDesc": "Valitse, mikä esikatselu näkyy Esikatselu-välilehdellä.",
       "spicyBackgroundDesc": "Mitä Spicy-esikatselun taustalla näkyy.",
       "fadeWidthDesc": "Kuinka pehmeä korostuksen reuna on, kun sana täyttyy Standard- ja Toxi-esikatseluissa."
@@ -775,11 +868,18 @@
     "orderChronological": "Kronologinen",
     "orderTextual": "Tekstijärjestys"
   },
+  "joinSplitWords": {
+    "label": "Yhdistä jaetut sanat",
+    "description": "Näytä osissa laulettu sana yhtenä sanana, kun osat on ajoitettu tasaisesti, kuten Spicy Lyricsin Join Split Words -asetus."
+  },
   "topBar": {
     "modeBtns": {
       "edit": "Muokkaus",
       "sync": "Ajoitus",
-      "preview": "Esikatselu"
+      "preview": "Esikatselu",
+      "editDesc": "Kirjoita, jaa ja merkitse sanoitukset.",
+      "syncDesc": "Ajoita jokainen sana ääneen.",
+      "previewDesc": "Toista sanoitukset niin kuin kuulijat ne näkevät."
     },
     "appName": "TTML Tool",
     "menu": {
@@ -808,10 +908,7 @@
       "ttmlChecklist": "TTML-tarkistuslista",
       "tool": "Työkalut",
       "importLyric": {
-        "import": "Tuo sanoituksia",
-        "fromPlainText": "Tuo pelkästä tekstistä…",
-        "fromLRCLIB": "Tuo LRCLIB-palvelusta…",
-        "fromGenius": "Tuo Genius-palvelusta…"
+        "import": "Tuo sanoituksia..."
       },
       "exportLyric": {
         "export": "Vie sanoituksia",
@@ -1016,7 +1113,10 @@
     "volume": "Äänenvoimakkuus",
     "playbackRate": "Toistonopeus",
     "preservesPitch": "Säilytä sävelkorkeus",
-    "clickToLoadMusic": "Lataa ääni napsauttamalla musiikkikuvaketta",
+    "audioMenu": "Ääni ja toisto",
+    "loadedAudio": "Ladattu ääni",
+    "replaceAudio": "Korvaa",
+    "resetSpeed": "Palauta 1×",
     "playPause": "Toista / keskeytä musiikki",
     "expandSpectrogram": "Laajenna / tiivistä spektrogrammi"
   },
@@ -1054,7 +1154,6 @@
       "searchError": "Haku epäonnistui: {error}",
       "fetchError": "Sanoitusta ei voitu hakea: {error}",
       "noLyricsError": "Ei tuotavia sanoituksia.",
-      "importSuccess": "{count, plural, one {Tuotiin # rivi Genius-palvelusta.} other {Tuotiin # riviä Genius-palvelusta.}}",
       "howToGetKey": "Genius-käyttöoikeustunnuksen hankkiminen"
     },
     "openLink": "Avaa linkki",
@@ -1078,11 +1177,15 @@
     "addPresets": "Lisää kaikki vakiokentät",
     "clear": "Tyhjennä"
   },
+  "helpText": {
+    "metadataArtists": "Kuka esittää kappaleen, kuten se on merkitty suoratoistopalveluissa. Esimerkki: ”Shake It Off” on Taylor Swiftin kappale.",
+    "metadataSongwriter": "Kuka kirjoitti musiikin ja sanat, tekijätietojen mukaan. Usein eri henkilöt kuin artistit. Esimerkki: ”Shake It Off” -kappaleen kirjoittivat Taylor Swift, Max Martin ja Shellback.",
+    "openSongwritersGuide": "Avaa lauluntekijäopas"
+  },
   "lrclib": {
     "placeholder": "Kappaleen nimi ja esittäjä…",
     "notFound": "Tuloksia ei löytynyt, kokeile eri avainsanoja",
     "noResult": "Hae kirjoittamalla kappale tai esittäjä",
-    "title": "Tuo sanoitukset LRCLIB-palvelusta",
     "matchesAudio": "Vastaa äänitiedostoasi"
   },
   "lyricEditor": {
@@ -1207,13 +1310,8 @@
     "setupTitle": "Genius-käyttöoikeustunnus",
     "setupDesc": "Tuontiin Genius-palvelusta tarvitaan käyttöoikeustunnus (Genius käyttää nimeä Client Access Token). Voit luoda sen Genius-kehittäjäportaalissa.",
     "keyPlaceholder": "Liitä Genius-käyttöoikeustunnuksesi…",
-    "previewTitle": "Genius — Sanoitusten esikatselu",
-    "back": "Takaisin",
-    "previewSubtitle": "Voit muokata alla olevia sanoituksia ennen tuontia.",
     "linesCount": "{count, plural, one {# rivi} other {# riviä}}",
     "importButton": "Tuo sanoituksia",
-    "importTitle": "Tuo sanoitukset Genius-palvelusta",
-    "searchPlaceholder": "Esittäjä – kappaleen nimi…",
     "notFound": "Tuloksia ei löytynyt. Kokeile eri avainsanoja.",
     "noResult": "Aloita kirjoittamalla kappaleen nimi tai esittäjä.",
     "howToGetKey": "Genius-käyttöoikeustunnuksen hankkiminen",
@@ -1222,8 +1320,6 @@
   "textImportDialog": {
     "processLyrics": "Käsittele sanoitukset",
     "processedSuccess": "Sanoitukset on valmisteltu tavukohtaiseen ajoitukseen.",
-    "title": "Tuo sanoitukset tekstistä",
-    "actionButton": "Tuo",
     "contentMode": {
       "caption": "Tekstin sisältö",
       "lyric": "Vain sanoitukset",
@@ -1241,20 +1337,11 @@
     "wordSeparator": "Sanaerotin",
     "enableSpecialPrefix": "Käytä rivietuliitteitä",
     "bgLyricPrefix": "Taustalaulurivin etuliite",
-    "duetLyricPrefix": "Duettorivin etuliite",
-    "description": "Tuo sanoitukset pelkkänä tekstinä tai muista muodoista."
+    "duetLyricPrefix": "Duettorivin etuliite"
   },
   "sectionImportReview": {
     "title": "Tarkista havaitut osiot",
-    "description": "Tarkista normalisoidut luokat ja metatiedot ennen sanoitusten vaihtamista.",
-    "sourceLyrics": "Alkuperäiset sanoitukset",
-    "structure": "Rakenne",
-    "sectionCount": "{count, plural, one {# osio} other {# osiota}}",
-    "vocalist": "Laulaja / rooli",
-    "color": "Osion väri",
-    "notes": "Huomautuksia",
-    "lineCount": "{count, plural, one {# sanoitusrivi} other {# sanoitusriviä}}",
-    "import": "Tuo tarkistetut sanoitukset"
+    "lineCount": "{count, plural, one {# sanoitusrivi} other {# sanoitusriviä}}"
   },
   "globalDragOverlay": {
     "title": "Vapauta ladataksesi"
@@ -1421,6 +1508,23 @@
     "openContributorProfile": "Avaa käyttäjän {name} GitHub-profiili",
     "unknown": "Tuntematon"
   },
+  "spectrogramLanes": {
+    "settingTitle": "Erilliset raidat",
+    "settingDesc": "Näytä taustalaulurivit omalla raidallaan päärivien alla. Raidat ovat vain näyttöä varten: vaihda rivin rooli muokkaustilassa.",
+    "menu": "Raidat",
+    "visibleLanes": "Näytä raidat",
+    "duetLane": "Erillinen duettoraita",
+    "lane": {
+      "main": "Pää",
+      "duet": "Duetto",
+      "bg": "Tausta"
+    }
+  },
+  "spectrogramLineEnds": {
+    "mergedHandle": "Rivin ja viimeisen sanan loppu. Siirrä vain toista Alt-vedolla.",
+    "wordEndHandle": "Viimeisen sanan loppu",
+    "lineEndHandle": "Rivin loppu"
+  },
   "spectrogram": {
     "invalidEndTime": "Tätä loppuaikaa ei voi valita",
     "noAudioLoaded": "Lataa äänitiedosto näyttääksesi spektrogrammin",
@@ -1436,6 +1540,17 @@
       "4096": "4096 (tarkin)"
     },
     "height": "Näyttökorkeus"
+  },
+  "spectrogramFollow": {
+    "toggle": "Seuraa toistokohtaa",
+    "shortcut": "Spektrogrammi - Toistokohdan seuraaminen päälle/pois",
+    "setting": "Seuraa toistokohtaa",
+    "settingDesc": "Vierittää spektrogrammia niin, että toistokohta pysyy näkyvissä. Vierittäminen tai vetäminen keskeyttää sen, kunnes painat toistoa tai odotat hetken.",
+    "style": "Seuraamistapa",
+    "page": "Sivuittain",
+    "pageDesc": "Hyppää eteenpäin, kun toistokohta poistuu näkymästä.",
+    "continuous": "Jatkuva",
+    "continuousDesc": "Vierittää toistokohdan mukana ja pitää sen keskellä."
   },
   "export": {
     "recoveryUntimed": "Tämä palautusvienti sisältää ajoittamattomia sanoituksia. Tarkista ajoitus ennen lähettämistä.",

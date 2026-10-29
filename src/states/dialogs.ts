@@ -1,7 +1,6 @@
 import { atom } from "jotai";
 
-export const importFromTextDialogAtom = atom(false);
-export const importLyricsChooserDialogAtom = atom(false);
+export const importLyricsDialogAtom = atom(false);
 export const metadataEditorDialogAtom = atom(false);
 export const settingsDialogAtom = atom(false);
 export const settingsTabAtom = atom("common");
@@ -37,10 +36,8 @@ export const confirmDialogAtom = atom<{
 	description: "",
 });
 export const historyRestoreDialogAtom = atom(false);
-export const importFromLRCLIBDialogAtom = atom(false);
 export const geniusSearchDialogAtom = atom(false);
 export const changelogDialogAtom = atom(false);
-export const geniusImportLyricsDialogAtom = atom(false);
 export const fontSelectionDialogAtom = atom(false);
 export const projectsDialogAtom = atom(false);
 export const timeShiftPreviewOffsetAtom = atom(0);

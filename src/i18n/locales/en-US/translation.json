@@ -27,16 +27,20 @@
     }
   },
   "onlineImport": {
-    "processDescription": "On import, splits text into words, cleans punctuation and spacing, and turns parenthesized vocals into background lines.",
-    "noLyricsLabel": "No lyrics available for this track.",
-    "editingRawText": "Editing raw text",
-    "backToPreview": "Back to Preview",
-    "manualEdit": "Manual Edit",
-    "source": "Source: "
+    "noLyricsLabel": "No lyrics available for this track."
   },
   "preview": {
     "untimedLines": "{count, plural, one {# line has no timing yet} other {# lines have no timing yet}}",
     "jumpToUntimed": "Time the first untimed line"
+  },
+  "previewProblems": {
+    "count": "{count, plural, one {# word has a timing problem} other {# words have timing problems}}",
+    "jump": "Select the first one",
+    "untimed": "No timing in a timed line",
+    "untimedLine": "Not synced yet",
+    "endsBeforeStart": "Ends before it starts",
+    "startsBeforeLine": "Starts before its line",
+    "endsAfterLine": "Ends after its line"
   },
   "beginnerGuide": {
     "empty": {
@@ -66,7 +70,7 @@
       "link": "Customize editor appearance"
     },
     "status": {
-      "complete": "Done — the tool detected this step is complete."
+      "complete": "Done. The tool detected that this step is complete."
     },
     "readMore": "Full guide",
     "continue": "Continue",
@@ -90,7 +94,7 @@
       "step1": "1. Open Genius API Clients and sign in.",
       "step2": "2. Select New API Client, give it any recognizable app name, and fill the required app website field.",
       "step3": "3. Save the client, then select Generate Access Token.",
-      "step4": "4. Copy the Client Access Token—not the Client ID or Client Secret.",
+      "step4": "4. Copy the Client Access Token, not the Client ID or Client Secret.",
       "reuse": "The tool stores this token locally and reuses it for lyric imports and songwriter lookup.",
       "openPortal": "Open Genius API Clients",
       "paste": "Paste token in Genius import"
@@ -109,8 +113,8 @@
       },
       "lyrics": {
         "title": "Import the lyrics",
-        "description": "Choose a lyrics source below. Review the result in its import window and confirm the import.",
-        "waiting": "Choose one source below and finish its import window."
+        "description": "Choose a lyrics source below. It opens the import screen, where you can switch between Paste, LRCLIB and Genius at the top, clean up the text and import it.",
+        "waiting": "Choose a source below and import the lyrics from the import screen."
       },
       "review": {
         "title": "Check lyrics and line types",
@@ -140,17 +144,92 @@
       }
     }
   },
-  "importChooser": {
+  "importLyrics": {
     "title": "Import lyrics",
-    "description": "Choose where you want to import your lyrics from.",
+    "description": "Paste lyrics or find them online, tidy them up, then import.",
+    "sourceLabel": "Lyrics source",
+    "paste": "Paste",
+    "textLabel": "Lyrics text",
+    "textPlaceholder": "Paste lyrics here, one line per row. Section headers like [Chorus] go on their own row.",
+    "backToText": "Back to text",
+    "showResults": "Show search results",
+    "usingTrack": "Details from {title} by {artist}",
+    "dropTrack": "Don't use these details",
+    "prepareTitle": "Clean up",
+    "processHint": "Splits words, tidies punctuation and spacing, and moves parenthesized vocals to background lines.",
+    "splitSyllables": "Split syllables",
+    "splitHint": "Marks syllables with the word separator, using your segmentation settings and learned splits. Fix any marks in the text before importing.",
+    "splitDone": "Syllables marked. Check them before importing.",
+    "splitNothing": "Nothing to split.",
+    "restoreOriginal": "Restore original text",
+    "sectionsTitle": "Section headers",
+    "sectionsFound": "{count, plural, one {# header found} other {# headers found}}",
+    "makeSections": "Make sections",
+    "makeSectionsHint": "Each header starts a section. Turns on Genius sections.",
+    "removeHeaders": "Remove",
+    "removeHeadersHint": "Drops the header rows from the lyrics.",
+    "textFormat": "Text format",
+    "reviewSections": "Review sections",
+    "reviewHint": "Fix any category that was guessed wrong. Colors, vocalists and notes can be set later from the section menu.",
+    "sectionLabel": "Section label",
+    "sectionCategory": "Section category",
+    "lowConfidence": "Category guessed. Check it.",
+    "importSuccess": "{count, plural, one {Imported # line.} other {Imported # lines.}}",
+    "importFailed": "Couldn't read these lyrics. Check the text and the text format settings.",
+    "stepsLabel": "Import steps",
+    "stepText": "Edit text",
+    "processSteps": {
+      "advanced": "Advanced",
+      "removeInlineBrackets": "Remove inline notes",
+      "removeInlineBracketsHint": "Drops [notes] in the middle of a line. Header rows are kept.",
+      "backgroundVocals": "Parentheses to background",
+      "backgroundVocalsHint": "Moves (vocals) to their own background line.",
+      "capitalizeBackground": "Capitalize background lines",
+      "capitalizeBackgroundHint": "Starts each background line with a capital letter.",
+      "emDashes": "Em dashes",
+      "emDashesHint": "Turns double hyphens and stray hyphens into em dashes.",
+      "splitHyphens": "Split hyphenated words",
+      "splitHyphensHint": "Splits words like mm-hmm after the hyphen.",
+      "splitCjk": "Split CJK characters",
+      "splitCjkHint": "Splits Chinese, Japanese and Korean text into characters and at script changes.",
+      "punctuationSpacing": "Tidy punctuation",
+      "punctuationSpacingHint": "One space after commas, none before punctuation, and quotes kept on their word.",
+      "collapseSpaces": "Collapse spaces",
+      "collapseSpacesHint": "Turns runs of spaces into one.",
+      "splitWords": "Split at spaces",
+      "splitWordsHint": "Marks each space as a word boundary for the import."
+    }
+  },
+  "lyricMarkup": {
+    "section": "Section: {label}",
+    "joinSyllables": "Join syllables",
+    "toolbar": "Line tools",
+    "background": "Background line",
+    "duet": "Duet line",
+    "split": "Split or join syllable",
+    "hint": "Alt+click between letters to split, click a dot to join. Alt+C changes a section.",
+    "headerText": "Header text",
+    "category": "Category",
+    "gutter": {
+      "background": "Background",
+      "duet": "Duet",
+      "translation": "Translation",
+      "romanization": "Romanization",
+      "removed": "Removed",
+      "dropped": "Not imported",
+      "missingTranslation": "Missing translation",
+      "missingRomanization": "Missing romanization"
+    }
+  },
+  "importChooser": {
     "options": {
       "plainText": {
-        "title": "Plain text",
+        "title": "Paste",
         "description": "Paste lyrics and choose how lines, translations, romanization, and word splits are interpreted."
       },
       "lrclib": {
         "title": "LRCLIB",
-        "description": "Search LRCLIB for synced or plain lyrics by song and artist."
+        "description": "Search LRCLIB by song and artist and bring in its lyrics as plain text."
       },
       "genius": {
         "title": "Genius",
@@ -206,8 +285,7 @@
       "snapToPlayhead": "Snap to playhead",
       "noPreviousFound": "No earlier matching section with timing found.",
       "noMatchingLines": "No lines in this section match the earlier one, so nothing was copied.",
-      "copyPrevious": "Copy previous timing",
-      "headersRestored": "Section headers restored."
+      "copyPrevious": "Copy previous timing"
     }
   },
   "common": {
@@ -305,6 +383,15 @@
   },
   "ribbonBar": {
     "advancedTooltip": "Applies to the Edit, Time and Preview ribbons.",
+    "tooltips": {
+      "newLyricLine": "Add an empty line at the end of the lyrics.",
+      "bgLyric": "Mark the selected lines as background vocals.",
+      "duetLyric": "Mark the selected lines as sung by the second singer.",
+      "ignoreSync": "Sync keys jump past the selected lines, so you don't time them.",
+      "romanizationLanguage": "Romanization language",
+      "romanizationLanguageDesc": "The language the selected lyrics are in. Auto-detect works for most songs.",
+      "romanize": "Fill in romanization for the selected lines or words."
+    },
     "editMode": {
       "multipleValues": "Multiple values…",
       "duration": "Duration",
@@ -355,7 +442,7 @@
       "mode": "Mode",
       "standard": "Standard",
       "timing": "Timing",
-      "spicy": "Spicy",
+      "spicy": "Spicy Lyrics",
       "simpleLyrics": "Simple Lyrics mode",
       "forceLineRendering": "Show as line-synced",
       "background": "Background",
@@ -381,10 +468,10 @@
       "showTimestampUpdate": "Show timestamp updates",
       "touchSyncPanel": "Touch sync panel",
       "bgLyricSync": "Background lines",
-      "bgSyncInline": "Inline",
+      "bgSyncInline": "Sync with main",
       "bgSyncInlineDesc": "Sync each background line right after its main line.",
-      "bgSyncSeparate": "Separate pass",
-      "bgSyncSeparateDesc": "G and H stay on main lines. Click a background line to sync the background lines on their own.",
+      "bgSyncSeparate": "Skip while syncing",
+      "bgSyncSeparateDesc": "G and H stay on main lines. Click a background line to sync them on their own.",
       "quickFixes": "Quick fixes",
       "manualTimestampEdit": "Manual timestamp editing",
       "doubleClickEdit": "Double-click word editing",
@@ -414,6 +501,7 @@
     "common": {
       "highlightActiveLineDesc": "Highlights the line that is playing in the selected mode.",
       "playbackSettingsMode": "Playback behavior for",
+      "playbackSettingsModeDesc": "Auto-scroll and tab position are set separately for Edit and Time. Pick which one to change.",
       "editMode": "Edit",
       "timeMode": "Time",
       "enabled": "Enabled",
@@ -449,8 +537,11 @@
       "playbackRate": "Playback speed",
       "autosave": {
         "enable": "Enable autosave",
+        "enableDesc": "Saves your lyrics a few seconds after each change and keeps snapshots you can restore from the File menu.",
         "interval": "Save every (minutes)",
-        "limit": "Snapshots to keep"
+        "intervalDesc": "Minimum time between snapshots. Your latest changes are still saved after every edit.",
+        "limit": "Snapshots to keep",
+        "limitDesc": "How many snapshots to keep for each song. The oldest are deleted first."
       },
       "customBackground": "Custom background",
       "customBackgroundDesc": "Choose an image to use as the background.",
@@ -510,6 +601,7 @@
     "appearance": {
       "mode": {
         "label": "Appearance editor",
+        "labelDesc": "Simple covers theme, background, scale and font. Advanced sets individual colors, spacing and the panel order.",
         "basic": "Simple layout",
         "advanced": "Advanced layout",
         "none": "None",
@@ -540,6 +632,7 @@
       "glassBlur": "Glass intensity",
       "glassBlurDesc": "Adjust the background blur effect for glassmorphic elements.",
       "background": "Background",
+      "backgroundDesc": "Show an image or a gradient behind the app.",
       "useCustomGradient": "Custom gradient color",
       "useCustomGradientDesc": "Generate a gradient from a single color.",
       "syncGradientToAccent": "Sync first color with Accent",
@@ -754,7 +847,7 @@
       "timingOverviewAutoScrollDesc": "Keep the timing overview scrolled to the playhead.",
       "vsyncDesc": "Update the Standard and Toxi previews every frame instead of about 30 times per second. Smoother, but uses more CPU.",
       "showFpsDesc": "Show a frame rate counter on the preview.",
-      "syncLevelDesc": "Word: time each word as you go. Line: time whole lines and spread their words out evenly, for a rough sync you fine-tune in the spectrogram.",
+      "syncLevelDesc": "Word: time each word as you go. Line: time whole lines and spread their words out evenly. Line still saves word timings, not line-synced lyrics, so fine-tune the words in the spectrogram.",
       "previewModeDesc": "Choose which preview the Preview tab shows.",
       "spicyBackgroundDesc": "What shows behind the Spicy preview.",
       "fadeWidthDesc": "How soft the edge of the highlight is as a word fills in the Standard and Toxi previews."
@@ -775,11 +868,18 @@
     "orderChronological": "Chronological",
     "orderTextual": "Textual"
   },
+  "joinSplitWords": {
+    "label": "Join split words",
+    "description": "Show a word sung in parts as one word when the parts line up evenly, like Spicy Lyrics' Join Split Words setting."
+  },
   "topBar": {
     "modeBtns": {
       "edit": "Edit",
       "sync": "Time",
-      "preview": "Preview"
+      "preview": "Preview",
+      "editDesc": "Type, split and mark up the lyrics.",
+      "syncDesc": "Time each word to the audio.",
+      "previewDesc": "Play the lyrics back the way listeners will see them."
     },
     "appName": "TTML Tool",
     "menu": {
@@ -808,10 +908,7 @@
       "ttmlChecklist": "TTML checklist",
       "tool": "Tools",
       "importLyric": {
-        "import": "Import lyrics",
-        "fromPlainText": "Import from plain text…",
-        "fromLRCLIB": "Import from LRCLIB…",
-        "fromGenius": "Import from Genius…"
+        "import": "Import lyrics..."
       },
       "exportLyric": {
         "export": "Export lyrics",
@@ -1016,7 +1113,10 @@
     "volume": "Volume",
     "playbackRate": "Playback speed",
     "preservesPitch": "Preserve pitch",
-    "clickToLoadMusic": "Click the music icon to load audio",
+    "audioMenu": "Audio and playback",
+    "loadedAudio": "Loaded audio",
+    "replaceAudio": "Replace",
+    "resetSpeed": "Reset to 1×",
     "playPause": "Play / pause music",
     "expandSpectrogram": "Expand / collapse spectrogram"
   },
@@ -1054,7 +1154,6 @@
       "searchError": "Search failed: {error}",
       "fetchError": "Could not fetch lyrics: {error}",
       "noLyricsError": "No lyrics to import.",
-      "importSuccess": "{count, plural, one {Imported # line from Genius.} other {Imported # lines from Genius.}}",
       "howToGetKey": "How to get a Genius access token"
     },
     "openLink": "Open link",
@@ -1078,11 +1177,15 @@
     "addPresets": "Add all standard fields",
     "clear": "Clear"
   },
+  "helpText": {
+    "metadataArtists": "Who performs the song, as the track is credited on streaming services. Example: \"Shake It Off\" is by Taylor Swift.",
+    "metadataSongwriter": "Who wrote the music and lyrics, from the writing credits. Often different from the artists. Example: \"Shake It Off\" was written by Taylor Swift, Max Martin and Shellback.",
+    "openSongwritersGuide": "Open the songwriters guide"
+  },
   "lrclib": {
     "placeholder": "Song title and artist…",
     "notFound": "No results. Try different keywords.",
     "noResult": "Type a song or artist to search",
-    "title": "Import lyrics from LRCLIB",
     "matchesAudio": "Matches your audio"
   },
   "lyricEditor": {
@@ -1207,13 +1310,8 @@
     "setupTitle": "Genius access token",
     "setupDesc": "To import from Genius you need a Genius access token (Genius calls it the Client Access Token). You can create one in the Genius developer portal.",
     "keyPlaceholder": "Paste your Genius access token…",
-    "previewTitle": "Genius lyrics preview",
-    "back": "Back",
-    "previewSubtitle": "You can edit the lyrics below before importing.",
     "linesCount": "{count, plural, one {# line} other {# lines}}",
     "importButton": "Import lyrics",
-    "importTitle": "Import lyrics from Genius",
-    "searchPlaceholder": "Artist – song title…",
     "notFound": "No results found. Try different keywords.",
     "noResult": "Enter a song name or artist to start.",
     "howToGetKey": "How to get a Genius access token",
@@ -1222,8 +1320,6 @@
   "textImportDialog": {
     "processLyrics": "Process lyrics",
     "processedSuccess": "Lyrics prepared for syllable syncing.",
-    "title": "Import lyrics from plain text",
-    "actionButton": "Import",
     "contentMode": {
       "caption": "Text content",
       "lyric": "Lyrics only",
@@ -1241,20 +1337,11 @@
     "wordSeparator": "Word separator",
     "enableSpecialPrefix": "Use line prefixes",
     "bgLyricPrefix": "Background line prefix",
-    "duetLyricPrefix": "Duet line prefix",
-    "description": "Import lyrics from plain text or other formats."
+    "duetLyricPrefix": "Duet line prefix"
   },
   "sectionImportReview": {
     "title": "Review detected sections",
-    "description": "Check normalized categories and metadata before replacing the lyrics.",
-    "sourceLyrics": "Source lyrics",
-    "structure": "Structure",
-    "sectionCount": "{count, plural, one {# section} other {# sections}}",
-    "vocalist": "Vocalist / role",
-    "color": "Section color",
-    "notes": "Notes",
-    "lineCount": "{count, plural, one {# lyric line} other {# lyric lines}}",
-    "import": "Import reviewed lyrics"
+    "lineCount": "{count, plural, one {# lyric line} other {# lyric lines}}"
   },
   "globalDragOverlay": {
     "title": "Release to load"
@@ -1421,6 +1508,23 @@
     "openContributorProfile": "Open {name}'s GitHub profile",
     "unknown": "Unknown"
   },
+  "spectrogramLanes": {
+    "settingTitle": "Separate lanes",
+    "settingDesc": "Draw background lines in their own row under the main lines. Lanes are view-only: change a line's role in Edit mode.",
+    "menu": "Lanes",
+    "visibleLanes": "Show lanes",
+    "duetLane": "Separate duet lane",
+    "lane": {
+      "main": "Main",
+      "duet": "Duet",
+      "bg": "Background"
+    }
+  },
+  "spectrogramLineEnds": {
+    "mergedHandle": "Line and last word end. Alt-drag to move only one.",
+    "wordEndHandle": "Last word end",
+    "lineEndHandle": "Line end"
+  },
   "spectrogram": {
     "invalidEndTime": "Cannot select this end time",
     "noAudioLoaded": "Load an audio file to show the spectrogram",
@@ -1436,6 +1540,17 @@
       "4096": "4096 (most detail)"
     },
     "height": "Display height"
+  },
+  "spectrogramFollow": {
+    "toggle": "Follow playhead",
+    "shortcut": "Spectrogram - Follow playhead on/off",
+    "setting": "Follow the playhead",
+    "settingDesc": "Scrolls the spectrogram to keep the playhead in view. Scrolling or dragging pauses it until you press play or leave it for a moment.",
+    "style": "Follow style",
+    "page": "Page",
+    "pageDesc": "Jumps ahead when the playhead leaves the view.",
+    "continuous": "Continuous",
+    "continuousDesc": "Scrolls with the playhead and keeps it centered."
   },
   "export": {
     "recoveryUntimed": "This recovery export contains untimed lyrics. Check timing before submitting.",

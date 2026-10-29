@@ -3,6 +3,7 @@ import { useAtom, useAtomValue } from "jotai";
 import { useSetImmerAtom } from "jotai-immer";
 import { memo, useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { useLyricLinesWhileOpen } from "$/hooks/useLyricLinesWhileOpen.ts";
 import { combineWordsDialogAtom } from "$/states/dialogs";
 import { lyricLinesAtom, selectedWordsAtom } from "$/states/main";
 import {
@@ -20,7 +21,7 @@ export const CombineWordsDialog = memo(() => {
 	const [dialogState, setDialogState] = useAtom(combineWordsDialogAtom);
 	const [applyToAll, setApplyToAll] = useAtom(combineWordsApplyToAllAtom);
 	const [ignoreCase, setIgnoreCase] = useAtom(combineWordsIgnoreCaseAtom);
-	const lyricLines = useAtomValue(lyricLinesAtom);
+	const lyricLines = useLyricLinesWhileOpen(dialogState.open);
 	const selectedWordIds = useAtomValue(selectedWordsAtom);
 	const editLyricLines = useSetImmerAtom(lyricLinesAtom);
 

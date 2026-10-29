@@ -27,16 +27,20 @@
     }
   },
   "onlineImport": {
-    "processDescription": "Ao importar, divide o texto em palavras, ajusta a pontuação e os espaços e transforma os vocais entre parênteses em linhas de vocais de apoio.",
-    "noLyricsLabel": "Nenhuma letra disponível para esta faixa.",
-    "editingRawText": "Editando texto bruto",
-    "backToPreview": "Voltar à prévia",
-    "manualEdit": "Edição manual",
-    "source": "Fonte: "
+    "noLyricsLabel": "Nenhuma letra disponível para esta faixa."
   },
   "preview": {
     "untimedLines": "{count, plural, one {# linha ainda não foi sincronizada} many {# linhas ainda não foram sincronizadas} other {# linhas ainda não foram sincronizadas}}",
     "jumpToUntimed": "Sincronizar a primeira linha pendente"
+  },
+  "previewProblems": {
+    "count": "{count, plural, one {# palavra tem um problema de sincronização} many {# palavras têm problemas de sincronização} other {# palavras têm problemas de sincronização}}",
+    "jump": "Selecionar a primeira",
+    "untimed": "Sem sincronização em uma linha sincronizada",
+    "untimedLine": "Ainda não sincronizada",
+    "endsBeforeStart": "Termina antes de começar",
+    "startsBeforeLine": "Começa antes da sua linha",
+    "endsAfterLine": "Termina depois da sua linha"
   },
   "beginnerGuide": {
     "empty": {
@@ -66,7 +70,7 @@
       "link": "Personalizar a aparência do editor"
     },
     "status": {
-      "complete": "Pronto — a ferramenta detectou que esta etapa foi concluída."
+      "complete": "Pronto. A ferramenta detectou que esta etapa foi concluída."
     },
     "readMore": "Guia completo",
     "continue": "Continuar",
@@ -90,7 +94,7 @@
       "step1": "1. Abra o Genius API Clients e entre na sua conta.",
       "step2": "2. Selecione New API Client, dê um nome reconhecível ao app e preencha o campo obrigatório do site do app.",
       "step3": "3. Salve o cliente e depois selecione Generate Access Token.",
-      "step4": "4. Copie o Client Access Token — não o Client ID nem o Client Secret.",
+      "step4": "4. Copie o Client Access Token, não o Client ID nem o Client Secret.",
       "reuse": "A ferramenta guarda este token localmente e o reutiliza para importar letras e buscar compositores.",
       "openPortal": "Abrir Genius API Clients",
       "paste": "Colar o token na importação do Genius"
@@ -109,8 +113,8 @@
       },
       "lyrics": {
         "title": "Importe a letra",
-        "description": "Escolha uma fonte de letras abaixo. Revise o resultado na janela de importação e confirme.",
-        "waiting": "Escolha uma fonte abaixo e conclua a janela de importação."
+        "description": "Escolha uma fonte de letras abaixo. A tela de importação abre; nela você alterna entre Colar, LRCLIB e Genius no topo, ajusta o texto e importa.",
+        "waiting": "Escolha uma fonte abaixo e importe a letra pela tela de importação."
       },
       "review": {
         "title": "Revise a letra e os tipos de linha",
@@ -140,17 +144,92 @@
       }
     }
   },
-  "importChooser": {
+  "importLyrics": {
     "title": "Importar letras",
-    "description": "Escolha de onde você deseja importar suas letras.",
+    "description": "Cole a letra ou encontre-a online, ajuste-a e importe.",
+    "sourceLabel": "Origem da letra",
+    "paste": "Colar",
+    "textLabel": "Texto da letra",
+    "textPlaceholder": "Cole a letra aqui, um verso por linha. Cabeçalhos de seção como [Chorus] ficam em uma linha própria.",
+    "backToText": "Voltar ao texto",
+    "showResults": "Mostrar resultados da busca",
+    "usingTrack": "Dados de {title}, de {artist}",
+    "dropTrack": "Não usar estes dados",
+    "prepareTitle": "Limpeza",
+    "processHint": "Separa as palavras, ajusta a pontuação e os espaços e move os vocais entre parênteses para linhas de apoio.",
+    "splitSyllables": "Dividir sílabas",
+    "splitHint": "Marca as sílabas com o separador de palavras, usando suas configurações de segmentação e divisões aprendidas. Corrija as marcas no texto antes de importar.",
+    "splitDone": "Sílabas marcadas. Confira antes de importar.",
+    "splitNothing": "Nada para dividir.",
+    "restoreOriginal": "Restaurar texto original",
+    "sectionsTitle": "Cabeçalhos de seção",
+    "sectionsFound": "{count, plural, one {# cabeçalho encontrado} many {# cabeçalhos encontrados} other {# cabeçalhos encontrados}}",
+    "makeSections": "Criar seções",
+    "makeSectionsHint": "Cada cabeçalho inicia uma seção. Ativa Seções do Genius.",
+    "removeHeaders": "Remover",
+    "removeHeadersHint": "Tira as linhas de cabeçalho da letra.",
+    "textFormat": "Formato do texto",
+    "reviewSections": "Revisar seções",
+    "reviewHint": "Corrija as categorias que foram adivinhadas errado. Cores, vocalistas e notas podem ser definidos depois pelo menu da seção.",
+    "sectionLabel": "Nome da seção",
+    "sectionCategory": "Categoria da seção",
+    "lowConfidence": "Categoria adivinhada. Confira.",
+    "importSuccess": "{count, plural, one {# linha importada.} many {# linhas importadas.} other {# linhas importadas.}}",
+    "importFailed": "Não foi possível ler esta letra. Confira o texto e as configurações de formato do texto.",
+    "stepsLabel": "Etapas da importação",
+    "stepText": "Editar texto",
+    "processSteps": {
+      "advanced": "Avançado",
+      "removeInlineBrackets": "Remover notas na linha",
+      "removeInlineBracketsHint": "Remove [notas] no meio de uma linha. Linhas de cabeçalho ficam.",
+      "backgroundVocals": "Parênteses para apoio",
+      "backgroundVocalsHint": "Move os (vocais) para uma linha de apoio própria.",
+      "capitalizeBackground": "Maiúscula nas linhas de apoio",
+      "capitalizeBackgroundHint": "Começa cada linha de apoio com letra maiúscula.",
+      "emDashes": "Travessões",
+      "emDashesHint": "Transforma hifens duplos e soltos em travessões.",
+      "splitHyphens": "Dividir palavras com hífen",
+      "splitHyphensHint": "Divide palavras como mm-hmm depois do hífen.",
+      "splitCjk": "Dividir caracteres CJK",
+      "splitCjkHint": "Divide texto em chinês, japonês e coreano em caracteres e nas trocas de escrita.",
+      "punctuationSpacing": "Ajustar pontuação",
+      "punctuationSpacingHint": "Um espaço depois de vírgulas, nenhum antes da pontuação, e aspas ficam junto da palavra.",
+      "collapseSpaces": "Juntar espaços",
+      "collapseSpacesHint": "Transforma vários espaços seguidos em um.",
+      "splitWords": "Dividir nos espaços",
+      "splitWordsHint": "Marca cada espaço como limite de palavra para a importação."
+    }
+  },
+  "lyricMarkup": {
+    "section": "Seção: {label}",
+    "joinSyllables": "Juntar sílabas",
+    "toolbar": "Ferramentas de linha",
+    "background": "Linha de apoio",
+    "duet": "Linha de dueto",
+    "split": "Dividir ou juntar sílaba",
+    "hint": "Alt+clique entre letras para dividir, clique num ponto para juntar. Alt+C muda uma seção.",
+    "headerText": "Texto do cabeçalho",
+    "category": "Categoria",
+    "gutter": {
+      "background": "Apoio",
+      "duet": "Dueto",
+      "translation": "Tradução",
+      "romanization": "Romanização",
+      "removed": "Removido",
+      "dropped": "Não será importado",
+      "missingTranslation": "Falta tradução",
+      "missingRomanization": "Falta romanização"
+    }
+  },
+  "importChooser": {
     "options": {
       "plainText": {
-        "title": "Texto simples",
+        "title": "Colar",
         "description": "Cole as letras e escolha como as linhas, traduções, romanização e divisões de palavras serão interpretadas."
       },
       "lrclib": {
         "title": "LRCLIB",
-        "description": "Busque letras sincronizadas ou sem sincronização no LRCLIB por música e artista."
+        "description": "Busque no LRCLIB por música e artista e traga a letra como texto simples."
       },
       "genius": {
         "title": "Genius",
@@ -206,8 +285,7 @@
       "snapToPlayhead": "Ajustar ao cursor de reprodução",
       "noPreviousFound": "Nenhuma seção anterior correspondente com tempos encontrada.",
       "noMatchingLines": "Nenhuma linha desta seção corresponde à anterior, então nada foi copiado.",
-      "copyPrevious": "Copiar tempos anteriores",
-      "headersRestored": "Cabeçalhos de seção restaurados."
+      "copyPrevious": "Copiar tempos anteriores"
     }
   },
   "common": {
@@ -305,6 +383,15 @@
   },
   "ribbonBar": {
     "advancedTooltip": "Aplica-se às faixas de Edição, Sincronização e Prévia.",
+    "tooltips": {
+      "newLyricLine": "Adiciona uma linha vazia no fim da letra.",
+      "bgLyric": "Marca as linhas selecionadas como vocal de apoio.",
+      "duetLyric": "Marca as linhas selecionadas como cantadas pelo segundo cantor.",
+      "ignoreSync": "As teclas de sincronização pulam as linhas selecionadas, então você não as sincroniza.",
+      "romanizationLanguage": "Idioma da romanização",
+      "romanizationLanguageDesc": "O idioma da letra selecionada. A detecção automática funciona na maioria das músicas.",
+      "romanize": "Preenche a romanização das linhas ou palavras selecionadas."
+    },
     "editMode": {
       "multipleValues": "Múltiplos valores…",
       "duration": "Duração",
@@ -355,7 +442,7 @@
       "mode": "Modo",
       "standard": "Standard",
       "timing": "Tempos",
-      "spicy": "Spicy",
+      "spicy": "Spicy Lyrics",
       "simpleLyrics": "Letras simples",
       "forceLineRendering": "Mostrar sincronização por linha",
       "background": "Plano de fundo",
@@ -381,9 +468,9 @@
       "showTimestampUpdate": "Mostrar atualizações de marca de tempo",
       "touchSyncPanel": "Painel de sincronização por toque",
       "bgLyricSync": "Linhas de vocais de apoio",
-      "bgSyncInline": "Junto",
+      "bgSyncInline": "Junto da principal",
       "bgSyncInlineDesc": "Sincronize cada linha de vocais de apoio logo depois da linha principal.",
-      "bgSyncSeparate": "Passada separada",
+      "bgSyncSeparate": "Pular ao sincronizar",
       "bgSyncSeparateDesc": "G e H ficam nas linhas principais. Clique em uma linha de vocais de apoio para sincronizá-las à parte.",
       "quickFixes": "Correções rápidas",
       "manualTimestampEdit": "Edição manual de marcas de tempo",
@@ -414,6 +501,7 @@
     "common": {
       "highlightActiveLineDesc": "Destaca visualmente a linha da letra que está sendo reproduzida no modo selecionado.",
       "playbackSettingsMode": "Comportamento de reprodução para",
+      "playbackSettingsModeDesc": "A rolagem automática e a posição entre guias são definidas separadamente para Edição e Sincronização. Escolha qual alterar.",
       "editMode": "Edição",
       "timeMode": "Sincronização",
       "enabled": "Habilitado",
@@ -449,8 +537,11 @@
       "playbackRate": "Velocidade de reprodução",
       "autosave": {
         "enable": "Ativar salvamento automático",
+        "enableDesc": "Salva a letra alguns segundos após cada alteração e mantém instantâneos que você pode restaurar pelo menu Arquivo.",
         "interval": "Salvar a cada (minutos)",
-        "limit": "Instantâneos a manter"
+        "intervalDesc": "Tempo mínimo entre instantâneos. Suas alterações mais recentes continuam sendo salvas após cada edição.",
+        "limit": "Instantâneos a manter",
+        "limitDesc": "Quantos instantâneos manter para cada música. Os mais antigos são excluídos primeiro."
       },
       "customBackground": "Plano de fundo personalizado",
       "customBackgroundDesc": "Escolha uma imagem para usar como plano de fundo.",
@@ -510,6 +601,7 @@
     "appearance": {
       "mode": {
         "label": "Editor de aparência",
+        "labelDesc": "Simples inclui tema, fundo, escala e fonte. Avançado define cada cor, os espaçamentos e a ordem dos painéis.",
         "basic": "Layout simples",
         "advanced": "Layout avançado",
         "none": "Nenhum",
@@ -540,6 +632,7 @@
       "glassBlur": "Intensidade do efeito de vidro",
       "glassBlurDesc": "Ajusta o desfoque de fundo dos elementos com efeito de vidro.",
       "background": "Plano de fundo",
+      "backgroundDesc": "Mostra uma imagem ou um gradiente atrás do aplicativo.",
       "useCustomGradient": "Cor gradiente personalizada",
       "useCustomGradientDesc": "Gere um gradiente a partir de uma única cor.",
       "syncGradientToAccent": "Sincronizar a primeira cor com a cor de destaque",
@@ -754,7 +847,7 @@
       "timingOverviewAutoScrollDesc": "A visão geral dos tempos acompanha o cursor de reprodução.",
       "vsyncDesc": "Atualiza as prévias Standard e Toxi a cada quadro em vez de cerca de 30 vezes por segundo. Mais suave, mas usa mais CPU.",
       "showFpsDesc": "Mostra um contador de quadros por segundo na prévia.",
-      "syncLevelDesc": "Palavra: sincronize cada palavra enquanto avança. Linha: sincronize linhas inteiras e distribua as palavras igualmente para obter uma sincronização aproximada, que você refina no espectrograma.",
+      "syncLevelDesc": "Palavra: sincronize cada palavra enquanto avança. Linha: sincronize linhas inteiras e distribua as palavras igualmente. Linha ainda salva o tempo de cada palavra, não uma letra sincronizada por linha, então refine as palavras no espectrograma.",
       "previewModeDesc": "Escolha qual prévia a aba Prévia mostra.",
       "spicyBackgroundDesc": "O que aparece atrás da prévia do Spicy.",
       "fadeWidthDesc": "Quão suave é a borda do destaque enquanto uma palavra é preenchida nas prévias Standard e Toxi."
@@ -775,11 +868,18 @@
     "orderChronological": "Cronológico",
     "orderTextual": "Ordem do texto"
   },
+  "joinSplitWords": {
+    "label": "Juntar palavras divididas",
+    "description": "Mostra uma palavra cantada em partes como uma só quando as partes se encaixam de forma uniforme, como a opção Join Split Words do Spicy Lyrics."
+  },
   "topBar": {
     "modeBtns": {
       "edit": "Edição",
       "sync": "Sincronização",
-      "preview": "Prévia"
+      "preview": "Prévia",
+      "editDesc": "Digite, divida e marque a letra.",
+      "syncDesc": "Sincronize cada palavra com o áudio.",
+      "previewDesc": "Reproduza a letra do jeito que os ouvintes vão ver."
     },
     "appName": "TTML Tool",
     "menu": {
@@ -808,10 +908,7 @@
       "ttmlChecklist": "Lista de tarefas TTML",
       "tool": "Ferramentas",
       "importLyric": {
-        "import": "Importar letras",
-        "fromPlainText": "Importar de texto simples…",
-        "fromLRCLIB": "Importar do LRCLIB...",
-        "fromGenius": "Importar de Genius…"
+        "import": "Importar letras..."
       },
       "exportLyric": {
         "export": "Exportar letras",
@@ -1016,7 +1113,10 @@
     "volume": "Volume",
     "playbackRate": "Velocidade de reprodução",
     "preservesPitch": "Preservar o tom",
-    "clickToLoadMusic": "Clique no ícone de música para carregar áudio",
+    "audioMenu": "Áudio e reprodução",
+    "loadedAudio": "Áudio carregado",
+    "replaceAudio": "Substituir",
+    "resetSpeed": "Voltar para 1×",
     "playPause": "Reproduzir / pausar música",
     "expandSpectrogram": "Expandir / recolher espectrograma"
   },
@@ -1054,7 +1154,6 @@
       "searchError": "Falha na pesquisa: {error}",
       "fetchError": "Não foi possível buscar a letra: {error}",
       "noLyricsError": "Nenhuma letra para importar.",
-      "importSuccess": "{count, plural, one {# linha importada do Genius.} many {# linhas importadas do Genius.} other {# linhas importadas do Genius.}}",
       "howToGetKey": "Como obter um token de acesso do Genius"
     },
     "openLink": "Abrir link",
@@ -1078,11 +1177,15 @@
     "addPresets": "Adicionar todos os campos padrão",
     "clear": "Limpar"
   },
+  "helpText": {
+    "metadataArtists": "Quem interpreta a música, como a faixa é creditada nos serviços de streaming. Exemplo: \"Shake It Off\" é de Taylor Swift.",
+    "metadataSongwriter": "Quem escreveu a música e a letra, segundo os créditos de composição. Muitas vezes são pessoas diferentes dos artistas. Exemplo: \"Shake It Off\" foi escrita por Taylor Swift, Max Martin e Shellback.",
+    "openSongwritersGuide": "Abrir o guia de compositores"
+  },
   "lrclib": {
     "placeholder": "Título da música e artista…",
     "notFound": "Nenhum resultado encontrado, tente outras palavras-chave",
     "noResult": "Digite uma música ou artista para buscar",
-    "title": "Importar letra do LRCLIB",
     "matchesAudio": "Corresponde ao seu áudio"
   },
   "lyricEditor": {
@@ -1207,13 +1310,8 @@
     "setupTitle": "Token de acesso do Genius",
     "setupDesc": "Para importar do Genius, você precisa de um token de acesso (Client Access Token). Você pode criá-lo no portal de desenvolvedores do Genius.",
     "keyPlaceholder": "Cole seu token de acesso do Genius…",
-    "previewTitle": "Prévia da letra do Genius",
-    "back": "Voltar",
-    "previewSubtitle": "Você pode editar as letras abaixo antes de importar.",
     "linesCount": "{count, plural, one {# linha} many {# linhas} other {# linhas}}",
     "importButton": "Importar letras",
-    "importTitle": "Importar letras de Genius",
-    "searchPlaceholder": "Artista – título da música…",
     "notFound": "Nenhum resultado encontrado. Experimente palavras-chave diferentes.",
     "noResult": "Digite o nome de uma música ou artista para começar.",
     "howToGetKey": "Como obter um token de acesso do Genius",
@@ -1222,8 +1320,6 @@
   "textImportDialog": {
     "processLyrics": "Processar letra",
     "processedSuccess": "Letra preparada para sincronizar por sílabas.",
-    "title": "Importar letras de texto simples",
-    "actionButton": "Importar",
     "contentMode": {
       "caption": "Conteúdo do texto",
       "lyric": "Apenas letras",
@@ -1241,20 +1337,11 @@
     "wordSeparator": "Separador de palavras",
     "enableSpecialPrefix": "Usar prefixos de linha",
     "bgLyricPrefix": "Prefixo de linhas de vocais de apoio",
-    "duetLyricPrefix": "Prefixo de linhas de dueto",
-    "description": "Importe letras de texto simples ou de outros formatos."
+    "duetLyricPrefix": "Prefixo de linhas de dueto"
   },
   "sectionImportReview": {
     "title": "Revisar seções detectadas",
-    "description": "Verifique as categorias e metadados normalizados antes de substituir as letras.",
-    "sourceLyrics": "Letra de origem",
-    "structure": "Estrutura",
-    "sectionCount": "{count, plural, one {# seção} many {# seções} other {# seções}}",
-    "vocalist": "Vocalista / papel",
-    "color": "Cor da seção",
-    "notes": "Notas",
-    "lineCount": "{count, plural, one {# linha de letra} many {# linhas de letra} other {# linhas de letra}}",
-    "import": "Importar letras revisadas"
+    "lineCount": "{count, plural, one {# linha de letra} many {# linhas de letra} other {# linhas de letra}}"
   },
   "globalDragOverlay": {
     "title": "Solte para carregar"
@@ -1421,6 +1508,23 @@
     "openContributorProfile": "Abrir o perfil do GitHub de {name}",
     "unknown": "Desconhecido"
   },
+  "spectrogramLanes": {
+    "settingTitle": "Faixas separadas",
+    "settingDesc": "Mostra as linhas de vocais de apoio em uma faixa própria abaixo das linhas principais. As faixas são só para visualização: mude a função de uma linha no modo de edição.",
+    "menu": "Faixas",
+    "visibleLanes": "Mostrar faixas",
+    "duetLane": "Faixa separada para dueto",
+    "lane": {
+      "main": "Principal",
+      "duet": "Dueto",
+      "bg": "Apoio"
+    }
+  },
+  "spectrogramLineEnds": {
+    "mergedHandle": "Fim da linha e da última palavra. Arraste com Alt para mover só um.",
+    "wordEndHandle": "Fim da última palavra",
+    "lineEndHandle": "Fim da linha"
+  },
   "spectrogram": {
     "invalidEndTime": "Não é possível selecionar este tempo de fim",
     "noAudioLoaded": "Por favor, carregue um arquivo de áudio para renderizar o espectrograma",
@@ -1436,6 +1540,17 @@
       "4096": "4096 (máximo de detalhes)"
     },
     "height": "Altura de exibição"
+  },
+  "spectrogramFollow": {
+    "toggle": "Seguir o cursor de reprodução",
+    "shortcut": "Espectrograma - Ativar/desativar seguir o cursor de reprodução",
+    "setting": "Seguir o cursor de reprodução",
+    "settingDesc": "Rola o espectrograma para manter o cursor de reprodução visível. Rolar ou arrastar pausa isso até você dar play ou esperar um momento.",
+    "style": "Modo de acompanhamento",
+    "page": "Por página",
+    "pageDesc": "Salta adiante quando o cursor sai da visualização.",
+    "continuous": "Contínuo",
+    "continuousDesc": "Rola junto com o cursor e o mantém no centro."
   },
   "export": {
     "recoveryUntimed": "Esta exportação de recuperação contém letras sem sincronização. Verifique a sincronização antes de enviar.",

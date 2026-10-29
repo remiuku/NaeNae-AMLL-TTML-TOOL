@@ -3,6 +3,7 @@ import { useAtom, useSetAtom } from "jotai";
 import { useSetImmerAtom } from "jotai-immer";
 import { type FC, useCallback } from "react";
 import { useTranslation } from "react-i18next";
+import { ActionTooltip } from "$/components/ActionTooltip";
 import { BrandMark } from "$/components/BrandBand";
 import WindowControls from "$/components/WindowControls";
 import {
@@ -59,14 +60,43 @@ export const TitleBar: FC = () => {
 					onValueChange={(v) => switchMode(v as ToolMode)}
 					// size="1"
 				>
+					{/* The tooltip goes inside the item: wrapping the item itself would
+					    break the control's active indicator. */}
 					<SegmentedControl.Item value={ToolMode.Edit}>
-						{t("topBar.modeBtns.edit", "编辑")}
+						<ActionTooltip
+							label={t("topBar.modeBtns.edit", "编辑")}
+							description={t(
+								"topBar.modeBtns.editDesc",
+								"Type, split and mark up the lyrics.",
+							)}
+							shortcut={keySwitchEditModeAtom}
+						>
+							{t("topBar.modeBtns.edit", "编辑")}
+						</ActionTooltip>
 					</SegmentedControl.Item>
 					<SegmentedControl.Item value={ToolMode.Sync}>
-						{t("topBar.modeBtns.sync", "打轴")}
+						<ActionTooltip
+							label={t("topBar.modeBtns.sync", "打轴")}
+							description={t(
+								"topBar.modeBtns.syncDesc",
+								"Time each word to the audio.",
+							)}
+							shortcut={keySwitchSyncModeAtom}
+						>
+							{t("topBar.modeBtns.sync", "打轴")}
+						</ActionTooltip>
 					</SegmentedControl.Item>
 					<SegmentedControl.Item value={ToolMode.Preview}>
-						{t("topBar.modeBtns.preview", "预览")}
+						<ActionTooltip
+							label={t("topBar.modeBtns.preview", "预览")}
+							description={t(
+								"topBar.modeBtns.previewDesc",
+								"Play the lyrics back the way listeners will see them.",
+							)}
+							shortcut={keySwitchPreviewModeAtom}
+						>
+							{t("topBar.modeBtns.preview", "预览")}
+						</ActionTooltip>
 					</SegmentedControl.Item>
 				</SegmentedControl.Root>
 			}

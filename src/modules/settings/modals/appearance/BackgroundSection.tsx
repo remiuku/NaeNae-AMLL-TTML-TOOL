@@ -64,9 +64,17 @@ export const BackgroundSection = ({
 	| "t"
 >) => (
 	<Flex direction="column" gap="3">
-		<Heading size="4">
-			{t("settings.appearance.background", "Background")}
-		</Heading>
+		<Flex direction="column" gap="1">
+			<Heading size="4">
+				{t("settings.appearance.background", "Background")}
+			</Heading>
+			<Text size="1" color="gray">
+				{t(
+					"settings.appearance.backgroundDesc",
+					"Show an image or a gradient behind the app.",
+				)}
+			</Text>
+		</Flex>
 
 		<OptionPicker<"none" | "image" | "gradient">
 			variant="segmented"

@@ -27,16 +27,20 @@
     }
   },
   "onlineImport": {
-    "processDescription": "İçe aktarırken metni kelimelere böler, noktalama ve boşlukları temizler, parantez içindeki vokalleri arka vokal satırlarına dönüştürür.",
-    "noLyricsLabel": "Bu parça için şarkı sözü mevcut değil.",
-    "editingRawText": "Ham metin düzenleme",
-    "backToPreview": "Önizlemeye dön",
-    "manualEdit": "Elle düzenleme",
-    "source": "Kaynak:"
+    "noLyricsLabel": "Bu parça için şarkı sözü mevcut değil."
   },
   "preview": {
     "untimedLines": "{count, plural, one {# satır henüz zamanlanmamış} other {# satır henüz zamanlanmamış}}",
     "jumpToUntimed": "Zamanlanmamış ilk satırı senkronize et"
+  },
+  "previewProblems": {
+    "count": "{count, plural, one {# kelimede zamanlama sorunu var} other {# kelimede zamanlama sorunu var}}",
+    "jump": "İlkini seç",
+    "untimed": "Zamanlanmış satırda zamanlaması yok",
+    "untimedLine": "Henüz zamanlanmadı",
+    "endsBeforeStart": "Başlamadan önce bitiyor",
+    "startsBeforeLine": "Satırından önce başlıyor",
+    "endsAfterLine": "Satırından sonra bitiyor"
   },
   "beginnerGuide": {
     "empty": {
@@ -66,7 +70,7 @@
       "link": "Düzenleyici görünümünü özelleştir"
     },
     "status": {
-      "complete": "Tamam — araç bu adımın tamamlandığını algıladı."
+      "complete": "Tamam. Araç bu adımın tamamlandığını algıladı."
     },
     "readMore": "Tam rehber",
     "continue": "Devam",
@@ -109,8 +113,8 @@
       },
       "lyrics": {
         "title": "Şarkı sözlerini içe aktarın",
-        "description": "Aşağıdan bir şarkı sözü kaynağı seçin. Sonucu içe aktarma penceresinde inceleyin ve onaylayın.",
-        "waiting": "Aşağıdan bir kaynak seçin ve içe aktarma penceresini tamamlayın."
+        "description": "Aşağıdan bir şarkı sözü kaynağı seçin. İçe aktarma ekranı açılır; üstten Yapıştır, LRCLIB ve Genius arasında geçiş yapabilir, metni düzenleyip içe aktarabilirsiniz.",
+        "waiting": "Aşağıdan bir kaynak seçin ve şarkı sözlerini içe aktarma ekranından aktarın."
       },
       "review": {
         "title": "Şarkı sözlerini ve satır türlerini kontrol edin",
@@ -140,17 +144,92 @@
       }
     }
   },
-  "importChooser": {
+  "importLyrics": {
     "title": "Şarkı sözlerini içe aktar",
-    "description": "Şarkı sözlerinizi nereden içe aktarmak istediğinizi seçin.",
+    "description": "Şarkı sözlerini yapıştırın veya çevrimiçi bulun, düzenleyin ve içe aktarın.",
+    "sourceLabel": "Şarkı sözü kaynağı",
+    "paste": "Yapıştır",
+    "textLabel": "Şarkı sözü metni",
+    "textPlaceholder": "Şarkı sözlerini buraya yapıştırın, her satıra bir dize. [Chorus] gibi bölüm başlıkları kendi satırına yazılır.",
+    "backToText": "Metne dön",
+    "showResults": "Arama sonuçlarını göster",
+    "usingTrack": "{artist} - {title} bilgileri",
+    "dropTrack": "Bu bilgileri kullanma",
+    "prepareTitle": "Temizle",
+    "processHint": "Kelimeleri ayırır, noktalama ve boşlukları düzeltir, parantez içindeki vokalleri arka vokal satırlarına taşır.",
+    "splitSyllables": "Hecelere böl",
+    "splitHint": "Heceleri, bölme ayarlarınıza ve öğrenilen bölmelere göre kelime ayırıcıyla işaretler. İçe aktarmadan önce işaretleri metinde düzeltin.",
+    "splitDone": "Heceler işaretlendi. İçe aktarmadan önce kontrol edin.",
+    "splitNothing": "Bölünecek bir şey yok.",
+    "restoreOriginal": "Orijinal metni geri yükle",
+    "sectionsTitle": "Bölüm başlıkları",
+    "sectionsFound": "{count, plural, one {# başlık bulundu} other {# başlık bulundu}}",
+    "makeSections": "Bölüm oluştur",
+    "makeSectionsHint": "Her başlık bir bölüm başlatır. Genius bölümlerini açar.",
+    "removeHeaders": "Kaldır",
+    "removeHeadersHint": "Başlık satırlarını şarkı sözlerinden siler.",
+    "textFormat": "Metin biçimi",
+    "reviewSections": "Bölümleri incele",
+    "reviewHint": "Yanlış tahmin edilen kategorileri düzeltin. Renkler, vokalistler ve notlar daha sonra bölüm menüsünden ayarlanabilir.",
+    "sectionLabel": "Bölüm adı",
+    "sectionCategory": "Bölüm kategorisi",
+    "lowConfidence": "Kategori tahmin edildi. Kontrol edin.",
+    "importSuccess": "{count, plural, one {# satır içe aktarıldı.} other {# satır içe aktarıldı.}}",
+    "importFailed": "Bu şarkı sözleri okunamadı. Metni ve metin biçimi ayarlarını kontrol edin.",
+    "stepsLabel": "İçe aktarma adımları",
+    "stepText": "Metni düzenle",
+    "processSteps": {
+      "advanced": "Gelişmiş",
+      "removeInlineBrackets": "Satır içi notları kaldır",
+      "removeInlineBracketsHint": "Satır ortasındaki [notları] siler. Başlık satırları kalır.",
+      "backgroundVocals": "Parantezleri arka vokale taşı",
+      "backgroundVocalsHint": "(Vokalleri) kendi arka vokal satırına taşır.",
+      "capitalizeBackground": "Arka vokalde büyük harf",
+      "capitalizeBackgroundHint": "Her arka vokal satırını büyük harfle başlatır.",
+      "emDashes": "Uzun tireler",
+      "emDashesHint": "Çift ve tek başına kalan kısa çizgileri uzun tireye çevirir.",
+      "splitHyphens": "Tireli kelimeleri böl",
+      "splitHyphensHint": "mm-hmm gibi kelimeleri tireden sonra böler.",
+      "splitCjk": "CJK karakterlerini böl",
+      "splitCjkHint": "Çince, Japonca ve Korece metni karakterlere ve yazı değişimlerinde böler.",
+      "punctuationSpacing": "Noktalamayı düzenle",
+      "punctuationSpacingHint": "Virgülden sonra bir boşluk, noktalamadan önce boşluk yok ve tırnaklar kelimesinde kalır.",
+      "collapseSpaces": "Boşlukları birleştir",
+      "collapseSpacesHint": "Art arda gelen boşlukları teke indirir.",
+      "splitWords": "Boşluklardan böl",
+      "splitWordsHint": "Her boşluğu içe aktarma için kelime sınırı olarak işaretler."
+    }
+  },
+  "lyricMarkup": {
+    "section": "Bölüm: {label}",
+    "joinSyllables": "Heceleri birleştir",
+    "toolbar": "Satır araçları",
+    "background": "Arka vokal satırı",
+    "duet": "Düet satırı",
+    "split": "Heceyi böl veya birleştir",
+    "hint": "Bölmek için harflerin arasına Alt+tıklayın, birleştirmek için noktaya tıklayın. Alt+C bölümü değiştirir.",
+    "headerText": "Başlık metni",
+    "category": "Kategori",
+    "gutter": {
+      "background": "Arka vokal",
+      "duet": "Düet",
+      "translation": "Çeviri",
+      "romanization": "Romanizasyon",
+      "removed": "Kaldırıldı",
+      "dropped": "İçe aktarılmaz",
+      "missingTranslation": "Çeviri eksik",
+      "missingRomanization": "Romanizasyon eksik"
+    }
+  },
+  "importChooser": {
     "options": {
       "plainText": {
-        "title": "Düz metin",
+        "title": "Yapıştır",
         "description": "Şarkı sözlerini yapıştırın; satırların, çevirilerin, Latin harflerine çevirinin ve kelime bölmelerinin nasıl işleneceğini seçin."
       },
       "lrclib": {
         "title": "LRCLIB",
-        "description": "LRCLIB'de şarkıya ve sanatçıya göre zamanlanmış veya düz şarkı sözleri arayın."
+        "description": "LRCLIB'de şarkıya ve sanatçıya göre arayın ve sözleri düz metin olarak alın."
       },
       "genius": {
         "title": "Genius",
@@ -206,8 +285,7 @@
       "snapToPlayhead": "Oynatma konumuna hizala",
       "noPreviousFound": "Zamanlaması olan önceki bir eşleşen bölüm bulunamadı.",
       "noMatchingLines": "Bu bölümdeki hiçbir satır öncekiyle eşleşmiyor, bu yüzden hiçbir şey kopyalanmadı.",
-      "copyPrevious": "Önceki zamanlamayı kopyala",
-      "headersRestored": "Bölüm başlıkları geri yüklendi."
+      "copyPrevious": "Önceki zamanlamayı kopyala"
     }
   },
   "common": {
@@ -305,6 +383,15 @@
   },
   "ribbonBar": {
     "advancedTooltip": "Düzenle, Zamanla ve Önizleme şeritleri için geçerlidir.",
+    "tooltips": {
+      "newLyricLine": "Şarkı sözlerinin sonuna boş bir satır ekler.",
+      "bgLyric": "Seçili satırları arka vokal olarak işaretler.",
+      "duetLyric": "Seçili satırları ikinci şarkıcının söylediği satırlar olarak işaretler.",
+      "ignoreSync": "Senkronizasyon tuşları seçili satırları atlar, böylece onları zamanlamazsınız.",
+      "romanizationLanguage": "Latin harflerine çeviri dili",
+      "romanizationLanguageDesc": "Seçili sözlerin dili. Otomatik algılama çoğu şarkıda işe yarar.",
+      "romanize": "Seçili satırlar veya kelimeler için Latin harfli yazımı doldurur."
+    },
     "editMode": {
       "multipleValues": "Birden çok değer…",
       "duration": "Süre",
@@ -355,7 +442,7 @@
       "mode": "Mod",
       "standard": "Standard",
       "timing": "Zamanlama",
-      "spicy": "Spicy",
+      "spicy": "Spicy Lyrics",
       "simpleLyrics": "Basit şarkı sözleri",
       "forceLineRendering": "Satır senkronizasyonuyla göster",
       "background": "Arka plan",
@@ -381,9 +468,9 @@
       "showTimestampUpdate": "Zaman damgası güncellemelerini göster",
       "touchSyncPanel": "Dokunmatik senkronizasyon paneli",
       "bgLyricSync": "Arka vokal satırları",
-      "bgSyncInline": "Birlikte",
+      "bgSyncInline": "Ana satırla birlikte",
       "bgSyncInlineDesc": "Her arka vokal satırını ana satırından hemen sonra senkronize edin.",
-      "bgSyncSeparate": "Ayrı tur",
+      "bgSyncSeparate": "Senkronizasyonda atla",
       "bgSyncSeparateDesc": "G ve H ana satırlarda kalır. Arka vokalleri ayrıca senkronize etmek için bir arka vokal satırına tıklayın.",
       "quickFixes": "Hızlı düzeltmeler",
       "manualTimestampEdit": "Zaman damgalarını elle düzenleme",
@@ -414,6 +501,7 @@
     "common": {
       "highlightActiveLineDesc": "Seçili modda o anda çalınan satırı vurgular.",
       "playbackSettingsMode": "Şunun için oynatma davranışı:",
+      "playbackSettingsModeDesc": "Otomatik kaydırma ve sekmeler arası konum, Düzenle ve Zamanla modları için ayrı ayarlanır. Hangisini değiştireceğinizi seçin.",
       "editMode": "Düzenle",
       "timeMode": "Zamanla",
       "enabled": "Etkin",
@@ -449,8 +537,11 @@
       "playbackRate": "Oynatma hızı",
       "autosave": {
         "enable": "Otomatik kaydı etkinleştir",
+        "enableDesc": "Şarkı sözlerinizi her değişiklikten birkaç saniye sonra kaydeder ve Dosya menüsünden geri yükleyebileceğiniz anlık görüntüler tutar.",
         "interval": "Kayıt aralığı (dakika)",
-        "limit": "Tutulacak anlık görüntü sayısı"
+        "intervalDesc": "Anlık görüntüler arasındaki en kısa süre. Son değişiklikleriniz yine de her düzenlemeden sonra kaydedilir.",
+        "limit": "Tutulacak anlık görüntü sayısı",
+        "limitDesc": "Her şarkı için tutulacak anlık görüntü sayısı. En eskiler önce silinir."
       },
       "customBackground": "Özel arka plan",
       "customBackgroundDesc": "Arka plan olarak kullanılacak bir resim seçin.",
@@ -510,6 +601,7 @@
     "appearance": {
       "mode": {
         "label": "Görünüm düzenleyici",
+        "labelDesc": "Basit; tema, arka plan, ölçek ve yazı tipini içerir. Gelişmiş; tek tek renkleri, boşlukları ve panel sırasını ayarlar.",
         "basic": "Basit düzen",
         "advanced": "Gelişmiş düzen",
         "none": "Hiçbiri",
@@ -540,6 +632,7 @@
       "glassBlur": "Cam efekti yoğunluğu",
       "glassBlurDesc": "Cam efektli öğelerin arka plan bulanıklığını ayarlayın.",
       "background": "Arka plan",
+      "backgroundDesc": "Uygulamanın arkasında bir görsel veya gradyan gösterir.",
       "useCustomGradient": "Özel gradyan rengi",
       "useCustomGradientDesc": "Tek bir renkten gradyan oluşturun.",
       "syncGradientToAccent": "İlk rengi vurgu rengiyle eşitle",
@@ -754,7 +847,7 @@
       "timingOverviewAutoScrollDesc": "Zamanlama görünümünü oynatma konumuna göre kaydırır.",
       "vsyncDesc": "Standard ve Toxi önizlemelerini saniyede yaklaşık 30 kez yerine her karede günceller. Daha akıcıdır, ancak daha fazla CPU kullanır.",
       "showFpsDesc": "Önizlemede kare hızı sayacı gösterir.",
-      "syncLevelDesc": "Kelime: her kelimeyi ayrı zamanlayın. Satır: tüm satırı zamanlayıp kelimeleri eşit dağıtın. Bu kaba senkronizasyonu spektrogramda ince ayarlayabilirsiniz.",
+      "syncLevelDesc": "Kelime: her kelimeyi ayrı zamanlayın. Satır: tüm satırı zamanlayıp kelimeleri eşit dağıtın. Satır modu da her kelimenin zamanını kaydeder, satır senkronlu söz oluşturmaz; kelimeleri spektrogramda ince ayarlayın.",
       "previewModeDesc": "Önizleme sekmesinin hangi önizlemeyi göstereceğini seçin.",
       "spicyBackgroundDesc": "Spicy önizlemesinin arkasında ne görüneceği.",
       "fadeWidthDesc": "Standard ve Toxi önizlemelerinde bir kelime dolarken vurgunun kenarının ne kadar yumuşak olacağı."
@@ -775,11 +868,18 @@
     "orderChronological": "Zamana göre",
     "orderTextual": "Metne göre"
   },
+  "joinSplitWords": {
+    "label": "Bölünmüş kelimeleri birleştir",
+    "description": "Parçalar halinde söylenen bir kelimeyi, parçalar düzenli şekilde hizalandığında tek kelime olarak gösterir; Spicy Lyrics'teki Join Split Words ayarı gibi."
+  },
   "topBar": {
     "modeBtns": {
       "edit": "Düzenle",
       "sync": "Zamanla",
-      "preview": "Önizleme"
+      "preview": "Önizleme",
+      "editDesc": "Sözleri yazın, bölün ve işaretleyin.",
+      "syncDesc": "Her kelimeyi sese göre zamanlayın.",
+      "previewDesc": "Sözleri dinleyicilerin göreceği şekilde oynatır."
     },
     "appName": "TTML Tool",
     "menu": {
@@ -808,10 +908,7 @@
       "ttmlChecklist": "TTML yapılacaklar listesi",
       "tool": "Araçlar",
       "importLyric": {
-        "import": "Şarkı sözlerini içe aktar",
-        "fromPlainText": "Düz metinden içe aktar…",
-        "fromLRCLIB": "LRCLIB'den içe aktar...",
-        "fromGenius": "Genius'tan içe aktar…"
+        "import": "Şarkı sözlerini içe aktar..."
       },
       "exportLyric": {
         "export": "Şarkı sözlerini dışa aktar",
@@ -1016,7 +1113,10 @@
     "volume": "Ses düzeyi",
     "playbackRate": "Oynatma hızı",
     "preservesPitch": "Ses perdesini koru",
-    "clickToLoadMusic": "Ses yüklemek için müzik simgesine tıklayın",
+    "audioMenu": "Ses ve oynatma",
+    "loadedAudio": "Yüklenen ses",
+    "replaceAudio": "Değiştir",
+    "resetSpeed": "1× değerine sıfırla",
     "playPause": "Müziği oynat/duraklat",
     "expandSpectrogram": "Spektrogramı genişlet/daralt"
   },
@@ -1054,7 +1154,6 @@
       "searchError": "Arama yapılamadı: {error}",
       "fetchError": "Şarkı sözü alınamadı: {error}",
       "noLyricsError": "İçe aktarmak için şarkı sözü yok.",
-      "importSuccess": "Genius'tan {count, plural, one {# satır} other {# satır}} içe aktarıldı.",
       "howToGetKey": "Genius erişim belirteci nasıl alınır"
     },
     "openLink": "Linki aç",
@@ -1078,11 +1177,15 @@
     "addPresets": "Tüm standart alanları ekle",
     "clear": "Temizle"
   },
+  "helpText": {
+    "metadataArtists": "Şarkıyı seslendiren kişi, parçanın yayın hizmetlerinde listelendiği şekliyle. Örnek: \"Shake It Off\" Taylor Swift'in şarkısıdır.",
+    "metadataSongwriter": "Müziği ve sözleri yazan kişiler, yazar bilgilerine göre. Çoğu zaman sanatçılardan farklıdır. Örnek: \"Shake It Off\" şarkısını Taylor Swift, Max Martin ve Shellback yazdı.",
+    "openSongwritersGuide": "Söz yazarları rehberini aç"
+  },
   "lrclib": {
     "placeholder": "Şarkı adı ve sanatçı…",
     "notFound": "Sonuç yok. Farklı anahtar kelimeler deneyin.",
     "noResult": "Aramak için şarkı veya sanatçı adı yazın",
-    "title": "LRCLIB'den şarkı sözlerini içe aktar",
     "matchesAudio": "Ses dosyanızla eşleşiyor"
   },
   "lyricEditor": {
@@ -1207,13 +1310,8 @@
     "setupTitle": "Genius erişim belirteci",
     "setupDesc": "Genius'tan içe aktarmak için bir erişim belirteci (Genius'taki adıyla Client Access Token) gerekir. Genius geliştirici portalından oluşturabilirsiniz.",
     "keyPlaceholder": "Genius erişim belirtecinizi yapıştırın…",
-    "previewTitle": "Genius şarkı sözü önizlemesi",
-    "back": "Geri",
-    "previewSubtitle": "Şarkı sözlerini içe aktarmadan önce aşağıda düzenleyebilirsiniz.",
     "linesCount": "{count, plural, one {# satır} other {# satır}}",
     "importButton": "Şarkı sözlerini içe aktar",
-    "importTitle": "Genius'tan şarkı sözlerini içe aktar",
-    "searchPlaceholder": "Sanatçı - Şarkı adı…",
     "notFound": "Sonuç bulunamadı. Farklı anahtar kelimeler deneyin.",
     "noResult": "Başlamak için şarkı veya sanatçı adı girin.",
     "howToGetKey": "Genius erişim belirteci nasıl alınır",
@@ -1222,8 +1320,6 @@
   "textImportDialog": {
     "processLyrics": "Şarkı sözlerini işle",
     "processedSuccess": "Şarkı sözleri hece senkronizasyonu için hazırlandı.",
-    "title": "Düz metinden şarkı sözlerini içe aktar",
-    "actionButton": "İçe aktar",
     "contentMode": {
       "caption": "Metin içeriği",
       "lyric": "Yalnızca şarkı sözleri",
@@ -1241,20 +1337,11 @@
     "wordSeparator": "Kelime ayırıcı",
     "enableSpecialPrefix": "Satır öneklerini kullan",
     "bgLyricPrefix": "Arka vokal satırı öneki",
-    "duetLyricPrefix": "Düet satırı öneki",
-    "description": "Şarkı sözlerini düz metinden veya başka biçimlerden içe aktarın."
+    "duetLyricPrefix": "Düet satırı öneki"
   },
   "sectionImportReview": {
     "title": "Algılanan bölümleri incele",
-    "description": "Şarkı sözlerini değiştirmeden önce normalleştirilmiş kategorileri ve meta verileri kontrol edin.",
-    "sourceLyrics": "Kaynak şarkı sözleri",
-    "structure": "Yapı",
-    "sectionCount": "{count, plural, one {# bölüm} other {# bölüm}}",
-    "vocalist": "Vokalist / rol",
-    "color": "Bölüm rengi",
-    "notes": "Notlar",
-    "lineCount": "{count, plural, one {# şarkı sözü satırı} other {# şarkı sözü satırı}}",
-    "import": "İncelenen şarkı sözlerini içe aktar"
+    "lineCount": "{count, plural, one {# şarkı sözü satırı} other {# şarkı sözü satırı}}"
   },
   "globalDragOverlay": {
     "title": "Yüklemek için bırakın"
@@ -1421,6 +1508,23 @@
     "openContributorProfile": "{name} kullanıcısının GitHub profilini aç",
     "unknown": "Bilinmiyor"
   },
+  "spectrogramLanes": {
+    "settingTitle": "Ayrı şeritler",
+    "settingDesc": "Arka vokal satırlarını ana satırların altında kendi şeritlerinde göster. Şeritler yalnızca görüntü içindir: bir satırın rolünü Düzenle modunda değiştirin.",
+    "menu": "Şeritler",
+    "visibleLanes": "Şeritleri göster",
+    "duetLane": "Ayrı düet şeridi",
+    "lane": {
+      "main": "Ana",
+      "duet": "Düet",
+      "bg": "Arka vokal"
+    }
+  },
+  "spectrogramLineEnds": {
+    "mergedHandle": "Satırın ve son kelimenin sonu. Yalnızca birini taşımak için Alt ile sürükleyin.",
+    "wordEndHandle": "Son kelimenin sonu",
+    "lineEndHandle": "Satır sonu"
+  },
   "spectrogram": {
     "invalidEndTime": "Bu bitiş zamanı seçilemez",
     "noAudioLoaded": "Spektrogramı göstermek için ses dosyası yükleyin",
@@ -1436,6 +1540,17 @@
       "4096": "4096 (en fazla ayrıntı)"
     },
     "height": "Görünüm yüksekliği"
+  },
+  "spectrogramFollow": {
+    "toggle": "Oynatma imlecini takip et",
+    "shortcut": "Spektrogram - Oynatma imlecini takibi aç/kapat",
+    "setting": "Oynatma imlecini takip et",
+    "settingDesc": "Oynatma imleci görünür kalsın diye spektrogramı kaydırır. Kaydırmak veya sürüklemek, oynatmaya basana ya da bir süre bekleyene kadar takibi duraklatır.",
+    "style": "Takip biçimi",
+    "page": "Sayfa sayfa",
+    "pageDesc": "İmleç görünümden çıkınca ileri atlar.",
+    "continuous": "Sürekli",
+    "continuousDesc": "İmleçle birlikte kayar ve onu ortada tutar."
   },
   "export": {
     "recoveryUntimed": "Bu kurtarma dışa aktarımı zamanlanmamış sözler içeriyor. Göndermeden önce zamanlamayı kontrol edin.",

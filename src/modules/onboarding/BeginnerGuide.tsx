@@ -23,23 +23,22 @@ import { useTranslation } from "react-i18next";
 import { BrandBandMark, brandBandClassName } from "$/components/BrandBand";
 import { useTopMenuActions } from "$/components/TopMenu/useTopMenuActions";
 import { useLoadAudio } from "$/hooks/useLoadAudio";
+import { useLyricLinesWhileOpen } from "$/hooks/useLyricLinesWhileOpen.ts";
 import { audioEngine } from "$/modules/audio/audio-engine";
 import { currentDurationAtom } from "$/modules/audio/states";
 import {
 	ImportSourceCards,
 	type ImportSourceId,
 } from "$/modules/lyrics-import/components/ImportSourceCards";
+import { openImportLyricsAtom } from "$/modules/lyrics-import/states";
 import { type ExportTranslation, saveTTML } from "$/modules/project/ttml-save";
 import { geniusApiKeyAtom } from "$/modules/settings/states";
 import {
-	geniusImportLyricsDialogAtom,
-	importFromLRCLIBDialogAtom,
-	importFromTextDialogAtom,
 	metadataEditorDialogAtom,
 	settingsDialogAtom,
 	settingsTabAtom,
 } from "$/states/dialogs";
-import { lyricLinesAtom, ToolMode, toolModeAtom } from "$/states/main";
+import { ToolMode, toolModeAtom } from "$/states/main";
 import {
 	GUIDE_STEP_IDS,
 	getGuideProgress,
@@ -71,7 +70,7 @@ const GUIDE_COPY = {
 	},
 	lyrics: {
 		title: "Import the lyrics",
-		text: "Choose a lyrics source below. Review the result in its import window and confirm the import.",
+		text: "Choose a lyrics source below. It opens the import screen, where you can switch between Paste, LRCLIB and Genius at the top, clean up the text and import it.",
 	},
 	review: {
 		title: "Check lyrics and line types",
@@ -112,12 +111,12 @@ export const BeginnerGuide = () => {
 		[t],
 	);
 	const store = useStore();
-	const lyrics = useAtomValue(lyricLinesAtom);
 	const duration = useAtomValue(currentDurationAtom);
 	const geniusApiKey = useAtomValue(geniusApiKeyAtom);
 	const [showGeniusSetup, setShowGeniusSetup] = useState(false);
 	const [welcomeOpen, setWelcomeOpen] = useAtom(guideWelcomeOpenAtom);
 	const [panelOpen, setPanelOpen] = useAtom(guidePanelOpenAtom);
+	const lyrics = useLyricLinesWhileOpen(welcomeOpen || panelOpen);
 	const [step, setStep] = useAtom(guideStepAtom);
 	const [exported, setExported] = useAtom(guideExportedAtom);
 	const [completion, setCompletion] = useAtom(guideCompletionAtom);
@@ -127,9 +126,7 @@ export const BeginnerGuide = () => {
 		y: 200,
 	}));
 	const dragOffset = useRef({ x: 0, y: 0 });
-	const setImportText = useSetAtom(importFromTextDialogAtom);
-	const setImportGenius = useSetAtom(geniusImportLyricsDialogAtom);
-	const setImportLrclib = useSetAtom(importFromLRCLIBDialogAtom);
+	const openImport = useSetAtom(openImportLyricsAtom);
 	const setMetadata = useSetAtom(metadataEditorDialogAtom);
 	const setToolMode = useSetAtom(toolModeAtom);
 	const setSettingsOpen = useSetAtom(settingsDialogAtom);
@@ -215,14 +212,10 @@ export const BeginnerGuide = () => {
 
 	const openImportSource = useCallback(
 		(source: ImportSourceId) => {
-			if (source === "plainText") setImportText(true);
-			if (source === "lrclib") setImportLrclib(true);
-			if (source === "genius") {
-				if (geniusApiKey) setImportGenius(true);
-				else setShowGeniusSetup(true);
-			}
+			if (source === "genius" && !geniusApiKey) setShowGeniusSetup(true);
+			else openImport(source);
 		},
-		[geniusApiKey, setImportGenius, setImportLrclib, setImportText],
+		[geniusApiKey, openImport],
 	);
 
 	const doAction = useCallback(async () => {
@@ -272,7 +265,7 @@ export const BeginnerGuide = () => {
 			: currentId === "audio"
 				? "Use “Choose audio” below, then wait for loading to finish."
 				: currentId === "lyrics"
-					? "Choose one source below and finish its import window."
+					? "Choose a source below and import the lyrics from the import screen."
 					: currentId === "review"
 						? hasNoEmptyLyricLines(lyrics)
 							? "The structure is valid. Finish reading the lyrics, then confirm your review."
@@ -540,7 +533,7 @@ export const BeginnerGuide = () => {
 										{stepComplete
 											? t(
 													"beginnerGuide.status.complete",
-													"Done — the tool detected this step is complete.",
+													"Done. The tool detected that this step is complete.",
 												)
 											: t(waitingKey, waitingText)}
 									</Text>
@@ -642,7 +635,7 @@ export const BeginnerGuide = () => {
 											<Text size="2">
 												{t(
 													"beginnerGuide.genius.step4",
-													"4. Copy the Client Access Token—not the Client ID or Client Secret.",
+													"4. Copy the Client Access Token, not the Client ID or Client Secret.",
 												)}
 											</Text>
 											<Text size="1" color="gray">
@@ -667,7 +660,7 @@ export const BeginnerGuide = () => {
 														"Open Genius API Clients",
 													)}
 												</Button>
-												<Button onClick={() => setImportGenius(true)}>
+												<Button onClick={() => openImport("genius")}>
 													{t(
 														"beginnerGuide.genius.paste",
 														"Paste token in Genius import",

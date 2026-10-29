@@ -27,16 +27,20 @@
     }
   },
   "onlineImport": {
-    "processDescription": "Przy imporcie dzieli tekst na słowa, porządkuje interpunkcję i odstępy oraz zamienia wokale w nawiasach na wersy wokalu w tle.",
-    "noLyricsLabel": "Brak tekstu dla tego utworu.",
-    "editingRawText": "Edycja surowego tekstu",
-    "backToPreview": "Powrót do podglądu",
-    "manualEdit": "Edycja ręczna",
-    "source": "Źródło:"
+    "noLyricsLabel": "Brak tekstu dla tego utworu."
   },
   "preview": {
     "untimedLines": "{count, plural, one {# wers nie ma jeszcze synchronizacji} few {# wersy nie mają jeszcze synchronizacji} many {# wersów nie ma jeszcze synchronizacji} other {# wersu nie ma jeszcze synchronizacji}}",
     "jumpToUntimed": "Synchronizuj pierwszy wers bez czasów"
+  },
+  "previewProblems": {
+    "count": "{count, plural, one {# słowo ma problem z synchronizacją} few {# słowa mają problemy z synchronizacją} many {# słów ma problemy z synchronizacją} other {# słowa ma problemy z synchronizacją}}",
+    "jump": "Zaznacz pierwsze",
+    "untimed": "Brak czasów w zsynchronizowanym wersie",
+    "untimedLine": "Jeszcze niezsynchronizowany",
+    "endsBeforeStart": "Kończy się, zanim się zacznie",
+    "startsBeforeLine": "Zaczyna się przed swoim wersem",
+    "endsAfterLine": "Kończy się po swoim wersie"
   },
   "beginnerGuide": {
     "empty": {
@@ -66,7 +70,7 @@
       "link": "Dostosuj wygląd edytora"
     },
     "status": {
-      "complete": "Gotowe — narzędzie wykryło, że ten krok jest ukończony."
+      "complete": "Gotowe. Narzędzie wykryło, że ten krok jest ukończony."
     },
     "readMore": "Pełny przewodnik",
     "continue": "Dalej",
@@ -90,7 +94,7 @@
       "step1": "1. Otwórz Genius API Clients i zaloguj się.",
       "step2": "2. Wybierz New API Client, nadaj dowolną rozpoznawalną nazwę aplikacji i wypełnij wymagane pole strony aplikacji.",
       "step3": "3. Zapisz klienta, a następnie wybierz Generate Access Token.",
-      "step4": "4. Skopiuj Client Access Token — nie Client ID ani Client Secret.",
+      "step4": "4. Skopiuj Client Access Token, nie Client ID ani Client Secret.",
       "reuse": "Narzędzie zapisuje ten token lokalnie i używa go ponownie do importu tekstów i wyszukiwania autorów.",
       "openPortal": "Otwórz Genius API Clients",
       "paste": "Wklej token w imporcie z Genius"
@@ -109,8 +113,8 @@
       },
       "lyrics": {
         "title": "Zaimportuj tekst",
-        "description": "Wybierz poniżej źródło tekstu. Sprawdź wynik w oknie importu i potwierdź import.",
-        "waiting": "Wybierz poniżej jedno źródło i dokończ jego okno importu."
+        "description": "Wybierz poniżej źródło tekstu. Otworzy się ekran importu, na którym u góry przełączasz między Wklej, LRCLIB i Genius, porządkujesz tekst i go importujesz.",
+        "waiting": "Wybierz poniżej źródło i zaimportuj tekst z ekranu importu."
       },
       "review": {
         "title": "Sprawdź tekst i typy wersów",
@@ -140,17 +144,92 @@
       }
     }
   },
-  "importChooser": {
+  "importLyrics": {
     "title": "Importuj tekst",
-    "description": "Wybierz, skąd chcesz zaimportować swoje teksty.",
+    "description": "Wklej tekst lub znajdź go w sieci, uporządkuj go i zaimportuj.",
+    "sourceLabel": "Źródło tekstu",
+    "paste": "Wklej",
+    "textLabel": "Tekst utworu",
+    "textPlaceholder": "Wklej tutaj tekst, jeden wers w wierszu. Nagłówki sekcji, takie jak [Chorus], umieść w osobnych wierszach.",
+    "backToText": "Wróć do tekstu",
+    "showResults": "Pokaż wyniki wyszukiwania",
+    "usingTrack": "Dane z utworu {title} ({artist})",
+    "dropTrack": "Nie używaj tych danych",
+    "prepareTitle": "Porządkowanie",
+    "processHint": "Dzieli słowa, porządkuje interpunkcję i odstępy oraz przenosi wokale w nawiasach do wersów w tle.",
+    "splitSyllables": "Podziel na sylaby",
+    "splitHint": "Oznacza sylaby separatorem słów według ustawień podziału i zapamiętanych podziałów. Popraw oznaczenia w tekście przed importem.",
+    "splitDone": "Sylaby oznaczone. Sprawdź je przed importem.",
+    "splitNothing": "Nie ma czego dzielić.",
+    "restoreOriginal": "Przywróć oryginalny tekst",
+    "sectionsTitle": "Nagłówki sekcji",
+    "sectionsFound": "{count, plural, one {Znaleziono # nagłówek} few {Znaleziono # nagłówki} many {Znaleziono # nagłówków} other {Znaleziono # nagłówka}}",
+    "makeSections": "Utwórz sekcje",
+    "makeSectionsHint": "Każdy nagłówek zaczyna sekcję. Włącza Sekcje Genius.",
+    "removeHeaders": "Usuń",
+    "removeHeadersHint": "Usuwa wiersze nagłówków z tekstu.",
+    "textFormat": "Format tekstu",
+    "reviewSections": "Sprawdź sekcje",
+    "reviewHint": "Popraw źle odgadnięte kategorie. Kolory, wokalistów i notatki ustawisz później w menu sekcji.",
+    "sectionLabel": "Nazwa sekcji",
+    "sectionCategory": "Kategoria sekcji",
+    "lowConfidence": "Kategoria odgadnięta. Sprawdź ją.",
+    "importSuccess": "{count, plural, one {Zaimportowano # wers.} few {Zaimportowano # wersy.} many {Zaimportowano # wersów.} other {Zaimportowano # wersu.}}",
+    "importFailed": "Nie udało się odczytać tego tekstu. Sprawdź tekst i ustawienia formatu tekstu.",
+    "stepsLabel": "Kroki importu",
+    "stepText": "Edytuj tekst",
+    "processSteps": {
+      "advanced": "Zaawansowane",
+      "removeInlineBrackets": "Usuń wtrącone notatki",
+      "removeInlineBracketsHint": "Usuwa [notatki] w środku wersu. Wiersze nagłówków zostają.",
+      "backgroundVocals": "Nawiasy do tła",
+      "backgroundVocalsHint": "Przenosi (wokale) do osobnego wersu w tle.",
+      "capitalizeBackground": "Wielka litera w tle",
+      "capitalizeBackgroundHint": "Zaczyna każdy wers w tle wielką literą.",
+      "emDashes": "Pauzy",
+      "emDashesHint": "Zamienia podwójne i samotne łączniki na pauzy.",
+      "splitHyphens": "Dziel słowa z łącznikiem",
+      "splitHyphensHint": "Dzieli słowa takie jak mm-hmm po łączniku.",
+      "splitCjk": "Dziel znaki CJK",
+      "splitCjkHint": "Dzieli tekst chiński, japoński i koreański na znaki i przy zmianie pisma.",
+      "punctuationSpacing": "Uporządkuj interpunkcję",
+      "punctuationSpacingHint": "Jedna spacja po przecinku, żadnej przed interpunkcją, a cudzysłowy zostają przy słowie.",
+      "collapseSpaces": "Scal spacje",
+      "collapseSpacesHint": "Zamienia kilka spacji z rzędu na jedną.",
+      "splitWords": "Dziel na spacjach",
+      "splitWordsHint": "Oznacza każdą spację jako granicę słowa przy imporcie."
+    }
+  },
+  "lyricMarkup": {
+    "section": "Sekcja: {label}",
+    "joinSyllables": "Połącz sylaby",
+    "toolbar": "Narzędzia wersu",
+    "background": "Wers w tle",
+    "duet": "Wers duetu",
+    "split": "Podziel lub połącz sylabę",
+    "hint": "Alt+kliknięcie między literami dzieli, kliknięcie kropki łączy. Alt+C zmienia sekcję.",
+    "headerText": "Tekst nagłówka",
+    "category": "Kategoria",
+    "gutter": {
+      "background": "W tle",
+      "duet": "Duet",
+      "translation": "Tłumaczenie",
+      "romanization": "Latynizacja",
+      "removed": "Usunięto",
+      "dropped": "Nie zostanie zaimportowane",
+      "missingTranslation": "Brak tłumaczenia",
+      "missingRomanization": "Brak latynizacji"
+    }
+  },
+  "importChooser": {
     "options": {
       "plainText": {
-        "title": "Zwykły tekst",
+        "title": "Wklej",
         "description": "Wklej tekst i wybierz sposób odczytu wersów, tłumaczeń, transkrypcji łacińskiej i podziału słów."
       },
       "lrclib": {
         "title": "LRCLIB",
-        "description": "Wyszukaj w LRCLIB zsynchronizowany lub zwykły tekst według utworu i wykonawcy."
+        "description": "Wyszukaj w LRCLIB według utworu i wykonawcy i pobierz tekst jako zwykły tekst."
       },
       "genius": {
         "title": "Genius",
@@ -206,8 +285,7 @@
       "snapToPlayhead": "Przyciągnij do pozycji odtwarzania",
       "noPreviousFound": "Nie znaleziono wcześniejszej pasującej sekcji z synchronizacją.",
       "noMatchingLines": "Żaden wiersz w tej sekcji nie pasuje do wcześniejszej, więc nic nie skopiowano.",
-      "copyPrevious": "Kopiuj poprzednie czasy",
-      "headersRestored": "Przywrócono nagłówki sekcji."
+      "copyPrevious": "Kopiuj poprzednie czasy"
     }
   },
   "common": {
@@ -305,6 +383,15 @@
   },
   "ribbonBar": {
     "advancedTooltip": "Dotyczy wstążek Edycja, Synchronizacja i Podgląd.",
+    "tooltips": {
+      "newLyricLine": "Dodaje pusty wers na końcu tekstu.",
+      "bgLyric": "Oznacza zaznaczone wersy jako wokal w tle.",
+      "duetLyric": "Oznacza zaznaczone wersy jako śpiewane przez drugiego wokalistę.",
+      "ignoreSync": "Klawisze synchronizacji pomijają zaznaczone wersy, więc nie nadajesz im czasu.",
+      "romanizationLanguage": "Język transkrypcji",
+      "romanizationLanguageDesc": "Język zaznaczonego tekstu. Automatyczne wykrywanie działa w większości utworów.",
+      "romanize": "Uzupełnia transkrypcję łacińską dla zaznaczonych wersów lub słów."
+    },
     "editMode": {
       "multipleValues": "Wiele wartości…",
       "duration": "Czas trwania",
@@ -355,7 +442,7 @@
       "mode": "Tryb",
       "standard": "Standard",
       "timing": "Synchronizacja",
-      "spicy": "Spicy",
+      "spicy": "Spicy Lyrics",
       "simpleLyrics": "Proste teksty",
       "forceLineRendering": "Pokaż synchronizację wersami",
       "background": "Tło",
@@ -381,10 +468,10 @@
       "showTimestampUpdate": "Pokaż aktualizacje znaczników czasu",
       "touchSyncPanel": "Panel synchronizacji dotykowej",
       "bgLyricSync": "Wersy wokalu w tle",
-      "bgSyncInline": "Na bieżąco",
+      "bgSyncInline": "Z głównym wersem",
       "bgSyncInlineDesc": "Synchronizuj każdy wers wokalu w tle zaraz po jego głównym wersie.",
-      "bgSyncSeparate": "Osobno",
-      "bgSyncSeparateDesc": "G i H zostają na głównych wersach. Kliknij wers wokalu w tle, aby zsynchronizować wokal w tle osobno.",
+      "bgSyncSeparate": "Pomijaj przy synchronizacji",
+      "bgSyncSeparateDesc": "G i H zostają na głównych wersach. Kliknij wers wokalu w tle, aby zsynchronizować je osobno.",
       "quickFixes": "Szybkie poprawki",
       "manualTimestampEdit": "Ręczna edycja znaczników czasu",
       "doubleClickEdit": "Edytuj słowa dwuklikiem",
@@ -414,6 +501,7 @@
     "common": {
       "highlightActiveLineDesc": "Podświetla wers odtwarzany w wybranym trybie.",
       "playbackSettingsMode": "Zachowanie odtwarzania dla",
+      "playbackSettingsModeDesc": "Automatyczne przewijanie i pozycję na kartach ustawia się osobno dla trybów Edycja i Synchronizacja. Wybierz, który zmienić.",
       "editMode": "Edycja",
       "timeMode": "Synchronizacja",
       "enabled": "Włączone",
@@ -449,8 +537,11 @@
       "playbackRate": "Prędkość odtwarzania",
       "autosave": {
         "enable": "Włącz automatyczny zapis",
+        "enableDesc": "Zapisuje tekst kilka sekund po każdej zmianie i przechowuje migawki, które przywrócisz z menu Plik.",
         "interval": "Zapisuj co (minuty)",
-        "limit": "Liczba migawek do zachowania"
+        "intervalDesc": "Najkrótszy czas między migawkami. Ostatnie zmiany i tak są zapisywane po każdej edycji.",
+        "limit": "Liczba migawek do zachowania",
+        "limitDesc": "Ile migawek przechowywać dla każdego utworu. Najstarsze są usuwane jako pierwsze."
       },
       "customBackground": "Niestandardowe tło",
       "customBackgroundDesc": "Wybierz obraz, który ma zostać użyty jako tło.",
@@ -510,6 +601,7 @@
     "appearance": {
       "mode": {
         "label": "Edytor wyglądu",
+        "labelDesc": "Prosty obejmuje motyw, tło, skalę i czcionkę. Zaawansowany ustawia poszczególne kolory, odstępy i kolejność paneli.",
         "basic": "Prosty układ",
         "advanced": "Zaawansowany układ",
         "none": "Brak",
@@ -540,6 +632,7 @@
       "glassBlur": "Intensywność efektu szkła",
       "glassBlurDesc": "Dostosuj rozmycie tła elementów z efektem szkła.",
       "background": "Tło",
+      "backgroundDesc": "Pokazuj obraz lub gradient za aplikacją.",
       "useCustomGradient": "Niestandardowy kolor gradientu",
       "useCustomGradientDesc": "Wygeneruj gradient z jednego koloru.",
       "syncGradientToAccent": "Synchronizuj pierwszy kolor z akcentem",
@@ -754,7 +847,7 @@
       "timingOverviewAutoScrollDesc": "Utrzymuj przegląd czasów przewinięty do pozycji odtwarzania.",
       "vsyncDesc": "Aktualizuj podglądy Standard i Toxi w każdej klatce zamiast około 30 razy na sekundę. Płynniej, ale większe użycie CPU.",
       "showFpsDesc": "Pokaż licznik klatek na sekundę w podglądzie.",
-      "syncLevelDesc": "Słowa: ustawiaj czas każdego słowa. Wersy: ustawiaj czas całych wersów i rozkładaj słowa równomiernie. Tę wstępną synchronizację dopracujesz w spektrogramie.",
+      "syncLevelDesc": "Słowa: ustawiaj czas każdego słowa. Wersy: ustawiaj czas całych wersów i rozkładaj słowa równomiernie. Tryb Wersy nadal zapisuje czasy słów, a nie tekst synchronizowany wersami, więc słowa dopracujesz w spektrogramie.",
       "previewModeDesc": "Wybierz, który podgląd pokazuje karta Podgląd.",
       "spicyBackgroundDesc": "Co jest wyświetlane za podglądem Spicy.",
       "fadeWidthDesc": "Jak miękka jest krawędź wyróżnienia podczas wypełniania słowa w podglądach Standard i Toxi."
@@ -775,11 +868,18 @@
     "orderChronological": "Według czasu",
     "orderTextual": "Według tekstu"
   },
+  "joinSplitWords": {
+    "label": "Łącz podzielone słowa",
+    "description": "Pokaż słowo śpiewane w częściach jako jedno słowo, gdy części są rozłożone równomiernie, jak ustawienie Join Split Words w Spicy Lyrics."
+  },
   "topBar": {
     "modeBtns": {
       "edit": "Edycja",
       "sync": "Synchronizacja",
-      "preview": "Podgląd"
+      "preview": "Podgląd",
+      "editDesc": "Wpisuj, dziel i oznaczaj tekst.",
+      "syncDesc": "Synchronizuj każde słowo z dźwiękiem.",
+      "previewDesc": "Odtwórz tekst tak, jak zobaczą go słuchacze."
     },
     "appName": "TTML Tool",
     "menu": {
@@ -808,10 +908,7 @@
       "ttmlChecklist": "Lista planowanych TTML",
       "tool": "Narzędzia",
       "importLyric": {
-        "import": "Importuj tekst",
-        "fromPlainText": "Importuj ze zwykłego tekstu…",
-        "fromLRCLIB": "Importuj z LRCLIB...",
-        "fromGenius": "Importuj z Genius…"
+        "import": "Importuj tekst..."
       },
       "exportLyric": {
         "export": "Eksportuj tekst",
@@ -1016,7 +1113,10 @@
     "volume": "Głośność",
     "playbackRate": "Prędkość odtwarzania",
     "preservesPitch": "Zachowaj wysokość dźwięku",
-    "clickToLoadMusic": "Kliknij ikonę muzyki, aby wczytać dźwięk",
+    "audioMenu": "Dźwięk i odtwarzanie",
+    "loadedAudio": "Wczytany dźwięk",
+    "replaceAudio": "Zastąp",
+    "resetSpeed": "Przywróć 1×",
     "playPause": "Odtwórz / wstrzymaj muzykę",
     "expandSpectrogram": "Rozwiń / zwiń spektrogram"
   },
@@ -1054,7 +1154,6 @@
       "searchError": "Wyszukiwanie nie powiodło się: {error}",
       "fetchError": "Nie udało się pobrać tekstu: {error}",
       "noLyricsError": "Brak tekstów do zaimportowania.",
-      "importSuccess": "Zaimportowano z Genius {count, plural, one {# wers} few {# wersy} many {# wersów} other {# wersu}}.",
       "howToGetKey": "Jak uzyskać token dostępu Genius"
     },
     "openLink": "Otwórz link",
@@ -1078,11 +1177,15 @@
     "addPresets": "Dodaj wszystkie standardowe pola",
     "clear": "Wyczyść"
   },
+  "helpText": {
+    "metadataArtists": "Kto wykonuje utwór, tak jak jest podpisany w serwisach streamingowych. Przykład: „Shake It Off” wykonuje Taylor Swift.",
+    "metadataSongwriter": "Kto napisał muzykę i tekst, według informacji o autorach. Często są to inne osoby niż wykonawcy. Przykład: „Shake It Off” napisali Taylor Swift, Max Martin i Shellback.",
+    "openSongwritersGuide": "Otwórz przewodnik o autorach"
+  },
   "lrclib": {
     "placeholder": "Tytuł utworu i wykonawca…",
     "notFound": "Nie znaleziono wyników, spróbuj innych słów kluczowych",
     "noResult": "Wpisz utwór lub wykonawcę, aby wyszukać",
-    "title": "Importuj tekst z LRCLIB",
     "matchesAudio": "Pasuje do nagrania"
   },
   "lyricEditor": {
@@ -1207,13 +1310,8 @@
     "setupTitle": "Token dostępu Genius",
     "setupDesc": "Do importu z Genius potrzebujesz tokena dostępu (Client Access Token). Utworzysz go w portalu deweloperskim Genius.",
     "keyPlaceholder": "Wklej token dostępu Genius…",
-    "previewTitle": "Podgląd tekstu z Genius",
-    "back": "Powrót",
-    "previewSubtitle": "Przed importem możesz edytować poniższy tekst.",
     "linesCount": "{count, plural, one {# wers} few {# wersy} many {# wersów} other {# wersu}}",
     "importButton": "Importuj tekst",
-    "importTitle": "Importuj tekst z Genius",
-    "searchPlaceholder": "Wykonawca – tytuł utworu…",
     "notFound": "Nie znaleziono żadnych wyników. Wypróbuj inne słowa kluczowe.",
     "noResult": "Aby rozpocząć, wpisz nazwę utworu lub wykonawcę.",
     "howToGetKey": "Jak uzyskać token dostępu Genius",
@@ -1222,8 +1320,6 @@
   "textImportDialog": {
     "processLyrics": "Przetwórz tekst",
     "processedSuccess": "Tekst przygotowany do synchronizacji sylab.",
-    "title": "Importuj tekst ze zwykłego tekstu",
-    "actionButton": "Importuj",
     "contentMode": {
       "caption": "Zawartość tekstu",
       "lyric": "Tylko tekst",
@@ -1241,20 +1337,11 @@
     "wordSeparator": "Separator słów",
     "enableSpecialPrefix": "Używaj prefiksów wersów",
     "bgLyricPrefix": "Prefiks wersu wokalu w tle",
-    "duetLyricPrefix": "Prefiks wersu duetu",
-    "description": "Importuj tekst ze zwykłego tekstu lub innych formatów."
+    "duetLyricPrefix": "Prefiks wersu duetu"
   },
   "sectionImportReview": {
     "title": "Przejrzyj wykryte sekcje",
-    "description": "Przed zastąpieniem tekstu sprawdź znormalizowane kategorie i metadane.",
-    "sourceLyrics": "Tekst źródłowy",
-    "structure": "Struktura",
-    "sectionCount": "{count, plural, one {# sekcja} few {# sekcje} many {# sekcji} other {# sekcji}}",
-    "vocalist": "Wokalista / rola",
-    "color": "Kolor sekcji",
-    "notes": "Notatki",
-    "lineCount": "{count, plural, one {# wers tekstu} few {# wersy tekstu} many {# wersów tekstu} other {# wersu tekstu}}",
-    "import": "Importuj sprawdzony tekst"
+    "lineCount": "{count, plural, one {# wers tekstu} few {# wersy tekstu} many {# wersów tekstu} other {# wersu tekstu}}"
   },
   "globalDragOverlay": {
     "title": "Upuść, aby załadować"
@@ -1421,6 +1508,23 @@
     "openContributorProfile": "Otwórz profil GitHub użytkownika {name}",
     "unknown": "Nieznany"
   },
+  "spectrogramLanes": {
+    "settingTitle": "Osobne ścieżki",
+    "settingDesc": "Pokazuj wersy wokalu w tle na osobnej ścieżce pod głównymi wersami. Ścieżki służą tylko do podglądu: rolę wersu zmienisz w trybie edycji.",
+    "menu": "Ścieżki",
+    "visibleLanes": "Pokaż ścieżki",
+    "duetLane": "Osobna ścieżka duetu",
+    "lane": {
+      "main": "Główna",
+      "duet": "Duet",
+      "bg": "W tle"
+    }
+  },
+  "spectrogramLineEnds": {
+    "mergedHandle": "Koniec wiersza i ostatniego słowa. Przeciągnij z Alt, aby przesunąć tylko jedno.",
+    "wordEndHandle": "Koniec ostatniego słowa",
+    "lineEndHandle": "Koniec wiersza"
+  },
   "spectrogram": {
     "invalidEndTime": "Nie można wybrać tego czasu końcowego",
     "noAudioLoaded": "Wczytaj plik audio, aby zobaczyć spektrogram",
@@ -1436,6 +1540,17 @@
       "4096": "4096 (najwięcej szczegółów)"
     },
     "height": "Wysokość widoku"
+  },
+  "spectrogramFollow": {
+    "toggle": "Podążaj za głowicą",
+    "shortcut": "Spektrogram – włącz/wyłącz podążanie za głowicą",
+    "setting": "Podążaj za głowicą odtwarzania",
+    "settingDesc": "Przewija spektrogram, aby głowica była widoczna. Przewijanie lub przeciąganie wstrzymuje to, dopóki nie wciśniesz odtwarzania albo nie odczekasz chwili.",
+    "style": "Sposób podążania",
+    "page": "Stronami",
+    "pageDesc": "Przeskakuje dalej, gdy głowica opuści widok.",
+    "continuous": "Płynnie",
+    "continuousDesc": "Przewija razem z głowicą i trzyma ją na środku."
   },
   "export": {
     "recoveryUntimed": "Ten odzyskany eksport zawiera niezsynchronizowane teksty. Sprawdź synchronizację przed wysłaniem.",
