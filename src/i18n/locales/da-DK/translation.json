@@ -226,7 +226,57 @@
       "dropped": "Importeres ikke",
       "missingTranslation": "Mangler oversættelse",
       "missingRomanization": "Mangler romanisering"
+    },
+    "search": {
+      "label": "Find og erstat",
+      "find": "Find",
+      "replace": "Erstat med",
+      "matchCase": "Forskel på store og små bogstaver",
+      "wholeWord": "Hele ord",
+      "regex": "Brug et mønster (regex)",
+      "inSelection": "Kun i markeringen",
+      "showList": "Vis alle resultater",
+      "listLabel": "Resultater",
+      "rows": "Rækker at søge i",
+      "rowsAll": "Alle rækker",
+      "rowsLyrics": "Kun sangtekst",
+      "rowsTranslations": "Oversættelser og romanisering",
+      "previous": "Forrige resultat",
+      "next": "Næste resultat",
+      "toggleReplace": "Vis erstat",
+      "close": "Luk søgning",
+      "replaceOne": "Erstat",
+      "replaceAll": "Erstat alle",
+      "replaceThis": "Erstat dette resultat",
+      "count": "{count, plural, one {# resultat} other {# resultater}}",
+      "position": "{current} af {count}",
+      "noMatches": "Ingen resultater",
+      "replaced": "{count, plural, one {Erstattede # resultat} other {Erstattede # resultater}}",
+      "invalid": "Mønsteret er ikke gyldigt"
     }
+  },
+  "editAsText": {
+    "menuItem": "Rediger som tekst...",
+    "title": "Rediger som tekst",
+    "description": "Rediger hele sangteksten som almindelig tekst. Ord, du ikke ændrer, beholder deres timing.",
+    "textLabel": "Sangtekst",
+    "toolsHint": "Behandl sangtekster og Opdel stavelser virker på de markerede linjer, eller på det hele, når intet er markeret.",
+    "nothingToProcess": "Intet at ændre.",
+    "summaryTitle": "Ændringer",
+    "unchanged": "{count, plural, one {# linje uændret} other {# linjer uændret}}",
+    "edited": "{count, plural, one {# linje redigeret} other {# linjer redigeret}}",
+    "editedHint": "Timing bevares, hvor ordene matcher.",
+    "moved": "{count, plural, one {# linje flyttet} other {# linjer flyttet}}",
+    "added": "{count, plural, one {# linje tilføjet} other {# linjer tilføjet}}",
+    "removed": "{count, plural, one {# linje fjernet} other {# linjer fjernet}}",
+    "noChanges": "Ingen ændringer endnu.",
+    "droppedTimings": "{count, plural, one {# timet ord mister sin timing} other {# timede ord mister deres timing}}",
+    "lineNumber": "Linje {line}",
+    "more": "{count, plural, one {og # mere} other {og # mere}}",
+    "help": "Nye ord kommer ind uden timing. Linjer, der kun er flyttet, beholder deres timing. Anvend er ét fortrydelsestrin.",
+    "apply": "Anvend",
+    "applied": "Teksten er anvendt. Fortryd fjerner den i ét trin.",
+    "failed": "Teksten kunne ikke anvendes. Tjek den, og prøv igen."
   },
   "importChooser": {
     "options": {
@@ -272,6 +322,12 @@
     "importFile": {
       "title": "Importér ny sangtekst?",
       "description": "Du har ikke-gemte ændringer. Hvis du fortsætter, vil disse ændringer gå tabt. Er du sikker på, at du vil importere nye sangtekster?"
+    },
+    "discardTextEdits": {
+      "title": "Kassér dine ændringer?",
+      "description": "Teksten har ændringer, du ikke har anvendt. Lukker du nu, går de tabt.",
+      "discard": "Kassér",
+      "keepEditing": "Fortsæt redigering"
     },
     "noSongwriter": {
       "description": "Sangen har ingen sangskrivere. Gem alligevel?"
@@ -346,6 +402,7 @@
     "preview": "Forhåndsvisning"
   },
   "dialog": {
+    "openFilesIgnored": "{count, plural, one {# fil blev udeladt} other {# filer blev udeladt}}: åbn én tekstfil og én lydfil ad gangen.",
     "createProjectPrompt": {
       "title": "Opret et projekt?",
       "description": "Hold lyden og sangteksten sammen i en projektmappe.",
@@ -371,6 +428,18 @@
     "openWorkspace": {
       "title": "Vælg en arbejdsområdemappe med projekter"
     }
+  },
+  "commandPalette": {
+    "title": "Kommandopalet",
+    "placeholder": "Søg i kommandoer og indstillinger",
+    "noResults": "Ingen matchende kommandoer eller indstillinger",
+    "commandTag": "Kommando",
+    "settingTag": "Indstillinger",
+    "hint": "Piletaster flytter, Enter kører, Esc lukker",
+    "notRunnable": "Kommandoen kunne ikke køres. Giv den en genvej i Indstillinger, og prøv igen.",
+    "menu": "Kommandopalet...",
+    "shortcut": "Vis - Åbn kommandopaletten",
+    "shortcutAlternate": "Vis - Åbn kommandopaletten (alternativ genvej)"
   },
   "projectsDialog": {
     "title": "Projekter",
@@ -985,6 +1054,7 @@
     "deleteWords": "{count, plural, one {Slet # ord} other {Slet # ord}}",
     "bgLyric": "Baggrundslinje",
     "duetLyric": "Duetlinje",
+    "lineRole": "Linjens rolle",
     "moveLineToPlayhead": "Flyt linje til afspilningsmarkør",
     "copyTimingsTo": "Kopiér timing til…",
     "cancelCopyTimings": "Annuller kopiering af timing",
@@ -1027,6 +1097,8 @@
       "redoAlternate": "Gentag (alternativ genvej)",
       "selectAll": "Vælg alle",
       "unselectAll": "Fravælg alle",
+      "findInLyrics": "Find i sangteksten",
+      "replaceInLyrics": "Erstat i sangteksten",
       "deleteSelection": "Slet markering",
       "autoSegment": "Hurtig automatisk opdeling",
       "autoSegmentDialog": "Automatisk opdeling…",
@@ -1065,6 +1137,15 @@
       "auditionSelection": "Spektrogram - Afspil markering",
       "auditionSelectionAfter": "Spektrogram - Afspil markering (+0,5 s efter)",
       "cancelTimelineEditing": "Spektrogram - Annuller redigering af tidslinje",
+      "exportTtml": "Eksportér sangtekster: TTML",
+      "exportLrc": "Eksportér sangtekster: LRC",
+      "exportEslrc": "Eksportér sangtekster: ESLRC",
+      "exportQrc": "Eksportér sangtekster: QRC",
+      "exportYrc": "Eksportér sangtekster: YRC",
+      "exportLys": "Eksportér sangtekster: Lyricify Syllable",
+      "exportAss": "Eksportér sangtekster: ASS-undertekster",
+      "newLyricLine": "Ny sangtekstlinje",
+      "advancedRibbonControls": "Avancerede kontroller i båndet",
       "resetDefault": "Nulstil til standard",
       "clear": "Ryd",
       "unbound": "Ikke indstillet",
@@ -1076,11 +1157,12 @@
         "View": "Vis",
         "Sync": "Timing",
         "Audio": "Lyd",
-        "Spectrogram": "Spektrogram"
+        "Spectrogram": "Spektrogram",
+        "Tools": "Værktøjer",
+        "Help": "Hjælp",
+        "Preview": "Forhåndsvisning"
       },
-      "autoSegmentOptions": "Automatisk opdeling",
-      "autoSegmentDoublePress": "Kræver dobbelttryk",
-      "autoSegmentDoublePressDesc": "Kør kun hurtig automatisk opdeling, når genvejen trykkes to gange hurtigt."
+      "showAll": "Vis handlinger uden tast"
     },
     "tab": {
       "common": "Generelt",
@@ -1095,7 +1177,39 @@
       "changelog": "Ændringslog"
     }
   },
-  "autoSegmentApplied": "Automatisk opdelt med {engine}",
+  "keyboardView": {
+    "title": "Tastatur",
+    "search": "Søg i handlinger",
+    "searchResults": "{count, plural, =0 {Ingen handlinger passer} one {# handling passer} other {# handlinger passer}}",
+    "layout": "Tastaturlayout",
+    "layoutAuto": "Automatisk",
+    "layoutDetected": "Fundet: {layout}",
+    "layoutUnavailable": "Layoutet kan ikke findes her, så QWERTY vises",
+    "layerHint": "Klik på en ændringstast som Shift for at se de genveje, der bruger den.",
+    "category": {
+      "sync": "Synkronisering",
+      "edit": "Redigering",
+      "playback": "Afspilning",
+      "navigation": "Navigation"
+    },
+    "free": "Ledig",
+    "keyFree": "{key}: ledig",
+    "keyActions": "{key}: {actions}",
+    "modifierLayer": "Vis genveje med {key}",
+    "freeKey": "Intet bruger {key} endnu.",
+    "assignLabel": "Handling",
+    "assignPlaceholder": "Vælg en handling...",
+    "assign": "Tilføj til {key}",
+    "changeKey": "Skift tast",
+    "addKey": "Tilføj ekstra tast",
+    "removeKey": "Fjern {key}",
+    "duplicateKey": "Den tast er allerede sat til denne handling.",
+    "doublePress": "Tryk to gange for at køre",
+    "doublePressDesc": "Kører kun, når du trykker på tasten to gange hurtigt.",
+    "otherLayers": "Også på denne tast",
+    "closePanel": "Luk"
+  },
+  "autoSegmentApplied":"Automatisk opdelt med {engine}",
   "error": {
     "unsupportedFileFormat": "Ikke-understøttet filformat: {ext}",
     "openFileFailed": "Kunne ikke åbne fil",
@@ -1241,6 +1355,14 @@
     "wordTimingMismatch": "{count, plural, one {# linje havde et andet antal ord, så kun tilsvarende ordpositioner blev kopieret.} other {# linjer havde et andet antal ord, så kun tilsvarende ordpositioner blev kopieret.}}",
     "insertLine": "Indsæt ny linje her",
     "insertWord": "Indsæt ord her…"
+  },
+  "editModeTools": {
+    "splitTypedLinesTitle": "Del indtastede linjer i ord",
+    "splitTypedLinesDesc": "Tekst skrevet i en tom linje deles i ord på samme måde, som en import deler linjer.",
+    "scrollMemoryTitle": "Husk position i redigeringstilstand",
+    "scrollMemoryDesc": "Åbn hvert projekt ved den linje, du var på i redigeringstilstand.",
+    "swapDuetAll": "Byt om på hoved- og duetlinjer",
+    "swapDuetSelected": "Byt om på hoved og duet"
   },
   "lyricWordView": {
     "empty": "Tom",

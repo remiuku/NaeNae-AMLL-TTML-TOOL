@@ -50,6 +50,10 @@ vi.mock("$/states/main", () => ({
 vi.mock("$/utils/logging", () => ({ error: vi.fn(), log: vi.fn() }));
 const audioIo = vi.hoisted(() => ({ writeProjectAudioFile: vi.fn() }));
 vi.mock("./audio-io", () => audioIo);
+const linkedProjects = vi.hoisted(() => ({
+	isLinkedProjectDir: vi.fn(async (_dir: string) => true),
+}));
+vi.mock("./linked-projects", () => linkedProjects);
 vi.mock("./lyric-io", () => lyricIo);
 vi.mock("./project-folder-sync", () => ({
 	splitDirPath: (path: string) => ({
@@ -341,6 +345,22 @@ describe("folder project saves", () => {
 		});
 		expect(await saveProject(store as never, (k) => k)).toBe(false);
 		expect(lyricIo.writeProjectLyricFile).not.toHaveBeenCalled();
+	});
+
+	it("refuses a linked save from a folder outside the linked projects root", async () => {
+		linkedProjects.isLinkedProjectDir.mockResolvedValueOnce(false);
+		const store = makeStore({
+			...baseManifest,
+			audioFile: "song.flac",
+			lyricFile: "song.ttml",
+			linked: {
+				lyricPath: "D:/Lyrics/song.ttml",
+				audioPath: "E:/Audio/song.flac",
+			},
+		});
+		expect(await saveProject(store as never, (k) => k)).toBe(false);
+		expect(lyricIo.writeProjectLyricFile).not.toHaveBeenCalled();
+		expect(fs.writeTextFile).not.toHaveBeenCalled();
 	});
 
 	it("skips the backup when the linked file does not exist yet", async () => {

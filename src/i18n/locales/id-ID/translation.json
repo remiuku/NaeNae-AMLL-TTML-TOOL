@@ -226,7 +226,57 @@
       "dropped": "Tidak diimpor",
       "missingTranslation": "Terjemahan kosong",
       "missingRomanization": "Romanisasi kosong"
+    },
+    "search": {
+      "label": "Cari dan ganti",
+      "find": "Cari",
+      "replace": "Ganti dengan",
+      "matchCase": "Cocokkan huruf besar/kecil",
+      "wholeWord": "Seluruh kata",
+      "regex": "Gunakan pola (regex)",
+      "inSelection": "Hanya di pilihan",
+      "showList": "Tampilkan semua hasil",
+      "listLabel": "Hasil",
+      "rows": "Baris yang dicari",
+      "rowsAll": "Semua baris",
+      "rowsLyrics": "Hanya lirik",
+      "rowsTranslations": "Terjemahan dan romanisasi",
+      "previous": "Hasil sebelumnya",
+      "next": "Hasil berikutnya",
+      "toggleReplace": "Tampilkan ganti",
+      "close": "Tutup pencarian",
+      "replaceOne": "Ganti",
+      "replaceAll": "Ganti semua",
+      "replaceThis": "Ganti hasil ini",
+      "count": "{count, plural, other {# hasil}}",
+      "position": "{current} dari {count}",
+      "noMatches": "Tidak ada hasil",
+      "replaced": "{count, plural, other {# hasil diganti}}",
+      "invalid": "Pola tidak valid"
     }
+  },
+  "editAsText": {
+    "menuItem": "Edit sebagai teks...",
+    "title": "Edit sebagai teks",
+    "description": "Edit seluruh lirik sebagai teks biasa. Kata yang tidak Anda ubah tetap mempertahankan timing-nya.",
+    "textLabel": "Teks lirik",
+    "toolsHint": "Proses lirik dan Pisahkan suku kata bekerja pada baris yang dipilih, atau pada semuanya jika tidak ada yang dipilih.",
+    "nothingToProcess": "Tidak ada yang perlu diubah.",
+    "summaryTitle": "Perubahan",
+    "unchanged": "{count, plural, other {# baris tidak berubah}}",
+    "edited": "{count, plural, other {# baris diedit}}",
+    "editedHint": "Timing dipertahankan jika katanya cocok.",
+    "moved": "{count, plural, other {# baris dipindah}}",
+    "added": "{count, plural, other {# baris ditambahkan}}",
+    "removed": "{count, plural, other {# baris dihapus}}",
+    "noChanges": "Belum ada perubahan.",
+    "droppedTimings": "{count, plural, other {# kata bertiming kehilangan timing-nya}}",
+    "lineNumber": "Baris {line}",
+    "more": "{count, plural, other {dan # lainnya}}",
+    "help": "Kata baru masuk tanpa timing. Baris yang hanya dipindah tetap mempertahankan timing-nya. Terapkan adalah satu langkah urungkan.",
+    "apply": "Terapkan",
+    "applied": "Teks diterapkan. Urungkan mengembalikannya dalam satu langkah.",
+    "failed": "Teks tidak dapat diterapkan. Periksa lalu coba lagi."
   },
   "importChooser": {
     "options": {
@@ -272,6 +322,12 @@
     "importFile": {
       "title": "Impor lirik baru?",
       "description": "File saat ini memiliki perubahan yang belum disimpan. Jika dilanjutkan, perubahan ini akan hilang. Anda yakin ingin mengimpor lirik?"
+    },
+    "discardTextEdits": {
+      "title": "Buang perubahan Anda?",
+      "description": "Teks memiliki perubahan yang belum diterapkan. Jika ditutup sekarang, perubahan itu hilang.",
+      "discard": "Buang",
+      "keepEditing": "Lanjut mengedit"
     },
     "noSongwriter": {
       "description": "Lagu ini belum memiliki penulis lagu. Tetap simpan?"
@@ -346,6 +402,7 @@
     "preview": "Pratinjau"
   },
   "dialog": {
+    "openFilesIgnored": "{count, plural, other {# file dilewati}}: buka satu file lirik dan satu file audio sekaligus.",
     "createProjectPrompt": {
       "title": "Buat proyek?",
       "description": "Simpan audio dan lirik bersama-sama dalam folder proyek.",
@@ -371,6 +428,18 @@
     "openWorkspace": {
       "title": "Pilih folder ruang kerja yang berisi proyek"
     }
+  },
+  "commandPalette": {
+    "title": "Palet perintah",
+    "placeholder": "Cari perintah dan pengaturan",
+    "noResults": "Tidak ada perintah atau pengaturan yang cocok",
+    "commandTag": "Perintah",
+    "settingTag": "Preferensi",
+    "hint": "Tombol panah untuk berpindah, Enter untuk menjalankan, Esc untuk menutup",
+    "notRunnable": "Perintah tidak dapat dijalankan. Beri pintasan di Preferensi, lalu coba lagi.",
+    "menu": "Palet perintah...",
+    "shortcut": "Tampilan - Buka palet perintah",
+    "shortcutAlternate": "Tampilan - Buka palet perintah (pintasan alternatif)"
   },
   "projectsDialog": {
     "title": "Proyek",
@@ -985,6 +1054,7 @@
     "deleteWords": "{count, plural, other {Hapus # kata}}",
     "bgLyric": "Baris vokal latar",
     "duetLyric": "Baris duet",
+    "lineRole": "Peran baris",
     "moveLineToPlayhead": "Pindahkan baris ke penunjuk putar",
     "copyTimingsTo": "Salin waktu ke…",
     "cancelCopyTimings": "Batalkan penyalinan waktu",
@@ -1027,6 +1097,8 @@
       "redoAlternate": "Ulangi (pintasan alternatif)",
       "selectAll": "Pilih semua",
       "unselectAll": "Batalkan semua pilihan",
+      "findInLyrics": "Cari di lirik",
+      "replaceInLyrics": "Ganti di lirik",
       "deleteSelection": "Hapus pilihan",
       "autoSegment": "Segmentasi otomatis cepat",
       "autoSegmentDialog": "Segmentasi otomatis…",
@@ -1065,6 +1137,15 @@
       "auditionSelection": "Spektrogram - Putar pilihan",
       "auditionSelectionAfter": "Spektrogram - Putar pilihan (+0,5 dtk sesudah)",
       "cancelTimelineEditing": "Spektrogram - Batalkan pengeditan linimasa",
+      "exportTtml": "Ekspor lirik: TTML",
+      "exportLrc": "Ekspor lirik: LRC",
+      "exportEslrc": "Ekspor lirik: ESLRC",
+      "exportQrc": "Ekspor lirik: QRC",
+      "exportYrc": "Ekspor lirik: YRC",
+      "exportLys": "Ekspor lirik: Lyricify Syllable",
+      "exportAss": "Ekspor lirik: Subtitle ASS",
+      "newLyricLine": "Baris lirik baru",
+      "advancedRibbonControls": "Kontrol pita lanjutan",
       "resetDefault": "Setel ulang ke bawaan",
       "clear": "Hapus",
       "unbound": "Belum diatur",
@@ -1076,11 +1157,12 @@
         "View": "Tampilan",
         "Sync": "Sinkronisasi",
         "Audio": "Audio",
-        "Spectrogram": "Spektrogram"
+        "Spectrogram": "Spektrogram",
+        "Tools": "Alat",
+        "Help": "Bantuan",
+        "Preview": "Pratinjau"
       },
-      "autoSegmentOptions": "Segmentasi otomatis",
-      "autoSegmentDoublePress": "Perlu tekan dua kali",
-      "autoSegmentDoublePressDesc": "Jalankan segmentasi otomatis cepat hanya saat pintasannya ditekan dua kali dengan cepat."
+      "showAll": "Tampilkan aksi tanpa tombol"
     },
     "tab": {
       "common": "Umum",
@@ -1095,7 +1177,39 @@
       "changelog": "Log perubahan"
     }
   },
-  "autoSegmentApplied": "Disegmentasi otomatis dengan {engine}",
+  "keyboardView": {
+    "title": "Keyboard",
+    "search": "Cari aksi",
+    "searchResults": "{count, plural, =0 {Tidak ada aksi yang cocok} other {# aksi cocok}}",
+    "layout": "Tata letak keyboard",
+    "layoutAuto": "Otomatis",
+    "layoutDetected": "Terdeteksi: {layout}",
+    "layoutUnavailable": "Tata letak tidak dapat dideteksi di sini, jadi QWERTY ditampilkan",
+    "layerHint": "Klik tombol pengubah, seperti Shift, untuk melihat pintasan yang memakainya.",
+    "category": {
+      "sync": "Sinkronisasi",
+      "edit": "Edit",
+      "playback": "Pemutaran",
+      "navigation": "Navigasi"
+    },
+    "free": "Kosong",
+    "keyFree": "{key}: kosong",
+    "keyActions": "{key}: {actions}",
+    "modifierLayer": "Tampilkan pintasan dengan {key}",
+    "freeKey": "Belum ada yang memakai {key}.",
+    "assignLabel": "Aksi",
+    "assignPlaceholder": "Pilih aksi...",
+    "assign": "Tambahkan ke {key}",
+    "changeKey": "Ganti tombol",
+    "addKey": "Tambah tombol kedua",
+    "removeKey": "Hapus {key}",
+    "duplicateKey": "Tombol itu sudah dipakai untuk aksi ini.",
+    "doublePress": "Tekan dua kali untuk menjalankan",
+    "doublePressDesc": "Hanya berjalan saat tombolnya ditekan dua kali dengan cepat.",
+    "otherLayers": "Juga di tombol ini",
+    "closePanel": "Tutup"
+  },
+  "autoSegmentApplied":"Disegmentasi otomatis dengan {engine}",
   "error": {
     "unsupportedFileFormat": "Format file tidak didukung: {ext}",
     "openFileFailed": "Gagal membuka file",
@@ -1241,6 +1355,14 @@
     "wordTimingMismatch": "{count, plural, other {# baris memiliki jumlah kata berbeda; hanya posisi kata yang cocok yang disalin.}}",
     "insertLine": "Sisipkan baris baru di sini",
     "insertWord": "Sisipkan kata di sini…"
+  },
+  "editModeTools": {
+    "splitTypedLinesTitle": "Pecah baris yang diketik menjadi kata",
+    "splitTypedLinesDesc": "Teks yang diketik di baris kosong dipecah menjadi kata, sama seperti impor memecah baris.",
+    "scrollMemoryTitle": "Ingat posisi mode Edit",
+    "scrollMemoryDesc": "Buka setiap proyek di baris terakhir Anda dalam mode Edit.",
+    "swapDuetAll": "Tukar baris utama dan duet",
+    "swapDuetSelected": "Tukar utama dan duet"
   },
   "lyricWordView": {
     "empty": "Kosong",

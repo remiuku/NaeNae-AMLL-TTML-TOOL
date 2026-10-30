@@ -326,3 +326,14 @@
 .Toastify__close-button--light:hover {
 	color: var(--gray-12, #1c2024) !important;
 }
+
+/* No tooltips while a menu or select list is open. A ribbon control's
+   tooltip would otherwise stay up, or pop up from a label the pointer
+   crosses, on top of the choices the menu is showing. */
+body:has(
+	.rt-BaseMenuContent[data-state="open"],
+	.rt-SelectContent[data-state="open"]
+)
+.rt-TooltipContent {
+	display: none;
+}

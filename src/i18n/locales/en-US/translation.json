@@ -226,7 +226,57 @@
       "dropped": "Not imported",
       "missingTranslation": "Missing translation",
       "missingRomanization": "Missing romanization"
+    },
+    "search": {
+      "label": "Find and replace",
+      "find": "Find",
+      "replace": "Replace with",
+      "matchCase": "Match case",
+      "wholeWord": "Whole word",
+      "regex": "Use a pattern (regex)",
+      "inSelection": "Only in the selection",
+      "showList": "List every match",
+      "listLabel": "Matches",
+      "rows": "Rows to search",
+      "rowsAll": "All rows",
+      "rowsLyrics": "Lyrics only",
+      "rowsTranslations": "Translations and romanization",
+      "previous": "Previous match",
+      "next": "Next match",
+      "toggleReplace": "Show replace",
+      "close": "Close search",
+      "replaceOne": "Replace",
+      "replaceAll": "Replace all",
+      "replaceThis": "Replace this match",
+      "count": "{count, plural, one {# match} other {# matches}}",
+      "position": "{current} of {count}",
+      "noMatches": "No matches",
+      "replaced": "{count, plural, one {Replaced # match} other {Replaced # matches}}",
+      "invalid": "Pattern isn't valid"
     }
+  },
+  "editAsText": {
+    "menuItem": "Edit as text...",
+    "title": "Edit as text",
+    "description": "Edit the whole lyrics as plain text. Words you don't change keep their timing.",
+    "textLabel": "Lyrics text",
+    "toolsHint": "Process lyrics and Split syllables work on the selected lines, or on everything when nothing is selected.",
+    "nothingToProcess": "Nothing to change.",
+    "summaryTitle": "Changes",
+    "unchanged": "{count, plural, one {# line unchanged} other {# lines unchanged}}",
+    "edited": "{count, plural, one {# line edited} other {# lines edited}}",
+    "editedHint": "Timings are kept where words match.",
+    "moved": "{count, plural, one {# line moved} other {# lines moved}}",
+    "added": "{count, plural, one {# line added} other {# lines added}}",
+    "removed": "{count, plural, one {# line removed} other {# lines removed}}",
+    "noChanges": "No changes yet.",
+    "droppedTimings": "{count, plural, one {# timed word loses its timing} other {# timed words lose their timing}}",
+    "lineNumber": "Line {line}",
+    "more": "{count, plural, one {and # more} other {and # more}}",
+    "help": "New words come in untimed. Lines that only moved keep their timing. Apply is one undo step.",
+    "apply": "Apply",
+    "applied": "Applied the text. Undo reverts it in one step.",
+    "failed": "Couldn't apply the text. Check it and try again."
   },
   "importChooser": {
     "options": {
@@ -272,6 +322,12 @@
     "importFile": {
       "title": "Import new lyrics?",
       "description": "You have unsaved changes. If you proceed, these changes will be lost. Are you sure you want to import new lyrics?"
+    },
+    "discardTextEdits": {
+      "title": "Discard your edits?",
+      "description": "The text has changes you haven't applied. Closing now loses them.",
+      "discard": "Discard",
+      "keepEditing": "Keep editing"
     },
     "noSongwriter": {
       "description": "This song has no songwriters. Save anyway?"
@@ -346,6 +402,7 @@
     "preview": "Preview"
   },
   "dialog": {
+    "openFilesIgnored": "{count, plural, one {# file was left out} other {# files were left out}}: open one lyric file and one audio file at a time.",
     "createProjectPrompt": {
       "title": "Create a project?",
       "description": "Keep the audio and lyrics together in a project folder.",
@@ -371,6 +428,18 @@
     "openWorkspace": {
       "title": "Select a workspace folder containing projects"
     }
+  },
+  "commandPalette": {
+    "title": "Command palette",
+    "placeholder": "Search commands and settings",
+    "noResults": "No matching commands or settings",
+    "commandTag": "Command",
+    "settingTag": "Preferences",
+    "hint": "Arrow keys to move, Enter to run, Esc to close",
+    "notRunnable": "Couldn't run this command. Give it a shortcut in Preferences, then try again.",
+    "menu": "Command palette...",
+    "shortcut": "View - Open command palette",
+    "shortcutAlternate": "View - Open command palette (alternate shortcut)"
   },
   "projectsDialog": {
     "title": "Projects",
@@ -985,6 +1054,7 @@
     "deleteWords": "{count, plural, one {Delete # word} other {Delete # words}}",
     "bgLyric": "Background line",
     "duetLyric": "Duet line",
+    "lineRole": "Line role",
     "moveLineToPlayhead": "Move line to playhead",
     "copyTimingsTo": "Copy timings to…",
     "cancelCopyTimings": "Cancel timing copy",
@@ -1027,6 +1097,8 @@
       "redoAlternate": "Redo (alternate shortcut)",
       "selectAll": "Select all",
       "unselectAll": "Deselect all",
+      "findInLyrics": "Find in lyrics",
+      "replaceInLyrics": "Replace in lyrics",
       "deleteSelection": "Delete selection",
       "autoSegment": "Quick auto segment",
       "autoSegmentDialog": "Auto segment…",
@@ -1065,6 +1137,15 @@
       "auditionSelection": "Spectrogram - Play selection",
       "auditionSelectionAfter": "Spectrogram - Play selection (+0.5 s after)",
       "cancelTimelineEditing": "Spectrogram - Cancel timeline editing",
+      "exportTtml": "Export lyrics: TTML",
+      "exportLrc": "Export lyrics: LRC",
+      "exportEslrc": "Export lyrics: ESLRC",
+      "exportQrc": "Export lyrics: QRC",
+      "exportYrc": "Export lyrics: YRC",
+      "exportLys": "Export lyrics: Lyricify Syllable",
+      "exportAss": "Export lyrics: ASS subtitles",
+      "newLyricLine": "New lyric line",
+      "advancedRibbonControls": "Advanced ribbon controls",
       "resetDefault": "Reset to default",
       "clear": "Clear",
       "unbound": "Not set",
@@ -1076,11 +1157,12 @@
         "View": "View",
         "Sync": "Timing",
         "Audio": "Audio",
-        "Spectrogram": "Spectrogram"
+        "Spectrogram": "Spectrogram",
+        "Tools": "Tools",
+        "Help": "Help",
+        "Preview": "Preview"
       },
-      "autoSegmentOptions": "Auto segment",
-      "autoSegmentDoublePress": "Require double press",
-      "autoSegmentDoublePressDesc": "Only run quick auto segment when you press its shortcut twice quickly."
+      "showAll": "Show actions without a key"
     },
     "tab": {
       "common": "General",
@@ -1095,7 +1177,39 @@
       "changelog": "Changelog"
     }
   },
-  "autoSegmentApplied": "Auto-segmented with {engine}",
+  "keyboardView": {
+    "title": "Keyboard",
+    "search": "Search actions",
+    "searchResults": "{count, plural, =0 {No actions match} one {# action matches} other {# actions match}}",
+    "layout": "Keyboard layout",
+    "layoutAuto": "Automatic",
+    "layoutDetected": "Detected: {layout}",
+    "layoutUnavailable": "Can't detect the layout here, so QWERTY is shown",
+    "layerHint": "Click a modifier key, such as Shift, to see the shortcuts that use it.",
+    "category": {
+      "sync": "Sync",
+      "edit": "Edit",
+      "playback": "Playback",
+      "navigation": "Navigation"
+    },
+    "free": "Free",
+    "keyFree": "{key}: free",
+    "keyActions": "{key}: {actions}",
+    "modifierLayer": "Show shortcuts with {key}",
+    "freeKey": "Nothing uses {key} yet.",
+    "assignLabel": "Action",
+    "assignPlaceholder": "Choose an action...",
+    "assign": "Add to {key}",
+    "changeKey": "Change key",
+    "addKey": "Add second key",
+    "removeKey": "Remove {key}",
+    "duplicateKey": "That key is already set for this action.",
+    "doublePress": "Press twice to run",
+    "doublePressDesc": "Runs only when you press its key twice quickly.",
+    "otherLayers": "Also on this key",
+    "closePanel": "Close"
+  },
+  "autoSegmentApplied":"Auto-segmented with {engine}",
   "error": {
     "unsupportedFileFormat": "Unsupported file format: {ext}",
     "openFileFailed": "Failed to open file",
@@ -1241,6 +1355,14 @@
     "wordTimingMismatch": "{count, plural, one {# line had a different word count, so only matching word positions were copied.} other {# lines had different word counts, so only matching word positions were copied.}}",
     "insertLine": "Insert new line here",
     "insertWord": "Insert word here…"
+  },
+  "editModeTools": {
+    "splitTypedLinesTitle": "Split typed lines into words",
+    "splitTypedLinesDesc": "Text typed into an empty line is split into words, the same way an import splits lines.",
+    "scrollMemoryTitle": "Remember Edit mode position",
+    "scrollMemoryDesc": "Reopen each project at the line you were on in Edit mode.",
+    "swapDuetAll": "Swap main and duet lines",
+    "swapDuetSelected": "Swap main and duet"
   },
   "lyricWordView": {
     "empty": "Empty",

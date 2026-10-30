@@ -226,7 +226,57 @@
       "dropped": "No se importa",
       "missingTranslation": "Falta traducción",
       "missingRomanization": "Falta romanización"
+    },
+    "search": {
+      "label": "Buscar y reemplazar",
+      "find": "Buscar",
+      "replace": "Reemplazar por",
+      "matchCase": "Distinguir mayúsculas",
+      "wholeWord": "Palabra completa",
+      "regex": "Usar un patrón (regex)",
+      "inSelection": "Solo en la selección",
+      "showList": "Mostrar todas las coincidencias",
+      "listLabel": "Coincidencias",
+      "rows": "Filas donde buscar",
+      "rowsAll": "Todas las filas",
+      "rowsLyrics": "Solo la letra",
+      "rowsTranslations": "Traducciones y romanización",
+      "previous": "Coincidencia anterior",
+      "next": "Coincidencia siguiente",
+      "toggleReplace": "Mostrar reemplazar",
+      "close": "Cerrar búsqueda",
+      "replaceOne": "Reemplazar",
+      "replaceAll": "Reemplazar todo",
+      "replaceThis": "Reemplazar esta coincidencia",
+      "count": "{count, plural, one {# coincidencia} many {# coincidencias} other {# coincidencias}}",
+      "position": "{current} de {count}",
+      "noMatches": "Sin coincidencias",
+      "replaced": "{count, plural, one {# coincidencia reemplazada} many {# coincidencias reemplazadas} other {# coincidencias reemplazadas}}",
+      "invalid": "El patrón no es válido"
     }
+  },
+  "editAsText": {
+    "menuItem": "Editar como texto...",
+    "title": "Editar como texto",
+    "description": "Edita toda la letra como texto sin formato. Las palabras que no cambies conservan su sincronización.",
+    "textLabel": "Texto de la letra",
+    "toolsHint": "Procesar letra y Dividir sílabas actúan sobre las líneas seleccionadas, o sobre todo si no hay nada seleccionado.",
+    "nothingToProcess": "No hay nada que cambiar.",
+    "summaryTitle": "Cambios",
+    "unchanged": "{count, plural, one {# línea sin cambios} many {# líneas sin cambios} other {# líneas sin cambios}}",
+    "edited": "{count, plural, one {# línea editada} many {# líneas editadas} other {# líneas editadas}}",
+    "editedHint": "La sincronización se conserva donde las palabras coinciden.",
+    "moved": "{count, plural, one {# línea movida} many {# líneas movidas} other {# líneas movidas}}",
+    "added": "{count, plural, one {# línea añadida} many {# líneas añadidas} other {# líneas añadidas}}",
+    "removed": "{count, plural, one {# línea eliminada} many {# líneas eliminadas} other {# líneas eliminadas}}",
+    "noChanges": "Aún no hay cambios.",
+    "droppedTimings": "{count, plural, one {# palabra sincronizada pierde su sincronización} many {# palabras sincronizadas pierden su sincronización} other {# palabras sincronizadas pierden su sincronización}}",
+    "lineNumber": "Línea {line}",
+    "more": "{count, plural, one {y # más} many {y # más} other {y # más}}",
+    "help": "Las palabras nuevas entran sin sincronizar. Las líneas que solo se movieron conservan su sincronización. Aplicar es un solo paso de deshacer.",
+    "apply": "Aplicar",
+    "applied": "Texto aplicado. Deshacer lo revierte en un solo paso.",
+    "failed": "No se pudo aplicar el texto. Revísalo e inténtalo de nuevo."
   },
   "importChooser": {
     "options": {
@@ -272,6 +322,12 @@
     "importFile": {
       "title": "¿Importar una letra nueva?",
       "description": "Tienes cambios sin guardar. Si continúas, se perderán. ¿Seguro que quieres importar una letra nueva?"
+    },
+    "discardTextEdits": {
+      "title": "¿Descartar tus cambios?",
+      "description": "El texto tiene cambios que no has aplicado. Si cierras ahora, se perderán.",
+      "discard": "Descartar",
+      "keepEditing": "Seguir editando"
     },
     "noSongwriter": {
       "description": "Esta canción no tiene compositores. ¿Guardar igualmente?"
@@ -346,6 +402,7 @@
     "preview": "Vista previa"
   },
   "dialog": {
+    "openFilesIgnored": "{count, plural, one {Se omitió # archivo} many {Se omitieron # archivos} other {Se omitieron # archivos}}: abre un archivo de letra y un archivo de audio a la vez.",
     "createProjectPrompt": {
       "title": "¿Crear un proyecto?",
       "description": "Guarda el audio y la letra juntos en una carpeta de proyecto.",
@@ -371,6 +428,18 @@
     "openWorkspace": {
       "title": "Selecciona una carpeta de espacio de trabajo que contenga proyectos"
     }
+  },
+  "commandPalette": {
+    "title": "Paleta de comandos",
+    "placeholder": "Buscar comandos y ajustes",
+    "noResults": "No hay comandos ni ajustes coincidentes",
+    "commandTag": "Comando",
+    "settingTag": "Preferencias",
+    "hint": "Flechas para moverte, Intro para ejecutar, Esc para cerrar",
+    "notRunnable": "No se pudo ejecutar el comando. Asígnale un atajo en Preferencias y vuelve a intentarlo.",
+    "menu": "Paleta de comandos...",
+    "shortcut": "Ver - Abrir la paleta de comandos",
+    "shortcutAlternate": "Ver - Abrir la paleta de comandos (atajo alternativo)"
   },
   "projectsDialog": {
     "title": "Proyectos",
@@ -985,6 +1054,7 @@
     "deleteWords": "{count, plural, one {Eliminar # palabra} many {Eliminar # palabras} other {Eliminar # palabras}}",
     "bgLyric": "Línea de voces de fondo",
     "duetLyric": "Línea de dúo",
+    "lineRole": "Función de la línea",
     "moveLineToPlayhead": "Mover línea al cabezal de reproducción",
     "copyTimingsTo": "Copiar tiempos a…",
     "cancelCopyTimings": "Cancelar copia de tiempos",
@@ -1027,6 +1097,8 @@
       "redoAlternate": "Rehacer (atajo alternativo)",
       "selectAll": "Seleccionar todo",
       "unselectAll": "Deseleccionar todo",
+      "findInLyrics": "Buscar en la letra",
+      "replaceInLyrics": "Reemplazar en la letra",
       "deleteSelection": "Eliminar selección",
       "autoSegment": "División automática rápida",
       "autoSegmentDialog": "Segmentar automáticamente…",
@@ -1065,6 +1137,15 @@
       "auditionSelection": "Espectrograma - Reproducir selección",
       "auditionSelectionAfter": "Espectrograma - Reproducir selección (+0,5 s después)",
       "cancelTimelineEditing": "Espectrograma: cancelar la edición de la línea de tiempo",
+      "exportTtml": "Exportar letras: TTML",
+      "exportLrc": "Exportar letras: LRC",
+      "exportEslrc": "Exportar letras: ESLRC",
+      "exportQrc": "Exportar letras: QRC",
+      "exportYrc": "Exportar letras: YRC",
+      "exportLys": "Exportar letras: Lyricify Syllable",
+      "exportAss": "Exportar letras: Subtítulos ASS",
+      "newLyricLine": "Nueva línea de letra",
+      "advancedRibbonControls": "Controles avanzados de la cinta",
       "resetDefault": "Restablecer valor predeterminado",
       "clear": "Borrar",
       "unbound": "Sin asignar",
@@ -1076,11 +1157,12 @@
         "View": "Ver",
         "Sync": "Sincronización",
         "Audio": "Audio",
-        "Spectrogram": "Espectrograma"
+        "Spectrogram": "Espectrograma",
+        "Tools": "Herramientas",
+        "Help": "Ayuda",
+        "Preview": "Vista previa"
       },
-      "autoSegmentOptions": "Segmentación automática",
-      "autoSegmentDoublePress": "Exigir doble pulsación",
-      "autoSegmentDoublePressDesc": "Ejecuta la segmentación automática rápida solo al pulsar su atajo dos veces seguidas."
+      "showAll": "Mostrar acciones sin tecla"
     },
     "tab": {
       "common": "General",
@@ -1095,7 +1177,39 @@
       "changelog": "Registro de cambios"
     }
   },
-  "autoSegmentApplied": "Autosegmentado con {engine}",
+  "keyboardView": {
+    "title": "Teclado",
+    "search": "Buscar acciones",
+    "searchResults": "{count, plural, =0 {Ninguna acción coincide} one {# acción coincide} many {# acciones coinciden} other {# acciones coinciden}}",
+    "layout": "Distribución del teclado",
+    "layoutAuto": "Automática",
+    "layoutDetected": "Detectada: {layout}",
+    "layoutUnavailable": "No se puede detectar la distribución aquí, así que se muestra QWERTY",
+    "layerHint": "Haz clic en una tecla modificadora, como Shift, para ver los atajos que la usan.",
+    "category": {
+      "sync": "Sincronización",
+      "edit": "Edición",
+      "playback": "Reproducción",
+      "navigation": "Navegación"
+    },
+    "free": "Libre",
+    "keyFree": "{key}: libre",
+    "keyActions": "{key}: {actions}",
+    "modifierLayer": "Mostrar atajos con {key}",
+    "freeKey": "Nada usa {key} todavía.",
+    "assignLabel": "Acción",
+    "assignPlaceholder": "Elige una acción...",
+    "assign": "Añadir a {key}",
+    "changeKey": "Cambiar tecla",
+    "addKey": "Añadir segunda tecla",
+    "removeKey": "Quitar {key}",
+    "duplicateKey": "Esa tecla ya está asignada a esta acción.",
+    "doublePress": "Pulsar dos veces para ejecutar",
+    "doublePressDesc": "Solo se ejecuta al pulsar su tecla dos veces seguidas.",
+    "otherLayers": "También en esta tecla",
+    "closePanel": "Cerrar"
+  },
+  "autoSegmentApplied":"Autosegmentado con {engine}",
   "error": {
     "unsupportedFileFormat": "Formato de archivo no compatible: {ext}",
     "openFileFailed": "No se pudo abrir el archivo",
@@ -1241,6 +1355,14 @@
     "wordTimingMismatch": "{count, plural, one {# línea tenía un número distinto de palabras; solo se copiaron las posiciones coincidentes.} many {# líneas tenían un número distinto de palabras; solo se copiaron las posiciones coincidentes.} other {# líneas tenían un número distinto de palabras; solo se copiaron las posiciones coincidentes.}}",
     "insertLine": "Insertar nueva línea aquí",
     "insertWord": "Insertar palabra aquí…"
+  },
+  "editModeTools": {
+    "splitTypedLinesTitle": "Dividir en palabras las líneas escritas",
+    "splitTypedLinesDesc": "El texto escrito en una línea vacía se divide en palabras igual que una importación divide las líneas.",
+    "scrollMemoryTitle": "Recordar la posición del modo Edición",
+    "scrollMemoryDesc": "Abre cada proyecto en la línea donde estabas en el modo Edición.",
+    "swapDuetAll": "Intercambiar líneas principales y de dúo",
+    "swapDuetSelected": "Intercambiar principal y dúo"
   },
   "lyricWordView": {
     "empty": "Vacío",

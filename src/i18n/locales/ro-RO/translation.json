@@ -226,7 +226,57 @@
       "dropped": "Nu se importă",
       "missingTranslation": "Lipsește traducerea",
       "missingRomanization": "Lipsește romanizarea"
+    },
+    "search": {
+      "label": "Caută și înlocuiește",
+      "find": "Caută",
+      "replace": "Înlocuiește cu",
+      "matchCase": "Potrivește majusculele",
+      "wholeWord": "Cuvânt întreg",
+      "regex": "Folosește un model (regex)",
+      "inSelection": "Doar în selecție",
+      "showList": "Listează toate potrivirile",
+      "listLabel": "Potriviri",
+      "rows": "Rânduri de căutat",
+      "rowsAll": "Toate rândurile",
+      "rowsLyrics": "Doar versurile",
+      "rowsTranslations": "Traduceri și romanizare",
+      "previous": "Potrivirea anterioară",
+      "next": "Potrivirea următoare",
+      "toggleReplace": "Arată înlocuirea",
+      "close": "Închide căutarea",
+      "replaceOne": "Înlocuiește",
+      "replaceAll": "Înlocuiește tot",
+      "replaceThis": "Înlocuiește această potrivire",
+      "count": "{count, plural, one {# potrivire} few {# potriviri} other {# de potriviri}}",
+      "position": "{current} din {count}",
+      "noMatches": "Nicio potrivire",
+      "replaced": "{count, plural, one {# potrivire înlocuită} few {# potriviri înlocuite} other {# de potriviri înlocuite}}",
+      "invalid": "Modelul nu este valid"
     }
+  },
+  "editAsText": {
+    "menuItem": "Editează ca text...",
+    "title": "Editează ca text",
+    "description": "Editează toate versurile ca text simplu. Cuvintele pe care nu le schimbi își păstrează sincronizarea.",
+    "textLabel": "Textul versurilor",
+    "toolsHint": "Procesează versurile și Desparte în silabe lucrează pe rândurile selectate sau pe tot textul când nu e nimic selectat.",
+    "nothingToProcess": "Nimic de schimbat.",
+    "summaryTitle": "Modificări",
+    "unchanged": "{count, plural, one {# rând neschimbat} few {# rânduri neschimbate} other {# de rânduri neschimbate}}",
+    "edited": "{count, plural, one {# rând editat} few {# rânduri editate} other {# de rânduri editate}}",
+    "editedHint": "Sincronizarea se păstrează acolo unde cuvintele se potrivesc.",
+    "moved": "{count, plural, one {# rând mutat} few {# rânduri mutate} other {# de rânduri mutate}}",
+    "added": "{count, plural, one {# rând adăugat} few {# rânduri adăugate} other {# de rânduri adăugate}}",
+    "removed": "{count, plural, one {# rând eliminat} few {# rânduri eliminate} other {# de rânduri eliminate}}",
+    "noChanges": "Nicio modificare încă.",
+    "droppedTimings": "{count, plural, one {# cuvânt sincronizat își pierde sincronizarea} few {# cuvinte sincronizate își pierd sincronizarea} other {# de cuvinte sincronizate își pierd sincronizarea}}",
+    "lineNumber": "Rândul {line}",
+    "more": "{count, plural, one {și încă #} few {și încă #} other {și încă #}}",
+    "help": "Cuvintele noi intră fără sincronizare. Rândurile doar mutate își păstrează sincronizarea. Aplicarea se anulează într-un singur pas.",
+    "apply": "Aplică",
+    "applied": "Text aplicat. Anularea îl readuce într-un singur pas.",
+    "failed": "Textul nu a putut fi aplicat. Verifică-l și încearcă din nou."
   },
   "importChooser": {
     "options": {
@@ -272,6 +322,12 @@
     "importFile": {
       "title": "Imporți versuri noi?",
       "description": "Ai modificări nesalvate. Dacă continui, se vor pierde. Sigur vrei să imporți versuri noi?"
+    },
+    "discardTextEdits": {
+      "title": "Renunți la modificări?",
+      "description": "Textul are modificări pe care nu le-ai aplicat. Dacă închizi acum, le pierzi.",
+      "discard": "Renunță",
+      "keepEditing": "Continuă editarea"
     },
     "noSongwriter": {
       "description": "Melodia nu are compozitori. Salvezi oricum?"
@@ -346,6 +402,7 @@
     "preview": "Previzualizare"
   },
   "dialog": {
+    "openFilesIgnored": "{count, plural, one {# fișier a fost omis} few {# fișiere au fost omise} other {# de fișiere au fost omise}}: deschide câte un fișier cu versuri și un fișier audio odată.",
     "createProjectPrompt": {
       "title": "Creezi un proiect?",
       "description": "Păstrează sunetul și versurile împreună într-un folder de proiect.",
@@ -371,6 +428,18 @@
     "openWorkspace": {
       "title": "Selectează un folder de spațiu de lucru care conține proiecte"
     }
+  },
+  "commandPalette": {
+    "title": "Paleta de comenzi",
+    "placeholder": "Caută comenzi și setări",
+    "noResults": "Nu există comenzi sau setări care se potrivesc",
+    "commandTag": "Comandă",
+    "settingTag": "Preferințe",
+    "hint": "Săgețile mută selecția, Enter rulează, Esc închide",
+    "notRunnable": "Comanda nu a putut fi rulată. Atribuie-i o scurtătură în Preferințe și încearcă din nou.",
+    "menu": "Paleta de comenzi...",
+    "shortcut": "Vizualizare - Deschide paleta de comenzi",
+    "shortcutAlternate": "Vizualizare - Deschide paleta de comenzi (scurtătură alternativă)"
   },
   "projectsDialog": {
     "title": "Proiecte",
@@ -985,6 +1054,7 @@
     "deleteWords": "{count, plural, one {Șterge # cuvânt} few {Șterge # cuvinte} other {Șterge # de cuvinte}}",
     "bgLyric": "Vers de fundal",
     "duetLyric": "Vers de duet",
+    "lineRole": "Rolul rândului",
     "moveLineToPlayhead": "Mută versul la cursorul de redare",
     "copyTimingsTo": "Copiază timpii în…",
     "cancelCopyTimings": "Anulează copierea timpilor",
@@ -1027,6 +1097,8 @@
       "redoAlternate": "Refă (scurtătură alternativă)",
       "selectAll": "Selectează tot",
       "unselectAll": "Deselectează tot",
+      "findInLyrics": "Caută în versuri",
+      "replaceInLyrics": "Înlocuiește în versuri",
       "deleteSelection": "Șterge selecția",
       "autoSegment": "Împărțire automată rapidă",
       "autoSegmentDialog": "Segmentează automat…",
@@ -1065,6 +1137,15 @@
       "auditionSelection": "Spectrogramă - Redă selecția",
       "auditionSelectionAfter": "Spectrogramă - Redă selecția (+0,5 s după)",
       "cancelTimelineEditing": "Spectrogramă - Anulează editarea cronologiei",
+      "exportTtml": "Exportă versuri: TTML",
+      "exportLrc": "Exportă versuri: LRC",
+      "exportEslrc": "Exportă versuri: ESLRC",
+      "exportQrc": "Exportă versuri: QRC",
+      "exportYrc": "Exportă versuri: YRC",
+      "exportLys": "Exportă versuri: Lyricify Syllable",
+      "exportAss": "Exportă versuri: Subtitrări ASS",
+      "newLyricLine": "Vers nou",
+      "advancedRibbonControls": "Controale avansate ale panglicii",
       "resetDefault": "Resetează la valoarea implicită",
       "clear": "Golește",
       "unbound": "Nesetată",
@@ -1076,11 +1157,12 @@
         "View": "Vizualizare",
         "Sync": "Sincronizare",
         "Audio": "Audio",
-        "Spectrogram": "Spectrogramă"
+        "Spectrogram": "Spectrogramă",
+        "Tools": "Unelte",
+        "Help": "Ajutor",
+        "Preview": "Previzualizare"
       },
-      "autoSegmentOptions": "Segmentare automată",
-      "autoSegmentDoublePress": "Necesită apăsare dublă",
-      "autoSegmentDoublePressDesc": "Rulează segmentarea automată rapidă doar când apeși scurtătura de două ori rapid."
+      "showAll": "Arată acțiunile fără tastă"
     },
     "tab": {
       "common": "General",
@@ -1095,7 +1177,39 @@
       "changelog": "Jurnal de modificări"
     }
   },
-  "autoSegmentApplied": "Segmentat automat cu {engine}",
+  "keyboardView": {
+    "title": "Tastatură",
+    "search": "Caută acțiuni",
+    "searchResults": "{count, plural, =0 {Nicio acțiune nu se potrivește} one {# acțiune se potrivește} few {# acțiuni se potrivesc} other {# de acțiuni se potrivesc}}",
+    "layout": "Aspectul tastaturii",
+    "layoutAuto": "Automat",
+    "layoutDetected": "Detectat: {layout}",
+    "layoutUnavailable": "Aspectul nu poate fi detectat aici, așa că se afișează QWERTY",
+    "layerHint": "Apasă pe o tastă modificatoare, cum ar fi Shift, ca să vezi scurtăturile care o folosesc.",
+    "category": {
+      "sync": "Sincronizare",
+      "edit": "Editare",
+      "playback": "Redare",
+      "navigation": "Navigare"
+    },
+    "free": "Liberă",
+    "keyFree": "{key}: liberă",
+    "keyActions": "{key}: {actions}",
+    "modifierLayer": "Arată scurtăturile cu {key}",
+    "freeKey": "Nimic nu folosește încă {key}.",
+    "assignLabel": "Acțiune",
+    "assignPlaceholder": "Alege o acțiune...",
+    "assign": "Adaugă la {key}",
+    "changeKey": "Schimbă tasta",
+    "addKey": "Adaugă a doua tastă",
+    "removeKey": "Elimină {key}",
+    "duplicateKey": "Tasta aceasta este deja setată pentru această acțiune.",
+    "doublePress": "Apasă de două ori pentru a rula",
+    "doublePressDesc": "Rulează doar când apeși tasta de două ori rapid.",
+    "otherLayers": "Tot pe această tastă",
+    "closePanel": "Închide"
+  },
+  "autoSegmentApplied":"Segmentat automat cu {engine}",
   "error": {
     "unsupportedFileFormat": "Format de fișier nesuportat: {ext}",
     "openFileFailed": "Nu s-a putut deschide fișierul",
@@ -1241,6 +1355,14 @@
     "wordTimingMismatch": "{count, plural, one {# vers avea un număr diferit de cuvinte; s-au copiat doar pozițiile corespunzătoare.} few {# versuri aveau un număr diferit de cuvinte; s-au copiat doar pozițiile corespunzătoare.} other {# de versuri aveau un număr diferit de cuvinte; s-au copiat doar pozițiile corespunzătoare.}}",
     "insertLine": "Inserează un vers aici",
     "insertWord": "Introdu un cuvânt aici…"
+  },
+  "editModeTools": {
+    "splitTypedLinesTitle": "Împarte versurile tastate în cuvinte",
+    "splitTypedLinesDesc": "Textul tastat într-un vers gol este împărțit în cuvinte la fel cum un import împarte versurile.",
+    "scrollMemoryTitle": "Reține poziția din modul Editare",
+    "scrollMemoryDesc": "Redeschide fiecare proiect la versul la care erai în modul Editare.",
+    "swapDuetAll": "Inversează versurile principale și de duet",
+    "swapDuetSelected": "Inversează principal și duet"
   },
   "lyricWordView": {
     "empty": "Gol",

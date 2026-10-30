@@ -21,11 +21,14 @@ import {
 import SuspensePlaceHolder from "$/components/SuspensePlaceHolder";
 import { TouchSyncPanel } from "$/modules/lyric-editor/components/TouchSyncPanel/index.tsx";
 import { log } from "$/utils/logging.ts";
+// Installs second-key dispatch.
+import "$/modules/keyboard/binding-list";
 import "@radix-ui/themes/styles.css";
 import { invoke } from "@tauri-apps/api/core";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { platform, version } from "@tauri-apps/plugin-os";
 import { useAtomValue, useSetAtom, useStore } from "jotai";
+import { Tooltip as TooltipPrimitive } from "radix-ui";
 import {
 	Suspense,
 	useEffect,
@@ -545,7 +548,7 @@ function App() {
 	}, [status, update, t, setSettingsOpen, setSettingsTab]);
 
 	const setIsGlobalDragging = useSetAtom(isGlobalFileDraggingAtom);
-	const { openFile } = useFileOpener();
+	const { openFile, openFiles } = useFileOpener();
 	useAudioFeedback();
 
 	useEffect(() => {
@@ -633,11 +636,12 @@ function App() {
 			e.preventDefault();
 			setIsGlobalDragging(false);
 
-			const files = e.dataTransfer?.files;
-			if (files && files.length > 0) {
-				const file = files[0];
-				void attachDroppedFilePath(file).finally(() => openFile(file));
-			}
+			// A lyric file and an audio file dropped together both open.
+			const files = Array.from(e.dataTransfer?.files ?? []);
+			if (files.length > 0)
+				void Promise.allSettled(files.map(attachDroppedFilePath)).then(() =>
+					openFiles(files),
+				);
 		};
 
 		window.addEventListener("dragenter", handleDragEnter);
@@ -651,7 +655,7 @@ function App() {
 			window.removeEventListener("dragleave", handleDragLeave);
 			window.removeEventListener("drop", handleDrop);
 		};
-	}, [setIsGlobalDragging, openFile]);
+	}, [setIsGlobalDragging, openFiles]);
 
 	return (
 		<Theme
@@ -666,132 +670,138 @@ function App() {
 			accentColor={accentColor}
 			className={styles.radixTheme}
 		>
-			{import.meta.env.TAURI_ENV_PLATFORM && <InterfaceScaleManager />}
-			<MigrationNotice />
-			<DiscordPresence />
-			<BeginnerGuide />
-			<DidYouKnowHints />
-			<AudioMetadataPrefill />
-			{customStyleString ? <style>{customStyleString}</style> : null}
-			<ErrorBoundary
-				FallbackComponent={AppErrorPage}
-				onReset={(_details) => {
-					// TODO
-				}}
-			>
-				{hasBackground && (
-					<div className={styles.customBackgroundLayer} aria-hidden="true">
-						<div
-							className={styles.customBackgroundImage}
-							style={{
-								backgroundImage:
-									backgroundMode === "image"
-										? `url(${customBackgroundImage})`
-										: backgroundMode === "gradient"
-											? useCustomGradient
-												? generateGradient(
-														customGradientColors,
-														customGradientType,
-														customGradientCenter,
-														customGradientAngle,
-														customGradientSize,
-													)
-												: selectedGradient?.css
-											: undefined,
-								opacity:
-									backgroundMode === "gradient"
-										? customGradientOpacity
-										: customBackgroundOpacity,
-								filter: `blur(${customBackgroundBlur}px) brightness(${customBackgroundBrightness})`,
-							}}
-						/>
-						<div
-							className={styles.customBackgroundMask}
-							style={{
-								opacity:
-									backgroundMode === "gradient" ? 0 : customBackgroundMask,
-							}}
-						/>
-					</div>
-				)}
-				<div className={styles.appContent}>
-					<AutosaveManager />
-					<GlobalDragOverlay />
-					{toolMode === ToolMode.Sync && <SyncKeyBinding />}
-					<UrbanDictionaryKeybinding />
-					<DarkThemeDetector />
-					<LogoColorStyle />
-					<Flex direction="column" height="100vh">
-						{appLayoutOrder.map((id) => {
-							if (id === "titlebar") return <TitleBar key="titlebar" />;
-							if (id === "ribbonbar") return <RibbonBar key="ribbonbar" />;
-							if (id === "editor") {
-								const editorContent = (
-									<Box flexGrow="1" overflow="hidden" key="editor-content">
-										<Flex height="100%" overflow="hidden">
-											<Box flexGrow="1" minWidth="0" overflow="hidden">
-												{previewPanelVisible ? (
-													<Flex height="100%" gap="2" p="2">
-														<Box flexGrow="1" overflow="hidden">
-															<SuspensePlaceHolder key={toolMode}>
-																<div style={editorModeViewStyle}>
-																	<LyricLinesView key={toolMode} />
-																</div>
-															</SuspensePlaceHolder>
-														</Box>
-														<ResizablePanel>
-															<SuspensePlaceHolder key="preview-panel">
-																<div style={{ height: "100%" }}>
-																	<PreviewModeSwitcher />
-																</div>
-															</SuspensePlaceHolder>
-														</ResizablePanel>
-													</Flex>
-												) : toolMode !== ToolMode.Preview ? (
-													// Mode switches swap instantly: fading the editor
-													// out and in left a blank panel and flickered.
-													<SuspensePlaceHolder key={toolMode}>
-														<div style={editorModeViewStyle}>
-															<LyricLinesView key={toolMode} />
-														</div>
-													</SuspensePlaceHolder>
-												) : (
-													<SuspensePlaceHolder key="preview-switcher">
-														<Box height="100%" p="2">
-															<PreviewModeSwitcher />
-														</Box>
-													</SuspensePlaceHolder>
-												)}
-											</Box>
-										</Flex>
-									</Box>
-								);
+			{/* Same delay as the Theme's own provider, but a tooltip closes once the
+			    pointer leaves its control instead of staying up while hovered. */}
+			<TooltipPrimitive.Provider delayDuration={200} disableHoverableContent>
+				{import.meta.env.TAURI_ENV_PLATFORM && <InterfaceScaleManager />}
+				<MigrationNotice />
+				<DiscordPresence />
+				<BeginnerGuide />
+				<DidYouKnowHints />
+				<AudioMetadataPrefill />
+				{customStyleString ? <style>{customStyleString}</style> : null}
+				<ErrorBoundary
+					FallbackComponent={AppErrorPage}
+					onReset={(_details) => {
+						// TODO
+					}}
+				>
+					{hasBackground && (
+						<div className={styles.customBackgroundLayer} aria-hidden="true">
+							<div
+								className={styles.customBackgroundImage}
+								style={{
+									backgroundImage:
+										backgroundMode === "image"
+											? `url(${customBackgroundImage})`
+											: backgroundMode === "gradient"
+												? useCustomGradient
+													? generateGradient(
+															customGradientColors,
+															customGradientType,
+															customGradientCenter,
+															customGradientAngle,
+															customGradientSize,
+														)
+													: selectedGradient?.css
+												: undefined,
+									opacity:
+										backgroundMode === "gradient"
+											? customGradientOpacity
+											: customBackgroundOpacity,
+									filter: `blur(${customBackgroundBlur}px) brightness(${customBackgroundBrightness})`,
+								}}
+							/>
+							<div
+								className={styles.customBackgroundMask}
+								style={{
+									opacity:
+										backgroundMode === "gradient" ? 0 : customBackgroundMask,
+								}}
+							/>
+						</div>
+					)}
+					<div className={styles.appContent}>
+						<AutosaveManager />
+						<GlobalDragOverlay />
+						{toolMode === ToolMode.Sync && <SyncKeyBinding />}
+						<UrbanDictionaryKeybinding />
+						<DarkThemeDetector />
+						<LogoColorStyle />
+						<Flex direction="column" height="100vh">
+							{appLayoutOrder.map((id) => {
+								if (id === "titlebar") return <TitleBar key="titlebar" />;
+								if (id === "ribbonbar") return <RibbonBar key="ribbonbar" />;
+								if (id === "editor") {
+									const editorContent = (
+										<Box flexGrow="1" overflow="hidden" key="editor-content">
+											<Flex height="100%" overflow="hidden">
+												<Box flexGrow="1" minWidth="0" overflow="hidden">
+													{previewPanelVisible ? (
+														<Flex height="100%" gap="2" p="2">
+															<Box flexGrow="1" overflow="hidden">
+																<SuspensePlaceHolder key={toolMode}>
+																	<div style={editorModeViewStyle}>
+																		<LyricLinesView key={toolMode} />
+																	</div>
+																</SuspensePlaceHolder>
+															</Box>
+															<ResizablePanel>
+																<SuspensePlaceHolder key="preview-panel">
+																	<div style={{ height: "100%" }}>
+																		<PreviewModeSwitcher />
+																	</div>
+																</SuspensePlaceHolder>
+															</ResizablePanel>
+														</Flex>
+													) : toolMode !== ToolMode.Preview ? (
+														// Mode switches swap instantly: fading the editor
+														// out and in left a blank panel and flickered.
+														<SuspensePlaceHolder key={toolMode}>
+															<div style={editorModeViewStyle}>
+																<LyricLinesView key={toolMode} />
+															</div>
+														</SuspensePlaceHolder>
+													) : (
+														<SuspensePlaceHolder key="preview-switcher">
+															<Box height="100%" p="2">
+																<PreviewModeSwitcher />
+															</Box>
+														</SuspensePlaceHolder>
+													)}
+												</Box>
+											</Flex>
+										</Box>
+									);
 
-								return editorContent;
+									return editorContent;
+								}
+								if (id === "audio-controls") {
+									return (
+										<Box flexShrink="0" key="audio-controls">
+											<AudioControls />
+										</Box>
+									);
+								}
+								return null;
+							})}
+							{showTouchSyncPanel && toolMode === ToolMode.Sync && (
+								<TouchSyncPanel />
+							)}
+						</Flex>
+						<Suspense fallback={null}>
+							<Dialogs />
+						</Suspense>
+						<ToastContainer
+							theme={effectiveTheme}
+							transition={
+								spicyLyricsDesign ? spicyLyricsToastTransition : Bounce
 							}
-							if (id === "audio-controls") {
-								return (
-									<Box flexShrink="0" key="audio-controls">
-										<AudioControls />
-									</Box>
-								);
-							}
-							return null;
-						})}
-						{showTouchSyncPanel && toolMode === ToolMode.Sync && (
-							<TouchSyncPanel />
-						)}
-					</Flex>
-					<Suspense fallback={null}>
-						<Dialogs />
-					</Suspense>
-					<ToastContainer
-						theme={effectiveTheme}
-						transition={spicyLyricsDesign ? spicyLyricsToastTransition : Bounce}
-					/>
-					<UpdatedToast />
-				</div>
-			</ErrorBoundary>
+						/>
+						<UpdatedToast />
+					</div>
+				</ErrorBoundary>
+			</TooltipPrimitive.Provider>
 		</Theme>
 	);
 }

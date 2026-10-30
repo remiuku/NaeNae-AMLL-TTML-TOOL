@@ -32,6 +32,10 @@ import {
 	resolveAnchorLineIndex,
 } from "../selection-scroll";
 import { findCurrentLineIndex } from "./current-line";
+import {
+	type EditScrollMemory,
+	useEditScrollMemory,
+} from "./use-edit-scroll-memory";
 import type { useLineListSelection } from "./use-line-list-selection";
 
 export function useLineListScrolling({
@@ -54,6 +58,8 @@ export function useLineListScrolling({
 	const scrollRafRef = useRef<number | null>(null);
 	const isProgrammaticScrollRef = useRef(false);
 	const lastProgrammaticScrollTimeRef = useRef<number>(0);
+	// Set below, once scrollToLineIndex exists.
+	const editScrollMemoryRef = useRef<EditScrollMemory | null>(null);
 
 	const cancelScrollAnimation = useCallback(() => {
 		if (scrollRafRef.current !== null) {
@@ -83,6 +89,7 @@ export function useLineListScrolling({
 		if (closest !== -1) {
 			modeAnchorLines[toolMode] = closest;
 			sharedAnchorLineIndex = closest;
+			editScrollMemoryRef.current?.noteAnchor(closest);
 		}
 	}, [toolMode, viewElRef]);
 
@@ -219,6 +226,11 @@ export function useLineListScrolling({
 			viewRef,
 		],
 	);
+	editScrollMemoryRef.current = useEditScrollMemory({
+		store,
+		toolMode,
+		scrollToLineIndex,
+	});
 	const syncTabPosition = useAtomValue(
 		toolMode === ToolMode.Edit ? editTabPositionAtom : syncTabPositionAtom,
 	);
@@ -233,7 +245,7 @@ export function useLineListScrolling({
 			if (!instance || hasRestoredAnchorRef.current) return;
 
 			const leftState = modeLeftState[toolMode];
-			const targetLineIndex = resolveAnchorLineIndex({
+			const resolvedLineIndex = resolveAnchorLineIndex({
 				syncTabPosition,
 				toolMode,
 				unchangedSinceLeft:
@@ -249,6 +261,10 @@ export function useLineListScrolling({
 				syncFocusMainLine: store.get(syncFocusMainLineAtom),
 				findCurrentLineIndex,
 			});
+			// A project reopened with scroll memory on goes back to its saved spot.
+			const remembered = editScrollMemoryRef.current?.claimRestore() ?? -1;
+			const targetLineIndex =
+				remembered !== -1 ? remembered : resolvedLineIndex;
 
 			if (targetLineIndex === -1) {
 				hasRestoredAnchorRef.current = true;

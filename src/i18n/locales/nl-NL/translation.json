@@ -226,7 +226,57 @@
       "dropped": "Niet geïmporteerd",
       "missingTranslation": "Vertaling ontbreekt",
       "missingRomanization": "Romanisering ontbreekt"
+    },
+    "search": {
+      "label": "Zoeken en vervangen",
+      "find": "Zoeken",
+      "replace": "Vervangen door",
+      "matchCase": "Hoofdlettergevoelig",
+      "wholeWord": "Heel woord",
+      "regex": "Patroon gebruiken (regex)",
+      "inSelection": "Alleen in de selectie",
+      "showList": "Alle resultaten tonen",
+      "listLabel": "Resultaten",
+      "rows": "Regels om te doorzoeken",
+      "rowsAll": "Alle regels",
+      "rowsLyrics": "Alleen songtekst",
+      "rowsTranslations": "Vertalingen en romanisering",
+      "previous": "Vorig resultaat",
+      "next": "Volgend resultaat",
+      "toggleReplace": "Vervangen tonen",
+      "close": "Zoeken sluiten",
+      "replaceOne": "Vervangen",
+      "replaceAll": "Alles vervangen",
+      "replaceThis": "Dit resultaat vervangen",
+      "count": "{count, plural, one {# resultaat} other {# resultaten}}",
+      "position": "{current} van {count}",
+      "noMatches": "Geen resultaten",
+      "replaced": "{count, plural, one {# resultaat vervangen} other {# resultaten vervangen}}",
+      "invalid": "Patroon is ongeldig"
     }
+  },
+  "editAsText": {
+    "menuItem": "Bewerken als tekst...",
+    "title": "Bewerken als tekst",
+    "description": "Bewerk de hele songtekst als platte tekst. Woorden die je niet wijzigt, houden hun timing.",
+    "textLabel": "Songtekst",
+    "toolsHint": "Songteksten verwerken en Lettergrepen splitsen werken op de geselecteerde regels, of op alles als er niets is geselecteerd.",
+    "nothingToProcess": "Niets te wijzigen.",
+    "summaryTitle": "Wijzigingen",
+    "unchanged": "{count, plural, one {# regel ongewijzigd} other {# regels ongewijzigd}}",
+    "edited": "{count, plural, one {# regel bewerkt} other {# regels bewerkt}}",
+    "editedHint": "Timing blijft behouden waar woorden overeenkomen.",
+    "moved": "{count, plural, one {# regel verplaatst} other {# regels verplaatst}}",
+    "added": "{count, plural, one {# regel toegevoegd} other {# regels toegevoegd}}",
+    "removed": "{count, plural, one {# regel verwijderd} other {# regels verwijderd}}",
+    "noChanges": "Nog geen wijzigingen.",
+    "droppedTimings": "{count, plural, one {# getimed woord verliest zijn timing} other {# getimede woorden verliezen hun timing}}",
+    "lineNumber": "Regel {line}",
+    "more": "{count, plural, one {en # meer} other {en # meer}}",
+    "help": "Nieuwe woorden komen binnen zonder timing. Regels die alleen verplaatst zijn, houden hun timing. Toepassen is één stap ongedaan maken.",
+    "apply": "Toepassen",
+    "applied": "Tekst toegepast. Ongedaan maken draait het in één stap terug.",
+    "failed": "Kan de tekst niet toepassen. Controleer hem en probeer het opnieuw."
   },
   "importChooser": {
     "options": {
@@ -272,6 +322,12 @@
     "importFile": {
       "title": "Nieuwe songtekst importeren?",
       "description": "Je hebt niet-opgeslagen wijzigingen. Als je doorgaat, gaan deze wijzigingen verloren. Weet je zeker dat je nieuwe songteksten wilt importeren?"
+    },
+    "discardTextEdits": {
+      "title": "Je wijzigingen verwerpen?",
+      "description": "De tekst heeft wijzigingen die je niet hebt toegepast. Als je nu sluit, gaan ze verloren.",
+      "discard": "Verwerpen",
+      "keepEditing": "Verder bewerken"
     },
     "noSongwriter": {
       "description": "Er zijn geen liedschrijvers toegevoegd. Toch opslaan?"
@@ -346,6 +402,7 @@
     "preview": "Voorbeeld"
   },
   "dialog": {
+    "openFilesIgnored": "{count, plural, one {# bestand is overgeslagen} other {# bestanden zijn overgeslagen}}: open één songtekstbestand en één audiobestand tegelijk.",
     "createProjectPrompt": {
       "title": "Een project aanmaken?",
       "description": "Bewaar de audio en songteksten bij elkaar in een projectmap.",
@@ -371,6 +428,18 @@
     "openWorkspace": {
       "title": "Kies een werkruimtemap met projecten"
     }
+  },
+  "commandPalette": {
+    "title": "Opdrachtpalet",
+    "placeholder": "Opdrachten en instellingen zoeken",
+    "noResults": "Geen overeenkomende opdrachten of instellingen",
+    "commandTag": "Opdracht",
+    "settingTag": "Voorkeuren",
+    "hint": "Pijltjestoetsen om te bewegen, Enter om uit te voeren, Esc om te sluiten",
+    "notRunnable": "Kan deze opdracht niet uitvoeren. Geef hem een sneltoets in Voorkeuren en probeer het opnieuw.",
+    "menu": "Opdrachtpalet...",
+    "shortcut": "Beeld - Opdrachtpalet openen",
+    "shortcutAlternate": "Beeld - Opdrachtpalet openen (alternatieve sneltoets)"
   },
   "projectsDialog": {
     "title": "Projecten",
@@ -985,6 +1054,7 @@
     "deleteWords": "{count, plural, one {# woord verwijderen} other {# woorden verwijderen}}",
     "bgLyric": "Achtergrondregel",
     "duetLyric": "Duetregel",
+    "lineRole": "Rol van de regel",
     "moveLineToPlayhead": "Regel naar afspeelkop verplaatsen",
     "copyTimingsTo": "Timing kopiëren naar…",
     "cancelCopyTimings": "Kopiëren van timing annuleren",
@@ -1027,6 +1097,8 @@
       "redoAlternate": "Opnieuw uitvoeren (alternatieve sneltoets)",
       "selectAll": "Alles selecteren",
       "unselectAll": "Alles deselecteren",
+      "findInLyrics": "Zoeken in songtekst",
+      "replaceInLyrics": "Vervangen in songtekst",
       "deleteSelection": "Selectie verwijderen",
       "autoSegment": "Snel automatisch splitsen",
       "autoSegmentDialog": "Automatisch splitsen…",
@@ -1065,6 +1137,15 @@
       "auditionSelection": "Spectrogram - Selectie afspelen",
       "auditionSelectionAfter": "Spectrogram - Selectie afspelen (+0,5 s erna)",
       "cancelTimelineEditing": "Spectrogram - Tijdlijnbewerking annuleren",
+      "exportTtml": "Songtekst exporteren: TTML",
+      "exportLrc": "Songtekst exporteren: LRC",
+      "exportEslrc": "Songtekst exporteren: ESLRC",
+      "exportQrc": "Songtekst exporteren: QRC",
+      "exportYrc": "Songtekst exporteren: YRC",
+      "exportLys": "Songtekst exporteren: Lyricify Syllable",
+      "exportAss": "Songtekst exporteren: ASS-ondertitels",
+      "newLyricLine": "Nieuwe songtekstregel",
+      "advancedRibbonControls": "Geavanceerde lintopties",
       "resetDefault": "Standaard herstellen",
       "clear": "Wissen",
       "unbound": "Niet ingesteld",
@@ -1076,11 +1157,12 @@
         "View": "Beeld",
         "Sync": "Timing",
         "Audio": "Geluid",
-        "Spectrogram": "Spectrogram"
+        "Spectrogram": "Spectrogram",
+        "Tools": "Hulpmiddelen",
+        "Help": "Hulp",
+        "Preview": "Voorbeeld"
       },
-      "autoSegmentOptions": "Automatisch splitsen",
-      "autoSegmentDoublePress": "Dubbele druk vereist",
-      "autoSegmentDoublePressDesc": "Voer snel automatisch splitsen alleen uit als je de sneltoets twee keer snel indrukt."
+      "showAll": "Acties zonder toets tonen"
     },
     "tab": {
       "common": "Algemeen",
@@ -1095,7 +1177,39 @@
       "changelog": "Wijzigingen"
     }
   },
-  "autoSegmentApplied": "Automatisch gesegmenteerd met {engine}",
+  "keyboardView": {
+    "title": "Toetsenbord",
+    "search": "Acties zoeken",
+    "searchResults": "{count, plural, =0 {Geen acties gevonden} one {# actie gevonden} other {# acties gevonden}}",
+    "layout": "Toetsenbordindeling",
+    "layoutAuto": "Automatisch",
+    "layoutDetected": "Gevonden: {layout}",
+    "layoutUnavailable": "De indeling kan hier niet worden bepaald, dus QWERTY wordt getoond",
+    "layerHint": "Klik op een aanpassingstoets, zoals Shift, om de sneltoetsen te zien die hem gebruiken.",
+    "category": {
+      "sync": "Synchronisatie",
+      "edit": "Bewerken",
+      "playback": "Afspelen",
+      "navigation": "Navigatie"
+    },
+    "free": "Vrij",
+    "keyFree": "{key}: vrij",
+    "keyActions": "{key}: {actions}",
+    "modifierLayer": "Sneltoetsen met {key} tonen",
+    "freeKey": "Nog niets gebruikt {key}.",
+    "assignLabel": "Actie",
+    "assignPlaceholder": "Kies een actie...",
+    "assign": "Toevoegen aan {key}",
+    "changeKey": "Toets wijzigen",
+    "addKey": "Tweede toets toevoegen",
+    "removeKey": "{key} verwijderen",
+    "duplicateKey": "Die toets is al ingesteld voor deze actie.",
+    "doublePress": "Twee keer drukken om uit te voeren",
+    "doublePressDesc": "Wordt alleen uitgevoerd als je de toets twee keer snel indrukt.",
+    "otherLayers": "Ook op deze toets",
+    "closePanel": "Sluiten"
+  },
+  "autoSegmentApplied":"Automatisch gesegmenteerd met {engine}",
   "error": {
     "unsupportedFileFormat": "Niet-ondersteunde bestandsindeling: {ext}",
     "openFileFailed": "Kan bestand niet openen",
@@ -1241,6 +1355,14 @@
     "wordTimingMismatch": "{count, plural, one {# regel had een ander aantal woorden; alleen overeenkomende woordposities zijn gekopieerd.} other {# regels hadden een ander aantal woorden; alleen overeenkomende woordposities zijn gekopieerd.}}",
     "insertLine": "Voeg hier een nieuwe regel in",
     "insertWord": "Woord hier invoegen…"
+  },
+  "editModeTools": {
+    "splitTypedLinesTitle": "Getypte regels in woorden splitsen",
+    "splitTypedLinesDesc": "Tekst die je in een lege regel typt, wordt in woorden gesplitst zoals een import regels splitst.",
+    "scrollMemoryTitle": "Positie in bewerkmodus onthouden",
+    "scrollMemoryDesc": "Opent elk project bij de regel waar je in de bewerkmodus was.",
+    "swapDuetAll": "Hoofd- en duetregels omwisselen",
+    "swapDuetSelected": "Hoofd en duet omwisselen"
   },
   "lyricWordView": {
     "empty": "Leeg",

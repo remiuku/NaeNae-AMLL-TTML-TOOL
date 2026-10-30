@@ -226,7 +226,57 @@
       "dropped": "Non importato",
       "missingTranslation": "Traduzione mancante",
       "missingRomanization": "Romanizzazione mancante"
+    },
+    "search": {
+      "label": "Trova e sostituisci",
+      "find": "Trova",
+      "replace": "Sostituisci con",
+      "matchCase": "Maiuscole/minuscole",
+      "wholeWord": "Parola intera",
+      "regex": "Usa un modello (regex)",
+      "inSelection": "Solo nella selezione",
+      "showList": "Elenca tutte le corrispondenze",
+      "listLabel": "Corrispondenze",
+      "rows": "Righe in cui cercare",
+      "rowsAll": "Tutte le righe",
+      "rowsLyrics": "Solo testo",
+      "rowsTranslations": "Traduzioni e romanizzazione",
+      "previous": "Corrispondenza precedente",
+      "next": "Corrispondenza successiva",
+      "toggleReplace": "Mostra sostituzione",
+      "close": "Chiudi ricerca",
+      "replaceOne": "Sostituisci",
+      "replaceAll": "Sostituisci tutto",
+      "replaceThis": "Sostituisci questa corrispondenza",
+      "count": "{count, plural, one {# corrispondenza} many {# corrispondenze} other {# corrispondenze}}",
+      "position": "{current} di {count}",
+      "noMatches": "Nessuna corrispondenza",
+      "replaced": "{count, plural, one {# corrispondenza sostituita} many {# corrispondenze sostituite} other {# corrispondenze sostituite}}",
+      "invalid": "Il modello non è valido"
     }
+  },
+  "editAsText": {
+    "menuItem": "Modifica come testo...",
+    "title": "Modifica come testo",
+    "description": "Modifica l'intero testo come testo semplice. Le parole che non cambi mantengono la sincronizzazione.",
+    "textLabel": "Testo della canzone",
+    "toolsHint": "Elabora testo e Dividi in sillabe agiscono sulle righe selezionate, o su tutto se non è selezionato nulla.",
+    "nothingToProcess": "Niente da cambiare.",
+    "summaryTitle": "Modifiche",
+    "unchanged": "{count, plural, one {# riga invariata} many {# righe invariate} other {# righe invariate}}",
+    "edited": "{count, plural, one {# riga modificata} many {# righe modificate} other {# righe modificate}}",
+    "editedHint": "La sincronizzazione resta dove le parole corrispondono.",
+    "moved": "{count, plural, one {# riga spostata} many {# righe spostate} other {# righe spostate}}",
+    "added": "{count, plural, one {# riga aggiunta} many {# righe aggiunte} other {# righe aggiunte}}",
+    "removed": "{count, plural, one {# riga rimossa} many {# righe rimosse} other {# righe rimosse}}",
+    "noChanges": "Ancora nessuna modifica.",
+    "droppedTimings": "{count, plural, one {# parola sincronizzata perde la sincronizzazione} many {# parole sincronizzate perdono la sincronizzazione} other {# parole sincronizzate perdono la sincronizzazione}}",
+    "lineNumber": "Riga {line}",
+    "more": "{count, plural, one {e # altra} many {e altre #} other {e altre #}}",
+    "help": "Le parole nuove entrano senza sincronizzazione. Le righe solo spostate mantengono la sincronizzazione. Applica si annulla in un solo passaggio.",
+    "apply": "Applica",
+    "applied": "Testo applicato. Annulla lo ripristina in un solo passaggio.",
+    "failed": "Impossibile applicare il testo. Controllalo e riprova."
   },
   "importChooser": {
     "options": {
@@ -272,6 +322,12 @@
     "importFile": {
       "title": "Importare un nuovo testo?",
       "description": "Ci sono modifiche non salvate. Se procedi, queste modifiche andranno perse. Sei sicuro di voler importare un nuovo testo?"
+    },
+    "discardTextEdits": {
+      "title": "Scartare le modifiche?",
+      "description": "Il testo ha modifiche non applicate. Se chiudi ora, andranno perse.",
+      "discard": "Scarta",
+      "keepEditing": "Continua a modificare"
     },
     "noSongwriter": {
       "description": "Questo brano non ha autori. Salvare comunque?"
@@ -346,6 +402,7 @@
     "preview": "Anteprima"
   },
   "dialog": {
+    "openFilesIgnored": "{count, plural, one {# file è stato escluso} many {# file sono stati esclusi} other {# file sono stati esclusi}}: apri un file di testo e un file audio alla volta.",
     "createProjectPrompt": {
       "title": "Creare un progetto?",
       "description": "Conserva l'audio e i testi insieme in una cartella di progetto.",
@@ -371,6 +428,18 @@
     "openWorkspace": {
       "title": "Seleziona una cartella dell'area di lavoro che contiene progetti"
     }
+  },
+  "commandPalette": {
+    "title": "Tavolozza dei comandi",
+    "placeholder": "Cerca comandi e impostazioni",
+    "noResults": "Nessun comando o impostazione corrispondente",
+    "commandTag": "Comando",
+    "settingTag": "Impostazioni",
+    "hint": "Frecce per spostarti, Invio per eseguire, Esc per chiudere",
+    "notRunnable": "Impossibile eseguire il comando. Assegnagli una scorciatoia nelle Impostazioni e riprova.",
+    "menu": "Tavolozza dei comandi...",
+    "shortcut": "Vista - Apri la tavolozza dei comandi",
+    "shortcutAlternate": "Vista - Apri la tavolozza dei comandi (scorciatoia alternativa)"
   },
   "projectsDialog": {
     "title": "Progetti",
@@ -985,6 +1054,7 @@
     "deleteWords": "{count, plural, one {Elimina # parola} many {Elimina # parole} other {Elimina # parole}}",
     "bgLyric": "Verso dei cori",
     "duetLyric": "Verso del duetto",
+    "lineRole": "Ruolo della riga",
     "moveLineToPlayhead": "Sposta il verso al cursore di riproduzione",
     "copyTimingsTo": "Copia tempi in…",
     "cancelCopyTimings": "Annulla copia dei tempi",
@@ -1027,6 +1097,8 @@
       "redoAlternate": "Ripeti (scorciatoia alternativa)",
       "selectAll": "Seleziona tutto",
       "unselectAll": "Deseleziona tutto",
+      "findInLyrics": "Trova nel testo",
+      "replaceInLyrics": "Sostituisci nel testo",
       "deleteSelection": "Elimina selezione",
       "autoSegment": "Divisione automatica rapida",
       "autoSegmentDialog": "Segmenta automaticamente…",
@@ -1065,6 +1137,15 @@
       "auditionSelection": "Spettrogramma - Riproduci selezione",
       "auditionSelectionAfter": "Spettrogramma - Riproduci selezione (+0,5 s dopo)",
       "cancelTimelineEditing": "Spettrogramma: annulla la modifica della timeline",
+      "exportTtml": "Esporta testo: TTML",
+      "exportLrc": "Esporta testo: LRC",
+      "exportEslrc": "Esporta testo: ESLRC",
+      "exportQrc": "Esporta testo: QRC",
+      "exportYrc": "Esporta testo: YRC",
+      "exportLys": "Esporta testo: Lyricify Syllable",
+      "exportAss": "Esporta testo: Sottotitoli ASS",
+      "newLyricLine": "Nuovo verso",
+      "advancedRibbonControls": "Controlli avanzati della barra",
       "resetDefault": "Ripristina le impostazioni predefinite",
       "clear": "Elimina",
       "unbound": "Non impostata",
@@ -1076,11 +1157,12 @@
         "View": "Visualizza",
         "Sync": "Sincronizzazione",
         "Audio": "Audio",
-        "Spectrogram": "Spettrogramma"
+        "Spectrogram": "Spettrogramma",
+        "Tools": "Strumenti",
+        "Help": "Aiuto",
+        "Preview": "Anteprima"
       },
-      "autoSegmentOptions": "Segmentazione automatica",
-      "autoSegmentDoublePress": "Richiedi doppia pressione",
-      "autoSegmentDoublePressDesc": "Esegue la segmentazione automatica rapida solo premendo due volte rapidamente la scorciatoia."
+      "showAll": "Mostra azioni senza tasto"
     },
     "tab": {
       "common": "Generale",
@@ -1095,7 +1177,39 @@
       "changelog": "Registro modifiche"
     }
   },
-  "autoSegmentApplied": "Segmentazione automatica con {engine}",
+  "keyboardView": {
+    "title": "Tastiera",
+    "search": "Cerca azioni",
+    "searchResults": "{count, plural, =0 {Nessuna azione corrisponde} one {# azione corrisponde} many {# azioni corrispondono} other {# azioni corrispondono}}",
+    "layout": "Layout della tastiera",
+    "layoutAuto": "Automatico",
+    "layoutDetected": "Rilevato: {layout}",
+    "layoutUnavailable": "Impossibile rilevare il layout qui, quindi viene mostrato QWERTY",
+    "layerHint": "Fai clic su un tasto modificatore, come Maiusc, per vedere le scorciatoie che lo usano.",
+    "category": {
+      "sync": "Sincronizzazione",
+      "edit": "Modifica",
+      "playback": "Riproduzione",
+      "navigation": "Navigazione"
+    },
+    "free": "Libero",
+    "keyFree": "{key}: libero",
+    "keyActions": "{key}: {actions}",
+    "modifierLayer": "Mostra scorciatoie con {key}",
+    "freeKey": "Niente usa ancora {key}.",
+    "assignLabel": "Azione",
+    "assignPlaceholder": "Scegli un'azione...",
+    "assign": "Aggiungi a {key}",
+    "changeKey": "Cambia tasto",
+    "addKey": "Aggiungi secondo tasto",
+    "removeKey": "Rimuovi {key}",
+    "duplicateKey": "Questo tasto è già impostato per questa azione.",
+    "doublePress": "Premi due volte per eseguire",
+    "doublePressDesc": "Si esegue solo premendo due volte rapidamente il tasto.",
+    "otherLayers": "Anche su questo tasto",
+    "closePanel": "Chiudi"
+  },
+  "autoSegmentApplied":"Segmentazione automatica con {engine}",
   "error": {
     "unsupportedFileFormat": "Formato file non supportato: {ext}",
     "openFileFailed": "Apertura del file non riuscita",
@@ -1241,6 +1355,14 @@
     "wordTimingMismatch": "{count, plural, one {# verso aveva un numero diverso di parole; sono state copiate solo le posizioni corrispondenti.} many {# versi avevano un numero diverso di parole; sono state copiate solo le posizioni corrispondenti.} other {# versi avevano un numero diverso di parole; sono state copiate solo le posizioni corrispondenti.}}",
     "insertLine": "Inserisci un nuovo verso qui",
     "insertWord": "Inserisci una parola qui…"
+  },
+  "editModeTools": {
+    "splitTypedLinesTitle": "Dividi in parole le righe digitate",
+    "splitTypedLinesDesc": "Il testo digitato in una riga vuota viene diviso in parole come fa l'importazione con le righe.",
+    "scrollMemoryTitle": "Ricorda la posizione in modalità Modifica",
+    "scrollMemoryDesc": "Riapre ogni progetto alla riga in cui eri in modalità Modifica.",
+    "swapDuetAll": "Scambia righe principali e del duetto",
+    "swapDuetSelected": "Scambia principale e duetto"
   },
   "lyricWordView": {
     "empty": "Vuoto",

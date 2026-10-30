@@ -57,8 +57,11 @@ interface SpanNode {
 /** Adapted from apoint123's upstream AMLL TTML Tool fix (04dbee4b). */
 export function separateTrailingWhitespace(words: LyricWord[]): LyricWord[] {
 	return words.flatMap((word) => {
-		const spaces = word.word.match(/\s+$/)?.[0];
-		if (!spaces || spaces.length === word.word.length) return [word];
+		// trimEnd strips the same characters as \s, in linear time. The /\s+$/
+		// regex backtracks quadratically on long whitespace runs.
+		const trimmedLength = word.word.trimEnd().length;
+		const spaces = word.word.slice(trimmedLength);
+		if (!spaces || trimmedLength === 0) return [word];
 		return [
 			{ ...word, word: word.word.slice(0, -spaces.length) },
 			{

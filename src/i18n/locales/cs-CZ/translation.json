@@ -226,7 +226,57 @@
       "dropped": "Neimportuje se",
       "missingTranslation": "Chybí překlad",
       "missingRomanization": "Chybí romanizace"
+    },
+    "search": {
+      "label": "Najít a nahradit",
+      "find": "Najít",
+      "replace": "Nahradit za",
+      "matchCase": "Rozlišovat velikost písmen",
+      "wholeWord": "Celá slova",
+      "regex": "Použít vzor (regex)",
+      "inSelection": "Jen ve výběru",
+      "showList": "Vypsat všechny shody",
+      "listLabel": "Shody",
+      "rows": "Prohledávané řádky",
+      "rowsAll": "Všechny řádky",
+      "rowsLyrics": "Jen text písně",
+      "rowsTranslations": "Překlady a romanizace",
+      "previous": "Předchozí shoda",
+      "next": "Další shoda",
+      "toggleReplace": "Zobrazit nahrazení",
+      "close": "Zavřít hledání",
+      "replaceOne": "Nahradit",
+      "replaceAll": "Nahradit vše",
+      "replaceThis": "Nahradit tuto shodu",
+      "count": "{count, plural, one {# shoda} few {# shody} many {# shody} other {# shod}}",
+      "position": "{current} z {count}",
+      "noMatches": "Žádné shody",
+      "replaced": "{count, plural, one {Nahrazena # shoda} few {Nahrazeny # shody} many {Nahrazeno # shody} other {Nahrazeno # shod}}",
+      "invalid": "Vzor není platný"
     }
+  },
+  "editAsText": {
+    "menuItem": "Upravit jako text...",
+    "title": "Upravit jako text",
+    "description": "Upravte celý text písně jako prostý text. Slova, která nezměníte, si ponechají časování.",
+    "textLabel": "Text písně",
+    "toolsHint": "Zpracovat text a Rozdělit slabiky pracují s vybranými řádky, nebo se vším, když není nic vybráno.",
+    "nothingToProcess": "Není co měnit.",
+    "summaryTitle": "Změny",
+    "unchanged": "{count, plural, one {# řádek beze změny} few {# řádky beze změny} many {# řádku beze změny} other {# řádků beze změny}}",
+    "edited": "{count, plural, one {# upravený řádek} few {# upravené řádky} many {# upraveného řádku} other {# upravených řádků}}",
+    "editedHint": "Časování zůstane tam, kde se slova shodují.",
+    "moved": "{count, plural, one {# přesunutý řádek} few {# přesunuté řádky} many {# přesunutého řádku} other {# přesunutých řádků}}",
+    "added": "{count, plural, one {# přidaný řádek} few {# přidané řádky} many {# přidaného řádku} other {# přidaných řádků}}",
+    "removed": "{count, plural, one {# odebraný řádek} few {# odebrané řádky} many {# odebraného řádku} other {# odebraných řádků}}",
+    "noChanges": "Zatím žádné změny.",
+    "droppedTimings": "{count, plural, one {# načasované slovo přijde o časování} few {# načasovaná slova přijdou o časování} many {# načasovaného slova přijde o časování} other {# načasovaných slov přijde o časování}}",
+    "lineNumber": "Řádek {line}",
+    "more": "{count, plural, one {a # další} few {a # další} many {a # dalšího} other {a # dalších}}",
+    "help": "Nová slova přijdou bez časování. Řádky, které se jen přesunuly, si časování ponechají. Použití vrátíte jedním krokem zpět.",
+    "apply": "Použít",
+    "applied": "Text byl použit. Jedním krokem zpět ho vrátíte.",
+    "failed": "Text se nepodařilo použít. Zkontrolujte ho a zkuste to znovu."
   },
   "importChooser": {
     "options": {
@@ -272,6 +322,12 @@
     "importFile": {
       "title": "Importovat nový text písně?",
       "description": "Máte neuložené změny. Pokud budete pokračovat, budou ztraceny. Opravdu chcete importovat nový text písně?"
+    },
+    "discardTextEdits": {
+      "title": "Zahodit úpravy?",
+      "description": "Text obsahuje změny, které jste nepoužili. Zavřením je ztratíte.",
+      "discard": "Zahodit",
+      "keepEditing": "Pokračovat v úpravách"
     },
     "noSongwriter": {
       "description": "Skladba nemá uvedené autory. Přesto uložit?"
@@ -346,6 +402,7 @@
     "preview": "Náhled"
   },
   "dialog": {
+    "openFilesIgnored": "{count, plural, one {# soubor byl vynechán} few {# soubory byly vynechány} many {# souboru bylo vynecháno} other {# souborů bylo vynecháno}}: otevřete najednou jeden soubor s textem a jeden zvukový soubor.",
     "createProjectPrompt": {
       "title": "Vytvořit projekt?",
       "description": "Uchovávejte zvuk a texty společně ve složce projektu.",
@@ -371,6 +428,18 @@
     "openWorkspace": {
       "title": "Vyberte složku pracovního prostoru s projekty"
     }
+  },
+  "commandPalette": {
+    "title": "Paleta příkazů",
+    "placeholder": "Hledat příkazy a nastavení",
+    "noResults": "Žádné odpovídající příkazy ani nastavení",
+    "commandTag": "Příkaz",
+    "settingTag": "Předvolby",
+    "hint": "Šipkami se posunete, Enter spustí, Esc zavře",
+    "notRunnable": "Příkaz se nepodařilo spustit. Přiřaďte mu zkratku v Předvolbách a zkuste to znovu.",
+    "menu": "Paleta příkazů...",
+    "shortcut": "Zobrazení – otevřít paletu příkazů",
+    "shortcutAlternate": "Zobrazení – otevřít paletu příkazů (alternativní zkratka)"
   },
   "projectsDialog": {
     "title": "Projekty",
@@ -985,6 +1054,7 @@
     "deleteWords": "Smazat {count, plural, one {# slovo} few {# slova} many {# slova} other {# slov}}",
     "bgLyric": "Doprovodný řádek",
     "duetLyric": "Duetový řádek",
+    "lineRole": "Role řádku",
     "moveLineToPlayhead": "Přesunout řádek na pozici přehrávání",
     "copyTimingsTo": "Kopírovat časování do…",
     "cancelCopyTimings": "Zrušit kopírování časování",
@@ -1027,6 +1097,8 @@
       "redoAlternate": "Znovu (alternativní zkratka)",
       "selectAll": "Vybrat vše",
       "unselectAll": "Zrušit celý výběr",
+      "findInLyrics": "Najít v textu",
+      "replaceInLyrics": "Nahradit v textu",
       "deleteSelection": "Smazat výběr",
       "autoSegment": "Rychlé automatické dělení",
       "autoSegmentDialog": "Automatické dělení…",
@@ -1065,6 +1137,15 @@
       "auditionSelection": "Spektrogram – přehrát výběr",
       "auditionSelectionAfter": "Spektrogram – přehrát výběr (+0,5 s po)",
       "cancelTimelineEditing": "Spektrogram – zrušit úpravu časové osy",
+      "exportTtml": "Exportovat text písně: TTML",
+      "exportLrc": "Exportovat text písně: LRC",
+      "exportEslrc": "Exportovat text písně: ESLRC",
+      "exportQrc": "Exportovat text písně: QRC",
+      "exportYrc": "Exportovat text písně: YRC",
+      "exportLys": "Exportovat text písně: Lyricify Syllable",
+      "exportAss": "Exportovat text písně: Titulky ASS",
+      "newLyricLine": "Nový řádek textu",
+      "advancedRibbonControls": "Pokročilé ovládací prvky pásu karet",
       "resetDefault": "Obnovit výchozí",
       "clear": "Vymazat",
       "unbound": "Nenastaveno",
@@ -1076,11 +1157,12 @@
         "View": "Zobrazení",
         "Sync": "Časování",
         "Audio": "Zvuk",
-        "Spectrogram": "Spektrogram"
+        "Spectrogram": "Spektrogram",
+        "Tools": "Nástroje",
+        "Help": "Nápověda",
+        "Preview": "Náhled"
       },
-      "autoSegmentOptions": "Automatické dělení",
-      "autoSegmentDoublePress": "Vyžadovat dvojí stisk",
-      "autoSegmentDoublePressDesc": "Spustit rychlé automatické dělení jen po dvojím rychlém stisku jeho zkratky."
+      "showAll": "Zobrazit akce bez klávesy"
     },
     "tab": {
       "common": "Obecné",
@@ -1095,7 +1177,39 @@
       "changelog": "Seznam změn"
     }
   },
-  "autoSegmentApplied": "Automaticky rozděleno pomocí {engine}",
+  "keyboardView": {
+    "title": "Klávesnice",
+    "search": "Hledat akce",
+    "searchResults": "{count, plural, =0 {Žádná akce neodpovídá} one {Odpovídá # akce} few {Odpovídají # akce} many {Odpovídá # akce} other {Odpovídá # akcí}}",
+    "layout": "Rozložení klávesnice",
+    "layoutAuto": "Automaticky",
+    "layoutDetected": "Zjištěno: {layout}",
+    "layoutUnavailable": "Rozložení zde nelze zjistit, zobrazuje se QWERTY",
+    "layerHint": "Klikněte na modifikační klávesu, například Shift, a uvidíte zkratky, které ji používají.",
+    "category": {
+      "sync": "Časování",
+      "edit": "Úpravy",
+      "playback": "Přehrávání",
+      "navigation": "Navigace"
+    },
+    "free": "Volná",
+    "keyFree": "{key}: volná",
+    "keyActions": "{key}: {actions}",
+    "modifierLayer": "Zobrazit zkratky s {key}",
+    "freeKey": "{key} zatím nic nepoužívá.",
+    "assignLabel": "Akce",
+    "assignPlaceholder": "Vyberte akci...",
+    "assign": "Přidat na {key}",
+    "changeKey": "Změnit klávesu",
+    "addKey": "Přidat druhou klávesu",
+    "removeKey": "Odebrat {key}",
+    "duplicateKey": "Tato klávesa je už pro tuto akci nastavena.",
+    "doublePress": "Spustit dvojím stiskem",
+    "doublePressDesc": "Spustí se jen po dvojím rychlém stisku klávesy.",
+    "otherLayers": "Také na této klávese",
+    "closePanel": "Zavřít"
+  },
+  "autoSegmentApplied":"Automaticky rozděleno pomocí {engine}",
   "error": {
     "unsupportedFileFormat": "Nepodporovaný formát souboru: {ext}",
     "openFileFailed": "Nepodařilo se otevřít soubor",
@@ -1241,6 +1355,14 @@
     "wordTimingMismatch": "{count, plural, one {# řádek měl} few {# řádky měly} many {# řádku mělo} other {# řádků mělo}} jiný počet slov. Zkopírovány byly jen odpovídající pozice slov.",
     "insertLine": "Vložit nový řádek zde",
     "insertWord": "Vložit slovo zde…"
+  },
+  "editModeTools": {
+    "splitTypedLinesTitle": "Rozdělit napsané řádky na slova",
+    "splitTypedLinesDesc": "Text napsaný do prázdného řádku se rozdělí na slova stejně, jako import rozděluje řádky.",
+    "scrollMemoryTitle": "Pamatovat si pozici v režimu úprav",
+    "scrollMemoryDesc": "Otevře každý projekt na řádku, kde jste byli v režimu úprav.",
+    "swapDuetAll": "Prohodit hlavní a duetové řádky",
+    "swapDuetSelected": "Prohodit hlavní a duet"
   },
   "lyricWordView": {
     "empty": "Prázdné",

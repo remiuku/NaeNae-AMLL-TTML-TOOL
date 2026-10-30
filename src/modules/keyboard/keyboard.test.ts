@@ -460,6 +460,53 @@ describe("double-press shortcuts", () => {
 		expect(callback).toHaveBeenCalledOnce();
 	});
 
+	it("runs a Press twice to run action on the second press only, and others at once", () => {
+		const flaggedAtom = keyboard.atomWithKeybindingStorage("test-double", [
+			"KeyE",
+		]);
+		const otherAtom = keyboard.atomWithKeybindingStorage("test-single", [
+			"KeyF",
+		]);
+		const flagged = vi.fn();
+		const other = vi.fn();
+		cleanups.push(
+			keyboard.registerKeyBindingAtom(flaggedAtom, ["KeyE"], flagged, true),
+			keyboard.registerKeyBindingAtom(otherAtom, ["KeyF"], other),
+		);
+		key("keydown", "KeyE", 0);
+		key("keyup", "KeyE", 10);
+		expect(flagged).not.toHaveBeenCalled();
+		// An action without the flag fires on its own first keydown, no waiting.
+		key("keydown", "KeyF", 20);
+		expect(other).toHaveBeenCalledOnce();
+		key("keyup", "KeyF", 30);
+		key("keydown", "KeyE", 40 + keyboard.DOUBLE_PRESS_WINDOW_MS);
+		key("keyup", "KeyE", 50 + keyboard.DOUBLE_PRESS_WINDOW_MS);
+		expect(flagged).not.toHaveBeenCalled();
+		key("keydown", "KeyE", 100 + keyboard.DOUBLE_PRESS_WINDOW_MS);
+		expect(flagged).toHaveBeenCalledOnce();
+	});
+
+	it("still runs a Press twice to run action at once from the palette", () => {
+		const flaggedAtom = keyboard.atomWithKeybindingStorage("test-palette", [
+			"KeyE",
+		]);
+		const callback = vi.fn();
+		cleanups.push(
+			keyboard.registerKeyBindingAtom(flaggedAtom, ["KeyE"], callback, true),
+		);
+		keyboard.forceInvokeKeyBindingAtom(createStore(), flaggedAtom);
+		expect(callback).toHaveBeenCalledOnce();
+	});
+
+	it("ignores an unbound Press twice to run action", () => {
+		const callback = vi.fn();
+		cleanups.push(keyboard.registerDoubleKeyBindings([], callback));
+		key("keydown", "KeyE", 0);
+		key("keydown", "KeyE", 50);
+		expect(callback).not.toHaveBeenCalled();
+	});
+
 	it("does not count slow taps or taps interrupted by typing", () => {
 		const callback = vi.fn();
 		cleanups.push(keyboard.registerDoubleKeyBindings(["KeyE"], callback));
@@ -503,5 +550,47 @@ describe("command defaults and conflict warnings", () => {
 				{ command: commands.cmdUndo, keys: [] },
 			]),
 		).toEqual(new Map());
+	});
+});
+
+describe("Press twice to run migration", () => {
+	function memoryStorage(entries: Record<string, string>) {
+		const data = new Map(Object.entries(entries));
+		return {
+			data,
+			getItem: (name: string) => data.get(name) ?? null,
+			setItem: (name: string, value: string) => void data.set(name, value),
+			removeItem: (name: string) => void data.delete(name),
+		};
+	}
+
+	it.each([
+		["on", "true", ["autoSegment"]],
+		["off", "false", []],
+	])("moves the old Auto segment switch (%s) to the per-action list", async (_, legacy, expected) => {
+		const states = await import("./states");
+		const storage = memoryStorage({
+			[states.LEGACY_AUTO_SEGMENT_DOUBLE_PRESS_KEY]: legacy,
+		});
+		states.migrateDoublePressSetting(storage);
+		expect(
+			JSON.parse(storage.getItem(states.DOUBLE_PRESS_STORAGE_KEY) ?? ""),
+		).toEqual(expected);
+		expect(storage.data.has(states.LEGACY_AUTO_SEGMENT_DOUBLE_PRESS_KEY)).toBe(
+			false,
+		);
+	});
+
+	it("leaves a fresh install on the default and an existing list alone", async () => {
+		const states = await import("./states");
+		const fresh = memoryStorage({});
+		states.migrateDoublePressSetting(fresh);
+		expect(fresh.data.size).toBe(0);
+		const existing = memoryStorage({
+			[states.DOUBLE_PRESS_STORAGE_KEY]: '["undo"]',
+			[states.LEGACY_AUTO_SEGMENT_DOUBLE_PRESS_KEY]: "false",
+		});
+		states.migrateDoublePressSetting(existing);
+		expect(existing.getItem(states.DOUBLE_PRESS_STORAGE_KEY)).toBe('["undo"]');
 	});
 });

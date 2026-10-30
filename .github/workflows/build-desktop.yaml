@@ -169,10 +169,12 @@ jobs:
       - name: Install AppImage repacking tool
         if: matrix.platform == 'ubuntu-latest'
         shell: bash
+        # Pinned: the rolling "continuous" build changed under us and broke v0.19.0.
         run: |
           curl --fail --location --retry 3 \
             --output /usr/local/bin/appimagetool \
-            https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage
+            https://github.com/AppImage/appimagetool/releases/download/1.9.1/appimagetool-x86_64.AppImage
+          echo "ed4ce84f0d9caff66f50bcca6ff6f35aae54ce8135408b3fa33abfc3cb384eb0  /usr/local/bin/appimagetool" | sha256sum --check
           chmod +x /usr/local/bin/appimagetool
       - name: Remove host-incompatible libraries from AppImage
         if: matrix.platform == 'ubuntu-latest'

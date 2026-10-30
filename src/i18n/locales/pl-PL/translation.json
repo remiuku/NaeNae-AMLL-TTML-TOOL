@@ -226,7 +226,57 @@
       "dropped": "Nie zostanie zaimportowane",
       "missingTranslation": "Brak tłumaczenia",
       "missingRomanization": "Brak latynizacji"
+    },
+    "search": {
+      "label": "Znajdź i zamień",
+      "find": "Znajdź",
+      "replace": "Zamień na",
+      "matchCase": "Uwzględniaj wielkość liter",
+      "wholeWord": "Całe słowo",
+      "regex": "Użyj wzorca (regex)",
+      "inSelection": "Tylko w zaznaczeniu",
+      "showList": "Pokaż wszystkie wyniki",
+      "listLabel": "Wyniki",
+      "rows": "Przeszukiwane wiersze",
+      "rowsAll": "Wszystkie wiersze",
+      "rowsLyrics": "Tylko tekst",
+      "rowsTranslations": "Tłumaczenia i latynizacja",
+      "previous": "Poprzedni wynik",
+      "next": "Następny wynik",
+      "toggleReplace": "Pokaż zamianę",
+      "close": "Zamknij wyszukiwanie",
+      "replaceOne": "Zamień",
+      "replaceAll": "Zamień wszystko",
+      "replaceThis": "Zamień ten wynik",
+      "count": "{count, plural, one {# wynik} few {# wyniki} many {# wyników} other {# wyniku}}",
+      "position": "{current} z {count}",
+      "noMatches": "Brak wyników",
+      "replaced": "{count, plural, one {Zamieniono # wynik} few {Zamieniono # wyniki} many {Zamieniono # wyników} other {Zamieniono # wyniku}}",
+      "invalid": "Wzorzec jest nieprawidłowy"
     }
+  },
+  "editAsText": {
+    "menuItem": "Edytuj jako tekst...",
+    "title": "Edytuj jako tekst",
+    "description": "Edytuj cały tekst piosenki jako zwykły tekst. Słowa, których nie zmienisz, zachowują synchronizację.",
+    "textLabel": "Tekst piosenki",
+    "toolsHint": "Przetwórz tekst i Podziel na sylaby działają na zaznaczonych wierszach albo na całości, gdy nic nie jest zaznaczone.",
+    "nothingToProcess": "Nie ma czego zmieniać.",
+    "summaryTitle": "Zmiany",
+    "unchanged": "{count, plural, one {# wiersz bez zmian} few {# wiersze bez zmian} many {# wierszy bez zmian} other {# wiersza bez zmian}}",
+    "edited": "{count, plural, one {# edytowany wiersz} few {# edytowane wiersze} many {# edytowanych wierszy} other {# edytowanego wiersza}}",
+    "editedHint": "Synchronizacja zostaje tam, gdzie słowa się zgadzają.",
+    "moved": "{count, plural, one {# przeniesiony wiersz} few {# przeniesione wiersze} many {# przeniesionych wierszy} other {# przeniesionego wiersza}}",
+    "added": "{count, plural, one {# dodany wiersz} few {# dodane wiersze} many {# dodanych wierszy} other {# dodanego wiersza}}",
+    "removed": "{count, plural, one {# usunięty wiersz} few {# usunięte wiersze} many {# usuniętych wierszy} other {# usuniętego wiersza}}",
+    "noChanges": "Na razie brak zmian.",
+    "droppedTimings": "{count, plural, one {# zsynchronizowane słowo traci synchronizację} few {# zsynchronizowane słowa tracą synchronizację} many {# zsynchronizowanych słów traci synchronizację} other {# zsynchronizowanego słowa traci synchronizację}}",
+    "lineNumber": "Wiersz {line}",
+    "more": "{count, plural, one {i # więcej} few {i # więcej} many {i # więcej} other {i # więcej}}",
+    "help": "Nowe słowa trafiają bez synchronizacji. Wiersze, które tylko przeniesiono, zachowują synchronizację. Zastosowanie cofniesz jednym krokiem.",
+    "apply": "Zastosuj",
+    "applied": "Tekst zastosowany. Cofnij przywraca poprzedni stan jednym krokiem.",
+    "failed": "Nie udało się zastosować tekstu. Sprawdź go i spróbuj ponownie."
   },
   "importChooser": {
     "options": {
@@ -272,6 +322,12 @@
     "importFile": {
       "title": "Zaimportować nowy tekst?",
       "description": "Masz niezapisane zmiany. Jeśli kontynuujesz, te zmiany zostaną utracone. Czy na pewno chcesz zaimportować nowy tekst?"
+    },
+    "discardTextEdits": {
+      "title": "Odrzucić zmiany?",
+      "description": "Tekst ma niezastosowane zmiany. Zamknięcie teraz spowoduje ich utratę.",
+      "discard": "Odrzuć",
+      "keepEditing": "Edytuj dalej"
     },
     "noSongwriter": {
       "description": "Nie podano autorów utworu. Zapisać mimo to?"
@@ -346,6 +402,7 @@
     "preview": "Podgląd"
   },
   "dialog": {
+    "openFilesIgnored": "{count, plural, one {Pominięto # plik} few {Pominięto # pliki} many {Pominięto # plików} other {Pominięto # pliku}}: otwieraj naraz jeden plik z tekstem i jeden plik audio.",
     "createProjectPrompt": {
       "title": "Utworzyć projekt?",
       "description": "Trzymaj dźwięk i teksty razem w folderze projektu.",
@@ -371,6 +428,18 @@
     "openWorkspace": {
       "title": "Wybierz folder obszaru roboczego z projektami"
     }
+  },
+  "commandPalette": {
+    "title": "Paleta poleceń",
+    "placeholder": "Szukaj poleceń i ustawień",
+    "noResults": "Brak pasujących poleceń i ustawień",
+    "commandTag": "Polecenie",
+    "settingTag": "Preferencje",
+    "hint": "Strzałki przesuwają, Enter uruchamia, Esc zamyka",
+    "notRunnable": "Nie udało się uruchomić polecenia. Przypisz mu skrót w Preferencjach i spróbuj ponownie.",
+    "menu": "Paleta poleceń...",
+    "shortcut": "Widok – otwórz paletę poleceń",
+    "shortcutAlternate": "Widok – otwórz paletę poleceń (alternatywny skrót)"
   },
   "projectsDialog": {
     "title": "Projekty",
@@ -985,6 +1054,7 @@
     "deleteWords": "Usuń {count, plural, one {# słowo} few {# słowa} many {# słów} other {# słowa}}",
     "bgLyric": "Wers wokalu w tle",
     "duetLyric": "Wers duetu",
+    "lineRole": "Rola wiersza",
     "moveLineToPlayhead": "Przesuń wers do pozycji odtwarzania",
     "copyTimingsTo": "Kopiuj czasy do…",
     "cancelCopyTimings": "Anuluj kopiowanie czasów",
@@ -1027,6 +1097,8 @@
       "redoAlternate": "Ponów (alternatywny skrót)",
       "selectAll": "Zaznacz wszystko",
       "unselectAll": "Odznacz wszystko",
+      "findInLyrics": "Znajdź w tekście",
+      "replaceInLyrics": "Zamień w tekście",
       "deleteSelection": "Usuń zaznaczenie",
       "autoSegment": "Szybki automatyczny podział",
       "autoSegmentDialog": "Automatyczny podział…",
@@ -1065,6 +1137,15 @@
       "auditionSelection": "Spektrogram – odtwórz zaznaczenie",
       "auditionSelectionAfter": "Spektrogram – odtwórz zaznaczenie (+0,5 s po)",
       "cancelTimelineEditing": "Spektrogram – anuluj edycję osi czasu",
+      "exportTtml": "Eksportuj tekst: TTML",
+      "exportLrc": "Eksportuj tekst: LRC",
+      "exportEslrc": "Eksportuj tekst: ESLRC",
+      "exportQrc": "Eksportuj tekst: QRC",
+      "exportYrc": "Eksportuj tekst: YRC",
+      "exportLys": "Eksportuj tekst: Lyricify Syllable",
+      "exportAss": "Eksportuj tekst: Napisy ASS",
+      "newLyricLine": "Nowy wers tekstu",
+      "advancedRibbonControls": "Zaawansowane opcje wstążki",
       "resetDefault": "Przywróć ustawienia domyślne",
       "clear": "Wyczyść",
       "unbound": "Nie ustawiono",
@@ -1076,11 +1157,12 @@
         "View": "Widok",
         "Sync": "Synchronizacja",
         "Audio": "Dźwięk",
-        "Spectrogram": "Spektrogram"
+        "Spectrogram": "Spektrogram",
+        "Tools": "Narzędzia",
+        "Help": "Pomoc",
+        "Preview": "Podgląd"
       },
-      "autoSegmentOptions": "Automatyczny podział",
-      "autoSegmentDoublePress": "Wymagaj podwójnego naciśnięcia",
-      "autoSegmentDoublePressDesc": "Uruchamiaj szybki automatyczny podział tylko po dwukrotnym szybkim naciśnięciu skrótu."
+      "showAll": "Pokaż akcje bez klawisza"
     },
     "tab": {
       "common": "Ogólne",
@@ -1095,7 +1177,39 @@
       "changelog": "Lista zmian"
     }
   },
-  "autoSegmentApplied": "Automatycznie podzielono za pomocą {engine}",
+  "keyboardView": {
+    "title": "Klawiatura",
+    "search": "Szukaj akcji",
+    "searchResults": "{count, plural, =0 {Brak pasujących akcji} one {# pasująca akcja} few {# pasujące akcje} many {# pasujących akcji} other {# pasującej akcji}}",
+    "layout": "Układ klawiatury",
+    "layoutAuto": "Automatyczny",
+    "layoutDetected": "Wykryto: {layout}",
+    "layoutUnavailable": "Nie można tu wykryć układu, więc pokazano QWERTY",
+    "layerHint": "Kliknij klawisz modyfikujący, na przykład Shift, aby zobaczyć skróty, które go używają.",
+    "category": {
+      "sync": "Synchronizacja",
+      "edit": "Edycja",
+      "playback": "Odtwarzanie",
+      "navigation": "Nawigacja"
+    },
+    "free": "Wolny",
+    "keyFree": "{key}: wolny",
+    "keyActions": "{key}: {actions}",
+    "modifierLayer": "Pokaż skróty z {key}",
+    "freeKey": "Nic jeszcze nie używa {key}.",
+    "assignLabel": "Akcja",
+    "assignPlaceholder": "Wybierz akcję...",
+    "assign": "Dodaj do {key}",
+    "changeKey": "Zmień klawisz",
+    "addKey": "Dodaj drugi klawisz",
+    "removeKey": "Usuń {key}",
+    "duplicateKey": "Ten klawisz jest już ustawiony dla tej akcji.",
+    "doublePress": "Naciśnij dwa razy, aby uruchomić",
+    "doublePressDesc": "Uruchamia się tylko po dwukrotnym szybkim naciśnięciu klawisza.",
+    "otherLayers": "Również na tym klawiszu",
+    "closePanel": "Zamknij"
+  },
+  "autoSegmentApplied":"Automatycznie podzielono za pomocą {engine}",
   "error": {
     "unsupportedFileFormat": "Nieobsługiwany format pliku: {ext}",
     "openFileFailed": "Nie udało się otworzyć pliku",
@@ -1241,6 +1355,14 @@
     "wordTimingMismatch": "{count, plural, one {# wers miał} few {# wersy miały} many {# wersów miało} other {# wersu miało}} inną liczbę słów. Skopiowano tylko pasujące pozycje słów.",
     "insertLine": "Wstaw tutaj nowy wers",
     "insertWord": "Wstaw słowo tutaj…"
+  },
+  "editModeTools": {
+    "splitTypedLinesTitle": "Dziel wpisane wersy na słowa",
+    "splitTypedLinesDesc": "Tekst wpisany w pusty wers jest dzielony na słowa tak samo, jak import dzieli wersy.",
+    "scrollMemoryTitle": "Zapamiętuj pozycję w trybie edycji",
+    "scrollMemoryDesc": "Otwiera każdy projekt na wersie, na którym byłeś w trybie edycji.",
+    "swapDuetAll": "Zamień wersy główne i duetu",
+    "swapDuetSelected": "Zamień główny i duet"
   },
   "lyricWordView": {
     "empty": "Pusty",

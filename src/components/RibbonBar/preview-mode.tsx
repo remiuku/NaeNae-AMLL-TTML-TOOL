@@ -18,19 +18,14 @@ import { useAtomValue } from "jotai";
 import { forwardRef } from "react";
 import { useTranslation } from "react-i18next";
 import { ActionTooltip } from "$/components/ActionTooltip";
+import { SlIcon } from "$/components/SlIcon";
+import { RIBBON_ACTIONS } from "$/modules/menu-actions/ribbon-actions";
 import {
 	PreviewModeType,
 	previewModeTypeAtom,
-	showRomanLinesAtom,
-	showTranslationLinesAtom,
-	spicyForceLineSyncedAtom,
-	spicyJoinSplitWordsAtom,
-	spicySimpleLyricsModeAtom,
 } from "$/modules/settings/states/preview";
-import { timingOverviewAutoScrollAtom } from "$/modules/settings/states/sync.ts";
-import { AdvancedSection } from "./AdvancedSection";
 import { RibbonFrame, RibbonSection } from "./common";
-import { RibbonLabel, RibbonToggle } from "./RibbonToggle";
+import { RibbonActionToggle, RibbonLabel } from "./RibbonToggle";
 
 export const PreviewModeRibbonBar = forwardRef<HTMLDivElement>(
 	(_props, ref) => {
@@ -67,27 +62,19 @@ export const PreviewModeRibbonBar = forwardRef<HTMLDivElement>(
 							flexGrow="1"
 							align="center"
 						>
-							<RibbonToggle
-								label={t(
-									"ribbonBar.previewMode.simpleLyrics",
-									"Simple Lyrics mode",
-								)}
+							<RibbonActionToggle
+								action={RIBBON_ACTIONS.simpleLyricsMode}
 								description={t(
 									"settings.workflow.simpleLyricsDesc",
 									"Match Spicy Lyrics' Simple Lyrics mode, with calmer word animations.",
 								)}
-								setting={spicySimpleLyricsModeAtom}
 							/>
-							<RibbonToggle
-								label={t(
-									"ribbonBar.previewMode.forceLineRendering",
-									"Show as line-synced",
-								)}
+							<RibbonActionToggle
+								action={RIBBON_ACTIONS.forceLineSynced}
 								description={t(
 									"settings.workflow.forceLineRenderingDesc",
 									"Show every line in the Spicy preview as line-synced, without word timing.",
 								)}
-								setting={spicyForceLineSyncedAtom}
 							/>
 							<RibbonLabel
 								label={backgroundLabel}
@@ -111,13 +98,12 @@ export const PreviewModeRibbonBar = forwardRef<HTMLDivElement>(
 							flexGrow="1"
 							align="center"
 						>
-							<RibbonToggle
-								label={t("ribbonBar.previewMode.autoScroll", "Auto-scroll")}
+							<RibbonActionToggle
+								action={RIBBON_ACTIONS.timingAutoScroll}
 								description={t(
 									"settings.workflow.timingOverviewAutoScrollDesc",
 									"Keep the timing overview scrolled to the playhead.",
 								)}
-								setting={timingOverviewAutoScrollAtom}
 							/>
 						</Grid>
 					</RibbonSection>
@@ -131,42 +117,35 @@ export const PreviewModeRibbonBar = forwardRef<HTMLDivElement>(
 							flexGrow="1"
 							align="center"
 						>
-							<RibbonToggle
-								label={t(
-									"ribbonBar.previewMode.showTranslation",
-									"Show translation",
-								)}
+							<RibbonActionToggle
+								action={RIBBON_ACTIONS.previewTranslation}
 								description={t(
 									"settings.workflow.previewShowTranslationDesc",
 									"Show translation lines in the preview.",
 								)}
-								setting={showTranslationLinesAtom}
+								icon={<SlIcon name="translation" />}
 							/>
-							<RibbonToggle
-								label={t(
-									"ribbonBar.previewMode.showRoman",
-									"Show romanization",
-								)}
+							<RibbonActionToggle
+								action={RIBBON_ACTIONS.previewRomanization}
 								description={t(
 									"settings.workflow.previewShowRomanDesc",
 									"Show romanization in the preview.",
 								)}
-								setting={showRomanLinesAtom}
+								icon={<SlIcon name="romanization" />}
 							/>
 							{previewModeType === PreviewModeType.Spicy && (
-								<RibbonToggle
-									label={t("joinSplitWords.label", "Join split words")}
+								<RibbonActionToggle
+									action={RIBBON_ACTIONS.joinSplitWords}
 									description={t(
 										"joinSplitWords.description",
 										"Show a word sung in parts as one word when the parts line up evenly, like Spicy Lyrics' Join Split Words setting.",
 									)}
-									setting={spicyJoinSplitWordsAtom}
 								/>
 							)}
 						</Grid>
 					</RibbonSection>
 				)}
-				<AdvancedSection />
+				{/* No Advanced switch here: nothing in Preview has advanced controls. */}
 			</RibbonFrame>
 		);
 	},

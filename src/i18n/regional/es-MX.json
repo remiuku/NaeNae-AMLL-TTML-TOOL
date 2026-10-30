@@ -139,8 +139,7 @@
 	"settingsDialog": {
 		"search": "Buscar en la configuración",
 		"keybindings": {
-			"recording": "Presiona un atajo (Esc para cancelar)",
-			"autoSegmentDoublePressDesc": "Ejecuta la segmentación automática rápida solo al presionar su atajo dos veces seguidas."
+			"recording": "Presiona un atajo (Esc para cancelar)"
 		},
 		"tab": {
 			"backup": "Respaldo"

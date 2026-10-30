@@ -1,5 +1,115 @@
 [
 	{
+		"version": "0.20.0",
+		"summary": "Keyboard, palette and text editing",
+		"color": "green",
+		"date": "2026-10-30",
+		"entries": [
+			{
+				"type": "feature",
+				"title": "Edit the whole lyrics as text and keep your timings",
+				"body": "**Edit › Edit as text** opens the whole lyrics as text, and words you don't change keep their timing",
+				"highlight": true
+			},
+			{
+				"type": "feature",
+				"title": "Find and replace in lyrics",
+				"body": "`Ctrl+F` and `Ctrl+H` search Edit as text and the import screen, across syllable splits, with patterns and a match list",
+				"highlight": true
+			},
+			{
+				"type": "feature",
+				"title": "Command palette",
+				"body": "Press **Ctrl+K** to find and run any command or Preferences page",
+				"highlight": false
+			},
+			{
+				"type": "feature",
+				"title": "Process lyrics and split syllables in Edit as text",
+				"body": "Both buttons in **Edit › Edit as text** work on the selected lines, or on everything when nothing is selected",
+				"highlight": false
+			},
+			{
+				"type": "feature",
+				"title": "Second keys and a keyboard view for shortcuts",
+				"body": "**Preferences › Shortcuts** shows every shortcut on a keyboard, finds actions by name or key and adds second keys",
+				"highlight": false
+			},
+			{
+				"type": "feature",
+				"title": "Shortcuts for every menu item and ribbon switch",
+				"body": "Give any menu item, ribbon switch or Load audio file a key in **Preferences**, and find them all with **Ctrl+K**",
+				"highlight": false
+			},
+			{
+				"type": "feature",
+				"title": "Open lyrics and audio together",
+				"body": "Open and Load audio take lyrics, audio or one of each, and dropping a lyric file with its audio opens both",
+				"highlight": true
+			},
+			{
+				"type": "feature",
+				"title": "Swap duet lines and type whole lines in Edit mode",
+				"body": "Swap from the Tools or line menu, typed lines split into words, and Edit mode reopens where you left off",
+				"highlight": false
+			},
+			{
+				"type": "change",
+				"title": "Role icons across the editor, and a quicker line menu",
+				"body": "The line menu puts background, duet and swap in one row of icon buttons, and the same icons mark lines and the ribbon",
+				"highlight": true
+			},
+			{
+				"type": "change",
+				"title": "File dialogs remember their own folder",
+				"body": "Open, Load audio and the project pickers each reopen in the folder you last used them in, on desktop",
+				"highlight": false
+			},
+			{
+				"type": "change",
+				"title": "Line numbers and role icons in the lyrics text editor",
+				"body": "The import screen and Edit as text number each lyric line and mark backgrounds, duets and headers with icons",
+				"highlight": false
+			},
+			{
+				"type": "change",
+				"title": "Press twice to run for any shortcut",
+				"body": "Any action can wait for a second press of its key, set in the keyboard view; Auto segment keeps your old setting",
+				"highlight": false
+			},
+			{
+				"type": "change",
+				"title": "Tidier shortcut list and command palette",
+				"body": "Shortcut rows fit on one line and show second keys, and palette rows show their group icon instead of \"Command\"",
+				"highlight": false
+			},
+			{
+				"type": "change",
+				"title": "No Advanced switch in the Preview ribbon",
+				"body": "Preview has no advanced controls, so its ribbon no longer shows the Advanced switch",
+				"highlight": false
+			},
+			{
+				"type": "fix",
+				"title": "Saving works again on macOS and Linux",
+				"body": "Save, Export and settings backups open the system save dialog on every desktop app, where macOS and Linux did nothing",
+				"highlight": true
+			},
+			{
+				"type": "fix",
+				"title": "Safer handling of shared lyric files and projects",
+				"body": "Crafted TTML files can no longer freeze the editor, and shared project folders can't redirect saves elsewhere",
+				"highlight": false
+			},
+			{
+				"type": "fix",
+				"title": "Tooltips stay out of the way",
+				"body": "Tooltips close as soon as the pointer leaves their control, and stay hidden while a menu or dropdown is open",
+				"highlight": false
+			}
+		]
+	},
+	{
 		"version": "0.19.1",
 		"summary": "Linux build fix",
 		"color": "ruby",

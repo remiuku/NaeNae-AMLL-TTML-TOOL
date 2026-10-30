@@ -226,7 +226,57 @@
       "dropped": "İçe aktarılmaz",
       "missingTranslation": "Çeviri eksik",
       "missingRomanization": "Romanizasyon eksik"
+    },
+    "search": {
+      "label": "Bul ve değiştir",
+      "find": "Bul",
+      "replace": "Şununla değiştir",
+      "matchCase": "Büyük/küçük harf duyarlı",
+      "wholeWord": "Tam sözcük",
+      "regex": "Desen kullan (regex)",
+      "inSelection": "Yalnızca seçimde",
+      "showList": "Tüm eşleşmeleri listele",
+      "listLabel": "Eşleşmeler",
+      "rows": "Aranacak satırlar",
+      "rowsAll": "Tüm satırlar",
+      "rowsLyrics": "Yalnızca sözler",
+      "rowsTranslations": "Çeviriler ve romanizasyon",
+      "previous": "Önceki eşleşme",
+      "next": "Sonraki eşleşme",
+      "toggleReplace": "Değiştirmeyi göster",
+      "close": "Aramayı kapat",
+      "replaceOne": "Değiştir",
+      "replaceAll": "Tümünü değiştir",
+      "replaceThis": "Bu eşleşmeyi değiştir",
+      "count": "{count, plural, one {# eşleşme} other {# eşleşme}}",
+      "position": "{current}/{count}",
+      "noMatches": "Eşleşme yok",
+      "replaced": "{count, plural, one {# eşleşme değiştirildi} other {# eşleşme değiştirildi}}",
+      "invalid": "Desen geçerli değil"
     }
+  },
+  "editAsText": {
+    "menuItem": "Metin olarak düzenle...",
+    "title": "Metin olarak düzenle",
+    "description": "Şarkı sözlerinin tamamını düz metin olarak düzenleyin. Değiştirmediğiniz kelimeler zamanlamasını korur.",
+    "textLabel": "Şarkı sözü metni",
+    "toolsHint": "Şarkı sözlerini işle ve Hecelere böl seçili satırlarda, hiçbir şey seçili değilse tüm metinde çalışır.",
+    "nothingToProcess": "Değiştirilecek bir şey yok.",
+    "summaryTitle": "Değişiklikler",
+    "unchanged": "{count, plural, one {# satır değişmedi} other {# satır değişmedi}}",
+    "edited": "{count, plural, one {# satır düzenlendi} other {# satır düzenlendi}}",
+    "editedHint": "Kelimelerin eşleştiği yerlerde zamanlama korunur.",
+    "moved": "{count, plural, one {# satır taşındı} other {# satır taşındı}}",
+    "added": "{count, plural, one {# satır eklendi} other {# satır eklendi}}",
+    "removed": "{count, plural, one {# satır kaldırıldı} other {# satır kaldırıldı}}",
+    "noChanges": "Henüz değişiklik yok.",
+    "droppedTimings": "{count, plural, one {# zamanlanmış kelime zamanlamasını kaybeder} other {# zamanlanmış kelime zamanlamasını kaybeder}}",
+    "lineNumber": "Satır {line}",
+    "more": "{count, plural, one {ve # tane daha} other {ve # tane daha}}",
+    "help": "Yeni kelimeler zamanlamasız gelir. Yalnızca taşınan satırlar zamanlamasını korur. Uygula tek adımda geri alınır.",
+    "apply": "Uygula",
+    "applied": "Metin uygulandı. Geri al tek adımda eski haline döndürür.",
+    "failed": "Metin uygulanamadı. Kontrol edip tekrar deneyin."
   },
   "importChooser": {
     "options": {
@@ -272,6 +322,12 @@
     "importFile": {
       "title": "Yeni şarkı sözleri içe aktarılsın mı?",
       "description": "Kaydedilmemiş değişiklikleriniz var. Eğer devam ederseniz, bunlar kaybolacak. Yeni şarkı sözü içe aktarmak istediğinize emin misiniz?"
+    },
+    "discardTextEdits": {
+      "title": "Düzenlemeler atılsın mı?",
+      "description": "Metinde uygulanmamış değişiklikler var. Şimdi kapatırsanız kaybolur.",
+      "discard": "At",
+      "keepEditing": "Düzenlemeye devam et"
     },
     "noSongwriter": {
       "description": "Şarkı yazarı belirtilmemiş. Yine de kaydedilsin mi?"
@@ -346,6 +402,7 @@
     "preview": "Önizleme"
   },
   "dialog": {
+    "openFilesIgnored": "{count, plural, one {# dosya dışarıda bırakıldı} other {# dosya dışarıda bırakıldı}}: aynı anda bir şarkı sözü dosyası ve bir ses dosyası açın.",
     "createProjectPrompt": {
       "title": "Proje oluşturulsun mu?",
       "description": "Sesi ve şarkı sözlerini bir proje klasöründe bir arada tutun.",
@@ -371,6 +428,18 @@
     "openWorkspace": {
       "title": "Proje içeren bir çalışma alanı klasörü seçin"
     }
+  },
+  "commandPalette": {
+    "title": "Komut paleti",
+    "placeholder": "Komutlarda ve ayarlarda ara",
+    "noResults": "Eşleşen komut veya ayar yok",
+    "commandTag": "Komut",
+    "settingTag": "Tercihler",
+    "hint": "Ok tuşlarıyla gezinin, Enter ile çalıştırın, Esc ile kapatın",
+    "notRunnable": "Komut çalıştırılamadı. Tercihler'den ona bir kısayol atayın ve tekrar deneyin.",
+    "menu": "Komut paleti...",
+    "shortcut": "Görünüm - Komut paletini aç",
+    "shortcutAlternate": "Görünüm - Komut paletini aç (alternatif kısayol)"
   },
   "projectsDialog": {
     "title": "Projeler",
@@ -985,6 +1054,7 @@
     "deleteWords": "{count, plural, one {# kelimeyi sil} other {# kelimeyi sil}}",
     "bgLyric": "Arka vokal satırı",
     "duetLyric": "Düet satırı",
+    "lineRole": "Satır rolü",
     "moveLineToPlayhead": "Satırı oynatma konumuna taşı",
     "copyTimingsTo": "Zamanlamaları şuraya kopyala…",
     "cancelCopyTimings": "Zamanlama kopyalamasını iptal et",
@@ -1027,6 +1097,8 @@
       "redoAlternate": "İleri al (alternatif kısayol)",
       "selectAll": "Tümünü seç",
       "unselectAll": "Tüm seçimi kaldır",
+      "findInLyrics": "Sözlerde bul",
+      "replaceInLyrics": "Sözlerde değiştir",
       "deleteSelection": "Seçimi sil",
       "autoSegment": "Hızlı otomatik bölme",
       "autoSegmentDialog": "Otomatik bölme…",
@@ -1065,6 +1137,15 @@
       "auditionSelection": "Spektrogram - Seçimi oynat",
       "auditionSelectionAfter": "Spektrogram - Seçimi oynat (+0,5 sn sonra)",
       "cancelTimelineEditing": "Spektrogram - Zaman çizelgesi düzenlemesini iptal et",
+      "exportTtml": "Şarkı sözlerini dışa aktar: TTML",
+      "exportLrc": "Şarkı sözlerini dışa aktar: LRC",
+      "exportEslrc": "Şarkı sözlerini dışa aktar: ESLRC",
+      "exportQrc": "Şarkı sözlerini dışa aktar: QRC",
+      "exportYrc": "Şarkı sözlerini dışa aktar: YRC",
+      "exportLys": "Şarkı sözlerini dışa aktar: Lyricify Syllable",
+      "exportAss": "Şarkı sözlerini dışa aktar: ASS altyazıları",
+      "newLyricLine": "Yeni şarkı sözü satırı",
+      "advancedRibbonControls": "Gelişmiş şerit denetimleri",
       "resetDefault": "Varsayılana sıfırla",
       "clear": "Temizle",
       "unbound": "Atanmamış",
@@ -1076,11 +1157,12 @@
         "View": "Görünüm",
         "Sync": "Zamanlama",
         "Audio": "Ses",
-        "Spectrogram": "Spektrogram"
+        "Spectrogram": "Spektrogram",
+        "Tools": "Araçlar",
+        "Help": "Yardım",
+        "Preview": "Önizleme"
       },
-      "autoSegmentOptions": "Otomatik bölme",
-      "autoSegmentDoublePress": "Çift basmayı gerektir",
-      "autoSegmentDoublePressDesc": "Hızlı otomatik bölmeyi yalnızca kısayoluna art arda iki kez basıldığında çalıştırır."
+      "showAll": "Tuşu olmayan eylemleri göster"
     },
     "tab": {
       "common": "Genel",
@@ -1095,7 +1177,39 @@
       "changelog": "Değişiklik günlüğü"
     }
   },
-  "autoSegmentApplied": "{engine} ile otomatik bölündü",
+  "keyboardView": {
+    "title": "Klavye",
+    "search": "Eylem ara",
+    "searchResults": "{count, plural, =0 {Eşleşen eylem yok} one {# eylem eşleşiyor} other {# eylem eşleşiyor}}",
+    "layout": "Klavye düzeni",
+    "layoutAuto": "Otomatik",
+    "layoutDetected": "Algılanan: {layout}",
+    "layoutUnavailable": "Düzen burada algılanamıyor, bu yüzden QWERTY gösteriliyor",
+    "layerHint": "Onu kullanan kısayolları görmek için Shift gibi bir değiştirici tuşa tıklayın.",
+    "category": {
+      "sync": "Senkron",
+      "edit": "Düzenleme",
+      "playback": "Oynatma",
+      "navigation": "Gezinme"
+    },
+    "free": "Boş",
+    "keyFree": "{key}: boş",
+    "keyActions": "{key}: {actions}",
+    "modifierLayer": "{key} ile kısayolları göster",
+    "freeKey": "{key} henüz hiçbir şey tarafından kullanılmıyor.",
+    "assignLabel": "Eylem",
+    "assignPlaceholder": "Bir eylem seçin...",
+    "assign": "{key} tuşuna ekle",
+    "changeKey": "Tuşu değiştir",
+    "addKey": "İkinci tuş ekle",
+    "removeKey": "{key} tuşunu kaldır",
+    "duplicateKey": "Bu tuş bu eylem için zaten ayarlı.",
+    "doublePress": "Çalıştırmak için iki kez bas",
+    "doublePressDesc": "Yalnızca tuşuna art arda iki kez basıldığında çalışır.",
+    "otherLayers": "Bu tuşta ayrıca",
+    "closePanel": "Kapat"
+  },
+  "autoSegmentApplied":"{engine} ile otomatik bölündü",
   "error": {
     "unsupportedFileFormat": "Desteklenmeyen dosya biçimi: {ext}",
     "openFileFailed": "Dosya açılamadı",
@@ -1241,6 +1355,14 @@
     "wordTimingMismatch": "{count, plural, one {# satırda kelime sayısı farklıydı; yalnızca eşleşen kelime konumları kopyalandı.} other {# satırda kelime sayısı farklıydı; yalnızca eşleşen kelime konumları kopyalandı.}}",
     "insertLine": "Buraya yeni satır ekle",
     "insertWord": "Buraya kelime ekle…"
+  },
+  "editModeTools": {
+    "splitTypedLinesTitle": "Yazılan satırları kelimelere böl",
+    "splitTypedLinesDesc": "Boş bir satıra yazılan metin, içe aktarmanın satırları böldüğü gibi kelimelere bölünür.",
+    "scrollMemoryTitle": "Düzenleme modu konumunu hatırla",
+    "scrollMemoryDesc": "Her projeyi Düzenleme modunda kaldığınız satırda açar.",
+    "swapDuetAll": "Ana ve düet satırlarını değiştir",
+    "swapDuetSelected": "Ana ve düeti değiştir"
   },
   "lyricWordView": {
     "empty": "Boş",
