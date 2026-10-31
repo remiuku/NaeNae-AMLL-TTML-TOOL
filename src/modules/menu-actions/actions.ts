@@ -108,7 +108,9 @@ const hasSelectedLinesAtom = atom((get) => get(selectedLinesAtom).size > 0);
 const canCombineWordsAtom = atom(
 	(get) => get(selectedWordsAtom).size > 1 && get(selectedLinesAtom).size === 1,
 );
-const hasSelectedWordsAtom = atom((get) => get(selectedWordsAtom).size > 0);
+const hasSelectionAtom = atom(
+	(get) => get(selectedWordsAtom).size > 0 || get(selectedLinesAtom).size > 0,
+);
 
 const exportAction = (
 	id: string,
@@ -308,10 +310,14 @@ export const MENU_ACTIONS = {
 		],
 		{
 			modes: ["edit", "sync"],
-			enabledAtom: hasSelectedWordsAtom,
+			enabledAtom: hasSelectionAtom,
 			run: ({ store }) =>
 				store.set(lyricLinesAtom, (document) =>
-					clearWordTiming(document, store.get(selectedWordsAtom)),
+					clearWordTiming(
+						document,
+						store.get(selectedWordsAtom),
+						store.get(selectedLinesAtom),
+					),
 				),
 		},
 	),

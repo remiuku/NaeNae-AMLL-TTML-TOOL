@@ -3,6 +3,6 @@ type: feature
 impact: 3
 highlight: false
 ---
-Clear the timing of selected words
+Clear the timing of selected words or lines
 
-Run Clear word/syllable timestamps from Ctrl+K in Edit or Time mode or give it a key, and undo brings the times back
+Clear word/syllable timestamps runs from Ctrl+K in Edit or Time mode or from a key, and undo brings the times back
