@@ -3,6 +3,6 @@ type: fix
 impact: 5
 highlight: true
 ---
-Flatpak opens again
+The Flatpak opens instead of hanging at startup
 
-The Flatpak hung with no window while it rebuilt its font cache; the cache is now built before the app starts
+The Flatpak builds its font cache on first launch, so the window opens instead of hanging with a CPU core at full use
