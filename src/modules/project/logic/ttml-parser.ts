@@ -268,7 +268,12 @@ export function parseLyric(ttmlText: string): TTMLLyric {
 
 		for (const node of Array.from(textEl.childNodes)) {
 			if (node.nodeType === Node.TEXT_NODE) {
-				lineRomanMain += node.textContent ?? "";
+				const text = node.textContent ?? "";
+				const previous = mainWords[mainWords.length - 1];
+				// Apple stores romanized word gaps as spaces between the syllable
+				// spans. Keep them on the syllable before; newlines are just indent.
+				if (previous && /^[^\S\r\n]+$/.test(text)) previous.text += " ";
+				else lineRomanMain += text;
 			} else if (node.nodeType === Node.ELEMENT_NODE) {
 				const el = node as Element;
 				if (el.getAttribute("ttm:role") === "x-bg") {
@@ -625,5 +630,27 @@ export function parseLyric(ttmlText: string): TTMLLyric {
 		lyricLines: lyricLines,
 		marks: marks.length > 0 ? marks : undefined,
 		sections,
+		translationLanguage: translationLanguageOf(ttmlDoc, lyricLines),
 	};
+}
+
+function translationLanguageOf(
+	doc: Document,
+	lines: LyricLine[],
+): string | undefined {
+	const tagged = [
+		...Array.from(doc.getElementsByTagName("translation")),
+		...Array.from(doc.getElementsByTagName("span")).filter(
+			(span) => span.getAttribute("ttm:role") === "x-translation",
+		),
+	]
+		.map((el) => el.getAttribute("xml:lang")?.trim())
+		.find(Boolean);
+	if (!tagged) return undefined;
+	// Older exports tagged every translation zh-CN, whatever its language.
+	const hasHan = lines.some((line) =>
+		/\p{Script=Han}/u.test(line.translatedLyric),
+	);
+	if (/^zh\b/i.test(tagged) && !hasHan) return undefined;
+	return tagged;
 }
