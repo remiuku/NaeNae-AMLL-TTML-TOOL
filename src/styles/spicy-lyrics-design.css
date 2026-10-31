@@ -339,7 +339,7 @@
    accent block on every hover. */
 :root[data-design="spicy-lyrics"]
 	.radix-themes:is(.dark, .dark-theme)
-	.rt-BaseMenuItem[data-highlighted] {
+	.rt-BaseMenuItem[data-highlighted]:not([data-disabled]) {
 	background-color: var(--sl-accent-fill) !important;
 	color: var(--sl-foreground) !important;
 }

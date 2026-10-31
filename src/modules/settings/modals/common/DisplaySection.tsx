@@ -12,6 +12,7 @@ import {
 	Text,
 } from "@radix-ui/themes";
 import resources from "$/i18n/resources";
+import { UpdatedToastSetting } from "$/modules/updated-toast/UpdatedToastSetting";
 import { getLanguageName, getTranslationProgress } from "./language";
 import type { CommonSettings } from "./useCommonSettings";
 export const DisplaySection = ({
@@ -125,5 +126,7 @@ export const DisplaySection = ({
 				</Flex>
 			</Text>
 		</Card>
+
+		<UpdatedToastSetting />
 	</Flex>
 );

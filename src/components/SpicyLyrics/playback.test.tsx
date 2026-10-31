@@ -33,6 +33,7 @@ vi.mock("$/modules/settings/states", async () => {
 		allowConsecutiveBackgroundLinesAtom: atom(false),
 		useCustomAccentAtom: atom(false),
 		customAccentColorAtom: atom("#fff"),
+		liteEffectsAtom: atom(false),
 	};
 });
 vi.mock("$/modules/settings/states/preview", async () => {
@@ -43,6 +44,7 @@ vi.mock("$/modules/settings/states/preview", async () => {
 		showTranslationLinesAtom: atom(false),
 		spicyBackgroundModeAtom: atom("static"),
 		spicyForceLineSyncedAtom: atom(false),
+		spicyJoinSplitWordsAtom: atom(false),
 		spicySimpleLyricsModeAtom: atom(false),
 	};
 });

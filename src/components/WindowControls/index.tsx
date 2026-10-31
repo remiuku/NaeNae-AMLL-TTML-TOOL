@@ -7,11 +7,14 @@ import {
 } from "react";
 import { log, warn } from "$/utils/logging.ts";
 import styles from "./index.module.css";
+import { LinuxSystemControls } from "./linux.tsx";
+import { linuxUsesCustomTitleBar } from "./linux-title-bar.ts";
 import { MacOSSystemsControls } from "./macos.tsx";
 import { WindowsSystemsControls } from "./windows.tsx";
 
-// "native": the window manager draws the title bar (Linux), so no buttons here.
-export type WindowControlsVariant = "windows" | "macos" | "native";
+// "native": the window manager draws the title bar (Linux outside the
+// Flatpak), so no buttons here. "linux": our own bar in the Flatpak.
+export type WindowControlsVariant = "windows" | "macos" | "native" | "linux";
 
 export interface WindowControlsProps {
 	variant?: WindowControlsVariant;
@@ -48,7 +51,11 @@ export default function WindowControls(props: WindowControlsProps) {
 			case "darwin":
 				return setVariant("macos");
 			case "linux":
-				return setVariant("native");
+				setVariant("native");
+				linuxUsesCustomTitleBar().then(
+					(custom) => custom && setVariant("linux"),
+				);
+				return;
 		}
 	}, [props.variant]);
 
@@ -95,6 +102,15 @@ export default function WindowControls(props: WindowControlsProps) {
 		if (variant === "windows") {
 			return (
 				<WindowsSystemsControls
+					isMaximized={false}
+					onClosed={onClosed}
+					onMaximized={onMaximized}
+					onMinimized={onMinimized}
+				/>
+			);
+		} else if (variant === "linux") {
+			return (
+				<LinuxSystemControls
 					isMaximized={false}
 					onClosed={onClosed}
 					onMaximized={onMaximized}

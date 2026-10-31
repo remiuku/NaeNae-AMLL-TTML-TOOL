@@ -67,6 +67,7 @@ export function createSpicyAnimator({
 	// The line node each row was last drawn on, to spot rows that just mounted.
 	const shownNodes: Array<HTMLDivElement | undefined> = [];
 	let blurAnchor = -1;
+	const lineIndices = new Map(lines.map((line, index) => [line.id, index]));
 
 	/** Keys of every word and held letter node in a line. */
 	const nodeKeys = (line: SpicyLine) => {
@@ -208,18 +209,19 @@ export function createSpicyAnimator({
 		const anchor = findSpicyBlurAnchor(lines, time, blurAnchor);
 		const anchorMoved = anchor !== blurAnchor;
 		blurAnchor = anchor;
-		for (let i = 0; i < lines.length; i++) {
+		for (const key of springs.current.keys()) {
+			if (!wordNodes.current.has(key)) springs.current.delete(key);
+		}
+		for (const id of lineGlowSprings.current.keys()) {
+			if (!lineNodes.current.has(id)) lineGlowSprings.current.delete(id);
+		}
+		for (const [id, node] of lineNodes.current) {
+			const i = lineIndices.get(id);
+			if (i === undefined) continue;
 			const line = lines[i];
 			const status = stateAt(time, line.startTime, line.endTime);
 			const changed = lineStates[i] !== status;
 			lineStates[i] = status;
-			const node = lineNodes.current.get(line.id);
-			// Only rows near the viewport are mounted. The others keep their
-			// state here and are drawn from it when they mount.
-			if (!node) {
-				shownNodes[i] = undefined;
-				continue;
-			}
 			// A row that just mounted carries none of the animation state yet:
 			// write all of it and snap its springs to where they belong.
 			const mounted = shownNodes[i] !== node;
@@ -235,6 +237,8 @@ export function createSpicyAnimator({
 					node.dataset.prehidden = prehidden;
 			}
 			if (changed || anchorMoved || lineSnap) writeBlur(i, node, status);
+			// An untimed row has nothing to sing; it only blurs with its neighbours.
+			if (line.isUntimed) continue;
 			if (changed || mounted) lineResting[i] = false;
 			if (status !== "active" && !lineSnap && lineResting[i]) continue;
 
