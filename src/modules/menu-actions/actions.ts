@@ -19,6 +19,7 @@ import type {
 	KeyBindingCommand,
 	KeyBindingMode,
 } from "$/modules/keyboard/types";
+import { clearWordTiming } from "$/modules/lyric-editor/utils/clear-word-timing";
 import { swapDuetLinesAtom } from "$/modules/lyric-editor/utils/swap-duet";
 import { guideWelcomeOpenAtom } from "$/modules/onboarding/states";
 import type { LyricExportFormat } from "$/modules/project/export-lyric";
@@ -107,6 +108,7 @@ const hasSelectedLinesAtom = atom((get) => get(selectedLinesAtom).size > 0);
 const canCombineWordsAtom = atom(
 	(get) => get(selectedWordsAtom).size > 1 && get(selectedLinesAtom).size === 1,
 );
+const hasSelectedWordsAtom = atom((get) => get(selectedWordsAtom).size > 0);
 
 const exportAction = (
 	id: string,
@@ -294,6 +296,23 @@ export const MENU_ACTIONS = {
 			enabledAtom: hasSelectedLinesAtom,
 			run: ({ store }) =>
 				store.set(swapDuetLinesAtom, store.get(selectedLinesAtom)),
+		},
+	),
+	// An action rather than a timing key, so the palette lists it in Time mode.
+	clearWordTiming: defineAction(
+		"clearWordTiming",
+		"Sync",
+		[
+			key("settingsDialog.keybindings.clearWordTiming"),
+			"Timing - Clear word/syllable timestamps",
+		],
+		{
+			modes: ["edit", "sync"],
+			enabledAtom: hasSelectedWordsAtom,
+			run: ({ store }) =>
+				store.set(lyricLinesAtom, (document) =>
+					clearWordTiming(document, store.get(selectedWordsAtom)),
+				),
 		},
 	),
 	combineWords: defineAction(

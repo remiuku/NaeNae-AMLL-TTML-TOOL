@@ -248,13 +248,6 @@ export const cmdSyncEnd = registerCommand(
 	"Sync",
 );
 
-export const cmdClearWordTiming = registerCommand(
-	"clearWordTiming",
-	[],
-	t("settingsDialog.keybindings.clearWordTiming"),
-	"Sync",
-);
-
 export const cmdToggleWordHighlight = registerCommand(
 	"toggleWordHighlight",
 	["KeyK"],
