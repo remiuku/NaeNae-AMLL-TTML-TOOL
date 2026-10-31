@@ -250,11 +250,9 @@ export const cmdSyncEnd = registerCommand(
 
 export const cmdClearWordTiming = registerCommand(
 	"clearWordTiming",
-	["MouseMiddle"],
+	[],
 	t("settingsDialog.keybindings.clearWordTiming"),
 	"Sync",
-	["sync"],
-	{ supportsMouse: true },
 );
 
 export const cmdToggleWordHighlight = registerCommand(

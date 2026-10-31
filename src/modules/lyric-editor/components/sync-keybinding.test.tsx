@@ -3,6 +3,7 @@ import { createStore, Provider } from "jotai";
 import { act } from "react";
 import { createRoot } from "react-dom/client";
 import { describe, expect, it, vi } from "vitest";
+import { cmdClearWordTiming } from "$/modules/keyboard/commands";
 import { lyricLinesOnlyAtom } from "$/modules/lyric-editor/states/document-structure";
 import type { SyncLane } from "$/modules/lyric-editor/utils/lyric-states";
 import { processedLyricLinesAtom } from "$/modules/segmentation/utils/segment-processing";
@@ -22,6 +23,8 @@ import {
 	lyricLinesAtom,
 	selectedLinesAtom,
 	selectedWordsAtom,
+	ToolMode,
+	toolModeAtom,
 } from "$/states/main";
 import { newLyricLine, newLyricWord } from "$/types/ttml";
 import type { KeyBindingCallback } from "$/utils/keybindings";
@@ -328,6 +331,36 @@ describe("background lines while syncing", () => {
 			press(keySyncNextAtom, 2);
 			expect(view.selectedLine()).toBe(2);
 			expect(view.synced()[1].startTime).toBe(0);
+		} finally {
+			view.cleanup();
+		}
+	});
+});
+
+describe("clear word timing", () => {
+	it("clears only the selected words, as one edit", () => {
+		const view = mount();
+		try {
+			view.store.set(toolModeAtom, ToolMode.Sync);
+			view.store.set(lyricLinesAtom, (state) => ({
+				...state,
+				lyricLines: state.lyricLines.map((line) => ({
+					...line,
+					words: line.words.map((word) => ({
+						...word,
+						startTime: 1000,
+						endTime: 2000,
+					})),
+				})),
+			}));
+			press(cmdClearWordTiming.atom, 0);
+			const [first, second] = view.store.get(lyricLinesAtom).lyricLines;
+			expect(first.words.map((w) => [w.startTime, w.endTime])).toEqual([
+				[0, 0],
+				[1000, 2000],
+				[1000, 2000],
+			]);
+			expect(second.words[0]).toMatchObject({ startTime: 1000 });
 		} finally {
 			view.cleanup();
 		}
